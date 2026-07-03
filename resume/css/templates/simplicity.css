@@ -1,0 +1,371 @@
+/* ============================================
+   简约模板 (Simplicity) - 完全复刻 lgdsunday.club
+   ============================================ */
+
+/* 基础样式 */
+.resume-simplicity {
+    color: #555;
+    font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
+    background: #fff;
+}
+
+/* ============ 个人信息区域 ============ */
+.resume-simplicity .resume-mode__info {
+    color: #333;
+    margin-bottom: -28px;
+    background: #fff;
+    padding: 0 0 20px;
+}
+
+.resume-simplicity .resume-mode__info .info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px 22px;
+}
+
+.resume-simplicity .resume-mode__info .info-content {
+    flex: 1;
+}
+
+.resume-simplicity .resume-mode__info .avatar-wrapper {
+    width: 100px;
+    height: 120px;
+    overflow: hidden;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.resume-simplicity .resume-mode__info .avatar-wrapper:hover {
+    border-color: #3b82f6;
+    transform: scale(1.02);
+}
+
+.resume-simplicity .resume-mode__info .avatar-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* 基本信息网格 */
+.resume-simplicity .info-grid {
+    display: flex;
+    flex-wrap: wrap;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.resume-simplicity .info-grid:hover {
+    background: #f1f5f9;
+}
+
+.resume-simplicity .info-item {
+    display: flex;
+    width: 50%;
+    margin-bottom: 2px;
+    padding: 2px 0;
+}
+
+.resume-simplicity .info-label {
+    width: 80px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #333;
+}
+
+.resume-simplicity .info-value {
+    flex: 1;
+    line-height: 24px;
+    color: #555;
+}
+
+/* ============ 模块标题 - 原站特色样式 ============ */
+.resume-simplicity .resume-mode__title {
+    margin-bottom: 8px;
+    padding-top: 16px;
+}
+
+.resume-simplicity .module_tit {
+    color: #fff;
+    vertical-align: top;
+    min-width: 140px;
+    height: 24px;
+    margin-top: 16px;
+    font-size: 1.1em;
+    font-weight: 400;
+    line-height: 24px;
+    display: inline-block;
+    position: relative;
+}
+
+.resume-simplicity .module_tit span {
+    color: #fff;
+    white-space: nowrap;
+    background-color: #4e7282;
+    width: 100%;
+    height: 100%;
+    padding-left: 25px;
+    padding-right: 50px;
+    display: block;
+    position: relative;
+}
+
+.resume-simplicity .module_tit .tit_icon {
+    width: 50px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: -1px;
+    overflow: hidden;
+}
+
+.resume-simplicity .module_tit .tit_icon i {
+    background-color: #fff;
+    width: 27px;
+    height: 50px;
+    display: block;
+    position: absolute;
+    top: -18px;
+    right: -12px;
+    overflow: hidden;
+    transform: rotate(-45deg);
+}
+
+.resume-simplicity .module_tit .tit_icon:after {
+    content: "";
+    border: 2px solid #fff;
+    width: 7px;
+    height: 50px;
+    display: block;
+    position: absolute;
+    top: -12px;
+    right: 25px;
+    transform: rotate(-45deg);
+}
+
+.resume-simplicity .module_tit dfn {
+    border: 0 solid transparent;
+    border-top: 9px solid #4e7282;
+    border-left-width: 16px;
+    width: 0;
+    height: 0;
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    overflow: hidden;
+}
+
+/* ============ 行布局 ============ */
+.resume-simplicity .resume-mode__row {
+    color: #333;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 1.4em;
+    display: flex;
+}
+
+/* ============ 列表项 ============ */
+.resume-simplicity .resume-mode__item {
+    margin-bottom: 8px;
+    padding: 0 12px;
+}
+
+.resume-simplicity .resume-mode__item:last-child {
+    margin-bottom: 0;
+}
+
+/* ============ 日期 ============ */
+.resume-simplicity .resume-mode__date {
+    min-width: 160px;
+    font-weight: 600;
+    color: #666;
+    font-size: 13px;
+}
+
+/* ============ 公司/学校 ============ */
+.resume-simplicity .resume-mode__company,
+.resume-simplicity .resume-mode__desc {
+    text-align: center;
+    flex: 1;
+    font-weight: 700;
+    color: #333;
+}
+
+/* ============ 描述/职位 ============ */
+.resume-simplicity .resume-mode__desc {
+    text-align: right;
+    min-width: 160px;
+    font-weight: 600;
+    color: #555;
+}
+
+/* ============ 内容区域 ============ */
+.resume-simplicity .resume-mode__content {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.7;
+    padding: 0 12px;
+}
+
+.resume-simplicity .resume-mode__content p {
+    margin: 4px 0;
+}
+
+.resume-simplicity .resume-mode__content ul,
+.resume-simplicity .resume-mode__content ol {
+    margin: 4px 0;
+    padding-left: 20px;
+}
+
+.resume-simplicity .resume-mode__content li {
+    margin-bottom: 2px;
+}
+
+.resume-simplicity .resume-mode__content strong {
+    font-weight: 600;
+    color: #333;
+}
+
+/* ============ 求职意向 ============ */
+.resume-simplicity .job-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 16px;
+    padding: 12px;
+    cursor: pointer;
+}
+
+.resume-simplicity .job-info-grid:hover {
+    background: #f1f5f9;
+}
+
+.resume-simplicity .job-info-grid span {
+    font-size: 13px;
+    color: #555;
+}
+
+/* ============ 技能特长 ============ */
+.resume-simplicity .skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 8px 12px;
+}
+
+.resume-simplicity .skill-tag {
+    display: inline-block;
+    padding: 4px 14px;
+    background: #f0f4f8;
+    border: 1px solid #d9e2ec;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #4e7282;
+    font-weight: 500;
+}
+
+/* ============ 荣誉奖项 ============ */
+.resume-simplicity .award-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 12px;
+    margin-bottom: 6px;
+}
+
+.resume-simplicity .award-name {
+    font-size: 13px;
+    color: #333;
+}
+
+.resume-simplicity .award-date {
+    font-size: 12px;
+    color: #999;
+}
+
+/* ============ 简介区域 ============ */
+.resume-simplicity .summary-text {
+    padding: 8px 12px;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.8;
+    text-indent: 2em;
+}
+
+/* ============ 空状态 ============ */
+.resume-simplicity .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    color: #9ca3af;
+    padding: 40px;
+}
+
+.resume-simplicity .empty-state .empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.resume-simplicity .empty-state p {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.resume-simplicity .empty-state .hint {
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+/* ============ 可点击区域样式 ============ */
+.resume-simplicity [data-mkey] {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-radius: 4px;
+}
+
+.resume-simplicity [data-mkey]:hover {
+    background-color: #f8fafc;
+}
+
+/* ============ 分割线 ============ */
+.resume-simplicity .divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 12px 0;
+}
+
+/* ============ 响应式 ============ */
+@media (max-width: 768px) {
+    .resume-simplicity .info-header {
+        flex-direction: column-reverse;
+        align-items: center;
+        text-align: center;
+    }
+
+    .resume-simplicity .info-grid {
+        justify-content: center;
+    }
+
+    .resume-simplicity .info-item {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .resume-simplicity .resume-mode__row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .resume-simplicity .resume-mode__date,
+    .resume-simplicity .resume-mode__desc {
+        text-align: left;
+        min-width: auto;
+    }
+}

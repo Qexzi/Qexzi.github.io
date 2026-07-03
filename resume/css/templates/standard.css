@@ -1,0 +1,174 @@
+/* ============================================
+   标准模板 (Standard) - 复刻自 lgdsunday.club
+   ============================================ */
+
+.resume-standard {
+    color: #555;
+    font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
+}
+
+.resume-standard .resume-mode__info {
+    color: #333;
+}
+
+.resume-standard .resume-mode__info .info-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 32px 24px 20px;
+    border-bottom: 2px solid #3b82f6;
+}
+
+.resume-standard .resume-mode__info .avatar-wrapper {
+    width: 85px;
+    height: 85px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.resume-standard .resume-mode__info .avatar-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.resume-standard .resume-mode__info .info-content {
+    flex: 1;
+}
+
+.resume-standard .resume-mode__info .info-name {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1e3a5f;
+    margin-bottom: 4px;
+}
+
+.resume-standard .resume-mode__info .info-title {
+    font-size: 15px;
+    color: #3b82f6;
+    margin-bottom: 10px;
+}
+
+.resume-standard .resume-mode__info .info-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 13px;
+    color: #666;
+}
+
+/* 标题样式 */
+.resume-standard .resume-mode__title {
+    color: #333;
+    background: #f8fafc;
+    border-left: 4px solid #3b82f6;
+    border-radius: 8px;
+    margin: 0 -12px;
+    padding: 8px 16px;
+    font-size: 1.05em;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin-bottom: 12px;
+}
+
+/* 行布局 */
+.resume-standard .resume-mode__row {
+    color: #333;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 1.4em;
+    display: flex;
+}
+
+/* 列表项 */
+.resume-standard .resume-mode .resume-mode__item {
+    margin-bottom: 8px;
+    padding: 8px 12px;
+}
+
+.resume-standard .resume-mode .resume-mode__item:last-child {
+    margin-bottom: 0;
+}
+
+/* 日期 */
+.resume-standard .resume-mode .resume-mode__date {
+    min-width: 160px;
+    font-weight: 600;
+    color: #666;
+    font-size: 13px;
+}
+
+/* 公司/学校 */
+.resume-standard .resume-mode .resume-mode__company,
+.resume-standard .resume-mode .resume-mode__desc {
+    text-align: center;
+    flex: 1;
+    font-weight: 700;
+    color: #333;
+}
+
+/* 描述/职位 */
+.resume-standard .resume-mode .resume-mode__desc {
+    text-align: right;
+    min-width: 160px;
+    font-weight: 600;
+    color: #555;
+}
+
+/* 内容 */
+.resume-standard .resume-mode .resume-mode__content {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.7;
+}
+
+/* 技能标签 */
+.resume-standard .skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 4px 12px;
+}
+
+.resume-standard .skill-tag {
+    display: inline-block;
+    padding: 5px 16px;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 20px;
+    font-size: 12px;
+    color: #3b82f6;
+    font-weight: 500;
+}
+
+/* 荣誉奖项 */
+.resume-standard .award-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    background: #f8fafc;
+    border-radius: 6px;
+}
+
+.resume-standard .award-name {
+    font-size: 13px;
+    color: #333;
+}
+
+.resume-standard .award-date {
+    font-size: 12px;
+    color: #999;
+}
+
+/* 简介 */
+.resume-standard .summary-text {
+    padding: 4px 12px;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.8;
+}

@@ -10,368 +10,249 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- 左侧编辑面板 -->
-        <aside class="editor-panel">
-            <div class="editor-header">
+        <!-- 顶部工具栏 -->
+        <header class="toolbar">
+            <div class="toolbar-left">
                 <div class="logo">
                     <span class="logo-icon">📝</span>
                     <span class="logo-text">简历编辑器</span>
                 </div>
-                <div class="header-actions">
-                    <button class="btn btn-outline" id="btn-import" title="导入数据">
-                        <span class="btn-icon">📥</span>
-                        <span class="btn-text">导入</span>
-                    </button>
-                    <button class="btn btn-outline" id="btn-export-json" title="导出JSON">
-                        <span class="btn-icon">📤</span>
-                        <span class="btn-text">导出</span>
-                    </button>
-                    <button class="btn btn-primary" id="btn-export-pdf">
-                        <span class="btn-icon">📄</span>
-                        <span class="btn-text">导出PDF</span>
-                    </button>
-                </div>
             </div>
-
-            <div class="editor-content" id="editor-content">
-                <!-- 基本信息 -->
-                <section class="editor-section" data-section="basic">
-                    <div class="section-header" onclick="toggleSection(this)">
-                        <h3>👤 基本信息</h3>
-                        <span class="toggle-icon">▼</span>
-                    </div>
-                    <div class="section-body">
-                        <div class="form-group">
-                            <label>姓名 <span class="required">*</span></label>
-                            <input type="text" id="basic-name" placeholder="请输入姓名" data-field="basic.name">
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>性别</label>
-                                <select id="basic-gender" data-field="basic.gender">
-                                    <option value="">不填</option>
-                                    <option value="male">男</option>
-                                    <option value="female">女</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>出生年月</label>
-                                <input type="month" id="basic-birthday" data-field="basic.birthday">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>手机号</label>
-                                <input type="tel" id="basic-phone" placeholder="请输入手机号" data-field="basic.phone">
-                            </div>
-                            <div class="form-group">
-                                <label>邮箱</label>
-                                <input type="email" id="basic-email" placeholder="请输入邮箱" data-field="basic.email">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>求职意向</label>
-                                <input type="text" id="basic-title" placeholder="如：前端工程师" data-field="basic.title">
-                            </div>
-                            <div class="form-group">
-                                <label>工作年限</label>
-                                <select id="basic-experience" data-field="basic.experience">
-                                    <option value="">不填</option>
-                                    <option value="应届生">应届生</option>
-                                    <option value="1年经验">1年经验</option>
-                                    <option value="2年经验">2年经验</option>
-                                    <option value="3年经验">3年经验</option>
-                                    <option value="4年经验">4年经验</option>
-                                    <option value="5年经验">5年经验</option>
-                                    <option value="6年经验">6年经验</option>
-                                    <option value="7年经验">7年经验</option>
-                                    <option value="8年经验">8年经验</option>
-                                    <option value="9年经验">9年经验</option>
-                                    <option value="10年经验">10年经验</option>
-                                    <option value="10+年经验">10+年经验</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>所在城市</label>
-                            <input type="text" id="basic-location" placeholder="如：北京" data-field="basic.location">
-                        </div>
-                        <div class="form-group">
-                            <label>个人简介</label>
-                            <textarea id="basic-summary" rows="3" placeholder="简单介绍自己的优势和特点" data-field="basic.summary"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>头像</label>
-                            <div class="avatar-upload">
-                                <div class="avatar-preview" id="avatar-preview" onclick="document.getElementById('avatar-input').click()">
-                                    <span>点击上传</span>
-                                </div>
-                                <input type="file" id="avatar-input" accept="image/jpeg,image/png" style="display:none">
-                                <div class="avatar-actions">
-                                    <button class="btn btn-sm" onclick="document.getElementById('avatar-input').click()">选择图片</button>
-                                    <span class="hint">JPG/PNG，≤500KB</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 教育经历 -->
-                <section class="editor-section" data-section="education">
-                    <div class="section-header" onclick="toggleSection(this)">
-                        <h3>🎓 教育经历</h3>
-                        <span class="toggle-icon">▼</span>
-                    </div>
-                    <div class="section-body">
-                        <div id="education-list"></div>
-                        <button class="btn btn-add" onclick="addEducation()">+ 添加教育经历</button>
-                    </div>
-                </section>
-
-                <!-- 工作经历 -->
-                <section class="editor-section" data-section="experience">
-                    <div class="section-header" onclick="toggleSection(this)">
-                        <h3>💼 工作经历</h3>
-                        <span class="toggle-icon">▼</span>
-                    </div>
-                    <div class="section-body">
-                        <div id="experience-list"></div>
-                        <button class="btn btn-add" onclick="addExperience()">+ 添加工作经历</button>
-                    </div>
-                </section>
-
-                <!-- 项目经历 -->
-                <section class="editor-section" data-section="projects">
-                    <div class="section-header" onclick="toggleSection(this)">
-                        <h3>🚀 项目经历</h3>
-                        <span class="toggle-icon">▼</span>
-                    </div>
-                    <div class="section-body">
-                        <div id="projects-list"></div>
-                        <button class="btn btn-add" onclick="addProject()">+ 添加项目经历</button>
-                    </div>
-                </section>
-
-                <!-- 技能特长 -->
-                <section class="editor-section" data-section="skills">
-                    <div class="section-header" onclick="toggleSection(this)">
-                        <h3>⚡ 技能特长</h3>
-                        <span class="toggle-icon">▼</span>
-                    </div>
-                    <div class="section-body">
-                        <div class="form-group">
-                            <textarea id="skills-input" rows="4" placeholder="请输入技能，用逗号或换行分隔&#10;例如：JavaScript, Python, React, Vue.js" data-field="skills"></textarea>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 间距设置 - 逆向自原站 -->
-                <section class="editor-section" data-section="spacing">
-                    <div class="section-header" onclick="toggleSection(this)">
-                        <h3>📐 间距设置</h3>
-                        <span class="toggle-icon">▼</span>
-                    </div>
-                    <div class="section-body">
-                        <div class="form-group">
-                            <label for="font-size">字体大小： <span id="font-size-value">14</span>px</label>
-                            <input type="range" id="font-size" min="12" max="16" value="14" step="1" title="字体大小">
-                        </div>
-                        <div class="form-group">
-                            <label for="line-spacing">行间距： <span id="line-spacing-value">12</span>px</label>
-                            <input type="range" id="line-spacing" min="8" max="20" value="12" step="1" title="行间距">
-                        </div>
-                        <div class="form-group">
-                            <label for="module-spacing">模块间距： <span id="module-spacing-value">20</span>px</label>
-                            <input type="range" id="module-spacing" min="12" max="32" value="20" step="1" title="模块间距">
-                        </div>
-                        <div class="form-group spacing-actions">
-                            <button type="button" class="btn btn-primary btn-auto-fit" id="btn-auto-fit">
-                                📄 自动调整为1页
-                            </button>
-                            <button type="button" class="btn btn-outline" id="btn-reset-spacing">
-                                🔄 重置
-                            </button>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 荣誉奖项 -->
-                <section class="editor-section" data-section="awards">
-                    <div class="section-header" onclick="toggleSection(this)">
-                        <h3>🏆 荣誉奖项</h3>
-                        <span class="toggle-icon">▼</span>
-                    </div>
-                    <div class="section-body">
-                        <div id="awards-list"></div>
-                        <button class="btn btn-add" onclick="addAward()">+ 添加荣誉奖项</button>
-                    </div>
-                </section>
-            </div>
-        </aside>
-
-        <!-- 右侧预览区域 -->
-        <main class="preview-panel">
-            <div class="preview-toolbar">
+            <div class="toolbar-center">
+                <!-- 模板选择器 -->
                 <div class="template-selector">
-                    <span class="label">模板：</span>
-                    <button class="template-btn active" data-template="simplicity" onclick="switchTemplate('simplicity')">简约</button>
-                    <button class="template-btn" data-template="standard" onclick="switchTemplate('standard')">标准</button>
-                    <button class="template-btn" data-template="classic" onclick="switchTemplate('classic')">经典</button>
-                    <button class="template-btn" data-template="creative" onclick="switchTemplate('creative')">创意</button>
-                </div>
-                <div class="preview-actions">
-                    <div class="zoom-control">
-                        <button onclick="adjustZoom(-0.1)">-</button>
-                        <span id="zoom-level">100%</span>
-                        <button onclick="adjustZoom(0.1)">+</button>
-                        <button onclick="resetZoom()">重置</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="preview-container" id="preview-container">
-                <div class="a4-page" id="resume-preview">
-                    <!-- 使用原站的 resume-mode 结构 -->
-                    <div id="resume">
-                        <!-- 个人信息区域 -->
-                        <div class="resume-mode__info" id="section-info" data-mkey="base">
-                            <div class="info-header">
-                                <div class="avatar-wrapper" id="preview-avatar" style="display:none">
-                                    <img src="" alt="头像" id="preview-avatar-img">
-                                </div>
-                                <div class="info-content">
-                                    <h1 class="info-name" id="preview-name">你的姓名</h1>
-                                    <p class="info-title" id="preview-title"></p>
-                                    <div class="info-contact" id="preview-contact"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 求职意向 -->
-                        <div class="resume-section" id="section-job" data-mkey="job" style="display:none">
-                            <div class="resume-mode__title">
-                                <div class="module_tit">
-                                    <span>求职意向</span>
-                                    <div class="tit_icon"><i></i></div>
-                                    <dfn></dfn>
-                                </div>
-                            </div>
-                            <div id="preview-job" class="resume-mode"></div>
-                        </div>
-
-                        <!-- 教育背景 -->
-                        <div class="resume-section" id="section-education" data-mkey="education" style="display:none">
-                            <div class="resume-mode__title">
-                                <div class="module_tit">
-                                    <span>教育背景</span>
-                                    <div class="tit_icon"><i></i></div>
-                                    <dfn></dfn>
-                                </div>
-                            </div>
-                            <div id="preview-education"></div>
-                        </div>
-
-                        <!-- 工作经验 -->
-                        <div class="resume-section" id="section-work" data-mkey="work" style="display:none">
-                            <div class="resume-mode__title">
-                                <div class="module_tit">
-                                    <span>工作经验</span>
-                                    <div class="tit_icon"><i></i></div>
-                                    <dfn></dfn>
-                                </div>
-                            </div>
-                            <div id="preview-work"></div>
-                        </div>
-
-                        <!-- 校园经历 -->
-                        <div class="resume-section" id="section-campus" data-mkey="campus" style="display:none">
-                            <div class="resume-mode__title">
-                                <div class="module_tit">
-                                    <span>校园经历</span>
-                                    <div class="tit_icon"><i></i></div>
-                                    <dfn></dfn>
-                                </div>
-                            </div>
-                            <div id="preview-campus"></div>
-                        </div>
-
-                        <!-- 技能特长 -->
-                        <div class="resume-section" id="section-skill" data-mkey="skill" style="display:none">
-                            <div class="resume-mode__title">
-                                <div class="module_tit">
-                                    <span>技能特长</span>
-                                    <div class="tit_icon"><i></i></div>
-                                    <dfn></dfn>
-                                </div>
-                            </div>
-                            <div id="preview-skill" class="resume-mode"></div>
-                        </div>
-
-                        <!-- 荣誉证书 -->
-                        <div class="resume-section" id="section-certificate" data-mkey="certificate" style="display:none">
-                            <div class="resume-mode__title">
-                                <div class="module_tit">
-                                    <span>荣誉证书</span>
-                                    <div class="tit_icon"><i></i></div>
-                                    <dfn></dfn>
-                                </div>
-                            </div>
-                            <div id="preview-certificate" class="resume-mode"></div>
-                        </div>
-
-                        <!-- 自我评价 -->
-                        <div class="resume-section" id="section-selfEvaluation" data-mkey="selfEvaluation" style="display:none">
-                            <div class="resume-mode__title">
-                                <div class="module_tit">
-                                    <span>自我评价</span>
-                                    <div class="tit_icon"><i></i></div>
-                                    <dfn></dfn>
-                                </div>
-                            </div>
-                            <div id="preview-selfEvaluation" class="resume-mode"></div>
-                        </div>
-
-                        <!-- 项目经历 -->
-                        <div class="resume-section" id="section-project" data-mkey="project" style="display:none">
-                            <div class="resume-mode__title">
-                                <div class="module_tit">
-                                    <span>项目经历</span>
-                                    <div class="tit_icon"><i></i></div>
-                                    <dfn></dfn>
-                                </div>
-                            </div>
-                            <div id="preview-project"></div>
-                        </div>
-
-                        <!-- 实习经历 -->
-                        <div class="resume-section" id="section-internship" data-mkey="internship" style="display:none">
-                            <div class="resume-mode__title">
-                                <div class="module_tit">
-                                    <span>实习经历</span>
-                                    <div class="tit_icon"><i></i></div>
-                                    <dfn></dfn>
-                                </div>
-                            </div>
-                            <div id="preview-internship"></div>
-                        </div>
-
-                        <!-- 空状态提示 -->
-                        <div class="empty-state" id="empty-state">
-                            <div class="empty-icon">📝</div>
-                            <p>开始编辑你的简历吧</p>
-                            <p class="hint">点击下方编辑按钮或直接点击简历内容开始编辑</p>
-                        </div>
-                    </div>
+                    <button class="template-btn active" data-template="simplicity" onclick="switchTemplate('simplicity')">
+                        <img src="https://api.resume.lgdsunday.club/download/imgs/simplicity.png" alt="简约">
+                        <span>简约</span>
+                    </button>
+                    <button class="template-btn" data-template="standard" onclick="switchTemplate('standard')">
+                        <img src="https://api.resume.lgdsunday.club/download/imgs/standard.png" alt="标准">
+                        <span>标准</span>
+                    </button>
+                    <button class="template-btn" data-template="classic" onclick="switchTemplate('classic')">
+                        <img src="https://api.resume.lgdsunday.club/download/imgs/classic.png" alt="经典">
+                        <span>经典</span>
+                    </button>
+                    <button class="template-btn" data-template="creative" onclick="switchTemplate('creative')">
+                        <img src="https://api.resume.lgdsunday.club/download/imgs/creative.png" alt="创意">
+                        <span>创意</span>
+                    </button>
+                    <button class="template-btn" data-template="academic" onclick="switchTemplate('academic')">
+                        <img src="https://api.resume.lgdsunday.club/download/imgs/academic.png" alt="学术">
+                        <span>学术</span>
+                    </button>
                 </div>
             </div>
+            <div class="toolbar-right">
+                <button class="btn btn-outline" id="btn-import" title="导入数据">
+                    <span class="btn-icon">📥</span>
+                    <span class="btn-text">导入</span>
+                </button>
+                <button class="btn btn-outline" id="btn-export-json" title="导出JSON">
+                    <span class="btn-icon">📤</span>
+                    <span class="btn-text">导出</span>
+                </button>
+                <button class="btn btn-primary" id="btn-export-pdf">
+                    <span class="btn-icon">📄</span>
+                    <span class="btn-text">导出PDF</span>
+                </button>
+            </div>
+        </header>
 
-            <!-- 分页状态指示 -->
-            <div class="page-status" id="page-status">
-                <span class="status-ok" id="status-ok" style="display:none">✅ 内容适配单页</span>
-                <span class="status-warning" id="status-warning" style="display:none">⚠️ 内容较多，已自动调整</span>
+        <!-- 主内容区域 -->
+        <main class="main-content">
+            <!-- 预览容器 -->
+            <div class="preview-wrapper">
+                <div class="preview-container" id="preview-container">
+                    <div class="a4-page" id="resume-preview">
+                        <div id="resume">
+                            <!-- 个人信息区域 -->
+                            <div class="resume-mode__info" id="section-info" data-mkey="base">
+                                <div class="info-header">
+                                    <div class="avatar-wrapper" id="preview-avatar" style="display:none">
+                                        <img src="" alt="头像" id="preview-avatar-img">
+                                    </div>
+                                    <div class="info-content">
+                                        <h1 class="info-name" id="preview-name">你的姓名</h1>
+                                        <p class="info-title" id="preview-title"></p>
+                                        <div class="info-contact" id="preview-contact"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 求职意向 -->
+                            <div class="resume-section" id="section-job" data-mkey="job" style="display:none">
+                                <div class="resume-mode__title">
+                                    <div class="module_tit">
+                                        <span>求职意向</span>
+                                        <div class="tit_icon"><i></i></div>
+                                        <dfn></dfn>
+                                    </div>
+                                </div>
+                                <div id="preview-job" class="resume-mode"></div>
+                            </div>
+
+                            <!-- 教育背景 -->
+                            <div class="resume-section" id="section-education" data-mkey="education" style="display:none">
+                                <div class="resume-mode__title">
+                                    <div class="module_tit">
+                                        <span>教育背景</span>
+                                        <div class="tit_icon"><i></i></div>
+                                        <dfn></dfn>
+                                    </div>
+                                </div>
+                                <div id="preview-education"></div>
+                            </div>
+
+                            <!-- 工作经验 -->
+                            <div class="resume-section" id="section-work" data-mkey="work" style="display:none">
+                                <div class="resume-mode__title">
+                                    <div class="module_tit">
+                                        <span>工作经验</span>
+                                        <div class="tit_icon"><i></i></div>
+                                        <dfn></dfn>
+                                    </div>
+                                </div>
+                                <div id="preview-work"></div>
+                            </div>
+
+                            <!-- 校园经历 -->
+                            <div class="resume-section" id="section-campus" data-mkey="campus" style="display:none">
+                                <div class="resume-mode__title">
+                                    <div class="module_tit">
+                                        <span>校园经历</span>
+                                        <div class="tit_icon"><i></i></div>
+                                        <dfn></dfn>
+                                    </div>
+                                </div>
+                                <div id="preview-campus"></div>
+                            </div>
+
+                            <!-- 技能特长 -->
+                            <div class="resume-section" id="section-skill" data-mkey="skill" style="display:none">
+                                <div class="resume-mode__title">
+                                    <div class="module_tit">
+                                        <span>技能特长</span>
+                                        <div class="tit_icon"><i></i></div>
+                                        <dfn></dfn>
+                                    </div>
+                                </div>
+                                <div id="preview-skill" class="resume-mode"></div>
+                            </div>
+
+                            <!-- 荣誉证书 -->
+                            <div class="resume-section" id="section-certificate" data-mkey="certificate" style="display:none">
+                                <div class="resume-mode__title">
+                                    <div class="module_tit">
+                                        <span>荣誉证书</span>
+                                        <div class="tit_icon"><i></i></div>
+                                        <dfn></dfn>
+                                    </div>
+                                </div>
+                                <div id="preview-certificate" class="resume-mode"></div>
+                            </div>
+
+                            <!-- 自我评价 -->
+                            <div class="resume-section" id="section-selfEvaluation" data-mkey="selfEvaluation" style="display:none">
+                                <div class="resume-mode__title">
+                                    <div class="module_tit">
+                                        <span>自我评价</span>
+                                        <div class="tit_icon"><i></i></div>
+                                        <dfn></dfn>
+                                    </div>
+                                </div>
+                                <div id="preview-selfEvaluation" class="resume-mode"></div>
+                            </div>
+
+                            <!-- 项目经历 -->
+                            <div class="resume-section" id="section-project" data-mkey="project" style="display:none">
+                                <div class="resume-mode__title">
+                                    <div class="module_tit">
+                                        <span>项目经历</span>
+                                        <div class="tit_icon"><i></i></div>
+                                        <dfn></dfn>
+                                    </div>
+                                </div>
+                                <div id="preview-project"></div>
+                            </div>
+
+                            <!-- 实习经历 -->
+                            <div class="resume-section" id="section-internship" data-mkey="internship" style="display:none">
+                                <div class="resume-mode__title">
+                                    <div class="module_tit">
+                                        <span>实习经历</span>
+                                        <div class="tit_icon"><i></i></div>
+                                        <dfn></dfn>
+                                    </div>
+                                </div>
+                                <div id="preview-internship"></div>
+                            </div>
+
+                            <!-- 空状态提示 -->
+                            <div class="empty-state" id="empty-state">
+                                <div class="empty-icon">📝</div>
+                                <p>开始编辑你的简历吧</p>
+                                <p class="hint">点击下方编辑按钮开始编辑</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 页数状态 -->
+                <div class="page-status" id="page-status">
+                    <span class="status-ok">✅ 内容适配单页</span>
+                </div>
             </div>
         </main>
+
+        <!-- 底部编辑栏 - 逆向自原站 -->
+        <footer class="bottom-toolbar" id="bottom-toolbar">
+            <div class="toolbar-toggle" id="toolbar-toggle">
+                <span class="toggle-icon">▲</span>
+            </div>
+            <div class="toolbar-content">
+                <div class="toolbar-tabs" id="toolbar-tabs">
+                    <!-- 动态生成标签 -->
+                </div>
+                <div class="toolbar-actions">
+                    <div class="spacing-control">
+                        <label>间距设置</label>
+                        <div class="slider-group">
+                            <span>字体</span>
+                            <input type="range" id="font-size" min="12" max="16" value="14" title="字体大小">
+                            <span id="font-size-value">14</span>
+                        </div>
+                        <div class="slider-group">
+                            <span>行距</span>
+                            <input type="range" id="line-spacing" min="8" max="20" value="12" title="行间距">
+                            <span id="line-spacing-value">12</span>
+                        </div>
+                        <div class="slider-group">
+                            <span>模块</span>
+                            <input type="range" id="module-spacing" min="12" max="32" value="20" title="模块间距">
+                            <span id="module-spacing-value">20</span>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button type="button" class="btn btn-auto-fit" id="btn-auto-fit">
+                            📄 自动调整为1页
+                        </button>
+                        <button type="button" class="btn btn-reset" id="btn-reset-spacing">
+                            🔄 重置间距
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 编辑弹窗 -->
+    <div class="editor-popup" id="editor-popup">
+        <div class="popup-header">
+            <div class="popup-tabs" id="popup-tabs"></div>
+            <button type="button" class="popup-close" id="popup-close">✕</button>
+        </div>
+        <div class="popup-content" id="popup-content"></div>
     </div>
 
     <!-- 隐藏的文件输入 -->

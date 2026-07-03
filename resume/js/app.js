@@ -20,42 +20,73 @@ const G1 = {
     entryTime: { label: '到岗时间', unit: '' }
 };
 
-// ============================================
-// A4页面常量 - 与原站一致
-// ============================================
-const A4_HEIGHT = 1123; // A4高度 (297mm @ 96dpi)
+// A4页面常量
+const A4_HEIGHT = 1123;
 const MIN_LINE_SPACING = 8;
 const MIN_MODULE_SPACING = 12;
 const SPACING_STEP = 2;
 
-// ============================================
 // 全局状态
-// ============================================
 let currentTemplate = 'simplicity';
 let currentZoom = 1;
 let autoFitTimer = null;
-let resizeObserver = null;
+
+// 模块名称映射
+const MODULE_NAMES = {
+    base: '基本信息',
+    job: '求职意向',
+    education: '教育背景',
+    work: '工作经验',
+    campus: '校园经历',
+    skill: '技能特长',
+    certificate: '荣誉证书',
+    selfEvaluation: '自我评价',
+    project: '项目经历',
+    internship: '实习经历'
+};
 
 // ============================================
 // 初始化
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
-    // 加载保存的数据
     loadSavedData();
-
-    // 初始化事件监听
+    initToolbarTabs();
     initEventListeners();
-
-    // 初始化 ResizeObserver
-    initResizeObserver();
-
-    // 应用模板和缩放
     switchTemplate(currentTemplate);
-    applyZoom(currentZoom);
-
-    // 渲染初始内容
     renderAll();
 });
+
+// ============================================
+// 工具栏标签初始化
+// ============================================
+function initToolbarTabs() {
+    const tabsContainer = document.getElementById('toolbar-tabs');
+    const sortedData = ResumeStore.getSortedItemData();
+
+    tabsContainer.innerHTML = sortedData.map(item => `
+        <button type="button" class="tab-btn" data-mkey="${item.mKey}" onclick="openEditor('${item.mKey}')">
+            ${MODULE_NAMES[item.mKey] || item.mKey}
+        </button>
+    `).join('');
+}
+
+// ============================================
+// 打开编辑器
+// ============================================
+window.openEditor = function(mKey) {
+    // 更新标签状态
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mkey === mKey);
+    });
+
+    // 展开底部工具栏
+    document.getElementById('bottom-toolbar').classList.add('expanded');
+
+    // 打开编辑弹窗
+    if (window.editorPopup) {
+        window.editorPopup.switchTab(mKey);
+    }
+};
 
 // ============================================
 // 数据持久化
@@ -65,7 +96,6 @@ function loadSavedData() {
         const saved = localStorage.getItem('resume_store');
         if (saved) {
             const data = JSON.parse(saved);
-            // 合并数据到ResumeStore
             Object.keys(data).forEach(key => {
                 if (key === 'baseInfo' || key === 'jobInfo' || key === 'otherData') {
                     Object.assign(ResumeStore[key], data[key]);
@@ -75,6 +105,11 @@ function loadSavedData() {
                     ResumeStore[key] = data[key];
                 }
             });
+
+            // 恢复模板
+            if (data.templateName) {
+                currentTemplate = data.templateName;
+            }
         }
     } catch (e) {
         console.error('加载数据失败:', e);
@@ -84,8 +119,6 @@ function loadSavedData() {
 function saveData() {
     try {
         const data = {
-            resumeId: ResumeStore.resumeId,
-            resumeName: ResumeStore.resumeName,
             templateName: currentTemplate,
             baseInfo: { ...ResumeStore.baseInfo },
             addBaseInfo: [...ResumeStore.addBaseInfo],
@@ -112,141 +145,11 @@ function saveData() {
     }
 }
 
-// 防抖保存
 let saveTimer = null;
 window.saveData = function debounceSave() {
     if (saveTimer) clearTimeout(saveTimer);
     saveTimer = setTimeout(saveData, 500);
 };
-
-// ============================================
-// ResizeObserver - 监听内容变化
-// ============================================
-function initResizeObserver() {
-    const resumeEl = document.getElementById('resume');
-
-    const debouncedUpdate = debounce(updateResumeHeight, 200);
-
-    resizeObserver = new ResizeObserver(() => {
-        debouncedUpdate();
-    });
-
-    if (resumeEl) {
-        resizeObserver.observe(resumeEl);
-    }
-}
-
-function updateResumeHeight() {
-    const resumeEl = document.getElementById('resume');
-    if (!resumeEl) return;
-
-    const height = resumeEl.offsetHeight;
-    updatePageCount(height);
-}
-
-function updatePageCount(height) {
-    const pages = Math.ceil(height / A4_HEIGHT);
-    const statusEl = document.getElementById('page-status');
-
-    if (statusEl) {
-        if (pages <= 1) {
-            statusEl.innerHTML = '<span class="status-ok">✅ 内容适配单页</span>';
-        } else {
-            statusEl.innerHTML = `<span class="status-warning">⚠️ 当前 ${pages} 页</span>`;
-        }
-    }
-}
-
-// ============================================
-// 自动分页算法 - 逆向自原站
-// ============================================
-async function autoFitToOnePage() {
-    if (autoFitTimer) {
-        clearInterval(autoFitTimer);
-    }
-
-    const resumeEl = document.getElementById('resume');
-    if (!resumeEl) return;
-
-    if (resumeEl.offsetHeight <= A4_HEIGHT) {
-        showMessage('内容已在单页内', 'success');
-        return;
-    }
-
-    showMessage('正在自动调整...', 'info');
-
-    // 使用 setInterval 每200ms检查一次 - 与原站逻辑一致
-    autoFitTimer = setInterval(() => {
-        const currentHeight = resumeEl.offsetHeight;
-
-        if (currentHeight <= A4_HEIGHT) {
-            clearInterval(autoFitTimer);
-            autoFitTimer = null;
-            showMessage('已调整为单页', 'success');
-            updateResumeHeight();
-            return;
-        }
-
-        if (ResumeStore.lineSpacing <= MIN_LINE_SPACING &&
-            ResumeStore.moduleSpacing <= MIN_MODULE_SPACING) {
-            clearInterval(autoFitTimer);
-            autoFitTimer = null;
-            showMessage('自动调整失败，内容无法缩减到1页', 'error');
-            updateResumeHeight();
-            return;
-        }
-
-        if (ResumeStore.lineSpacing - SPACING_STEP >= MIN_LINE_SPACING) {
-            ResumeStore.lineSpacing -= SPACING_STEP;
-        }
-
-        if (ResumeStore.moduleSpacing - SPACING_STEP >= MIN_MODULE_SPACING) {
-            ResumeStore.moduleSpacing -= SPACING_STEP;
-        }
-
-        // 更新滑块值
-        const lineSlider = document.getElementById('line-spacing');
-        const moduleSlider = document.getElementById('module-spacing');
-        if (lineSlider) lineSlider.value = ResumeStore.lineSpacing;
-        if (moduleSlider) moduleSlider.value = ResumeStore.moduleSpacing;
-
-        applySpacingStyles();
-        renderAll();
-    }, 200);
-}
-
-// ============================================
-// 应用样式
-// ============================================
-function applySpacingStyles() {
-    const lineHeight = Math.max(16, ResumeStore.lineSpacing + 12);
-
-    // 行间距
-    document.querySelectorAll('.resume-mode__row').forEach(el => {
-        el.style.marginBottom = `${ResumeStore.lineSpacing}px`;
-    });
-
-    // 模块间距
-    document.querySelectorAll('.resume-mode').forEach(el => {
-        el.style.marginTop = `${ResumeStore.moduleSpacing}px`;
-    });
-
-    // 内容行高
-    document.querySelectorAll('.resume-mode__content').forEach(el => {
-        el.style.lineHeight = `${lineHeight}px`;
-    });
-
-    // 字体大小
-    const previewEl = document.getElementById('resume-preview');
-    if (previewEl) {
-        previewEl.style.fontSize = `${ResumeStore.fontSize}px`;
-    }
-
-    // 页面边距
-    document.querySelectorAll('.resume-section').forEach(el => {
-        el.style.padding = `0 ${ResumeStore.pageMargin}px`;
-    });
-}
 
 // ============================================
 // 渲染函数
@@ -256,33 +159,44 @@ window.renderAll = function renderAll() {
     renderJobPreview();
     renderEducationPreview();
     renderWorkPreview();
-    renderProjectPreview();
+    renderCampusPreview();
     renderSkillPreview();
     renderCertificatePreview();
     renderSelfEvaluationPreview();
+    renderProjectPreview();
+    renderInternshipPreview();
     applySpacingStyles();
     updateEmptyState();
 };
 
+function applySpacingStyles() {
+    const lineHeight = Math.max(16, ResumeStore.lineSpacing + 12);
+
+    document.querySelectorAll('.resume-mode__row').forEach(el => {
+        el.style.marginBottom = `${ResumeStore.lineSpacing}px`;
+    });
+
+    document.querySelectorAll('.resume-mode').forEach(el => {
+        el.style.marginTop = `${ResumeStore.moduleSpacing}px`;
+    });
+
+    document.querySelectorAll('.resume-mode__content').forEach(el => {
+        el.style.lineHeight = `${lineHeight}px`;
+    });
+
+    const previewEl = document.getElementById('resume-preview');
+    if (previewEl) {
+        previewEl.style.fontSize = `${ResumeStore.fontSize}px`;
+    }
+}
+
 function renderBasicPreview() {
     const base = ResumeStore.baseInfo;
-    const sortedData = ResumeStore.getSortedItemData();
-    const baseModule = sortedData.find(i => i.mKey === 'base');
 
-    // 名称
     document.getElementById('preview-name').textContent = base.name || '你的姓名';
+    document.getElementById('preview-title').textContent = ResumeStore.jobInfo.jobIntention || '';
 
-    // 求职意向
-    const jobIntention = ResumeStore.jobInfo.jobIntention || '';
-    document.getElementById('preview-title').textContent = jobIntention;
-
-    // 联系信息 - 使用原站格式
-    const contactItems = [];
-    if (base.phone) contactItems.push(`<span class="info-value">${base.phone}</span>`);
-    if (base.email) contactItems.push(`<span class="info-value">${base.email}</span>`);
-    if (base.nativePlace) contactItems.push(`<span class="info-value">${base.nativePlace}</span>`);
-
-    // 构建基本信息网格 - 与原站一致
+    // 构建基本信息网格
     const baseInfo = ResumeStore.getBaseInfo();
     let gridHTML = '';
     for (const [key, value] of Object.entries(baseInfo)) {
@@ -297,8 +211,7 @@ function renderBasicPreview() {
             `;
         }
     }
-
-    document.getElementById('preview-contact').innerHTML = gridHTML || contactItems.join('');
+    document.getElementById('preview-contact').innerHTML = gridHTML;
 
     // 头像
     const avatarContainer = document.getElementById('preview-avatar');
@@ -313,79 +226,54 @@ function renderBasicPreview() {
             avatarContainer.style.display = 'none';
         }
     }
-
-    // 基本信息模块显示/隐藏
-    const sectionInfo = document.getElementById('section-info');
-    if (sectionInfo && baseModule) {
-        sectionInfo.style.display = baseModule.props.isShow ? 'block' : 'none';
-    }
 }
 
 function renderJobPreview() {
-    const sortedData = ResumeStore.getSortedItemData();
-    const jobModule = sortedData.find(i => i.mKey === 'job');
+    const jobModule = ResumeStore.getSortedItemData().find(i => i.mKey === 'job');
     const section = document.getElementById('section-job');
+    const container = document.getElementById('preview-job');
 
-    if (!section) return;
-
-    if (!jobModule || !jobModule.props.isShow) {
-        section.style.display = 'none';
-        return;
-    }
+    if (!section || !container) return;
 
     const job = ResumeStore.jobInfo;
     const hasData = job.jobIntention || job.cityIntention || job.salary || job.entryTime;
 
-    if (!hasData) {
+    if (!jobModule?.props?.isShow || !hasData) {
         section.style.display = 'none';
         return;
     }
 
     section.style.display = 'block';
+    updateSectionTheme(section);
 
-    // 更新标题颜色
-    const titleEl = section.querySelector('.module_tit span');
-    const dfnEl = section.querySelector('.module_tit dfn');
-    if (titleEl) titleEl.style.backgroundColor = ResumeStore.themeColor;
-    if (dfnEl) dfnEl.style.borderTopColor = ResumeStore.themeColor;
+    const fields = [];
+    if (job.jobIntention) fields.push(`<span>求职意向：${job.jobIntention}</span>`);
+    if (job.cityIntention) fields.push(`<span>期望城市：${job.cityIntention}</span>`);
+    if (job.salary) fields.push(`<span>期望薪资：${job.salary}</span>`);
+    if (job.entryTime) fields.push(`<span>到岗时间：${job.entryTime}</span>`);
 
-    const container = document.getElementById('preview-job');
-    if (container) {
-        const fields = [];
-        if (job.jobIntention) fields.push(`<span>求职意向：${job.jobIntention}</span>`);
-        if (job.cityIntention) fields.push(`<span>期望城市：${job.cityIntention}</span>`);
-        if (job.salary) fields.push(`<span>期望薪资：${job.salary}</span>`);
-        if (job.entryTime) fields.push(`<span>到岗时间：${job.entryTime}</span>`);
-
-        container.innerHTML = `<div class="job-info-grid">${fields.join('')}</div>`;
-    }
+    container.innerHTML = `<div class="job-info-grid">${fields.join('')}</div>`;
 }
 
 function renderEducationPreview() {
-    const sortedData = ResumeStore.getSortedItemData();
-    const eduModule = sortedData.find(i => i.mKey === 'education');
+    const eduModule = ResumeStore.getSortedItemData().find(i => i.mKey === 'education');
     const section = document.getElementById('section-education');
     const container = document.getElementById('preview-education');
     const education = ResumeStore.education || [];
 
     if (!section || !container) return;
 
-    if (!eduModule || !eduModule.props.isShow || education.length === 0) {
+    if (!eduModule?.props?.isShow || education.length === 0) {
         section.style.display = 'none';
         return;
     }
 
     section.style.display = 'block';
-
-    // 更新标题颜色
-    const titleEl = section.querySelector('.module_tit span');
-    const dfnEl = section.querySelector('.module_tit dfn');
-    if (titleEl) titleEl.style.backgroundColor = ResumeStore.themeColor;
-    if (dfnEl) dfnEl.style.borderTopColor = ResumeStore.themeColor;
+    updateSectionTheme(section);
 
     container.innerHTML = education.map(edu => `
-        <div class="resume-mode" data-mkey="education" style="margin-top: ${ResumeStore.moduleSpacing}px">
-            <div class="resume-mode__row" style="margin-bottom: ${ResumeStore.lineSpacing}px">
+        <div class="resume-mode" data-mkey="education">
+            <div class="resume-mode__row">
                 <span class="resume-mode__date">${formatDateRange(edu.startDate, edu.endDate, edu.isNow)}</span>
                 <span class="resume-mode__company">${edu.title || '学校名称'}</span>
                 <span class="resume-mode__desc">${edu.degree || ''}</span>
@@ -397,30 +285,24 @@ function renderEducationPreview() {
 }
 
 function renderWorkPreview() {
-    const sortedData = ResumeStore.getSortedItemData();
-    const workModule = sortedData.find(i => i.mKey === 'work');
+    const workModule = ResumeStore.getSortedItemData().find(i => i.mKey === 'work');
     const section = document.getElementById('section-work');
     const container = document.getElementById('preview-work');
     const work = ResumeStore.work || [];
 
     if (!section || !container) return;
 
-    if (!workModule || !workModule.props.isShow || work.length === 0) {
+    if (!workModule?.props?.isShow || work.length === 0) {
         section.style.display = 'none';
         return;
     }
 
     section.style.display = 'block';
-
-    // 更新标题颜色
-    const titleEl = section.querySelector('.module_tit span');
-    const dfnEl = section.querySelector('.module_tit dfn');
-    if (titleEl) titleEl.style.backgroundColor = ResumeStore.themeColor;
-    if (dfnEl) dfnEl.style.borderTopColor = ResumeStore.themeColor;
+    updateSectionTheme(section);
 
     container.innerHTML = work.map(w => `
-        <div class="resume-mode" data-mkey="work" style="margin-top: ${ResumeStore.moduleSpacing}px">
-            <div class="resume-mode__row" style="margin-bottom: ${ResumeStore.lineSpacing}px">
+        <div class="resume-mode" data-mkey="work">
+            <div class="resume-mode__row">
                 <span class="resume-mode__date">${formatDateRange(w.startDate, w.endDate, w.isNow)}</span>
                 <span class="resume-mode__company">${w.title || '公司名称'}</span>
                 <span class="resume-mode__desc">${w.desc || ''}</span>
@@ -430,31 +312,107 @@ function renderWorkPreview() {
     `).join('');
 }
 
+function renderCampusPreview() {
+    const campusModule = ResumeStore.getSortedItemData().find(i => i.mKey === 'campus');
+    const section = document.getElementById('section-campus');
+    const container = document.getElementById('preview-campus');
+    const campus = ResumeStore.campus || [];
+
+    if (!section || !container) return;
+
+    if (!campusModule?.props?.isShow || campus.length === 0) {
+        section.style.display = 'none';
+        return;
+    }
+
+    section.style.display = 'block';
+    updateSectionTheme(section);
+
+    container.innerHTML = campus.map(c => `
+        <div class="resume-mode" data-mkey="campus">
+            <div class="resume-mode__row">
+                <span class="resume-mode__date">${formatDateRange(c.startDate, c.endDate, c.isNow)}</span>
+                <span class="resume-mode__company">${c.title || '经历名称'}</span>
+                <span class="resume-mode__desc">${c.desc || ''}</span>
+            </div>
+            ${c.content ? `<div class="resume-mode__content">${c.content}</div>` : ''}
+        </div>
+    `).join('');
+}
+
+function renderSkillPreview() {
+    const skillModule = ResumeStore.getSortedItemData().find(i => i.mKey === 'skill');
+    const section = document.getElementById('section-skill');
+    const container = document.getElementById('preview-skill');
+
+    if (!section || !container) return;
+
+    if (!skillModule?.props?.isShow || !ResumeStore.skill) {
+        section.style.display = 'none';
+        return;
+    }
+
+    section.style.display = 'block';
+    updateSectionTheme(section);
+
+    container.innerHTML = `<div class="resume-mode__content">${ResumeStore.skill}</div>`;
+}
+
+function renderCertificatePreview() {
+    const certModule = ResumeStore.getSortedItemData().find(i => i.mKey === 'certificate');
+    const section = document.getElementById('section-certificate');
+    const container = document.getElementById('preview-certificate');
+
+    if (!section || !container) return;
+
+    if (!certModule?.props?.isShow || !ResumeStore.certificate) {
+        section.style.display = 'none';
+        return;
+    }
+
+    section.style.display = 'block';
+    updateSectionTheme(section);
+
+    container.innerHTML = `<div class="resume-mode__content">${ResumeStore.certificate}</div>`;
+}
+
+function renderSelfEvaluationPreview() {
+    const evalModule = ResumeStore.getSortedItemData().find(i => i.mKey === 'selfEvaluation');
+    const section = document.getElementById('section-selfEvaluation');
+    const container = document.getElementById('preview-selfEvaluation');
+
+    if (!section || !container) return;
+
+    if (!evalModule?.props?.isShow || !ResumeStore.selfEvaluation) {
+        section.style.display = 'none';
+        return;
+    }
+
+    section.style.display = 'block';
+    updateSectionTheme(section);
+
+    container.innerHTML = `<div class="resume-mode__content">${ResumeStore.selfEvaluation}</div>`;
+}
+
 function renderProjectPreview() {
-    const sortedData = ResumeStore.getSortedItemData();
-    const projModule = sortedData.find(i => i.mKey === 'project');
+    const projModule = ResumeStore.getSortedItemData().find(i => i.mKey === 'project');
     const section = document.getElementById('section-project');
     const container = document.getElementById('preview-project');
     const project = ResumeStore.project || [];
 
     if (!section || !container) return;
 
-    if (!projModule || !projModule.props.isShow || project.length === 0) {
+    if (!projModule?.props?.isShow || project.length === 0) {
         section.style.display = 'none';
         return;
     }
 
     section.style.display = 'block';
-
-    // 更新标题颜色
-    const titleEl = section.querySelector('.module_tit span');
-    const dfnEl = section.querySelector('.module_tit dfn');
-    if (titleEl) titleEl.style.backgroundColor = ResumeStore.themeColor;
-    if (dfnEl) dfnEl.style.borderTopColor = ResumeStore.themeColor;
+    updateSectionTheme(section);
 
     container.innerHTML = project.map(p => `
-        <div class="resume-mode" data-mkey="project" style="margin-top: ${ResumeStore.moduleSpacing}px">
-            <div class="resume-mode__row" style="margin-bottom: ${ResumeStore.lineSpacing}px">
+        <div class="resume-mode" data-mkey="project">
+            <div class="resume-mode__row">
                 <span class="resume-mode__date">${formatDateRange(p.startDate, p.endDate, p.isNow)}</span>
                 <span class="resume-mode__company">${p.title || '项目名称'}</span>
                 <span class="resume-mode__desc">${p.desc || ''}</span>
@@ -464,76 +422,42 @@ function renderProjectPreview() {
     `).join('');
 }
 
-function renderSkillPreview() {
-    const sortedData = ResumeStore.getSortedItemData();
-    const skillModule = sortedData.find(i => i.mKey === 'skill');
-    const section = document.getElementById('section-skill');
-    const container = document.getElementById('preview-skill');
+function renderInternshipPreview() {
+    const internModule = ResumeStore.getSortedItemData().find(i => i.mKey === 'internship');
+    const section = document.getElementById('section-internship');
+    const container = document.getElementById('preview-internship');
+    const internship = ResumeStore.internship || [];
 
     if (!section || !container) return;
 
-    if (!skillModule || !skillModule.props.isShow || !ResumeStore.skill) {
+    if (!internModule?.props?.isShow || internship.length === 0) {
         section.style.display = 'none';
         return;
     }
 
     section.style.display = 'block';
+    updateSectionTheme(section);
 
-    // 更新标题颜色
-    const titleEl = section.querySelector('.module_tit span');
-    const dfnEl = section.querySelector('.module_tit dfn');
-    if (titleEl) titleEl.style.backgroundColor = ResumeStore.themeColor;
-    if (dfnEl) dfnEl.style.borderTopColor = ResumeStore.themeColor;
-
-    container.innerHTML = `<div class="resume-mode__content">${ResumeStore.skill}</div>`;
+    container.innerHTML = internship.map(i => `
+        <div class="resume-mode" data-mkey="internship">
+            <div class="resume-mode__row">
+                <span class="resume-mode__date">${formatDateRange(i.startDate, i.endDate, i.isNow)}</span>
+                <span class="resume-mode__company">${i.title || '公司名称'}</span>
+                <span class="resume-mode__desc">${i.desc || ''}</span>
+            </div>
+            ${i.content ? `<div class="resume-mode__content">${i.content}</div>` : ''}
+        </div>
+    `).join('');
 }
 
-function renderCertificatePreview() {
-    const sortedData = ResumeStore.getSortedItemData();
-    const certModule = sortedData.find(i => i.mKey === 'certificate');
-    const section = document.getElementById('section-certificate');
-    const container = document.getElementById('preview-certificate');
-
-    if (!section || !container) return;
-
-    if (!certModule || !certModule.props.isShow || !ResumeStore.certificate) {
-        section.style.display = 'none';
-        return;
-    }
-
-    section.style.display = 'block';
-
-    // 更新标题颜色
+// 更新模块主题颜色
+function updateSectionTheme(section) {
     const titleEl = section.querySelector('.module_tit span');
     const dfnEl = section.querySelector('.module_tit dfn');
+    const iconEl = section.querySelector('.tit_icon');
     if (titleEl) titleEl.style.backgroundColor = ResumeStore.themeColor;
     if (dfnEl) dfnEl.style.borderTopColor = ResumeStore.themeColor;
-
-    container.innerHTML = `<div class="resume-mode__content">${ResumeStore.certificate}</div>`;
-}
-
-function renderSelfEvaluationPreview() {
-    const sortedData = ResumeStore.getSortedItemData();
-    const evalModule = sortedData.find(i => i.mKey === 'selfEvaluation');
-    const section = document.getElementById('section-selfEvaluation');
-    const container = document.getElementById('preview-selfEvaluation');
-
-    if (!section || !container) return;
-
-    if (!evalModule || !evalModule.props.isShow || !ResumeStore.selfEvaluation) {
-        section.style.display = 'none';
-        return;
-    }
-
-    section.style.display = 'block';
-
-    // 更新标题颜色
-    const titleEl = section.querySelector('.module_tit span');
-    const dfnEl = section.querySelector('.module_tit dfn');
-    if (titleEl) titleEl.style.backgroundColor = ResumeStore.themeColor;
-    if (dfnEl) dfnEl.style.borderTopColor = ResumeStore.themeColor;
-
-    container.innerHTML = `<div class="resume-mode__content">${ResumeStore.selfEvaluation}</div>`;
+    if (iconEl) iconEl.style.backgroundColor = ResumeStore.themeColor;
 }
 
 function updateEmptyState() {
@@ -551,9 +475,14 @@ function updateEmptyState() {
 // 事件监听
 // ============================================
 function initEventListeners() {
+    // 底部工具栏展开/收起
+    document.getElementById('toolbar-toggle').addEventListener('click', () => {
+        document.getElementById('bottom-toolbar').classList.toggle('expanded');
+    });
+
     // 间距设置
     document.getElementById('line-spacing').addEventListener('input', (e) => {
-        ResumeStore.lineSpacing = parseInt(e.target.value) || 12;
+        ResumeStore.lineSpacing = parseInt(e.target.value);
         document.getElementById('line-spacing-value').textContent = ResumeStore.lineSpacing;
         applySpacingStyles();
         renderAll();
@@ -561,7 +490,7 @@ function initEventListeners() {
     });
 
     document.getElementById('module-spacing').addEventListener('input', (e) => {
-        ResumeStore.moduleSpacing = parseInt(e.target.value) || 20;
+        ResumeStore.moduleSpacing = parseInt(e.target.value);
         document.getElementById('module-spacing-value').textContent = ResumeStore.moduleSpacing;
         applySpacingStyles();
         renderAll();
@@ -569,7 +498,7 @@ function initEventListeners() {
     });
 
     document.getElementById('font-size').addEventListener('input', (e) => {
-        ResumeStore.fontSize = parseInt(e.target.value) || 14;
+        ResumeStore.fontSize = parseInt(e.target.value);
         document.getElementById('font-size-value').textContent = ResumeStore.fontSize;
         applySpacingStyles();
         renderAll();
@@ -607,73 +536,101 @@ function initEventListeners() {
     });
     document.getElementById('import-input').addEventListener('change', handleImportJSON);
 
-    // 模板切换
-    document.querySelectorAll('.template-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            switchTemplate(btn.dataset.template);
-        });
-    });
-
-    // 点击预览区域打开编辑
-    document.querySelectorAll('.resume-mode, .resume-mode__info').forEach(el => {
+    // 点击简历区域打开编辑
+    document.querySelectorAll('[data-mkey]').forEach(el => {
         el.addEventListener('click', (e) => {
-            const mKey = el.dataset.mkey || el.closest('[data-mkey]')?.dataset.mkey;
-            if (mKey && editorPopup) {
-                editorPopup.switchTab(mKey);
+            const mKey = el.dataset.mkey;
+            if (mKey) {
+                openEditor(mKey);
             }
         });
     });
 }
 
 // ============================================
-// 模板与缩放
+// 模板切换
 // ============================================
-function switchTemplate(templateName) {
+window.switchTemplate = function(templateName) {
     currentTemplate = templateName;
 
+    // 更新按钮状态
     document.querySelectorAll('.template-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.template === templateName);
     });
 
+    // 更新样式表
     const templateLink = document.getElementById('template-style');
     if (templateLink) {
         templateLink.href = `./css/templates/${templateName}.css`;
     }
 
+    // 更新预览元素类名
     const previewEl = document.getElementById('resume-preview');
     if (previewEl) {
         previewEl.className = `a4-page ${templateName}`;
     }
 
-    const settings = { template: templateName, zoom: currentZoom };
-    localStorage.setItem('resume_settings', JSON.stringify(settings));
+    window.saveData();
 
-    setTimeout(() => {
+    setTimeout(renderAll, 100);
+};
+
+// ============================================
+// 自动分页
+// ============================================
+async function autoFitToOnePage() {
+    if (autoFitTimer) {
+        clearInterval(autoFitTimer);
+    }
+
+    const resumeEl = document.getElementById('resume');
+    if (!resumeEl) return;
+
+    if (resumeEl.offsetHeight <= A4_HEIGHT) {
+        showMessage('内容已在单页内', 'success');
+        return;
+    }
+
+    showMessage('正在自动调整...', 'info');
+
+    autoFitTimer = setInterval(() => {
+        const currentHeight = resumeEl.offsetHeight;
+
+        if (currentHeight <= A4_HEIGHT) {
+            clearInterval(autoFitTimer);
+            autoFitTimer = null;
+            showMessage('已调整为单页', 'success');
+            updateSliders();
+            return;
+        }
+
+        if (ResumeStore.lineSpacing <= MIN_LINE_SPACING &&
+            ResumeStore.moduleSpacing <= MIN_MODULE_SPACING) {
+            clearInterval(autoFitTimer);
+            autoFitTimer = null;
+            showMessage('自动调整失败，内容无法缩减到1页', 'error');
+            updateSliders();
+            return;
+        }
+
+        if (ResumeStore.lineSpacing - SPACING_STEP >= MIN_LINE_SPACING) {
+            ResumeStore.lineSpacing -= SPACING_STEP;
+        }
+
+        if (ResumeStore.moduleSpacing - SPACING_STEP >= MIN_MODULE_SPACING) {
+            ResumeStore.moduleSpacing -= SPACING_STEP;
+        }
+
         applySpacingStyles();
-        updateResumeHeight();
-    }, 100);
+        renderAll();
+    }, 200);
 }
 
-function adjustZoom(delta) {
-    currentZoom = Math.max(0.5, Math.min(1.5, currentZoom + delta));
-    applyZoom(currentZoom);
-}
-
-function resetZoom() {
-    currentZoom = 1;
-    applyZoom(currentZoom);
-}
-
-function applyZoom(zoom) {
-    const previewEl = document.getElementById('resume-preview');
-    if (previewEl) {
-        previewEl.style.transform = `scale(${zoom})`;
-    }
-
-    const zoomLevel = document.getElementById('zoom-level');
-    if (zoomLevel) {
-        zoomLevel.textContent = `${Math.round(zoom * 100)}%`;
-    }
+function updateSliders() {
+    document.getElementById('line-spacing').value = ResumeStore.lineSpacing;
+    document.getElementById('module-spacing').value = ResumeStore.moduleSpacing;
+    document.getElementById('line-spacing-value').textContent = ResumeStore.lineSpacing;
+    document.getElementById('module-spacing-value').textContent = ResumeStore.moduleSpacing;
 }
 
 // ============================================
@@ -699,14 +656,12 @@ async function handleExportPDF() {
         } catch (e) {
             showMessage('PDF导出失败', 'error');
         }
-    } else {
-        showMessage('PDF库加载失败，请刷新页面重试', 'error');
     }
 }
 
 function handleExportJSON() {
     const name = ResumeStore.baseInfo.name || '简历';
-    saveData(); // 确保最新数据已保存
+    saveData();
     const data = localStorage.getItem('resume_store');
     const blob = new Blob([data], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -715,7 +670,6 @@ function handleExportJSON() {
     a.href = url;
     a.download = `${name}_简历数据.json`;
     a.click();
-
     URL.revokeObjectURL(url);
 }
 
@@ -727,7 +681,6 @@ async function handleImportJSON(e) {
         const text = await file.text();
         const data = JSON.parse(text);
 
-        // 合并数据
         Object.keys(data).forEach(key => {
             if (key === 'baseInfo' || key === 'jobInfo' || key === 'otherData') {
                 Object.assign(ResumeStore[key], data[key]);
@@ -739,8 +692,8 @@ async function handleImportJSON(e) {
         });
 
         saveData();
+        initToolbarTabs();
         renderAll();
-
         showMessage('导入成功！', 'success');
     } catch (error) {
         showMessage('导入失败：无效的JSON文件', 'error');
@@ -765,12 +718,6 @@ function formatDate(dateStr) {
     return `${year}.${month}`;
 }
 
-function toggleSection(headerEl) {
-    const body = headerEl.nextElementSibling;
-    headerEl.classList.toggle('collapsed');
-    body.classList.toggle('hidden');
-}
-
 function showMessage(message, type = 'info') {
     const toast = document.createElement('div');
     toast.className = `toast toast-${type}`;
@@ -780,12 +727,4 @@ function showMessage(message, type = 'info') {
     setTimeout(() => {
         toast.remove();
     }, 3000);
-}
-
-function debounce(fn, delay) {
-    let timer = null;
-    return function (...args) {
-        if (timer) clearTimeout(timer);
-        timer = setTimeout(() => fn.apply(this, args), delay);
-    };
 }

@@ -1373,7 +1373,7 @@ MathJax = {
 <hr>
 <h2 id="13-4-WSDL-接口"><a href="#13-4-WSDL-接口" class="headerlink" title="13.4 WSDL 接口"></a>13.4 WSDL 接口</h2><p>WSDL 接口漏洞的思路暂时还是知识盲点，待议。</p>
 <h2 id="13-5-JeecgBoot-框架"><a href="#13-5-JeecgBoot-框架" class="headerlink" title="13.5 JeecgBoot 框架"></a>13.5 JeecgBoot 框架</h2><p>待究</p>
-<h2 id="13-6-Ruoyi-框架"><a href="#13-6-Ruoyi-框架" class="headerlink" title="13.6 Ruoyi 框架"></a>13.6 Ruoyi 框架</h2><p>待究</p>
+<h2 id="13-6-Ruoyi-框架"><a href="#13-6-Ruoyi-框架" class="headerlink" title="13.6 Ruoyi 框架"></a>13.6 Ruoyi 框架</h2><p>若依框架特征可以看会“框架接口”笔记。<br>注意最好使用弱口令 ry&#x2F;123456 或 ruoyi&#x2F;123456</p>
 <h2 id="13-7-struts-框架"><a href="#13-7-struts-框架" class="headerlink" title="13.7  struts 框架"></a>13.7  struts 框架</h2><p>使用熊猫头插件看了一下路径存在 “&#x2F;login.action” “.do&#x2F;.action” 的可以尝试一下struts的相关漏洞<br>然后使用工具一把梭哈</p>
 <h2 id="13-8-camunda-框架"><a href="#13-8-camunda-框架" class="headerlink" title="13.8 camunda 框架"></a>13.8 camunda 框架</h2><p>待议</p>
 <hr>
@@ -1466,7 +1466,7 @@ MathJax = {
 <blockquote>
 <p><strong>推理深挖</strong>：onscan 的价值不在于”它自动帮你找到漏洞”，而在于<strong>它帮你整理了一份接口&#x2F;路径清单</strong>。把它当成一个初筛工具——它扫出来 500 条，你人工筛选出 10 条可疑的（swagger、druid、actuator、.git、.env 等），然后重点手工测试这 10 条。<strong>工具的价值是缩小范围，不是直接出洞。</strong></p>
 </blockquote>
-<h2 id="17-3-JS-路径提取工具使用心得"><a href="#17-3-JS-路径提取工具使用心得" class="headerlink" title="17.3 JS 路径提取工具使用心得"></a>17.3 JS 路径提取工具使用心得</h2><p>URLFinder-master 跑未授权，但 <code>api/asadas/adasd</code> 这种只能手动摸索规律。手动方法上面 13.4 已详述。</p>
+<h2 id="17-3-JS-路径提取工具使用心得"><a href="#17-3-JS-路径提取工具使用心得" class="headerlink" title="17.3 JS 路径提取工具使用心得"></a>17.3 JS 路径提取工具使用心得</h2><p>URLFinder-master 跑未授权，但 <code>api/asadas/adasd</code> 这种只能手动摸索规律。手动方法上面 13.4 已详述。<br>还有就是开动脑筋，雪瞳&#x2F;fingsomethings 可以得到一下前端框架的接口，导出这些接口，然后使用burp的攻击器遍历这些接口</p>
 <hr>
 <h1 id="十八、杂项"><a href="#十八、杂项" class="headerlink" title="十八、杂项"></a>十八、杂项</h1><h2 id="18-1-关于DNSlog"><a href="#18-1-关于DNSlog" class="headerlink" title="18.1 关于DNSlog"></a>18.1 关于DNSlog</h2><p>关于DNSlog,有几个疑问需要解决：</p>
 <ol>

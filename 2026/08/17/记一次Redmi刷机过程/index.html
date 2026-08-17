@@ -1,0 +1,558 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>记一次Redmi刷机过程 | ZQ-Rookie-Hacker&#39;s Blog</title>
+  <meta name="author" content="ZQ-Rookie-Hacker">
+  
+  <meta name="description" content="引入
+在root之前，需要解除BL锁，本文只是记录了root过程
+
+主要过程是通过 Magisk 获取 root 权限
+
+
+
+1.过程原理在fastboot模式下读取手机分区信息，目的是确认当前激活槽位是a且引导分区明确存在，这决定了后续只能针对这个分区操作；
+接着通过下载与系统版本完全一致的官方卡刷包，从中解压出payload.bin文件，并借助payload-dumper-go工具单独提取出原厂boot.img，这一步不能直接在手机上读取是因为运行中的系统会锁定该分区，只能从官方固件包里取料；
+将提取的boot.img传入手机后，由Magisk App对其进行修补，它实际上是在内核的ramdisk中注入自身的初始化代码，这种修补必须在目标手机上即时完成，以确保生成的镜像与当前系统环境完全匹配；
+将修补好的镜像拉回电脑，再让手机重启到fastboot模式，执行fastboot flash boot_a命令，其目的就是利用底层硬件接口直接将该镜像写入当前正在使用的a槽位，而明确指定a槽位是为了绕过fastboot工具可能存在的自动映射错误，避免误写入闲置的b槽位导致root无效或下次切换分区时无法开机；
+刷入完成后重启设备，只要magisk应用能识别出版本号，就代表内核已被成功接管，root权限就此获得。
+1.手机型号信息"> 
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="记一次Redmi刷机过程"/>
+  <meta property="og:site_name" content="ZQ-Rookie-Hacker&#39;s Blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+  
+    <link href="/zhuzhuxia.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-70812759-1');
+</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 8.1.1"><script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true,
+    processEnvironments: true
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  startup: {
+    pageReady: () => {
+      return MathJax.startup.defaultPageReady();
+    }
+  }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">ZQ-Rookie-Hacker&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class=""></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class=""></i>Tags
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">
+			<h1> 记一次Redmi刷机过程</h1>
+		</div>
+	
+
+
+
+
+<!-- Reading progress bar -->
+<div class="reading-progress-bar" id="reading-progress-bar"></div>
+
+
+<div class="row post">
+		<!-- cols -->
+		
+		<div id="top_meta"></div>
+		<div class="col-md-9">
+		
+
+		<!-- content -->
+		<div class="mypage">
+		  
+		  <!-- 文章统计 -->
+		  <div class="article-stats">
+		    <i class="fa fa-file-text"></i> 字数: <span id="word-count">计算中...</span>
+		    <span style="margin-left: 12px;"><i class="fa fa-clock-o"></i> 阅读时长: <span id="reading-time">计算中...</span></span>
+		  </div>
+		  
+		  
+
+		  <h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><ol>
+<li><p>在root之前，需要解除BL锁，本文只是记录了root过程</p>
+</li>
+<li><p>主要过程是通过 <code>Magisk</code> 获取 root 权限</p>
+</li>
+</ol>
+<hr>
+<h2 id="1-过程原理"><a href="#1-过程原理" class="headerlink" title="1.过程原理"></a>1.过程原理</h2><p>在<code>fastboot</code>模式下读取手机分区信息，目的是确认当前激活槽位是a且引导分区明确存在，这决定了后续只能针对这个分区操作；</p>
+<p>接着通过下载与系统版本完全一致的官方<code>卡刷包</code>，从中解压出<code>payload.bin</code>文件，并借助<code>payload-dumper-go</code>工具单独提取出原厂boot.img，这一步不能直接在手机上读取是因为运行中的系统会锁定该分区，只能从官方固件包里取料；</p>
+<p>将提取的boot.img传入手机后，由<code>Magisk App</code>对其进行修补，它实际上是在内核的ramdisk中注入自身的初始化代码，这种修补必须在目标手机上即时完成，以确保生成的镜像与当前系统环境完全匹配；</p>
+<p>将修补好的镜像拉回电脑，再让手机重启到<code>fastboot</code>模式，执行fastboot flash boot_a命令，其目的就是利用底层硬件接口直接将该镜像写入当前正在使用的a槽位，而明确指定a槽位是为了绕过fastboot工具可能存在的自动映射错误，避免误写入闲置的b槽位导致root无效或下次切换分区时无法开机；</p>
+<p>刷入完成后重启设备，只要magisk应用能识别出版本号，就代表内核已被成功接管，root权限就此获得。</p>
+<h2 id="1-手机型号信息"><a href="#1-手机型号信息" class="headerlink" title="1.手机型号信息"></a>1.手机型号信息</h2><blockquote>
+<p><strong>适用机型</strong>：Redmi Note 10 Pro（开发代号 chopin）<br><strong>系统版本</strong>：MIUI 13.0.13.0 (SKPCNXM)<br><strong>Android 版本</strong>：12<br><strong>处理器</strong>：联发科（MTK）<br><strong>分区方案</strong>：A&#x2F;B 分区（无缝更新），当前激活槽位为 A</p>
+</blockquote>
+<hr>
+<h2 id="2-准备工作"><a href="#2-准备工作" class="headerlink" title="2.准备工作"></a>2.准备工作</h2><h3 id="2-1-所需的硬件工具"><a href="#2-1-所需的硬件工具" class="headerlink" title="2.1 所需的硬件工具"></a>2.1 所需的硬件工具</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>一台 Windows 电脑</td>
+<td>已安装 ADB 和 Fastboot 工具</td>
+</tr>
+<tr>
+<td>一根数据线</td>
+<td>质量可靠，用于连接手机和电脑</td>
+</tr>
+<tr>
+<td>手机</td>
+<td>Bootloader 已解锁（<code>unlocked: yes</code>）</td>
+</tr>
+</tbody></table>
+<h3 id="2-2-所需的软件工具"><a href="#2-2-所需的软件工具" class="headerlink" title="2.2 所需的软件工具"></a>2.2 所需的软件工具</h3><table>
+<thead>
+<tr>
+<th>文件</th>
+<th>来源</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>官方卡刷包</strong></td>
+<td><a target="_blank" rel="noopener" href="https://xiaomirom.com/download/redmi-note-10-pro-5g-poco-x3-gt-chopin-stable-V13.0.13.0.SKPCNXM/">xiaomirom.com</a></td>
+<td>必须与手机当前版本完全一致，本指南版本为 <code>miui_CHOPIN_V13.0.13.0.SKPCNXM_f78390d0a5_12.0.zip</code></td>
+</tr>
+<tr>
+<td><strong>Magisk App</strong></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/topjohnwu/Magisk/releases">GitHub - topjohnwu&#x2F;Magisk</a></td>
+<td>下载 <code>.apk</code> 文件</td>
+</tr>
+<tr>
+<td><strong>payload-dumper-go</strong></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/ssut/payload-dumper-go/releases">GitHub - ssut&#x2F;payload-dumper-go</a></td>
+<td>Windows 选择 <code>payload-dumper-go_1.2.2_windows_amd64.tar.gz</code></td>
+</tr>
+</tbody></table>
+<p>下载好工具后可以设置好环境变量，方便使用工具</p>
+<hr>
+<h2 id="3-设备信息确认"><a href="#3-设备信息确认" class="headerlink" title="3. 设备信息确认"></a>3. 设备信息确认</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">fastboot devices</span><br><span class="line">fastboot getvar all</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/%E8%AE%B0%E4%B8%80%E6%AC%A1Redmi%E5%88%B7%E6%9C%BA%E8%BF%87%E7%A8%8B/image_1.png" alt="在这里插入图片描述"></p>
+<p><strong>需要记录的关键信息</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>本机值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>product</code></td>
+<td><code>chopin</code></td>
+<td>机型代号</td>
+</tr>
+<tr>
+<td><code>unlocked</code></td>
+<td><code>yes</code></td>
+<td>Bootloader 已解锁</td>
+</tr>
+<tr>
+<td><code>current-slot</code></td>
+<td><code>a</code></td>
+<td>当前激活槽位</td>
+</tr>
+<tr>
+<td><code>slot-count</code></td>
+<td><code>2</code></td>
+<td>支持 A&#x2F;B 分区</td>
+</tr>
+<tr>
+<td><code>has-slot:boot</code></td>
+<td><code>yes</code></td>
+<td>boot 分区有 A&#x2F;B 双槽</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="4-安装-Magisk-App"><a href="#4-安装-Magisk-App" class="headerlink" title="4. 安装 Magisk App"></a>4. 安装 Magisk App</h2><p>将从github下载的 <code>Magisk-vXX.X.apk</code> 使用数据线输出到到手机 <code>Download</code> 文件夹。然后在手机安装</p>
+<ol>
+<li>打开手机「文件管理」App → 进入 <code>Download</code> 文件夹</li>
+<li>点击 APK 文件，然后就可以安装了</li>
+</ol>
+<hr>
+<h2 id="5-第三阶段：提取-boot-img"><a href="#5-第三阶段：提取-boot-img" class="headerlink" title="5. 第三阶段：提取 boot.img"></a>5. 第三阶段：提取 boot.img</h2><p>解压卡刷包找到其中的 <strong><code>payload.bin</code></strong> 文件（约 3~4 GB）。</p>
+<p>解压 <code>payload-dumper-go_xxx_windows_amd64.tar.gz</code>，得到 <code>payload-dumper-go.exe</code></p>
+<p>执行命令提取boot.img</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">payload-dumper-go.exe -partitions boot payload.bin</span><br></pre></td></tr></table></figure>
+<p><img src="/images/%E8%AE%B0%E4%B8%80%E6%AC%A1Redmi%E5%88%B7%E6%9C%BA%E8%BF%87%E7%A8%8B/image_2.png" alt="在这里插入图片描述"></p>
+<hr>
+<h2 id="6-第四阶段：修补-boot-img"><a href="#6-第四阶段：修补-boot-img" class="headerlink" title="6. 第四阶段：修补 boot.img"></a>6. 第四阶段：修补 boot.img</h2><h3 id="步骤-1：传输文件到手机"><a href="#步骤-1：传输文件到手机" class="headerlink" title="步骤 1：传输文件到手机"></a>步骤 1：传输文件到手机</h3><p>将提取出的 <code>boot.img</code>（约 134 MB）复制到手机 <code>Download</code> 文件夹。然后在 Magisk 中修补</p>
+<p><img src="/images/%E8%AE%B0%E4%B8%80%E6%AC%A1Redmi%E5%88%B7%E6%9C%BA%E8%BF%87%E7%A8%8B/image_3.png" alt="在这里插入图片描述"></p>
+<ol>
+<li>打开手机 <strong>Magisk App</strong></li>
+<li>点击主界面顶部的 <strong>「安装」</strong> 按钮</li>
+<li>选择 <strong>「选择并修补一个文件」</strong></li>
+<li>在文件管理器中找到并选中 <code>boot.img</code></li>
+<li>点击右上角 <strong>「开始」</strong>，等待修补完成（几秒钟）</li>
+</ol>
+<p><img src="/images/%E8%AE%B0%E4%B8%80%E6%AC%A1Redmi%E5%88%B7%E6%9C%BA%E8%BF%87%E7%A8%8B/image_4.png" alt="在这里插入图片描述"></p>
+<p>修补完成后，手机 <code>Download</code> 文件夹会生成一个文件，文件名类似：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">magisk_patched-30700_wZfnM.img</span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<h2 id="7-刷入修补镜像"><a href="#7-刷入修补镜像" class="headerlink" title="7. 刷入修补镜像"></a>7. 刷入修补镜像</h2><p>将 <code>magisk_patched-XXXXX.img</code> 从手机复制到电脑（与 <code>boot.img</code> 同目录即可）。</p>
+<p>然后进入fastboot模式，执行刷入命令</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">fastboot flash boot_a magisk_patched-<span class="number">30700</span>_wZfnM.img</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>期望输出</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Sending &#x27;boot_a&#x27; (131072 KB)    OKAY [3.092s]</span><br><span class="line">Writing &#x27;boot_a&#x27;                OKAY [0.456s]</span><br><span class="line">Finished. Total time: 3.555s</span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<h2 id="8-验证"><a href="#8-验证" class="headerlink" title="8. 验证"></a>8. 验证</h2><p><img src="/images/%E8%AE%B0%E4%B8%80%E6%AC%A1Redmi%E5%88%B7%E6%9C%BA%E8%BF%87%E7%A8%8B/image_5.png" alt="在这里插入图片描述"></p>
+<p>magisk成功安装到boot区，且超级用户功能可以是使用，即已经完成root操作</p>
+
+		  <div class="article-footer-copyright">
+
+    本博客采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议(CC BY-NC-SA 4.0) 发布.</a>
+</div>
+
+
+		  <script>
+		    // 计算字数与阅读时长，同时更新阅读进度条
+		    (function() {
+		      var content = document.querySelector('.mypage');
+		      if (content) {
+		        var text = content.innerText || content.textContent;
+		        // 中文字符（含 CJK 扩展区 + 标点），按字符计数
+		        var chineseChars = (text.match(/[一-鿿㐀-䶿豈-﫿　-〿＀-￯]/g) || []).length;
+		        // 英文/数字按字符计（非词），与 CSDN 统计方式一致
+		        var latinChars = (text.match(/[a-zA-Z0-9]/g) || []).length;
+		        var wordCount = chineseChars + latinChars;
+		        // 阅读时长：中文约 300 字/分钟，英文约 200 词/分钟
+		        var englishWords = (text.match(/[a-zA-Z0-9]+/g) || []).length;
+		        var readingTime = Math.max(1, Math.ceil(chineseChars / 300 + englishWords / 200));
+		        var wcEl = document.getElementById('word-count');
+		        var rtEl = document.getElementById('reading-time');
+		        if (wcEl) wcEl.textContent = '~' + wordCount + ' 字';
+		        if (rtEl) rtEl.textContent = '约 ' + readingTime + ' 分钟';
+		      }
+		      // 阅读进度条
+		      var bar = document.getElementById('reading-progress-bar');
+		      if (bar) {
+		        window.addEventListener('scroll', function() {
+		          var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+		          var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+		          var progress = docHeight > 0 ? Math.min(100, (scrollTop / docHeight) * 100) : 0;
+		          bar.style.width = progress + '%';
+		        });
+		      }
+		    })();
+		  </script>
+		</div>
+
+		
+		<span id="" class="leancloud-visitors view" data-flag-title="记一次Redmi刷机过程">
+			<em class="post-meta-item-text"> Page View </em> <i class="leancloud-visitors-count"></i>
+		</span>
+		
+		
+		<div>
+	  	<center>
+
+		<div class="pagination">
+
+    
+    
+    <a type="button" class="btn btn-default disabled"><i class="fa fa-arrow-circle-o-left"></i>上一页</a>
+    
+
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="/2026/08/17/文件上传绕过/" type="button" class="btn btn-default ">下一页<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
+</div>
+
+
+	    </center>
+		</div>
+
+		<!-- comment -->
+		
+			<section id="comments" class="comments">
+				<style>
+				.comments{margin:30px;padding:10px;background:rgb(0, 0, 0)}
+				@media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#000}}
+				</style>
+				<div id="vcomment" class="comment"></div>
+<script>
+// 延迟加载评论系统
+window.addEventListener('load', function() {
+  setTimeout(function() {
+    var script = document.createElement('script');
+    script.src = 'https://unpkg.com/valine@1.5.1/dist/Valine.min.js';
+    script.onload = function() {
+      var valineConfig = {"enable":true,"appId":"22F2XnoONZRtEbXvXO1SDcjS-gzGzoHsz","appKey":"bIFSRG6LeUO90VdfRBHUXNQs","placeholder":"说点什么吧~","visitor":true,"avatar":"monsterid","requiredFields":["nick","mail"],"pageView":true}
+      valineConfig.el = '#vcomment';
+      valineConfig.recordIP = true;
+      valineConfig.serverURLs = 'https://22f2xnoo.api.lncldglobal.com';
+      new Valine(valineConfig);
+    };
+    document.head.appendChild(script);
+  }, 1000); // 延迟1秒加载
+});
+</script>
+			</section>
+		
+		
+		
+		</div> <!-- col-md-9/col-md-12 -->
+
+
+		
+		<div id="side_meta">
+			<div class="col-md-3 sticky-meta" id="post_meta"> 
+
+	<!-- small fixed card (date + brief meta) -->
+	<div class="top-card">
+		<!-- date -->
+		
+		<div class="meta-widget">
+		<i class="fa fa-clock-o"></i>
+		2026-08-17
+		</div>
+		
+
+		<!-- brief categories/tags inside fixed card -->
+		
+		<div class="meta-widget small-cats">
+			<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>
+			<ul id="categorys" class="tag_box list-unstyled collapse in">
+				  
+  <li>
+    <li><a href="/categories/知识杂碎/">知识杂碎<span>3</span></a></li>
+  </li>
+
+			</ul>
+		</div>
+		
+
+		
+		<div class="meta-widget small-tags">
+			<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>
+			<ul id="tags" class="tag_box list-unstyled collapse in">
+				  
+  <li><a href="/tags/root/">root<span>1</span></a></li> <li><a href="/tags/刷机/">刷机<span>1</span></a></li>
+			</ul>
+		</div>
+		
+	</div>
+
+	<!-- All Categories: sticky within sidebar area -->
+	<div class="category-stick" id="category-stick">
+		
+<div class="widget-wrap">
+  <h3 class="widget-title" style="font-family: monospace; font-size: 1.3em; font-weight: bold; color: #fff;">Categories</h3>
+  <div class="widget category-tree">
+    <ul class="hacker-category-list"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/408/">408</a><span class="hacker-category-list-count">7</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/408/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="hacker-category-list-count">7</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/AI/">AI</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/AI/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="hacker-category-list-count">2</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/">CTF</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/">BUUCTF</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/PWN/">PWN</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/WEB/">WEB</a><span class="hacker-category-list-count">1</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%9F%A5%E8%AF%86%E6%9D%82%E7%A2%8E/">知识杂碎</a><span class="hacker-category-list-count">3</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Java/">Java</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/python/">python</a><span class="hacker-category-list-count">1</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a><span class="hacker-category-list-count">41</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC-%E6%B8%97%E9%80%8F/">SRC&渗透</a><span class="hacker-category-list-count">7</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC-%E6%B8%97%E9%80%8F/SRC/">SRC</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC-%E6%B8%97%E9%80%8F/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">信息收集</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC-%E6%B8%97%E9%80%8F/%E5%86%85%E7%BD%91/">内网</a><span class="hacker-category-list-count">3</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="hacker-category-list-count">20</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/Linux/">Linux</a><span class="hacker-category-list-count">4</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/windows/">windows</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E5%89%8D%E7%AB%AF/">前端</a><span class="hacker-category-list-count">6</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E5%90%8E%E7%AB%AF/">后端</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E9%80%9A%E7%94%A8/">通用</a><span class="hacker-category-list-count">8</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/">漏洞</a><span class="hacker-category-list-count">14</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/PWN/">PWN</a><span class="hacker-category-list-count">3</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB%E5%AE%89%E5%85%A8/">WEB安全</a><span class="hacker-category-list-count">10</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB%E5%AE%89%E5%85%A8/Top10/">Top10</a><span class="hacker-category-list-count">10</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/%E5%A4%8D%E7%8E%B0/">复现</a><span class="hacker-category-list-count">1</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E8%AF%81%E4%B9%A6/">证书</a><span class="hacker-category-list-count">1</span></li></ul>
+  </div>
+</div>
+
+
+<style>
+/* Hacker / Terminal Style Category Tree */
+.category-tree .hacker-category-list {
+  padding-left: 20px;
+  font-family: 'Consolas', 'Courier New', monospace;
+  color: #fff;
+  list-style-type: circle; /* 'o' bullet */
+}
+
+.category-tree .hacker-category-list .hacker-category-list {
+  list-style-type: square; /* '■' bullet */
+}
+
+.category-tree .hacker-category-list .hacker-category-list .hacker-category-list {
+  list-style-type: square;
+}
+
+.category-tree .hacker-category-list-item {
+  margin: 6px 0;
+}
+
+.category-tree .hacker-category-list-link {
+  background-color: rgba(43, 188, 138, 0.1);
+  color: #2bbc8a;
+  text-decoration: none;
+  padding: 1px 6px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.category-tree .hacker-category-list-link:hover {
+  background-color: rgba(43, 188, 138, 0.2);
+  text-decoration: none;
+}
+
+.category-tree .hacker-category-list-count {
+  color: #2bbc8a;
+  margin-left: 5px;
+}
+</style>
+
+	</div>
+
+	<!-- article TOC placed below the category list; should scroll with page -->
+	<div class="toc-wrapper">
+		<div class="toc-widget">
+		
+			 <div class="toc">
+				 <span class="toc-title"><i class="fa fa-list"></i> Contents</span>
+				<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%BC%95%E5%85%A5"><span class="toc-article-text">引入</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#1-%E8%BF%87%E7%A8%8B%E5%8E%9F%E7%90%86"><span class="toc-article-text">1.过程原理</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#1-%E6%89%8B%E6%9C%BA%E5%9E%8B%E5%8F%B7%E4%BF%A1%E6%81%AF"><span class="toc-article-text">1.手机型号信息</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-article-text">2.准备工作</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-1-%E6%89%80%E9%9C%80%E7%9A%84%E7%A1%AC%E4%BB%B6%E5%B7%A5%E5%85%B7"><span class="toc-article-text">2.1 所需的硬件工具</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-2-%E6%89%80%E9%9C%80%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7"><span class="toc-article-text">2.2 所需的软件工具</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#3-%E8%AE%BE%E5%A4%87%E4%BF%A1%E6%81%AF%E7%A1%AE%E8%AE%A4"><span class="toc-article-text">3. 设备信息确认</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#4-%E5%AE%89%E8%A3%85-Magisk-App"><span class="toc-article-text">4. 安装 Magisk App</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#5-%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%EF%BC%9A%E6%8F%90%E5%8F%96-boot-img"><span class="toc-article-text">5. 第三阶段：提取 boot.img</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#6-%E7%AC%AC%E5%9B%9B%E9%98%B6%E6%AE%B5%EF%BC%9A%E4%BF%AE%E8%A1%A5-boot-img"><span class="toc-article-text">6. 第四阶段：修补 boot.img</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E6%AD%A5%E9%AA%A4-1%EF%BC%9A%E4%BC%A0%E8%BE%93%E6%96%87%E4%BB%B6%E5%88%B0%E6%89%8B%E6%9C%BA"><span class="toc-article-text">步骤 1：传输文件到手机</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#7-%E5%88%B7%E5%85%A5%E4%BF%AE%E8%A1%A5%E9%95%9C%E5%83%8F"><span class="toc-article-text">7. 刷入修补镜像</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#8-%E9%AA%8C%E8%AF%81"><span class="toc-article-text">8. 验证</span></a></li></ol>
+			</div>
+		
+		</div>
+	</div>
+
+</div><!-- col-md-3 -->
+
+
+		</div>
+
+		
+
+	</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  
+  &copy; 2026 ZQ-Rookie-Hacker's Blog
+  
+      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/toc.js"></script>
+<script src="/js/copy-code.js"></script>
+
+   <script type="text/javascript">
+     var searchPath = "/search.xml";
+   </script>
+
+
+<script src="/js/search.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

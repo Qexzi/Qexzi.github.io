@@ -137,6 +137,45 @@ MathJax = {
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
+			<a href="/2026/08/17/记一次Redmi刷机过程/" >记一次Redmi刷机过程</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2026-08-17  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><ol>
+<li><p>在root之前，需要解除BL锁，本文只是记录了root过程</p>
+</li>
+<li><p>主要过程是通过 <code>Magisk</code> 获取 root 权限</p>
+</li>
+</ol>
+<hr>
+<h2 id="1-过程原理"><a href="#1-过程原理" class="headerlink" title="1.过程原理"></a>1.过程原理</h2><p>在<code>fastboot</code>模式下读取手机分区信息，目的是确认当前激活槽位是a且引导分区明确存在，这决定了后续只能针对这个分区操作；</p>
+<p>接着通过下载与系统版本完全一致的官方<code>卡刷包</code>，从中解压出<code>payload.bin</code>文件，并借助<code>payload-dumper-go</code>工具单独提取出原厂boot.img，这一步不能直接在手机上读取是因为运行中的系统会锁定该分区，只能从官方固件包里取料；</p>
+<p>将提取的boot.img传入手机后，由<code>Magisk App</code>对其进行修补，它实际上是在内核的ramdisk中注入自身的初始化代码，这种修补必须在目标手机上即时完成，以确保生成的镜像与当前系统环境完全匹配；</p>
+<p>将修补好的镜像拉回电脑，再让手机重启到<code>fastboot</code>模式，执行fastboot flash boot_a命令，其目的就是利用底层硬件接口直接将该镜像写入当前正在使用的a槽位，而明确指定a槽位是为了绕过fastboot工具可能存在的自动映射错误，避免误写入闲置的b槽位导致root无效或下次切换分区时无法开机；</p>
+<p>刷入完成后重启设备，只要magisk应用能识别出版本号，就代表内核已被成功接管，root权限就此获得。</p>
+<h2 id="1-手机型号信息"><a href="#1-手机型号信息" class="headerlink" title="1.手机型号信息"></a>1.手机型号信息</h2>
+	
+	</div>
+  <a type="button" href="/2026/08/17/记一次Redmi刷机过程/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
 			<a href="/2026/08/17/文件上传绕过/" >文件上传绕过</a>
 		</h3>
 		</div>
@@ -167,128 +206,10 @@ MathJax = {
 <p>（注意，这里说的 MIME 编码可不是将 Content-Type 修改为 image&#x2F;png 等类似的方式进行绕过的，这种方式修改的是 MIME type。）</p>
 <p>Multipurpose Internet Mail Extensions (MIME)，通常也称为多用途互联网邮件扩展，从字面意思可以看出，它的出现是为了扩展了电子邮件的格式，支持 ASCII 字符集以外二进制数据（例如图像、音频、视频或其他文件）转换为文本数据，以便能够安全地传输和处理。从 commons-fileupload 库版本 1.3 开始，FileUpload 可以处理 RFC 2047 编码的标头值。</p>
 <p>取 &#x3D; 后的两个两个十六进制数字，并将其转换为 ascii 码值对应的字符。所以 MIME 编码的格式为：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">=?charset?encoding?encoded text?=</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">=?charset?encoding?encoded text?=</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 	
 	</div>
   <a type="button" href="/2026/08/17/文件上传绕过/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="/2026/08/12/CSRF基础/" >CSRF基础</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2026-08-12  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><blockquote>
-<ol>
-<li>在下面的题解中，没有特别强调时：<code>SameSite:None</code></li>
-<li>漏洞完成最终利用形式：<code>钓鱼</code>，在实际利用中最好找到一个方法将钓鱼形式csrf转化为无用户交互的csrf，进而提高危害</li>
-</ol>
-</blockquote>
-<hr>
-<h3 id="0x00-基础知识"><a href="#0x00-基础知识" class="headerlink" title="0x00.基础知识"></a>0x00.基础知识</h3><ol>
-<li><p><strong><code>什么是CSRF？</code></strong><br> 跨站请求伪造（Cross-Site Request Forgery，简称 CSRF），是一种利用用户已登录的身份，在用户不知情的情况下，诱导其在第三方页面发起伪造请求，从而执行非预期操作（如改密码、转账、修改信息）的漏洞。即攻击者不偷你的账号密码，不读你的 Cookie，只是让你的浏览器 <code>“带着你的身份，替你干坏事”</code>。</p>
-</li>
-<li><p><strong><code>漏洞由来</code></strong>：HTTP 无状态与 Cookie 的设计初衷</p>
-<ul>
-<li>HTTP 协议本身是无状态的：每次请求都是独立的，网站无法直接识别用户身份。</li>
-<li>为了实现 “免重复登录”，诞生了Cookie + Session机制：用户登录后，网站会在浏览器中写入 Cookie，后续每次访问该网站，浏览器都会自动带上对应域名的 Cookie，网站通过 Cookie 识别用户身份。</li>
-<li>漏洞的根源：浏览器的 “自动带 Cookie” 机制，被跨站请求滥用 —— 第三方恶意页面发起的请求，浏览器依然会自动带上目标网站的 Cookie，网站无法区分请求是用户主动发起，还是被伪造的。</li>
-</ul>
-</li>
-<li><p><strong><code>CSRF 攻击的 3 个必备条件</code></strong></p>
-<ul>
-<li>用户处于目标网站的有效登录状态（浏览器存有合法的会话 Cookie）；</li>
-<li>目标网站的敏感操作接口，仅依赖 Cookie 做身份校验，没有额外的请求合法性校验；</li>
-<li>浏览器允许跨站发起请求，并自动携带目标网站的 Cookie（这是浏览器的原生行为）。</li>
-</ul>
-</li>
-</ol>
-<p><strong><code>对于cookie的字段认识</code></strong><br>Cookie 所有标准字段完整对照表</p>
-<table>
-<thead>
-<tr>
-<th>字段名称</th>
-<th>示例值</th>
-<th>详细作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Name&#x3D;Value</td>
-<td><code>user_session=7s9k2p6d8f1g</code></td>
-<td>Cookie 核心主体，以键值对形式存储用户会话、身份标识、临时配置等数据，是网站识别用户的核心凭证。</td>
-</tr>
-<tr>
-<td>Domain</td>
-<td><code>example.com</code></td>
-<td>规定该 Cookie 归属的域名，默认是当前请求域名；设置后<strong>所有子域名</strong>都能携带、访问该 Cookie。</td>
-</tr>
-<tr>
-<td>Path</td>
-<td><code>/admin</code></td>
-<td>限制 Cookie 生效的网站路径，只有访问域名下该路径及子路径时，浏览器才会携带此 Cookie。</td>
-</tr>
-<tr>
-<td>Expires</td>
-<td><code>Fri, 31 Dec 2026 23:59:59 GMT</code></td>
-<td>绝对过期时间，设置固定日期时间；到达时间后浏览器自动删除该 Cookie，用于<strong>持久型 Cookie</strong>。</td>
-</tr>
-<tr>
-<td>Max-Age</td>
-<td><code>86400</code></td>
-<td>相对过期时间，单位秒；从设置时刻开始倒计时，超时自动删除，优先级高于 Expires。</td>
-</tr>
-<tr>
-<td>HttpOnly</td>
-<td>无值（仅标记）</td>
-<td>禁止前端 JavaScript 通过 <code>document.cookie</code> 读取和操作该 Cookie，防止 XSS 攻击窃取会话凭证。</td>
-</tr>
-<tr>
-<td>Secure</td>
-<td>无值（仅标记）</td>
-<td>该 Cookie <strong>仅在 HTTPS 加密请求</strong>中携带，HTTP 明文请求不会发送，避免中间人抓包窃取。</td>
-</tr>
-<tr>
-<td>SameSite</td>
-<td><code>Strict</code> &#x2F; <code>Lax</code> &#x2F; <code>None</code></td>
-<td>管控跨站请求时是否自动携带 Cookie，用来规范浏览器跨域身份凭证的发送行为。</td>
-</tr>
-<tr>
-<td>Priority</td>
-<td><code>High</code> &#x2F; <code>Medium</code> &#x2F; <code>Low</code></td>
-<td>浏览器存储空间不足时，按优先级淘汰 Cookie；高优先级最后被清理，保证重要会话 Cookie 留存。</td>
-</tr>
-<tr>
-<td>Partitioned</td>
-<td>无值（仅标记）</td>
-<td>隔离第三方 Cookie，采用分区存储，防止跨网站追踪用户行为，适配现代浏览器隐私策略。</td>
-</tr>
-</tbody></table>
-<ul>
-<li>SameSite&#x3D;Strict（比如 hook_slardar_session_id）：<br>浏览器完全禁止跨站请求携带这个 Cookie。也就是说，只要请求是从其他域名发起的（比如恶意页面），浏览器绝不会带上这个 Cookie，直接防御 CSRF。</li>
-<li>SameSite&#x3D;None（比如 passport_csrf_token、ssid_ucp_v1）：<br>浏览器不限制跨站携带，任何跨站请求（POST 表单、AJAX、GET 跳转）都会自动带上 Cookie。这是 CSRF 风险最高的设置，而且必须搭配 Secure 属性（截图里这些 Cookie 都同时开了 Secure，符合规范）。</li>
-<li>无显式设置（默认 Lax）（截图里大部分 Cookie 没标 SameSite，Chrome 80+ 默认值）：<br>宽松限制：仅在「跨站顶级导航的 GET 请求」中携带 Cookie（比如点击恶意链接跳转到目标网站），跨站 POST 表单、AJAX 请求不会携带。<br>这意味着：如果靶场的敏感操作是 GET 请求，Lax Cookie 依然能被 CSRF 利用；如果是 POST 请求，跨站表单就带不上 Cookie，攻击会失败。</li>
-</ul>
-<p>在现在的网页中，网站会在<code>用户会话</code>中生成一个随机 Token，存在 Cookie 里，同时在表单 &#x2F; 请求参数里也会带上这个 Token，提交请求时服务器会比对两者是否一致，直接防御 CSRF。</p>
-<hr>
-	
-	</div>
-  <a type="button" href="/2026/08/12/CSRF基础/#more" class="btn btn-default more">阅读此文</a>
 </div>
 
 		
@@ -338,7 +259,7 @@ MathJax = {
 <div class="widget-wrap">
   <h3 class="widget-title" style="font-family: monospace; font-size: 1.3em; font-weight: bold; color: #fff;">Categories</h3>
   <div class="widget category-tree">
-    <ul class="hacker-category-list"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/408/">408</a><span class="hacker-category-list-count">7</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/408/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="hacker-category-list-count">7</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/AI/">AI</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/AI/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="hacker-category-list-count">2</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/CTF/">CTF</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/CTF/BUUCTF/">BUUCTF</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/CTF/BUUCTF/PWN/">PWN</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/CTF/BUUCTF/WEB/">WEB</a><span class="hacker-category-list-count">1</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%9F%A5%E8%AF%86%E6%9D%82%E7%A2%8E/">知识杂碎</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Java/">Java</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/python/">python</a><span class="hacker-category-list-count">1</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a><span class="hacker-category-list-count">41</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC-%E6%B8%97%E9%80%8F/">SRC&渗透</a><span class="hacker-category-list-count">7</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC-%E6%B8%97%E9%80%8F/SRC/">SRC</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC-%E6%B8%97%E9%80%8F/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">信息收集</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC-%E6%B8%97%E9%80%8F/%E5%86%85%E7%BD%91/">内网</a><span class="hacker-category-list-count">3</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="hacker-category-list-count">20</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/Linux/">Linux</a><span class="hacker-category-list-count">4</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/windows/">windows</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E5%89%8D%E7%AB%AF/">前端</a><span class="hacker-category-list-count">6</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E5%90%8E%E7%AB%AF/">后端</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E9%80%9A%E7%94%A8/">通用</a><span class="hacker-category-list-count">8</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/">漏洞</a><span class="hacker-category-list-count">14</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/PWN/">PWN</a><span class="hacker-category-list-count">3</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB%E5%AE%89%E5%85%A8/">WEB安全</a><span class="hacker-category-list-count">10</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB%E5%AE%89%E5%85%A8/Top10/">Top10</a><span class="hacker-category-list-count">10</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/%E5%A4%8D%E7%8E%B0/">复现</a><span class="hacker-category-list-count">1</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E8%AF%81%E4%B9%A6/">证书</a><span class="hacker-category-list-count">1</span></li></ul>
+    <ul class="hacker-category-list"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/408/">408</a><span class="hacker-category-list-count">7</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/408/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="hacker-category-list-count">7</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/AI/">AI</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/AI/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="hacker-category-list-count">2</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/CTF/">CTF</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/CTF/BUUCTF/">BUUCTF</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/CTF/BUUCTF/PWN/">PWN</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/CTF/BUUCTF/WEB/">WEB</a><span class="hacker-category-list-count">1</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%9F%A5%E8%AF%86%E6%9D%82%E7%A2%8E/">知识杂碎</a><span class="hacker-category-list-count">3</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Java/">Java</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/python/">python</a><span class="hacker-category-list-count">1</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a><span class="hacker-category-list-count">41</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC-%E6%B8%97%E9%80%8F/">SRC&渗透</a><span class="hacker-category-list-count">7</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC-%E6%B8%97%E9%80%8F/SRC/">SRC</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC-%E6%B8%97%E9%80%8F/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">信息收集</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC-%E6%B8%97%E9%80%8F/%E5%86%85%E7%BD%91/">内网</a><span class="hacker-category-list-count">3</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="hacker-category-list-count">20</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/Linux/">Linux</a><span class="hacker-category-list-count">4</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/windows/">windows</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E5%89%8D%E7%AB%AF/">前端</a><span class="hacker-category-list-count">6</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E5%90%8E%E7%AB%AF/">后端</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E9%80%9A%E7%94%A8/">通用</a><span class="hacker-category-list-count">8</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/">漏洞</a><span class="hacker-category-list-count">14</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/PWN/">PWN</a><span class="hacker-category-list-count">3</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB%E5%AE%89%E5%85%A8/">WEB安全</a><span class="hacker-category-list-count">10</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB%E5%AE%89%E5%85%A8/Top10/">Top10</a><span class="hacker-category-list-count">10</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/%E5%A4%8D%E7%8E%B0/">复现</a><span class="hacker-category-list-count">1</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E8%AF%81%E4%B9%A6/">证书</a><span class="hacker-category-list-count">1</span></li></ul>
   </div>
 </div>
 
@@ -390,48 +311,48 @@ MathJax = {
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/指令/">指令<span>3</span></a></li>
-		
-			<li><a href="/tags/数据链路层/">数据链路层<span>1</span></a></li>
-		
-			<li><a href="/tags/CNN与RNN基础/">CNN与RNN基础<span>1</span></a></li>
-		
-			<li><a href="/tags/Next/">Next<span>1</span></a></li>
-		
-			<li><a href="/tags/ARL/">ARL<span>1</span></a></li>
-		
-			<li><a href="/tags/DIV/">DIV<span>1</span></a></li>
-		
-			<li><a href="/tags/域渗透/">域渗透<span>2</span></a></li>
-		
-			<li><a href="/tags/Hexo/">Hexo<span>1</span></a></li>
-		
-			<li><a href="/tags/计算机体系架构/">计算机体系架构<span>1</span></a></li>
-		
-			<li><a href="/tags/传输层/">传输层<span>1</span></a></li>
-		
-			<li><a href="/tags/GitHub-Dork/">GitHub Dork<span>1</span></a></li>
-		
-			<li><a href="/tags/资产收集/">资产收集<span>1</span></a></li>
-		
-			<li><a href="/tags/服务器/">服务器<span>1</span></a></li>
-		
-			<li><a href="/tags/CSS/">CSS<span>1</span></a></li>
-		
-			<li><a href="/tags/WEB/">WEB<span>1</span></a></li>
-		
-			<li><a href="/tags/CSRF/">CSRF<span>1</span></a></li>
-		
-			<li><a href="/tags/SQL注入/">SQL注入<span>1</span></a></li>
-		
-			<li><a href="/tags/windows/">windows<span>1</span></a></li>
-		
-			<li><a href="/tags/PHP/">PHP<span>1</span></a></li>
+			<li><a href="/tags/代理/">代理<span>1</span></a></li>
 		
 			<li><a href="/tags/CORS/">CORS<span>2</span></a></li>
 		
+			<li><a href="/tags/认证/">认证<span>2</span></a></li>
 		
-		   <li><a href="/tags">...<span>67</span></a></li>
+			<li><a href="/tags/FOFA/">FOFA<span>1</span></a></li>
+		
+			<li><a href="/tags/CNN与RNN基础/">CNN与RNN基础<span>1</span></a></li>
+		
+			<li><a href="/tags/DIV/">DIV<span>1</span></a></li>
+		
+			<li><a href="/tags/root/">root<span>1</span></a></li>
+		
+			<li><a href="/tags/虚拟机网络/">虚拟机网络<span>1</span></a></li>
+		
+			<li><a href="/tags/Jenkins/">Jenkins<span>1</span></a></li>
+		
+			<li><a href="/tags/Linux/">Linux<span>3</span></a></li>
+		
+			<li><a href="/tags/业务逻辑漏洞/">业务逻辑漏洞<span>1</span></a></li>
+		
+			<li><a href="/tags/文件上传/">文件上传<span>1</span></a></li>
+		
+			<li><a href="/tags/应用层/">应用层<span>1</span></a></li>
+		
+			<li><a href="/tags/ARL/">ARL<span>1</span></a></li>
+		
+			<li><a href="/tags/hook/">hook<span>1</span></a></li>
+		
+			<li><a href="/tags/Pwn/">Pwn<span>3</span></a></li>
+		
+			<li><a href="/tags/Mysql/">Mysql<span>1</span></a></li>
+		
+			<li><a href="/tags/传输层/">传输层<span>1</span></a></li>
+		
+			<li><a href="/tags/指令/">指令<span>3</span></a></li>
+		
+			<li><a href="/tags/XSS/">XSS<span>1</span></a></li>
+		
+		
+		   <li><a href="/tags">...<span>69</span></a></li>
 		 
 		</ul>
 	</div>
@@ -442,6 +363,10 @@ MathJax = {
 <div class="widget">
   <h4>最新文章</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2026/08/17/记一次Redmi刷机过程/" ><i class="fa fa-file-o"></i>记一次Redmi刷机过程</a>
+      </li>
     
       <li>
         <a href="/2026/08/17/文件上传绕过/" ><i class="fa fa-file-o"></i>文件上传绕过</a>
@@ -457,10 +382,6 @@ MathJax = {
     
       <li>
         <a href="/2026/07/27/神经网络基础/" ><i class="fa fa-file-o"></i>神经网络基础</a>
-      </li>
-    
-      <li>
-        <a href="/2026/07/16/XXE基础/" ><i class="fa fa-file-o"></i>XXE基础</a>
       </li>
     
   </ul>

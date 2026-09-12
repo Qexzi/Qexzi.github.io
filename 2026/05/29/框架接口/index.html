@@ -6,8 +6,8 @@
   <meta http-equiv="cache-control" content="no-cache">
   <meta http-equiv="expires" content="0">
   
-  <title>框架接口 | ZQ-Rookie-Hacker&#39;s Blog</title>
-  <meta name="author" content="ZQ-Rookie-Hacker">
+  <title>框架接口 | Qexzi&#39;s Blog</title>
+  <meta name="author" content="Qexzi">
   
   <meta name="description" content="0x00 引入如果发现一些接口使用https”无法访问”，可以换为http。
 
@@ -29,7 +29,7 @@ Actuator 极高危
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   <meta property="og:title" content="框架接口"/>
-  <meta property="og:site_name" content="ZQ-Rookie-Hacker&#39;s Blog"/>
+  <meta property="og:site_name" content="Qexzi&#39;s Blog"/>
 
   
     <meta property="og:image" content=""/>
@@ -99,7 +99,7 @@ MathJax = {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-	  <a class="navbar-brand" href="/">ZQ-Rookie-Hacker&#39;s Blog</a>
+	  <a class="navbar-brand" href="/">Qexzi&#39;s Blog</a>
       <div class="collapse navbar-collapse nav-menu">
 		<ul class="nav navbar-nav">
 		  
@@ -1021,7 +1021,7 @@ MathJax = {
 <td><strong>系统管理-极高危</strong></td>
 <td><code>/sys/selectDepart</code></td>
 <td>部门选择&#x2F;查询接口</td>
-<td><strong>CVE-2026-9580</strong>：≤3.9.1权限提升，LoginController.selectDepart权限校验缺失，绕过认证获取敏感数据，修复版本3.9.2</td>
+<td><strong>CVE-2026-9580</strong>：≤3.9.1权限提升，LoginController.selectDepart权限校验缺失，绕过认证获取敏感数据，修复版本3.9.2  使用的是PUT方法</td>
 </tr>
 <tr>
 <td><strong>系统管理-极高危</strong></td>
@@ -1045,13 +1045,25 @@ MathJax = {
 <td><strong>系统管理-极高危</strong></td>
 <td><code>/sys/user/list</code></td>
 <td>获取所有用户列表</td>
-<td>早期版本SQL注入（已修复）；<code>QueryGenerator.initQueryWrapper()</code> 自动映射SysUser所有字段（含password&#x2F;salt）为LIKE可查询列，泄露密码哈希</td>
+<td>早期版本SQL注入（已修复）；<code>QueryGenerator.initQueryWrapper()</code> 自动映射SysUser所有字段（含password&#x2F;salt）为LIKE可查询列，泄露密码哈希 。 还有就是list的分页查询参数 pageNo&#x3D;2&amp;pageSize&#x3D;10</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/sys/user/passwordChange</code></td>
+<td>用户密码修改接口</td>
+<td>&#x2F;sys&#x2F;user&#x2F;passwordChange?username&#x3D;admin&amp;password&#x3D;admin&amp;smscode&#x3D;&amp;phone&#x3D;</td>
 </tr>
 <tr>
 <td><strong>系统管理-极高危</strong></td>
 <td><code>/sys/dict/loadTreeData</code></td>
 <td>字典树数据加载</td>
-<td><strong>CVE-2026-8114</strong>：≤3.9.1 SQL注入，<code>condition._tableFilterSql</code>参数使用<code>${value}</code>直接拼接SQL，可注入任意语句</td>
+<td><strong>CVE-2026-8114</strong>：≤3.9.1 SQL注入（时间盲注），<code>condition._tableFilterSql</code>参数使用<code>${value}</code>直接拼接SQL，可注入任意语句;  还有就是get参数过滤不全，导致出现越权查询漏洞 &#x2F;sys&#x2F;dict&#x2F;loadTreeData?tableName&#x3D;sys_user t&amp;text&#x3D;password,id&amp;code&#x3D;password&amp;hasChildField&#x3D;&amp;converIsLeafVal&#x3D;1&amp;condition&#x3D;&amp;pid&#x3D;admin&amp;pidField&#x3D;username</td>
+</tr>
+<tr>
+<td><strong>报表-极高危</strong></td>
+<td><code>/jeecg-boot/jmreport/show</code></td>
+<td>积木报表展示接口</td>
+<td><strong>CVE-2023-34659</strong>：JimuReport≤1.6.1 SQL布尔注入，<code>id</code>参数未过滤</td>
 </tr>
 <tr>
 <td><strong>系统管理-高危</strong></td>
@@ -1069,7 +1081,7 @@ MathJax = {
 <td><strong>系统管理-极高危</strong></td>
 <td><code>/sys/common/upload</code></td>
 <td>通用文件上传接口</td>
-<td>路径遍历（≤3.5.3）：<code>biz</code>参数设为<code>..</code>可上传文件至系统敏感目录</td>
+<td><strong>CVE-2025-61188</strong>：路径遍历（≤3.5.3）<code>biz</code>参数设为<code>..</code>可上传文件至系统敏感目录</td>
 </tr>
 <tr>
 <td><strong>系统管理-极高危</strong></td>
@@ -1111,7 +1123,7 @@ MathJax = {
 <td><strong>文件操作-极高危</strong></td>
 <td><code>/common/upload</code></td>
 <td>文件上传接口</td>
-<td>未校验文件类型可上传Webshell；<code>biz</code>参数路径遍历</td>
+<td>未校验文件类型可上传Webshell</td>
 </tr>
 <tr>
 <td><strong>文件操作-极高危</strong></td>
@@ -1275,6 +1287,24 @@ MathJax = {
 <td>数据库连接测试</td>
 <td>≤3.5.3任意文件读取漏洞</td>
 </tr>
+<tr>
+<td><strong>SQL注入-高危</strong></td>
+<td><code>/jeecg-boot/drag/onlDragDatasetHead/getTotalData</code></td>
+<td>body 的json数据 fieldName 存在sql注入</td>
+<td>JeecgBoot v3.7.1版本</td>
+</tr>
+<tr>
+<td><strong>RAG模块-高危</strong></td>
+<td><code>/jeecg-boot/airag/airagMcp/saveAndSync</code></td>
+<td>JeecgBoot AIRAG 模块 远程命令执行（RCE）漏洞</td>
+<td>JeecgBoot v3.9.1 版本 body {“endpoint”: “ ; id &gt; &#x2F;tmp&#x2F;result.txt ; echo ‘done’”}</td>
+</tr>
+<tr>
+<td><strong>消息模板-高危</strong></td>
+<td><code>/sys/message/sysMessageTemplate/add</code></td>
+<td>消息模板添加</td>
+<td><strong>CVE-2026-53510</strong>：≤3.9.2 消息模板模块未对模板内容进行过滤，可构造恶意消息模板，触发RCE</td>
+</tr>
 </tbody></table>
 <blockquote>
 <p><strong>路径前缀</strong>：JeecgBoot默认部署路径为<code>/jeecg-boot</code>（如<code>/jeecg-boot/sys/user/list</code>），部分版本使用<code>/jeecgboot</code>或自定义前缀。</p>
@@ -1305,6 +1335,19 @@ MathJax = {
 <li><strong>CVE-2026-5616</strong>：AI聊天模块未授权工具调用（<code>add_user</code>&#x2F;<code>grant_user_roles</code>），≤3.9.1</li>
 </ul>
 </blockquote>
+<p>文章：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/19197">关于JeecgBoot漏洞利用Tips</a></li>
+<li><a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/14575">jeecgboot3.50前台漏洞汇总+审计</a></li>
+<li><a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/16490">JeecgBoot SQL注入漏洞分析(CVE-2024-48307)</a></li>
+<li><a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/17738">代码审计之实战中各类SQL注入漏洞代码分析及其成因分析(以jeecgboot3.5.3为例)</a></li>
+<li><a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/91794">&#x2F;sys&#x2F;dict&#x2F;getDictItems&#x2F;{dictCode}接口的sql注入</a></li>
+<li><a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/91897">jeecgBoot v3.9.1 多漏洞审计过程</a></li>
+<li><a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/92753">JeecgBoot （≤ 3.9.3） 未授权权限绕过 + SQL 注入组合漏洞分析与复现</a></li>
+<li><a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/92754">从FreeMarker攻防史到JeecgBoot沙箱逃逸RCE（CVE-2026-51086&amp;51087）</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/HqAYYMQIADuEsDzQYaHO4Q">JeecgBoot 积木报表 autoexport RCE漏洞（XVE-2026-53510）深度分析</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/436956.html">Jeecg-boot常见漏洞汇总</a></li>
+</ul>
 <hr>
 
 		  <div class="article-footer-copyright">
@@ -1417,7 +1460,7 @@ window.addEventListener('load', function() {
 			<ul id="categorys" class="tag_box list-unstyled collapse in">
 				  
   <li>
-    <li><a href="/categories/网络安全/">网络安全<span>45</span></a></li> <li><a href="/categories/网络安全/SRC-渗透/">SRC&渗透<span>11</span></a></li> <li><a href="/categories/网络安全/SRC-渗透/框架/">框架<span>1</span></a></li>
+    <li><a href="/categories/网络安全/">网络安全<span>45</span></a></li> <li><a href="/categories/网络安全/SRC/">SRC<span>4</span></a></li>
   </li>
 
 			</ul>
@@ -1441,7 +1484,7 @@ window.addEventListener('load', function() {
 <div class="widget-wrap">
   <h3 class="widget-title" style="font-family: monospace; font-size: 1.3em; font-weight: bold; color: #fff;">Categories</h3>
   <div class="widget category-tree">
-    <ul class="hacker-category-list"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/408/">408</a><span class="hacker-category-list-count">7</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/408/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="hacker-category-list-count">7</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/AI/">AI</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/AI/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="hacker-category-list-count">2</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/">CTF</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/">BUUCTF</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/PWN/">PWN</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/WEB/">WEB</a><span class="hacker-category-list-count">1</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%9F%A5%E8%AF%86%E6%9D%82%E7%A2%8E/">知识杂碎</a><span class="hacker-category-list-count">3</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Java/">Java</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/python/">python</a><span class="hacker-category-list-count">1</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a><span class="hacker-category-list-count">40</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC-%E6%B8%97%E9%80%8F/">SRC&渗透</a><span class="hacker-category-list-count">7</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC-%E6%B8%97%E9%80%8F/SRC/">SRC</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC-%E6%B8%97%E9%80%8F/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">信息收集</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC-%E6%B8%97%E9%80%8F/%E5%86%85%E7%BD%91/">内网</a><span class="hacker-category-list-count">3</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="hacker-category-list-count">19</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/Linux/">Linux</a><span class="hacker-category-list-count">4</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/windows/">windows</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E5%89%8D%E7%AB%AF/">前端</a><span class="hacker-category-list-count">6</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E5%90%8E%E7%AB%AF/">后端</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E9%80%9A%E7%94%A8/">通用</a><span class="hacker-category-list-count">7</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/">漏洞</a><span class="hacker-category-list-count">14</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/PWN/">PWN</a><span class="hacker-category-list-count">3</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB%E5%AE%89%E5%85%A8/">WEB安全</a><span class="hacker-category-list-count">10</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB%E5%AE%89%E5%85%A8/Top10/">Top10</a><span class="hacker-category-list-count">10</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/%E5%A4%8D%E7%8E%B0/">复现</a><span class="hacker-category-list-count">1</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E8%AF%81%E4%B9%A6/">证书</a><span class="hacker-category-list-count">1</span></li></ul>
+    <ul class="hacker-category-list"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/408/">408</a><span class="hacker-category-list-count">7</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/408/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="hacker-category-list-count">7</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/AI/">AI</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/AI/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="hacker-category-list-count">2</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/">CTF</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/">BUUCTF</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/PWN/">PWN</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/WEB/">WEB</a><span class="hacker-category-list-count">1</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%9F%A5%E8%AF%86%E6%9D%82%E7%A2%8E/">知识杂碎</a><span class="hacker-category-list-count">3</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Java/">Java</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/python/">python</a><span class="hacker-category-list-count">1</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a><span class="hacker-category-list-count">41</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC/">SRC</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">信息收集</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%86%85%E7%BD%91/">内网</a><span class="hacker-category-list-count">3</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="hacker-category-list-count">19</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/Linux/">Linux</a><span class="hacker-category-list-count">4</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/windows/">windows</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E5%89%8D%E7%AB%AF/">前端</a><span class="hacker-category-list-count">6</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E5%90%8E%E7%AB%AF/">后端</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E9%80%9A%E7%94%A8/">通用</a><span class="hacker-category-list-count">7</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a><span class="hacker-category-list-count">1</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/%E7%BA%A2%E9%98%9F/">红队</a><span class="hacker-category-list-count">1</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/">漏洞</a><span class="hacker-category-list-count">14</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/PWN/">PWN</a><span class="hacker-category-list-count">3</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB/">WEB</a><span class="hacker-category-list-count">10</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB/Top10/">Top10</a><span class="hacker-category-list-count">10</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/%E5%A4%8D%E7%8E%B0/">复现</a><span class="hacker-category-list-count">1</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E8%AF%81%E4%B9%A6/">证书</a><span class="hacker-category-list-count">1</span></li></ul>
   </div>
 </div>
 
@@ -1515,7 +1558,7 @@ window.addEventListener('load', function() {
   <div class="container-narrow">
   <footer> <p>
   
-  &copy; 2026 ZQ-Rookie-Hacker's Blog
+  &copy; 2026 Qexzi's Blog
   
       powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
 </p>

@@ -1543,7 +1543,6 @@ h3:after {
 
 h1 {
     font-size: 18px;
-    text-transform: uppercase
 }
 
 h2 {
@@ -1802,10 +1801,6 @@ u:after {
     content: '_'
 }
 
-
-strong {
-    text-transform: uppercase
-}
 
 .list-unstyled {
     padding-left: 0;

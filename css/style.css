@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿.container-narrow {
+﻿﻿﻿﻿﻿﻿.container-narrow {
     margin: 0 auto;
     max-width: 970px
 }
@@ -849,6 +849,8 @@ th {
     letter-spacing: 0.5px;
     text-align: left;
     border-bottom: 1px solid #333;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 td {
@@ -858,6 +860,8 @@ td {
     vertical-align: middle;
     border-bottom: 1px solid #262626;
     color: #c8c8c8;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 /* 去掉最后一行底部边框 */

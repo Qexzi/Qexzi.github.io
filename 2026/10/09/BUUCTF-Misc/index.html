@@ -1,0 +1,2122 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>Misc合集 | Qexzi&#39;s Blog</title>
+  <meta name="author" content="Qexzi">
+  
+  <meta name="description" content="前言处理原有的“烂尾楼”笔记
+
+一、基础知识1. 文件头文件头（File Header），也称为魔数（Magic Number） 或文件签名（File Signature），是文件开头的一段固定字节序列，用于标识文件的真实格式。它比文件后缀名更可靠，因为后缀可以被轻易修改。
+
+
+
+文件类型
+常用扩展名
+文件头 (十六进制 Hex)
+文件尾 (部分格式)
+简要说明
+
+
+
+PNG 图像
+.png
+89 50 4E 47 0D 0A 1A 0A
+AE 42 60 82
+8字节签名，开头\x89PNG非常独特
+
+
+JPEG 图像
+.jpg, .jpeg
+FF D8 FF
+FF D9
+最常见的照片格式
+
+
+GIF 图像
+.gif
+47 49 46 38 (GIF8)
+00 3B
+支持动图，文件头后常跟39 61或37 61
+
+
+BMP 图像
+.bmp
+42 4D (BM)
+-
+位图文件，开头两个字母即为”BM”
+
+
+TIFF 图像
+.tif, .tiff
+49 49 2A 00 或 4D 4D 00 2A
+-
+两种字节序，分别对应小端和大端
+
+
+PDF 文档
+.pdf
+25 50 44 46 2D (%PDF-)
+-
+文档格式，开头为%PDF-
+
+
+ZIP 压缩包
+.zip
+50 4B 03 04 (PK..)
+50 4B
+常见压缩格式，很多Office新格式也基于它
+
+
+RAR 压缩包
+.rar
+52 61 72 21 1A 07 00
+-
+另一种常见压缩格式
+
+
+7-Zip 压缩包
+.7z
+37 7A BC AF 27 1C
+-
+高压缩比格式
+
+
+GZIP 压缩包
+.gz
+1F 8B
+-
+常用于Linux系统的压缩格式
+
+
+MS Office (旧)
+.doc, .xls, .ppt
+D0 CF 11 E0 A1 B1 1A E1
+-
+传统的复合文档格式，Word&amp;#x2F;Excel&amp;#x2F;PPT共用
+
+
+MP3 音频
+.mp3
+49 44 33 (ID3) 或 FF FB
+-
+常见音频格式，ID3表示有元数据标签
+
+
+WAV 音频
+.wav
+52 49 46 46 (RIFF)
+-
+无损音频，文件头为RIFF
+
+
+AVI 视频
+.avi
+41 56 49 20 (AVI )
+-
+常见视频容器格式
+
+
+MP4 视频
+.mp4
+66 74 79 70 (ftyp)
+-
+现代视频格式，通常在文件偏移量4的位置出现ftyp
+
+
+ELF 可执行文件
+(Linux)
+7F 45 4C 46 (\x7FELF)
+-
+Linux下的可执行文件格式
+
+
+
+注意：FF D8 FF 是JPEG文件头的前三个字节，但完整的JPEG文件头通常是 FF D8 FF E0 (JFIF) 或 FF D8 FF E1 (EXIF)，FF D8 是其固定起始。
+
+2. 图片隐写的常用工具file"> 
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Misc合集"/>
+  <meta property="og:site_name" content="Qexzi&#39;s Blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+  
+    <link href="/zhuzhuxia.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-70812759-1');
+</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 8.1.1"><script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true,
+    processEnvironments: true
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  startup: {
+    pageReady: () => {
+      return MathJax.startup.defaultPageReady();
+    }
+  }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Qexzi&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class=""></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class=""></i>Tags
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">
+			<h1> Misc合集</h1>
+		</div>
+	
+
+
+
+
+<!-- Reading progress bar -->
+<div class="reading-progress-bar" id="reading-progress-bar"></div>
+
+
+<div class="row post">
+		<!-- cols -->
+		
+		<div id="top_meta"></div>
+		<div class="col-md-9">
+		
+
+		<!-- content -->
+		<div class="mypage">
+		  
+		  <!-- 文章统计 -->
+		  <div class="article-stats">
+		    <i class="fa fa-file-text"></i> 字数: <span id="word-count">计算中...</span>
+		    <span style="margin-left: 12px;"><i class="fa fa-clock-o"></i> 阅读时长: <span id="reading-time">计算中...</span></span>
+		  </div>
+		  
+		  
+
+		  <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>处理原有的“烂尾楼”笔记</p>
+<hr>
+<h1 id="一、基础知识"><a href="#一、基础知识" class="headerlink" title="一、基础知识"></a>一、基础知识</h1><h2 id="1-文件头"><a href="#1-文件头" class="headerlink" title="1. 文件头"></a>1. 文件头</h2><p>文件头（File Header），也称为<strong>魔数（Magic Number）</strong> 或<strong>文件签名（File Signature）</strong>，是文件开头的一段固定字节序列，用于标识文件的真实格式。它比文件后缀名更可靠，因为后缀可以被轻易修改。</p>
+<table>
+<thead>
+<tr>
+<th align="left">文件类型</th>
+<th align="left">常用扩展名</th>
+<th align="left">文件头 (十六进制 Hex)</th>
+<th align="left">文件尾 (部分格式)</th>
+<th align="left">简要说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>PNG 图像</strong></td>
+<td align="left">.png</td>
+<td align="left"><code>89 50 4E 47 0D 0A 1A 0A</code></td>
+<td align="left"><code>AE 42 60 82</code></td>
+<td align="left">8字节签名，开头<code>\x89PNG</code>非常独特</td>
+</tr>
+<tr>
+<td align="left">JPEG 图像</td>
+<td align="left">.jpg, .jpeg</td>
+<td align="left"><code>FF D8 FF</code></td>
+<td align="left"><code>FF D9</code></td>
+<td align="left">最常见的照片格式</td>
+</tr>
+<tr>
+<td align="left">GIF 图像</td>
+<td align="left">.gif</td>
+<td align="left"><code>47 49 46 38</code> (GIF8)</td>
+<td align="left"><code>00 3B</code></td>
+<td align="left">支持动图，文件头后常跟<code>39 61</code>或<code>37 61</code></td>
+</tr>
+<tr>
+<td align="left">BMP 图像</td>
+<td align="left">.bmp</td>
+<td align="left"><code>42 4D</code> (BM)</td>
+<td align="left">-</td>
+<td align="left">位图文件，开头两个字母即为”BM”</td>
+</tr>
+<tr>
+<td align="left">TIFF 图像</td>
+<td align="left">.tif, .tiff</td>
+<td align="left"><code>49 49 2A 00</code> 或 <code>4D 4D 00 2A</code></td>
+<td align="left">-</td>
+<td align="left">两种字节序，分别对应小端和大端</td>
+</tr>
+<tr>
+<td align="left">PDF 文档</td>
+<td align="left">.pdf</td>
+<td align="left"><code>25 50 44 46 2D</code> (%PDF-)</td>
+<td align="left">-</td>
+<td align="left">文档格式，开头为<code>%PDF-</code></td>
+</tr>
+<tr>
+<td align="left">ZIP 压缩包</td>
+<td align="left">.zip</td>
+<td align="left"><code>50 4B 03 04</code> (PK..)</td>
+<td align="left"><code>50 4B</code></td>
+<td align="left">常见压缩格式，很多Office新格式也基于它</td>
+</tr>
+<tr>
+<td align="left">RAR 压缩包</td>
+<td align="left">.rar</td>
+<td align="left"><code>52 61 72 21 1A 07 00</code></td>
+<td align="left">-</td>
+<td align="left">另一种常见压缩格式</td>
+</tr>
+<tr>
+<td align="left">7-Zip 压缩包</td>
+<td align="left">.7z</td>
+<td align="left"><code>37 7A BC AF 27 1C</code></td>
+<td align="left">-</td>
+<td align="left">高压缩比格式</td>
+</tr>
+<tr>
+<td align="left">GZIP 压缩包</td>
+<td align="left">.gz</td>
+<td align="left"><code>1F 8B</code></td>
+<td align="left">-</td>
+<td align="left">常用于Linux系统的压缩格式</td>
+</tr>
+<tr>
+<td align="left">MS Office (旧)</td>
+<td align="left">.doc, .xls, .ppt</td>
+<td align="left"><code>D0 CF 11 E0 A1 B1 1A E1</code></td>
+<td align="left">-</td>
+<td align="left">传统的复合文档格式，Word&#x2F;Excel&#x2F;PPT共用</td>
+</tr>
+<tr>
+<td align="left">MP3 音频</td>
+<td align="left">.mp3</td>
+<td align="left"><code>49 44 33</code> (ID3) 或 <code>FF FB</code></td>
+<td align="left">-</td>
+<td align="left">常见音频格式，<code>ID3</code>表示有元数据标签</td>
+</tr>
+<tr>
+<td align="left">WAV 音频</td>
+<td align="left">.wav</td>
+<td align="left"><code>52 49 46 46</code> (RIFF)</td>
+<td align="left">-</td>
+<td align="left">无损音频，文件头为<code>RIFF</code></td>
+</tr>
+<tr>
+<td align="left">AVI 视频</td>
+<td align="left">.avi</td>
+<td align="left"><code>41 56 49 20</code> (AVI )</td>
+<td align="left">-</td>
+<td align="left">常见视频容器格式</td>
+</tr>
+<tr>
+<td align="left">MP4 视频</td>
+<td align="left">.mp4</td>
+<td align="left"><code>66 74 79 70</code> (ftyp)</td>
+<td align="left">-</td>
+<td align="left">现代视频格式，通常在文件偏移量4的位置出现<code>ftyp</code></td>
+</tr>
+<tr>
+<td align="left">ELF 可执行文件</td>
+<td align="left">(Linux)</td>
+<td align="left"><code>7F 45 4C 46</code> (\x7FELF)</td>
+<td align="left">-</td>
+<td align="left">Linux下的可执行文件格式</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>注意</strong>：<code>FF D8 FF</code> 是JPEG文件头的前三个字节，但完整的JPEG文件头通常是 <code>FF D8 FF E0</code> (JFIF) 或 <code>FF D8 FF E1</code> (EXIF)，<code>FF D8</code> 是其固定起始。</p>
+</blockquote>
+<h2 id="2-图片隐写的常用工具"><a href="#2-图片隐写的常用工具" class="headerlink" title="2. 图片隐写的常用工具"></a>2. 图片隐写的常用工具</h2><p><strong>file</strong></p>
+<blockquote>
+<p>Linux 自带的工具，用于快速查看文件类型。只能读取文件头部特征识别单一文件类型，无法检测文件末尾追加的隐藏数据。</p>
+</blockquote>
+<p><strong>Binwalk</strong></p>
+<blockquote>
+<p>一个自动提取文件系统的工具。最大优点是可自动完成指定文件的扫描，智能发掘潜藏在文件中所有可疑的文件类型及文件系统。</p>
+<p>相比 <code>file</code> 命令：<code>file</code> 只从文件第一个字节开始识别，且通常只能把一个文件识别成一个类型，很难看出是否隐藏其他文件；Binwalk 能很好地完成这类任务。</p>
+<p>快速提取文件命令：<code>binwalk -e 文件名称</code></p>
+<p>补充知识点：<code>-e</code> 是 <code>--extract</code>，表示自动提取扫描到的内嵌文件；<code>-Me</code> 常用组合，递归提取。Kali 默认自带 Binwalk，常用于固件分析、CTF 文件追加隐写（图种）。</p>
+</blockquote>
+<p><strong>foremost</strong></p>
+<blockquote>
+<p>基于文件开始格式、文件结束标志和内部数据结构进行恢复文件的程序。它通过分析不同类型文件的头、尾和内部数据结构，与镜像文件的数据进行比对，以还原文件。</p>
+<p>默认支持 19 种类型文件的恢复，用户还可以通过配置文件扩展支持其他文件类型。有时候 Binwalk 无法正确分离出文件，可以尝试使用 foremost 分离。</p>
+<p>常用命令：<code>foremost -i 源文件 -o 输出目录</code></p>
+</blockquote>
+<p><strong>dd</strong></p>
+<blockquote>
+<p>半自动化工具。前面两种是自动化分离工具，当自动化工具不能实现文件分离时，可以用 dd 来手动分离。</p>
+<p>常用命令：<code>dd if=源文件名 bs=1 skip=开始分离的字节数 of=目标文件名</code></p>
+<ul>
+<li>if：input file 输入文件</li>
+<li>bs：block size 单次读取字节大小，bs&#x3D;1 代表按单字节读取</li>
+<li>skip：跳过前面多少字节开始读取</li>
+</ul>
+</blockquote>
+<p><strong>Stegsolve</strong></p>
+<blockquote>
+<p>CTF 中最常用来检测 LSB 隐写痕迹的Java图形工具。它可以对图片进行多种操作，查看不同比特位平面、通道提取、XOR、SUB等运算。</p>
+<ul>
+<li>File Format：文件格式，主要查看图片的具体信息。</li>
+<li>Data Extract：数据抽取，抽取图片中隐藏的LSB&#x2F;MSB数据。</li>
+<li>Frame Browser：帧浏览器，主要对 GIF 之类的动图进行分解。</li>
+<li>Image Combiner：拼图，图片拼接。</li>
+</ul>
+<blockquote>
+<p>注意：StegSolve是GUI程序，WSL终端无法直接调用；Windows下使用<code>java -jar StegSolve.jar</code>启动。LSB提取核心配置：勾选R&#x2F;G&#x2F;B通道bit0，Bit Order改为<code>LSB First</code>。</p>
+</blockquote>
+</blockquote>
+<p><strong>Stegdetect</strong></p>
+<blockquote>
+<p>主要用于分析 JPEG 文件，可以检测通过 JSteg、JPHide、OutGuess、Invisible Secrets、F5、appendX 和 Camouflage 等隐写工具隐藏的信息。属于老旧工具，现代CTF使用变少。</p>
+<p>Stegdetect 通过统计测试来分析图像文件中是否包含隐藏内容。它运行静态测试以判断隐藏内容是否存在，此外还会尝试识别隐藏内容是通过哪个隐写工具嵌入的。</p>
+<p>常用命令：<code>stegdetect -s 10.0 文件名</code></p>
+</blockquote>
+<p><strong>png-dimensions-bruteforcer（PCRT&#x2F;IHDR爆破工具统称）</strong></p>
+<blockquote>
+<p>专门针对PNG IHDR宽高篡改题目。PNG头部IHDR块存储宽高，篡改宽高后会造成图片只显示半截，同时IHDR块CRC校验失效。工具自动遍历宽高范围，计算CRC32匹配原始校验值，自动修复IHDR并输出完整PNG。</p>
+<p>WSL可使用Python脚本替代，无需额外安装依赖；Windows端替代品为TweakPNG。</p>
+</blockquote>
+<p><strong>zsteg</strong></p>
+<blockquote>
+<p>Linux&#x2F;WSL 环境下PNG&#x2F;BMP LSB隐写首选命令行工具，用ruby编写。自动遍历所有通道、比特位、LSB&#x2F;MSB、通道顺序组合，自动识别隐藏文本、图片、二进制文件。非常适合替代StegSolve做LSB批量扫描。</p>
+<p>常用命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">zsteg -a test.png          <span class="comment"># -a 全量扫描所有通道和比特位</span></span><br><span class="line">zsteg -E <span class="string">&quot;b1,rgb,lsb,xy&quot;</span> test.png &gt; hidden.png   <span class="comment"># 提取指定LSB数据，重定向输出文件</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：0.2.14版本无<code>-o</code>输出参数，提取二进制必须使用<code>&gt;</code>标准输出重定向。</p>
+</blockquote>
+</blockquote>
+<p><strong>stegseek</strong></p>
+<blockquote>
+<p>现代隐写爆破工具，针对<code>steghide</code>嵌入的隐写文件。使用高速字典爆破，比原版steghide暴力破解速度快非常多。<br>steghide隐写：一般嵌入JPG，需要密码才能提取；stegseek可以字典爆破密码，自动提取隐藏文件。</p>
+<p>常用命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">stegseek test.jpg wordlist.txt   <span class="comment"># 使用字典爆破密码并自动提取内容</span></span><br><span class="line">stegseek --crack test.jpg        <span class="comment"># 使用内置默认字典快速爆破</span></span><br></pre></td></tr></table></figure></blockquote>
+<p><strong>StegoForge</strong></p>
+<blockquote>
+<p>新一代跨平台隐写工具，支持图片隐写嵌入&#x2F;提取，支持LSB、DCT域隐写，支持带密码加密隐写。可作为steghide现代化替代品，支持更多图片格式。<br>常用命令：<code>stegoforge extract -i test.png -o out.bin</code></p>
+</blockquote>
+<p><strong>aletheia</strong></p>
+<blockquote>
+<p>JPG DCT域隐写检测工具，替代老旧的stegdetect。基于统计学分析JPEG的DCT系数，检测F5、Outguess等经典JPG隐写，适合JPG隐写类CTF题目。<br>针对DCT域隐写（JPG），<strong>不能用于PNG LSB检测</strong>。</p>
+</blockquote>
+<p><strong>stegoveritas</strong></p>
+<blockquote>
+<p>一站式Misc隐写自动化扫描工具，集成大量隐写检测脚本：自动调用binwalk、exif解析、LSB扫描、steghide检测、文件哈希、DCT统计等。上传图片一键输出全部隐写相关结果，适合快速批量排查。</p>
+<p>安装：需要Python环境，<code>pip install stegoveritas</code><br>常用命令：<code>stegoveritas test.png</code></p>
+</blockquote>
+<h3 id="pngcheck"><a href="#pngcheck" class="headerlink" title="pngcheck"></a><strong>pngcheck</strong></h3><blockquote>
+<p>PNG文件结构校验工具，专门用于检测PNG文件的块完整性、CRC校验值和数据块合法性。是CTF中排查PNG隐写、宽高篡改、文件拼接的前置快速检测工具。</p>
+<p>核心作用：逐块检查PNG的IHDR、IDAT、IEND等标准块，校验每个块的CRC32是否匹配。如果出现CRC错误，通常意味着块数据被篡改（最常见为IHDR宽高被修改）；如果IEND块后存在额外数据，可识别出文件尾部拼接隐写。</p>
+<p>安装：<code>sudo apt install pngcheck</code>（Kali&#x2F;WSL默认源可直接安装）</p>
+<p>常用命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pngcheck test.png          <span class="comment"># 基础校验，快速返回是否存在CRC/结构错误</span></span><br><span class="line">pngcheck -v test.png       <span class="comment"># 详细模式，输出每个块的偏移、长度、CRC值和类型</span></span><br><span class="line">pngcheck -7 test.png       <span class="comment"># 检测PNG尾部是否追加了7z/zip压缩包（文件拼接隐写）</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：当PNG图片显示不完整、且binwalk未识别出异常时，优先用pngcheck校验IHDR块CRC，判断是否为宽高篡改题。</p>
+</blockquote>
+</blockquote>
+<h3 id="stegg"><a href="#stegg" class="headerlink" title="stegg"></a><strong>stegg</strong></h3><blockquote>
+<p>现代Python开发的隐写分析套件，主打图片隐写的自动化扫描与提取，集成LSB位平面分析、DCT域统计检测等多种算法，自带终端TUI交互界面，适合快速批量排查图片隐写。</p>
+<p>注意：该工具核心能力集中在图片领域，<strong>对WAV&#x2F;MP3等音频文件支持极差</strong>，不推荐用于音频隐写排查。</p>
+<p>安装：<code>pipx install stegg</code></p>
+<p>常用命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">stegg analyze test.png     <span class="comment"># 自动分析图片隐写特征，输出可疑点</span></span><br><span class="line">stegg decode test.png      <span class="comment"># 尝试自动解码提取图片中的隐藏数据</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>定位：可作为老旧工具stegdetect的现代替代，用于图片隐写的初步快速筛查。</p>
+</blockquote>
+</blockquote>
+<h2 id="3-图片的基本概念"><a href="#3-图片的基本概念" class="headerlink" title="3. 图片的基本概念"></a>3. 图片的基本概念</h2><p><strong>数字图像</strong></p>
+<blockquote>
+<p>计算机中的图片本质上是一个数字化的像素矩阵。现实中的连续图像经过采样、量化和编码后，变成离散的二进制数据。图片隐写、图片分析、文件分离，本质上都是在操作这些二进制数据。</p>
+</blockquote>
+<p><strong>像素</strong></p>
+<blockquote>
+<p>像素是图像的最小组成单位。每个像素保存一个或多个颜色分量。例如 24 位 RGB 图像中，一个像素由 R、G、B 三个分量组成，每个分量通常占 8 位。</p>
+</blockquote>
+<p><strong>分辨率</strong></p>
+<blockquote>
+<p>分辨率表示图像的宽和高，例如 <code>1920×1080</code>。总像素数为“宽 × 高”。分辨率越高，图像越清晰，数据量也越大，通常可用于隐藏信息的空间也越大。</p>
+</blockquote>
+<p><strong>色彩深度 &#x2F; 位深</strong></p>
+<blockquote>
+<p>位深表示每个像素用多少 bit 来表示颜色。位深越高，能表示的颜色越多，文件通常也越大。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="left">位深</th>
+<th align="left">每像素 bit</th>
+<th align="left">颜色数</th>
+<th align="left">常见说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1 位</td>
+<td align="left">1</td>
+<td align="left">2</td>
+<td align="left">二值图像，只有黑和白</td>
+</tr>
+<tr>
+<td align="left">8 位</td>
+<td align="left">8</td>
+<td align="left">256</td>
+<td align="left">灰度图或索引色图像</td>
+</tr>
+<tr>
+<td align="left">24 位</td>
+<td align="left">24</td>
+<td align="left">约 1677 万</td>
+<td align="left">真彩色，R&#x2F;G&#x2F;B 各 8 位</td>
+</tr>
+<tr>
+<td align="left">32 位</td>
+<td align="left">32</td>
+<td align="left">约 1677 万 + 透明度</td>
+<td align="left">常见为 RGBA，A 表示 Alpha 透明度</td>
+</tr>
+</tbody></table>
+<p><strong>颜色通道</strong></p>
+<blockquote>
+<p>通道是颜色分量的存储方式。常见有：</p>
+<ul>
+<li>RGB：红、绿、蓝三通道；</li>
+<li>RGBA：RGB 加 Alpha 透明度通道；</li>
+<li>灰度：单通道；</li>
+<li>YCbCr：亮度 Y 和两个色度通道 Cb、Cr。</li>
+</ul>
+<p>图片隐写中，经常针对某一个通道或通道之间的差异进行分析，例如 LSB 隐写。</p>
+</blockquote>
+<p><strong>颜色模式</strong></p>
+<blockquote>
+<p>颜色模式描述图像如何表示颜色：</p>
+<ul>
+<li>RGB：屏幕显示常用，加色模式；</li>
+<li>CMYK：印刷常用，减色模式；</li>
+<li>灰度：只有亮度信息；</li>
+<li>索引色：像素存的是调色板索引，不是真实颜色值；</li>
+<li>YCbCr：JPEG 压缩过程中常用的中间颜色空间。</li>
+</ul>
+</blockquote>
+<p><strong>位图与矢量图</strong></p>
+<blockquote>
+<p>位图由像素点阵组成，例如 BMP、PNG、JPEG、GIF，缩放后容易失真。矢量图由几何图形描述，例如 SVG，缩放不失真。图片隐写通常针对位图，因为位图有大量可操作的像素数据。</p>
+</blockquote>
+<p><strong>有损压缩与无损压缩</strong></p>
+<blockquote>
+<ul>
+<li>无损压缩：解压后能完全恢复原图，例如 PNG、GIF、BMP、部分 TIFF；</li>
+<li>有损压缩：解压后不能完全恢复原图，例如 JPEG。</li>
+</ul>
+<p>图片隐写时要注意：如果图像经过有损压缩，隐藏数据可能被破坏；所以很多 LSB 隐写更常出现在 PNG、BMP 等无损格式中。</p>
+</blockquote>
+<p><strong>调色板 &#x2F; 索引色</strong></p>
+<blockquote>
+<p>GIF、PNG-8 等格式会把颜色保存在调色板中，像素数据只存索引值。调色板顺序、索引值、未使用颜色等都可能成为隐写或异常分析的位置。</p>
+</blockquote>
+<p><strong>扫描行与步长</strong></p>
+<blockquote>
+<p>图像数据通常按行存储。某些格式为了对齐，会在每行末尾填充额外字节。例如 BMP 每行字节数通常按 4 字节对齐，不足时补 <code>00</code>。这些填充字节不是像素，但分析文件时不能忽略。</p>
+</blockquote>
+<p><strong>通道顺序与像素排列</strong></p>
+<blockquote>
+<p>不同格式的通道顺序可能不同。例如 BMP 常见存储顺序是 BGR，而 PNG 常见是 RGB 或 RGBA。像素排列也可能有自上而下或自下而上的区别。分析图片数据时，这些细节会影响提取结果。</p>
+</blockquote>
+<p><strong>常见图片格式与隐写关系</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">格式</th>
+<th align="left">压缩方式</th>
+<th align="left">主要特点</th>
+<th align="left">隐写常见切入点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">BMP</td>
+<td align="left">通常不压缩</td>
+<td align="left">结构简单，像素数据直观</td>
+<td align="left">LSB、行填充、附加数据</td>
+</tr>
+<tr>
+<td align="left">PNG</td>
+<td align="left">无损压缩</td>
+<td align="left">块结构，支持 Alpha</td>
+<td align="left">数据块、LSB、调色板、附加数据</td>
+</tr>
+<tr>
+<td align="left">JPEG</td>
+<td align="left">有损压缩</td>
+<td align="left">DCT 变换，APPn 元数据多</td>
+<td align="left">DCT 系数、APPn、量化表、附加数据</td>
+</tr>
+<tr>
+<td align="left">GIF</td>
+<td align="left">无损索引色</td>
+<td align="left">调色板、多帧</td>
+<td align="left">调色板、帧分解、LSB、附加数据</td>
+</tr>
+<tr>
+<td align="left">TIFF</td>
+<td align="left">可无损可有损</td>
+<td align="left">标签结构复杂</td>
+<td align="left">标签、附加数据、像素排列</td>
+</tr>
+</tbody></table>
+<p><strong>总结</strong></p>
+<blockquote>
+<p>图片的基本概念核心是：像素、分辨率、位深、通道、颜色模式、压缩方式。理解这些之后，才能判断图片数据如何存储、隐写可能藏在哪里，以及为什么有些隐写只能用于 PNG&#x2F;BMP，而有些则针对 JPEG 的 DCT 系数或 APPn 段。</p>
+</blockquote>
+<hr>
+<h1 id="二、JPG图片隐写"><a href="#二、JPG图片隐写" class="headerlink" title="二、JPG图片隐写"></a>二、JPG图片隐写</h1><h2 id="1-JPG的文件结构"><a href="#1-JPG的文件结构" class="headerlink" title="1. JPG的文件结构"></a>1. JPG的文件结构</h2><p>以一幅24位（即RGB）彩色图像为例，JPEG的压缩分为四个步骤：</p>
+<ul>
+<li>颜色转换：在将彩色图像进行压缩之前，必须先对颜色模式进行数据转换。转换完成之后还需要进行数据采样。</li>
+<li>DCT变换：是将图像信号在频率域上进行变换，分离出高频和低频信息的处理过程，然后再对图像的高频部分（即图像细节）进行压缩。</li>
+<li>量化：由于下面第四步编码过程中使用的码本都是整数，因此要对频率系数进行量化，将之转换为整数。数据量化后，矩阵中的数据都是近似值，和原始图像数据之间有了差异，这一差异是造成图像压缩后失真的主要原因。</li>
+<li>编码：编码是基于统计特性的方法。</li>
+</ul>
+<p>四个步骤都完成后的JPEG文件，其基本数据结构为两大类型：<strong>段</strong>和<strong>经过压缩编码的图像数据</strong>。</p>
+<p>PS:</p>
+<ul>
+<li>有些段没有长度描述也没有内容，只有段标识和段类型。文件头和文件尾均属于这种段。</li>
+<li>段与段之间无论有多少 FF 都是合法的，这些 FF 称为「填充字节」，必须被忽略掉。</li>
+</ul>
+<p>JPEG文件使用的数据存储方式有多种。最常用的格式称为JPEG文件交换格式（JPEG File Interchange Format，JFIF），文件后缀名为jpg或jpeg。JPEG是有损压缩格式，将像素信息用JPEG保存成文件再读取出来，其中某些像素值会有少许变化。在保存时有个质量参数可在0至100之间选择，参数越大图片就越保真，但图片的体积也就越大。一般情况下选择70或80就足够清晰，和png图片相比，JPEG没有透明度信息。</p>
+<table>
+<thead>
+<tr>
+<th>数据段</th>
+<th>值</th>
+<th>名称</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SOI</td>
+<td>0xFFD8</td>
+<td>图像开始</td>
+</tr>
+<tr>
+<td>APP0</td>
+<td>0xFFE0</td>
+<td>JFIF应用资料块</td>
+</tr>
+<tr>
+<td>APPn</td>
+<td>0xFFE1 - 0xFFEF</td>
+<td>其他的应用资料块(n, 1～15)</td>
+</tr>
+<tr>
+<td>DQT</td>
+<td>0xFFDB</td>
+<td>量化表</td>
+</tr>
+<tr>
+<td>SOF0</td>
+<td>0xFFC0</td>
+<td>帧开始</td>
+</tr>
+<tr>
+<td>DHT</td>
+<td>0xFFC4</td>
+<td>霍夫曼(Huffman)表</td>
+</tr>
+<tr>
+<td>SOS</td>
+<td>0xFFDA</td>
+<td>扫描线开始</td>
+</tr>
+<tr>
+<td>EOI</td>
+<td>0xFFD9</td>
+<td>图像结束</td>
+</tr>
+</tbody></table>
+<h2 id="2-常见的隐写方式"><a href="#2-常见的隐写方式" class="headerlink" title="2. 常见的隐写方式"></a>2. 常见的隐写方式</h2><h3 id="2-1-exif信息隐藏"><a href="#2-1-exif信息隐藏" class="headerlink" title="2.1 exif信息隐藏"></a>2.1 exif信息隐藏</h3><p>可交换图像文件格式（英语：Exchangeable image file format，官方简称Exif），是专门为数码相机的照片设定的，可以记录数码照片的属性信息和拍摄数据。jpg图片拥有exif信息，可以通过填充exif信息来隐藏信息，其信息存储在jpg中的APP1段中</p>
+<p>解决方法</p>
+<ul>
+<li>在windows右键点击图片，选择属性，可以查看部分的exif信息。</li>
+<li>在linux使用工具exiftool可以看到所有的exif信息。</li>
+</ul>
+<h3 id="2-2-字符附加"><a href="#2-2-字符附加" class="headerlink" title="2.2 字符附加"></a>2.2 字符附加</h3><p>在附加式的图片隐写术中，我们通常是用某种程序或者某种方法在载体文件中直接附加上需要被隐写的字符串或其他信息，由于写入的位置对图片来说无关紧要，所以不会影响图片的正常打开和识别。</p>
+<p>解决方法</p>
+<ul>
+<li>用16进制编辑器打开图片，查找和flag有关的字符，出现在文件末尾的可能性更大</li>
+<li>在linux下，使用strings命令，可以将文件中的所有字符串打印出来，strings命令在对象文件或二进制文件中查找可打印的字符串。字符串是4个或更多可打印字符的任意序列，以换行符或空字符结束。 strings命令对识别随机对象文件很有用。</li>
+<li>常用命令：strings 文件名称</li>
+</ul>
+<h3 id="2-3-文件结合"><a href="#2-3-文件结合" class="headerlink" title="2.3 文件结合"></a>2.3 文件结合</h3><p>一种采用特殊方式将图片文件（如JPG格式）与其他文件结合起来的文件。该文件一般保存为JPG格式，可以正常显示图片，当有人获取该图片后，可以修改文件的后缀名，比如结合的是zip文件，将图片改为zip压缩文件，在文件无损坏的情况下就可以以zip文件直接打开。</p>
+<p>图种是一种以图片文件为载体，然后将zip等压缩包文件附加在图片文件后面。因为操作系统识别的过程中是，从文件头标志，到文件的结束标志位，当系统识别到图片的结束标志位后，默认是不再继续识别的，所以我们在通常情况下只能看到它是只是一张图片。</p>
+<p>解决方法</p>
+<ul>
+<li>在windows下修改后缀名或者16进制编辑器手工分离</li>
+<li>在linux下使用binwalk，dd, foremost工具分离文件</li>
+</ul>
+<h3 id="2-4-基于DCT域的JPG图片隐写"><a href="#2-4-基于DCT域的JPG图片隐写" class="headerlink" title="2.4 基于DCT域的JPG图片隐写"></a>2.4 基于DCT域的JPG图片隐写</h3><p>因为DCT是一种有损压缩（Loss Compression）技术，但一般不会影响图像的视觉效果，可以通过这个特性来隐藏信息。在这个隐写类型中，常见的隐写方法有JSteg、JPHide、Outguess、F5等等</p>
+<p>解决方法</p>
+<ul>
+<li>使用Stegdetect检测隐写方式，并且还可以基于字典暴力破解密码方法提取通过Jphide、outguess等方式嵌入的隐藏信息。</li>
+<li>根据Stegdetect的判断结果，使用JSteg、JPHide、OutGuess、Invisible Secrets、F5等工具完成解密。</li>
+</ul>
+<hr>
+<h1 id="三、PNG图片隐写"><a href="#三、PNG图片隐写" class="headerlink" title="三、PNG图片隐写"></a>三、PNG图片隐写</h1><h2 id="1-PNG的文件结构"><a href="#1-PNG的文件结构" class="headerlink" title="1. PNG的文件结构"></a>1. PNG的文件结构</h2><p>PNG 是一种无损压缩的位图片形格式，其设计目的是试图替代 GIF 和 TIFF 文件格式，同时增加一些 GIF 文件格式所不具备的特性。PNG 图像格式文件（或者称为数据流）由一个 8 字节的 PNG 文件署名（PNG file signature）域和按照特定结构组织的 3 个以上的数据块（chunk）组成。</p>
+<p>PNG 定义了两种类型的数据块，一种是称为关键数据块（critical chunk），这是必需的数据块，另一种叫做辅助数据块（ancillary chunks），这是可选的数据块。关键数据块定义了 4 个标准数据块（IHDR、PLTE、IDAT、IEND），每个 PNG 文件都必须包含它们，PNG 读写软件也都必须要支持这些数据块。</p>
+<p>PNG 文件签名（十六进制）：<br><code>89 50 4E 47 0D 0A 1A 0A</code><br>其中 <code>50 4E 47</code> 即 ASCII 的 <code>PNG</code>。</p>
+<p>PNG图像文件中每一块数据块的格式都是相同的，分别由4个部分组成</p>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>大小（字节）</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Length（长度）</td>
+<td>4</td>
+<td>指定数据块中的数据长度</td>
+</tr>
+<tr>
+<td>Chunk Type Code（数据块类型码）</td>
+<td>4</td>
+<td>数据块类型，例如IHDR、PLTE、IDAT等</td>
+</tr>
+<tr>
+<td>Chunk Data（数据块数据）</td>
+<td>Length</td>
+<td>存储数据</td>
+</tr>
+<tr>
+<td>CRC（循环冗余检测）</td>
+<td>4</td>
+<td>循环冗余码</td>
+</tr>
+</tbody></table>
+<p>CRC循环冗余码生成的计算方式是通过对ChunK Type Code和Chunk Data中的数据进行计算得到的，计算方式如下：<br>$$\boldsymbol{CRC-32&#x3D;x^{32}+x^{26}+x^{23}+x^{22}+x^{16}+x^{12}+x^{11}+x^{10}+x^{8}+x^{7}+x^{5}+x^{4}+x^{2}+x^{1}+1}$$</p>
+<p>PNG 中常见的关键数据块：</p>
+<table>
+<thead>
+<tr>
+<th>数据块</th>
+<th>类型码</th>
+<th>名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>IHDR</td>
+<td>0x49484452</td>
+<td>图像头</td>
+<td>宽、高、位深、颜色类型、压缩方法等</td>
+</tr>
+<tr>
+<td>PLTE</td>
+<td>0x504C5445</td>
+<td>调色板</td>
+<td>索引色图像使用</td>
+</tr>
+<tr>
+<td>IDAT</td>
+<td>0x49444154</td>
+<td>图像数据</td>
+<td>实际压缩后的像素数据，可多个</td>
+</tr>
+<tr>
+<td>IEND</td>
+<td>0x49454E44</td>
+<td>图像结束</td>
+<td>文件结尾标志</td>
+</tr>
+<tr>
+<td>tEXt</td>
+<td>0x74455874</td>
+<td>文本信息</td>
+<td>可存储键值对文本</td>
+</tr>
+<tr>
+<td>zTXt</td>
+<td>0x7A545874</td>
+<td>压缩文本</td>
+<td>压缩后的文本信息</td>
+</tr>
+<tr>
+<td>iTXt</td>
+<td>0x69545874</td>
+<td>国际化文本</td>
+<td>支持 UTF-8</td>
+</tr>
+<tr>
+<td>tIME</td>
+<td>0x74494D45</td>
+<td>时间信息</td>
+<td>最后修改时间</td>
+</tr>
+<tr>
+<td>pHYs</td>
+<td>0x70485973</td>
+<td>物理像素</td>
+<td>像素尺寸、宽高比等</td>
+</tr>
+</tbody></table>
+<h3 id="IHDR"><a href="#IHDR" class="headerlink" title="IHDR"></a>IHDR</h3><p>文件头数据块 IHDR（Header Chunk）：它包含有 PNG 文件中存储的图像数据的基本信息，由 13 字节组成，并要作为第一个数据块出现在 PNG 数据流中，而且一个 PNG 数据流中只能有一个文件头数据块</p>
+<p>其中我们需要了解的是前 8 字节的内容，其中我们主要关注图片的宽和高，出题人经常会去更改一张图片的高度或者宽度使得一张图片显示不完整从而达到隐藏信息的目的。</p>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>大小（字节）</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Width</td>
+<td>4</td>
+<td>图像宽度，以像素为单位</td>
+</tr>
+<tr>
+<td>Height</td>
+<td>4</td>
+<td>图像高度，以像素为单位</td>
+</tr>
+<tr>
+<td>Bit depth</td>
+<td>1</td>
+<td>图像深度</td>
+</tr>
+<tr>
+<td>ColorType</td>
+<td>1</td>
+<td>颜色类型</td>
+</tr>
+<tr>
+<td>Compression method</td>
+<td>1</td>
+<td>压缩方法（LZ77变种算法）</td>
+</tr>
+<tr>
+<td>Filter method</td>
+<td>1</td>
+<td>滤波器方法</td>
+</tr>
+<tr>
+<td>Interlace method</td>
+<td>1</td>
+<td>隔行扫描方法</td>
+</tr>
+</tbody></table>
+<h3 id="PLTE"><a href="#PLTE" class="headerlink" title="PLTE"></a>PLTE</h3><p>调色板数据块 PLTE（palette chunk）：它包含有与索引彩色图像（indexed-color image）相关的彩色变换数据，它仅与索引彩色图像有关，而且要放在图像数据块（image data chunk）之前。真彩色的 PNG 数据流也可以有调色板数据块，目的是便于非真彩色显示程序用它来量化图像数据，从而显示该图像。</p>
+<p>一个PNG文件只能有一个调色板数据块，调色板数据块从下标0开始</p>
+<table>
+<thead>
+<tr>
+<th>数据块名称</th>
+<th>允许多个数据块</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>btRed</td>
+<td>1</td>
+<td>红色颜色值</td>
+</tr>
+<tr>
+<td>btGreen</td>
+<td>1</td>
+<td>绿色颜色值</td>
+</tr>
+<tr>
+<td>btBlue</td>
+<td>1</td>
+<td>蓝色颜色值</td>
+</tr>
+</tbody></table>
+<h3 id="IDAT"><a href="#IDAT" class="headerlink" title="IDAT"></a>IDAT</h3><p>图像数据块 IDAT（image data chunk）：它存储实际的数据，在数据流中可包含多个连续顺序的图像数据块。</p>
+<p>特点如下：</p>
+<ul>
+<li>储存图像像素数据</li>
+<li>在数据流中可包含多个连续顺序的图像数据块</li>
+<li>采用 LZ77 算法的派生算法进行压缩</li>
+<li>可以用 zlib 解压缩</li>
+</ul>
+<p>值得注意的是，IDAT 块只有当上一个块充满时，才会继续一个新的块。</p>
+<h3 id="IEND"><a href="#IEND" class="headerlink" title="IEND"></a>IEND</h3><p>PNG的图像结束数据（IEND）用来标记PNG文件结束，并且必须要放在文件的尾部。</p>
+<p>一般情况下，所有PNG图像结束数据（IEND）的十六进制数值都是一样的，具体的数值如下：</p>
+<blockquote>
+<p><code>00 00 00 00 49 45 4E 44 AE 42 60 82</code></p>
+</blockquote>
+<p>IEND数据块的长度总是 <code>00 00 00 00</code>，数据标识总是 IEND（<code>49 45 4E 44</code>），因此，CRC码也总是 <code>AE 42 60 82</code><br>出题人可能修改该结构，导致文件无法正常打开。</p>
+<p>PNG 使用 DEFLATE（zlib）进行无损压缩，解码后能完全恢复原始像素。因为无损，所以非常适合 LSB 等像素级隐写。</p>
+<p>与 JPG 相比：</p>
+<ul>
+<li>PNG 没有 DCT 变换，不涉及有损量化；</li>
+<li>支持透明度（Alpha 通道）；</li>
+<li>文件通常比 JPG 大，但画质无损；</li>
+<li>隐写多发生在像素数据、调色板、文本块或附加数据中。</li>
+</ul>
+<h2 id="2-常见的隐写方式-1"><a href="#2-常见的隐写方式-1" class="headerlink" title="2. 常见的隐写方式"></a>2. 常见的隐写方式</h2><h3 id="2-1-LSB-隐写"><a href="#2-1-LSB-隐写" class="headerlink" title="2.1 LSB 隐写"></a>2.1 LSB 隐写</h3><p>LSB 全称 Least Significant Bit，最低有效位。PNG 文件中的图像像素一般是由 RGB 三原色（红绿蓝）组成，每一种颜色占用 8 位，取值范围为 0x00 至 0xFF，即有 256 种颜色，一共包含了 256 的 3 次方的颜色，即 16777216 种颜色。而人类的眼睛可以区分约 1000 万种不同的颜色，意味着人类的眼睛无法区分余下的颜色大约有 6777216 种。</p>
+<p>LSB 隐写就是修改 RGB 颜色分量的最低二进制位（LSB），每个颜色会有 8 bit，LSB 隐写就是修改了像素中的最低的 1 bit，而人类的眼睛不会注意到这前后的变化，每个像素可以携带 3 比特的信息。</p>
+<p>解决方法：</p>
+<ul>
+<li>使用 <strong>Stegsolve</strong> 工具，通过 <code>Data Extract</code> 功能抽取 LSB 数据，可分别查看 R、G、B、Alpha 等通道的最低位平面。</li>
+<li>使用 <strong>zsteg</strong> 工具，专门用于 PNG&#x2F;BMP 的 LSB 隐写检测，可自动尝试多种位平面和通道组合。<br>常用命令：<code>zsteg 文件名.png</code></li>
+<li>使用 Python 脚本（如 PIL、numpy）手动提取每个通道的最低位并重组为字节流。</li>
+<li>有时需要指定通道顺序（如 RGB、BGR）、位平面（如最低位、次低位）或扫描方向。</li>
+</ul>
+<h3 id="2-3-调色板隐写"><a href="#2-3-调色板隐写" class="headerlink" title="2.3 调色板隐写"></a>2.3 调色板隐写</h3><p>对于使用索引色的 PNG（颜色类型为 3），像素数据存储的是调色板索引，而不是真实颜色值。调色板中可能包含未使用的颜色，或者调色板顺序、索引值可以被修改来隐藏信息。</p>
+<p>解决方法：</p>
+<ul>
+<li>用 010 Editor 或 Python 解析 PLTE 块，查看调色板颜色数量和实际使用情况。</li>
+<li>检查调色板中是否有异常颜色、重复颜色或未使用的颜色项。</li>
+<li>修改调色板顺序或索引值可能隐藏数据，需对比原始图像或分析索引分布。</li>
+</ul>
+<h3 id="2-3-IDAT-块隐写-数据修改"><a href="#2-3-IDAT-块隐写-数据修改" class="headerlink" title="2.3 IDAT 块隐写 &#x2F; 数据修改"></a>2.3 IDAT 块隐写 &#x2F; 数据修改</h3><p>IDAT 块存储经过 zlib 压缩的像素数据。隐写者可能：</p>
+<ul>
+<li>在 IDAT 数据中直接插入额外信息；</li>
+<li>修改压缩流，使解压后像素值发生微小变化；</li>
+<li>利用多个 IDAT 块之间的顺序或内容隐藏信息。</li>
+</ul>
+<p>解决方法：</p>
+<ul>
+<li>使用 <strong>pngcheck</strong> 检查 PNG 文件完整性，查看 IDAT 块是否异常。<br>常用命令：<code>pngcheck -v 文件名.png</code></li>
+<li>用 Python 的 zlib 解压 IDAT 数据，分析原始像素，再重新压缩对比。</li>
+<li>用 <strong>binwalk</strong> 扫描是否有内嵌文件。</li>
+</ul>
+<h3 id="2-4-字符附加"><a href="#2-4-字符附加" class="headerlink" title="2.4 字符附加"></a>2.4 字符附加</h3><p>与 JPG 类似，可以在 PNG 文件末尾（IEND 块之后）直接附加字符串或文件。图片仍能正常打开，因为 PNG 解析器在读到 IEND 后就停止解析。</p>
+<p>解决方法：</p>
+<ul>
+<li>用 16 进制编辑器打开，拉到文件末尾，查找 <code>flag</code>、<code>key</code> 等关键字。</li>
+<li>使用 <code>strings 文件名.png</code> 提取所有可打印字符串。</li>
+<li>使用 <code>grep -a &quot;flag&quot; 文件名.png</code> 直接搜索。</li>
+</ul>
+<h3 id="2-5-文件结合（图种）"><a href="#2-5-文件结合（图种）" class="headerlink" title="2.5 文件结合（图种）"></a>2.5 文件结合（图种）</h3><p>将 ZIP、RAR 等压缩包附加在 PNG 文件后面，形成“图种”。修改后缀为 <code>.zip</code> 或用 binwalk、foremost 分离即可。</p>
+<p>解决方法：</p>
+<ul>
+<li>Linux 下：<code>binwalk -e 文件名.png</code> 自动提取内嵌文件。</li>
+<li><code>foremost -i 文件名.png -o 输出目录</code> 进行分离。</li>
+<li>手动分离：用 <code>dd</code> 根据文件头偏移提取。</li>
+<li>Windows 下可改后缀为 <code>.zip</code> 尝试打开。</li>
+</ul>
+<h3 id="2-6-文本块隐写（tEXt-zTXt-iTXt）"><a href="#2-6-文本块隐写（tEXt-zTXt-iTXt）" class="headerlink" title="2.6 文本块隐写（tEXt &#x2F; zTXt &#x2F; iTXt）"></a>2.6 文本块隐写（tEXt &#x2F; zTXt &#x2F; iTXt）</h3><p>PNG 允许在文件中嵌入文本信息，这些信息可能包含提示、密码或 flag。可以用 exiftool 或 pngcheck 查看。</p>
+<p>解决方法：</p>
+<ul>
+<li><code>exiftool 文件名.png</code> 查看所有元数据，包括文本块。</li>
+<li><code>pngcheck -v 文件名.png</code> 会列出所有块，包括 tEXt、zTXt、iTXt。</li>
+<li>用 010 Editor 的 PNG 模板查看文本块内容。</li>
+<li>有时文本被压缩（zTXt）或编码，需要手动解压&#x2F;解码。</li>
+</ul>
+<h3 id="2-7-基于PNG文件格式的隐写"><a href="#2-7-基于PNG文件格式的隐写" class="headerlink" title="2.7 基于PNG文件格式的隐写"></a>2.7 基于PNG文件格式的隐写</h3><p>在 CTF 中，经常通过改变宽和高使得图片显示不完整或者无法显示从而达到隐藏信息的目的。对于这种情况，我们不能轻易修改图片的宽或高的值，应该通过 CRC 的值推算出宽或高的值；或者是修改宽或高的值后，使用 CRC 计算工具，计算得出新的 CRC 值替换原本的值，以防图片报错打不开。</p>
+<p>除了修改宽高以外，IDAT 块也可以末尾的块内隐藏信息，并且不会影响图片的正常显示</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chunk IDAT at offset 0x130008, length 65524</span><br><span class="line">chunk IDAT at offset 0x140008, length 65524</span><br><span class="line">chunk IDAT at offset 0x150008, length 45027</span><br><span class="line">chunk IDAT at offset 0x15aff7, length 138</span><br><span class="line">chunk IEND at offset 0x15b08d, length 0</span><br></pre></td></tr></table></figure>
+
+<p><strong>解决方法：</strong></p>
+<ul>
+<li>由于 CRC 值计算的是数据块类型码及数据块数据，因此可以通过以下脚本计算出图片的原始宽和高</li>
+<li>使用 Stegsolve 检查 IDAT 块是否正常排列</li>
+</ul>
+<h3 id="2-8-图片容差隐写"><a href="#2-8-图片容差隐写" class="headerlink" title="2.8 图片容差隐写"></a>2.8 图片容差隐写</h3><p>容差原本是颜色选取的阈值参数，取值范围为 0～255；<strong>容差数值越大，匹配的颜色范围越广</strong>。CTF 题目出现两张及以上同源图片时，优先考虑容差比对、盲水印这类图像差分类隐写。<br>原理：载体图与含密图绝大部分像素几乎一致，仅少量像素存在微弱差值，肉眼无法分辨，通过图像差分、设置容差阈值，就能把差异区域提取出来，得到隐藏信息。</p>
+<p>解决方法</p>
+<ol>
+<li><p><strong>Beyond Compare（BC）</strong><br>支持图片模式对比，提供容差、范围、混合等调节选项，适合快速可视化两张图片之间像素差异。</p>
+</li>
+<li><p><strong>Photoshop</strong><br>将两张图层重叠，上层图层修改图层混合模式（差值 &#x2F; 排除），再调整对比度、亮度放大微弱像素差，显现隐藏内容；上手门槛略高，但对差分、盲水印类题目适用性很强。</p>
+</li>
+<li><p><strong>imagemagick</strong></p>
+<blockquote>
+<p>compare -fuzz 3% img1.png img2.png diff.png</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="2-9-图层叠加"><a href="#2-9-图层叠加" class="headerlink" title="2.9  图层叠加"></a>2.9  图层叠加</h3><p>图像由图层叠加而成，图层由像素组成，每一张图层可以理解为一层透明的 “玻璃”，它们各自包含独立的内容，可以理解为将各个图层从上到下依次重叠，然后俯视观测第一张图层，各个图层显示的叠加效果为图像最后的显示效果。</p>
+<p><img src="/images/BUUCTF-Misc/image_1.png" alt="在这里插入图片描述"></p>
+<ol>
+<li><strong>Photoshop（图形化工具）</strong><br>打开 PSD 源文件，直接单独显示 &#x2F; 隐藏各个图层，取出被遮挡的隐藏内容；也可以调整图层混合模式、不透明度做差分。</li>
+<li><strong>Stegsolve（CTF 最常用）</strong><br>专门针对帧、通道、位平面，<code>Frame Browser</code>浏览多帧 GIF&#x2F;APNG，切换各个通道、bit 平面，等效拆分图层，比赛首选。</li>
+<li><strong>WSL 命令行现代化方案</strong></li>
+</ol>
+<ul>
+<li><p><code>gifsicle</code>：提取 GIF 每一帧</p>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install gifsicle</span><br><span class="line">gifsicle --unoptimize input.gif &gt; frame_%03d.png</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>imagemagick convert</code>：拆分 APNG、PSD 图层</p>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">convert test.psd frame-%d.png</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="3-0-其他隐写方式"><a href="#3-0-其他隐写方式" class="headerlink" title="3.0 其他隐写方式"></a>3.0 其他隐写方式</h3><ul>
+<li><strong>APNG 多帧</strong>：动态 PNG 可能将信息隐藏在某一帧中，可用 Stegsolve 的 Frame Browser 分解查看。</li>
+<li><strong>Alpha 通道隐写</strong>：如果图片有透明通道，可在 Alpha 通道的 LSB 中隐藏信息。</li>
+</ul>
+<hr>
+<h1 id="四、GIF隐写"><a href="#四、GIF隐写" class="headerlink" title="四、GIF隐写"></a>四、GIF隐写</h1><h2 id="1-GIF文件结构"><a href="#1-GIF文件结构" class="headerlink" title="1. GIF文件结构"></a>1. GIF文件结构</h2><p>GIF 图像文件以数据块 (block) 为单位来存储图像的相关信息。一个 GIF 文件由表示图形 &#x2F; 图像的数据块、数据子块以及显示图形 &#x2F; 图像的控制信息块组成，称为 GIF 数据流 (Data Stream)。数据流中的所有控制信息块和数据块都必须在文件头 (Header) 和文件结束块 (Trailer) 之间。</p>
+<p>GIF 文件格式采用了 LZW (Lempel-Ziv-Walch) 压缩算法来存储图像数据，定义了允许用户为图像设置背景的透明 (transparency) 属性。此外，GIF 文件格式可在一个文件中存放多幅彩色图形 &#x2F; 图像。如果在 GIF 文件中存放有多幅图，它们可以像幻灯片那样显示或者像动画那样演示。</p>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>英文名称</th>
+<th align="center">是否必填</th>
+<th>作用&#x2F;说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GIF署名</td>
+<td>Signature</td>
+<td align="center">必填</td>
+<td>魔数 <code>47 49 46 38</code>（ASCII：<code>GIF87a</code>&#x2F;<code>GIF89a</code>）</td>
+</tr>
+<tr>
+<td>版本号</td>
+<td>Version</td>
+<td align="center">必填</td>
+<td><code>87a</code> 或 <code>89a</code></td>
+</tr>
+<tr>
+<td>逻辑屏幕标识符</td>
+<td>Logical Screen Descriptor</td>
+<td align="center">必填</td>
+<td>定义画布宽高、全局颜色列表标记等</td>
+</tr>
+<tr>
+<td>全局颜色列表</td>
+<td>Global Color Table</td>
+<td align="center">可选</td>
+<td>全局调色板</td>
+</tr>
+<tr>
+<td>图像标识符</td>
+<td>Image Descriptor</td>
+<td align="center">必填</td>
+<td>描述单帧图像位置与尺寸</td>
+</tr>
+<tr>
+<td>图像局部颜色列表</td>
+<td>Local Color Table</td>
+<td align="center">可选</td>
+<td>局部调色板（覆盖全局）</td>
+</tr>
+<tr>
+<td>基于颜色列表的图像数据</td>
+<td>Image Data</td>
+<td align="center">必填</td>
+<td>LZW压缩后的图像像素数据</td>
+</tr>
+<tr>
+<td>图形控制扩展</td>
+<td>Graphic Control Extension</td>
+<td align="center">可选</td>
+<td>控制帧延时、透明、动画逻辑</td>
+</tr>
+<tr>
+<td>注释扩展</td>
+<td>Comment Extension</td>
+<td align="center">可选</td>
+<td>文本注释（<strong>CTF常直接藏flag明文</strong>）</td>
+</tr>
+<tr>
+<td>应用程序扩展</td>
+<td>Application Extension</td>
+<td align="center">可选</td>
+<td>通常为 NETSCAPE2.0，控制循环播放</td>
+</tr>
+<tr>
+<td>纯文本扩展</td>
+<td>Plain Text Extension</td>
+<td align="center">可选</td>
+<td>内嵌文本</td>
+</tr>
+<tr>
+<td>文件结束块</td>
+<td>Trailer</td>
+<td align="center">必填</td>
+<td>结束标记字节 <code>3B</code>（0x3B）</td>
+</tr>
+</tbody></table>
+<p>GIF 文件内部是按块划分的，包括控制块（Control Block）和数据块（Data Sub‑blocks）两种。控制块是控制数据块行为的，根据不同的控制块包含一些不同的控制参数；数据块只包含一些 8‑bit 的字符流，由它前面的控制块来决定它的功能，每个数据块大小从 0 到 255 个字节，数据块的第一个字节指出这个数据块大小（字节数），计算数据块的大小时不包括这个字节，所以一个空的数据块有一个字节，那就是数据块的大小 0x00。下表是一个数据块的结构：</p>
+<table>
+<thead>
+<tr>
+<th>字节偏移 (BYTE)</th>
+<th>字段名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>Block Size（块大小）</td>
+<td>1 字节；代表后面 Data Values 的字节数量，<strong>不包含自身这一字节</strong>；取值范围 <code>0x00 ~ 0xFF</code>（0～255）</td>
+</tr>
+<tr>
+<td>1 ~ 255</td>
+<td>Data Values（块数据）</td>
+<td>8‑bit 字符流，实际长度由上面 Block Size 指定</td>
+</tr>
+</tbody></table>
+<h3 id="文件头"><a href="#文件头" class="headerlink" title="文件头"></a>文件头</h3><p>GIF署名(Signature)和版本号(Version)</p>
+<p>GIF署名用来确认一个文件是否是GIF格式的文件，这一部分由三个字符组成：“GIF”；文件版本号也是由三个字节组成，可以为“87a”或“89a”，具体描述见下表：</p>
+<table>
+<thead>
+<tr>
+<th>字节偏移</th>
+<th>字段</th>
+<th>取值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>Signature（GIF署名）</td>
+<td><code>G</code>、<code>I</code>、<code>F</code>（3字节）</td>
+<td>文件魔数，用于判定是否GIF</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Version（版本号）</td>
+<td><code>87a</code> &#x2F; <code>89a</code>（3字节）</td>
+<td><code>87a</code>：1987年5月，基础GIF   <code>89a</code>：1989年7月，支持动画、透明、各类扩展块（CTF绝大多数GIF题目是89a）</td>
+</tr>
+</tbody></table>
+<h3 id="GIF数据流部分"><a href="#GIF数据流部分" class="headerlink" title="GIF数据流部分"></a>GIF数据流部分</h3><p>这一部分由7个字节组成，定义了GIF图象的大小(Logical Screen Width &amp; Height)、颜色深度(Color Bits)、背景色(Background Color Index)以及有无全局颜色列表(Global Color Table)和颜色列表的索引数(Index Count)，具体描述见下表：</p>
+<table>
+<thead>
+<tr>
+<th>字节偏移</th>
+<th>字段名称</th>
+<th>长度</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>Logical Screen Width（逻辑屏幕宽度）</td>
+<td>2 Byte</td>
+<td>画布宽度，单位像素</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Logical Screen Height（逻辑屏幕高度）</td>
+<td>2 Byte</td>
+<td>画布高度，单位像素</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Packed Fields（压缩位域）</td>
+<td>1 Byte</td>
+<td>拆成4个子位：   • m(bit7)：全局颜色表标志   • cr(bit6<del>4)：颜色深度，深度&#x3D;cr+1   • s(bit3)：颜色表排序标志   • pixel(bit2</del>0)：全局颜色表大小，条目数&#x3D;$2^{(pixel+1)}$</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Background Color Index（背景色索引）</td>
+<td>1 Byte</td>
+<td>全局色表中的背景色编号；无全局色表时该字段无效</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Pixel Aspect Ratio（像素宽高比）</td>
+<td>1 Byte</td>
+<td>像素宽高比</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>位域解析（第5字节，bit7～bit0）</p>
+<ul>
+<li><strong>m</strong>：全局颜色列表标志(Global Color Table Flag)，置1代表存在全局颜色列表，pixel位有效</li>
+<li><strong>cr</strong>：颜色深度(Color Resolution)，<code>cr+1</code> 为图像颜色深度</li>
+<li><strong>s</strong>：分类标志(Sort Flag)，置1代表全局颜色列表按重要性排序</li>
+<li><strong>pixel</strong>：全局颜色列表大小，颜色表索引总数 &#x3D; $\boldsymbol{2^{(pixel+1)}}$</li>
+</ul>
+</blockquote>
+<h3 id="全局颜色列表"><a href="#全局颜色列表" class="headerlink" title="全局颜色列表"></a>全局颜色列表</h3><p>全局颜色列表必须紧跟在逻辑屏幕标识符后面，每个颜色列表索引条目由三个字节组成，按R、G、B的顺序排列。</p>
+<table>
+<thead>
+<tr>
+<th align="center">字节偏移</th>
+<th>字段名称</th>
+<th align="center">长度</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td>Red（红色分量）</td>
+<td align="center">1 Byte</td>
+<td>该颜色索引对应的红色值</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td>Green（绿色分量）</td>
+<td align="center">1 Byte</td>
+<td>该颜色索引对应的绿色值</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td>Blue（蓝色分量）</td>
+<td align="center">1 Byte</td>
+<td>该颜色索引对应的蓝色值</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>一条颜色条目固定占 <strong>3字节（RGB）</strong>；多条依次连续存放</p>
+</blockquote>
+<h3 id="图形控制扩展"><a href="#图形控制扩展" class="headerlink" title="图形控制扩展"></a>图形控制扩展</h3><p>这一部分是可选的（需要89a版本），可以放在一个图象块(图象标识符)或文本扩展块的前面，用来控制跟在它后面的第一个图象（或文本）的渲染(Render)形式，组成结构如下。</p>
+<blockquote>
+<p>处置方法(Disposal Method)指出处置图形的方法</p>
+<ul>
+<li>0 - 不使用处置方法</li>
+<li>1 - 不处置图形，把图形从当前位置移去</li>
+<li>2 - 回复到背景色</li>
+<li>3 - 回复到先前状态</li>
+</ul>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">字节偏移</th>
+<th>字段名称</th>
+<th align="center">长度</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td>Extension Introducer（扩展块标识）</td>
+<td align="center">1 Byte</td>
+<td>固定值 <code>0x21</code>，代表扩展块</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td>Graphic Control Label（图形控制扩展标签）</td>
+<td align="center">1 Byte</td>
+<td>固定值 <code>0xF9</code>，标识图形控制扩展</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td>Block Size（块大小）</td>
+<td align="center">1 Byte</td>
+<td>固定值 <code>4</code>，不含末尾终结器</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td>Packed Fields（压缩位域）</td>
+<td align="center">1 Byte</td>
+<td>bit：保留位、处置方法、i(用户输入标志)、t(透明色标志)</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td>Delay Time（延迟时间）</td>
+<td align="center">2 Byte</td>
+<td>单位：1&#x2F;100秒；非0代表帧等待时间</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td>Transparent Color Index（透明色索引）</td>
+<td align="center">1 Byte</td>
+<td>透明颜色在颜色表中的索引；t&#x3D;1时才生效</td>
+</tr>
+<tr>
+<td align="center">7</td>
+<td>Block Terminator（块终结器）</td>
+<td align="center">1 Byte</td>
+<td>固定值 <code>0x00</code>，标记本扩展块结束</td>
+</tr>
+</tbody></table>
+<h3 id="文件终结器-Trailer"><a href="#文件终结器-Trailer" class="headerlink" title="文件终结器(Trailer)"></a>文件终结器(Trailer)</h3><table>
+<thead>
+<tr>
+<th align="center">字节偏移</th>
+<th>字段名称</th>
+<th align="center">长度</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td>GIF Trailer（文件终结器）</td>
+<td align="center">1 Byte</td>
+<td>固定值 <strong>0x3B</strong>，代表整个GIF文件结束</td>
+</tr>
+</tbody></table>
+<h2 id="2-常见的隐写方式-2"><a href="#2-常见的隐写方式-2" class="headerlink" title="2. 常见的隐写方式"></a>2. 常见的隐写方式</h2><p>GIF隐写按照隐藏信息的载体，可以分为三大类：<strong>基于文件结构隐写、基于空间轴隐藏信息、基于时间轴隐藏信息</strong></p>
+<h3 id="2-1-基于文件结构隐写"><a href="#2-1-基于文件结构隐写" class="headerlink" title="2.1 基于文件结构隐写"></a>2.1 基于文件结构隐写</h3><p>不修改图像像素，通过操纵GIF文件各个数据块存放秘密信息。</p>
+<ul>
+<li>尾部追加隐写：在文件结束标记 <code>0x3B</code> 之后追加数据</li>
+<li>注释扩展块隐写：在Comment Extension扩展块存放明文flag，特征 <code>0x21 0xFE</code></li>
+<li>应用程序扩展块隐写：在NETSCAPE2.0扩展块嵌入数据，特征 <code>0x21 0xFF</code></li>
+<li>子块长度篡改、保留位篡改，制造解析错位隐藏数据</li>
+<li>全局&#x2F;局部颜色表的冗余条目存放数据</li>
+</ul>
+<h3 id="2-2-基于空间轴隐藏信息"><a href="#2-2-基于空间轴隐藏信息" class="headerlink" title="2.2 基于空间轴隐藏信息"></a>2.2 基于空间轴隐藏信息</h3><p>信息嵌入<strong>单帧图像内部</strong>，在像素&#x2F;调色板RGB分量层面隐藏。</p>
+<ul>
+<li>调色板RGB分量LSB隐写（GIF最经典空间隐写）</li>
+<li>图像LZW压缩数据流内部嵌入信息</li>
+<li>单帧图像像素索引LSB隐写</li>
+</ul>
+<h3 id="2-3-基于时间轴隐藏信息"><a href="#2-3-基于时间轴隐藏信息" class="headerlink" title="2.3 基于时间轴隐藏信息"></a>2.3 基于时间轴隐藏信息</h3><p>依托GIF多帧动画特性，<strong>帧与帧之间时序&#x2F;叠加关系携带秘密</strong>，单独一帧无法得到完整信息。</p>
+<ul>
+<li>帧分离后叠加、异或多帧图片还原flag</li>
+<li>修改帧延迟时间，降低播放速度观察一闪而过的内容</li>
+<li>篡改帧处置方法（Disposal Method），改变帧渲染叠加逻辑</li>
+<li>flag拆分在不同帧中，需要拼接全部帧内容</li>
+</ul>
+<h1 id="五、音频隐写"><a href="#五、音频隐写" class="headerlink" title="五、音频隐写"></a>五、音频隐写</h1><h2 id="1-MP3文件格式"><a href="#1-MP3文件格式" class="headerlink" title="1. MP3文件格式"></a>1. MP3文件格式</h2><p><strong>基础概念</strong><br>MP3全称为MPEG Audio Layer 3，它是一种高效的计算机音频编码方案，它以较大的压缩比将音频文件转换成较小的扩展名为.mp3的文件，基本保持源文件的音质。</p>
+<p>MP3音频压缩包含编码和解码两部分，编码是将原始信号转换成电平信号的过程，解码即是逆过程，MP3采用了感知音频编码（Perceptual Audio Coding）这一失真算法。人耳感受声音的频率范围是20Hz-20kHz，MP3截掉了大量的冗余信号和无关的信号，编码器通过混合滤波器组将原始声音变换到频率域，利用心理声学模型，估算刚好能被察觉到的噪声水平，再经过量化，转换成Huffman编码，形成MP3位流。解码器要简单得多，它的任务是从编码后的谱线成分中，经过反量化和逆变换，提取出声音信号。</p>
+<table>
+<thead>
+<tr>
+<th>组成部分</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ID3V2</td>
+<td>位于MP3首部，包含作者，作曲，专辑等信息，长度不固定</td>
+</tr>
+<tr>
+<td>音频数据</td>
+<td>音频数据</td>
+</tr>
+<tr>
+<td>ID3V1</td>
+<td>MP3文件末尾固定的128字节，包含作者作曲专辑等</td>
+</tr>
+<tr>
+<td>说明信息</td>
+<td>某些MP3文件可能会有额外的说明信息</td>
+</tr>
+</tbody></table>
+<p> <strong>MP3音频数据解析</strong><br>MP3由一帧一帧独立音频帧连续拼接而成。</p>
+<p>每一帧结构：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>占用空间</th>
+<th>属性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>帧头</td>
+<td>4字节</td>
+<td>必存在</td>
+</tr>
+<tr>
+<td>CRC校验</td>
+<td>2字节</td>
+<td>可选；帧头第16位&#x3D;1开启</td>
+</tr>
+<tr>
+<td>通道信息（Side Info）</td>
+<td>32字节</td>
+<td>必存在</td>
+</tr>
+<tr>
+<td>压缩声音数据</td>
+<td>N字节</td>
+<td>必存在</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>帧头4字节，是MP3帧的标志；CRC 2字节可选；标准MP3通道附加信息固定32字节，之后是Huffman编码压缩音频数据，解码器逐帧解码播放。</p>
+</blockquote>
+<blockquote>
+<p>CTF重点：MP3为有损压缩，存储的是频域压缩后的数据，<strong>不适合PCM采样LSB隐写</strong>，隐写多考察ID3标签、帧结构保留位、帧间隙隐藏文件。</p>
+</blockquote>
+<h2 id="2-WAV文件结构"><a href="#2-WAV文件结构" class="headerlink" title="2. WAV文件结构"></a>2. WAV文件结构</h2><p>WAVE 文件是非常简单的一种 RIFF 文件（资源互换文件格式），它的格式类型为<code>WAVE</code>。RIFF 块包含两个子块，这两个子块的 ID 分别是<code>fmt</code>和<code>data</code>，其中<code>fmt</code>子块由结构 PCMWAVEFORMAT 所组成，其子块的大小就是 sizeofof (PCMWAVEFORMAT)，数据组成就是 PCMWAVEFORMAT 结构中的数据。WAV 是最接近无损的音乐格式，所以文件大小相对也比较大。<br><img src="/images/BUUCTF-Misc/image_2.png" alt="在这里插入图片描述"></p>
+<h3 id="Format-chunk（fmt-子块）"><a href="#Format-chunk（fmt-子块）" class="headerlink" title="Format chunk（fmt 子块）"></a>Format chunk（fmt 子块）</h3><p>以 <code>&#39;fmt &#39;</code> 为标识，Size 表示该区块数据长度（不含 ID 和 Size 自身）。</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>偏移</th>
+<th>字节</th>
+<th>端序</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ID</td>
+<td>0x00</td>
+<td>4</td>
+<td>大端</td>
+<td>‘fmt ‘ &#x3D; 0x666D7420</td>
+</tr>
+<tr>
+<td>Size</td>
+<td>0x04</td>
+<td>4</td>
+<td>小端</td>
+<td>16（标准PCM）</td>
+</tr>
+<tr>
+<td>AudioFormat</td>
+<td>0x08</td>
+<td>2</td>
+<td>小端</td>
+<td>音频格式，PCM&#x3D;1</td>
+</tr>
+<tr>
+<td>NumChannels</td>
+<td>0x0A</td>
+<td>2</td>
+<td>小端</td>
+<td>声道数</td>
+</tr>
+<tr>
+<td>SampleRate</td>
+<td>0x0C</td>
+<td>4</td>
+<td>小端</td>
+<td>采样率</td>
+</tr>
+<tr>
+<td>ByteRate</td>
+<td>0x10</td>
+<td>4</td>
+<td>小端</td>
+<td>每秒字节数 &#x3D; 采样率×声道×位深&#x2F;8</td>
+</tr>
+<tr>
+<td>BlockAlign</td>
+<td>0x14</td>
+<td>2</td>
+<td>小端</td>
+<td>数据块对齐 &#x3D; 声道×位深&#x2F;8</td>
+</tr>
+<tr>
+<td>BitsPerSample</td>
+<td>0x16</td>
+<td>2</td>
+<td>小端</td>
+<td>采样位数</td>
+</tr>
+</tbody></table>
+<h3 id="Data-chunk"><a href="#Data-chunk" class="headerlink" title="Data chunk"></a>Data chunk</h3><p>Data块中存放的是音频的采样数据。每个sample按照采样的时间顺序写入，对于使用多个字节的sample，使用小端模式存放（低位字节存放在低地址，高位字节存放在高地址）。对于多声道的sample采用交叉存放的方式。例如：立体双声道的sample存储顺序为：声道1的第一个sample，声道2的第一个sample；声道1的第二个sample，声道2的第二个sample；依次类推……</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>偏移地址</th>
+<th>字节数</th>
+<th>端序</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ID</td>
+<td>0x00</td>
+<td>4Byte</td>
+<td>大端</td>
+<td><code>&#39;data&#39;</code> (0x64617461)</td>
+</tr>
+<tr>
+<td>Size</td>
+<td>0x04</td>
+<td>4Byte</td>
+<td>小端</td>
+<td>N</td>
+</tr>
+<tr>
+<td>Data</td>
+<td>0x08</td>
+<td>NByte</td>
+<td>小端</td>
+<td>音频数据</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>注：图片印刷笔误写为<code>0x64617461</code>前面的数字错印成0x64617461之外的值，<code>data</code>四个字符d(0x64)、a(0x61)、t(0x74)、a(0x61)，大端正确值：<strong>0x64617461</strong></p>
+</blockquote>
+<h2 id="3-隐写方式"><a href="#3-隐写方式" class="headerlink" title="3. 隐写方式"></a>3. 隐写方式</h2><h3 id="3-1-摩斯密码"><a href="#3-1-摩斯密码" class="headerlink" title="3.1 摩斯密码"></a>3.1 摩斯密码</h3><p>摩尔斯电码（又译为摩斯密码，Morse code）是一种时通时断的信号代码，通过不同的排列顺序来表达不同的英文字母、数字和标点符号，题目通过将摩斯电码的长短声音放入音频，从而达到隐写的效果<br><strong>解决方式：</strong></p>
+<ul>
+<li>使用 Audacity 观察音频的图像</li>
+<li>通过手动或者在线网站解密</li>
+<li><a target="_blank" rel="noopener" href="https://morsecode.world/international/decoder/audio-decoder-adaptive.html">https://morsecode.world/international/decoder/audio-decoder-adaptive.html</a></li>
+</ul>
+<h3 id="3-2-频谱隐写"><a href="#3-2-频谱隐写" class="headerlink" title="3.2 频谱隐写"></a>3.2 频谱隐写</h3><p>频谱隐写是音频CTF高频考点。音频分为<strong>时域波形</strong>和<strong>频域频谱</strong>，时域只能看到音量大小，切换到频谱视图可以看到不同频率随时间的变化。将文字、二维码等信息绘制在音频高频区域，人耳无法感知，播放音频听不出异常，只有查看频谱图才能发现隐藏内容。</p>
+<p><strong>解决方式：</strong></p>
+<ul>
+<li>使用 Audacity 打开音频，将视图切换为<strong>频谱图</strong>（ spectrogram），放大查看高频区域；</li>
+<li>若出现二维码：截图后使用二维码识别工具解码；</li>
+<li>Linux 命令行工具 <code>sox</code> 也可导出音频频谱图片。</li>
+</ul>
+<blockquote>
+<p>常见坑：默认打开Audacity是波形视图，<strong>必须手动切换到频谱视图</strong>；隐藏内容大多在高频段，需要放大上方频率区域。</p>
+</blockquote>
+<h3 id="3-3-波形隐写"><a href="#3-3-波形隐写" class="headerlink" title="3.3 波形隐写"></a>3.3 波形隐写</h3><p>波形隐写属于<strong>时域隐写</strong>，直接修改音频采样的振幅（波形高低），信息藏在波形轮廓上，频谱图不会有额外内容。一般用高低波形代表二进制<code>0</code>和<code>1</code>，或者在波形中嵌入条形码、标记点。</p>
+<p><strong>解决方式：</strong></p>
+<ul>
+<li>使用 Audacity，保持默认波形视图，横向放大音频；</li>
+<li>观察波形振幅的规律变化，提取01二进制串；</li>
+<li>将二进制串按8bit分组，转换为ASCII字符得到flag。</li>
+</ul>
+<blockquote>
+<p>区分要点：</p>
+<ul>
+<li>频谱隐写：看<strong>频域（频谱图）</strong></li>
+<li>波形隐写：看<strong>时域（波形图）</strong></li>
+</ul>
+</blockquote>
+<h3 id="3-4-基于LSB的音频隐写"><a href="#3-4-基于LSB的音频隐写" class="headerlink" title="3.4 基于LSB的音频隐写"></a>3.4 基于LSB的音频隐写</h3><blockquote>
+<p>仅适用于无损WAV（PCM）音频，MP3等有损压缩音频无法使用LSB隐写，压缩会破坏最低位信息。<br>原理：WAV文件的data块存储PCM采样值，采样二进制最低位LSB对声音影响极小，修改最低比特人耳几乎无法分辨。把flag的二进制数据依次写入每个采样的最低位；提取时读取每个采样的LSB比特，8bit一组转ASCII字符。</p>
+</blockquote>
+<p><strong>解决方式：</strong></p>
+<ul>
+<li>Python内置<code>wave</code>库编写脚本读取WAV采样，提取LSB比特；</li>
+<li>工具：stegolsb、wavsteg、steghide（带密码隐写）；<blockquote>
+<p>注意：立体声WAV采样为交叉存储 L1 R1 L2 R2，编写脚本时要遵循采样顺序读取。</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<h1 id="BUUCTF"><a href="#BUUCTF" class="headerlink" title="BUUCTF"></a>BUUCTF</h1><h2 id="1-图片中的密码"><a href="#1-图片中的密码" class="headerlink" title="1. 图片中的密码"></a>1. 图片中的密码</h2><p>直接exiftools查看</p>
+<p><img src="/images/BUUCTF-Misc/image_3.png" alt="在这里插入图片描述"></p>
+<hr>
+<h2 id="2-你竟然赶我走"><a href="#2-你竟然赶我走" class="headerlink" title="2. 你竟然赶我走"></a>2. 你竟然赶我走</h2><p>使用101打开查看<br><img src="/images/BUUCTF-Misc/image_4.png" alt="在这里插入图片描述"></p>
+<p>可以到直接找到flag, 实际上可以直接 ctrl+f 文本搜索“flag”,也可以使用stings<br><img src="/images/BUUCTF-Misc/image_5.png" alt="在这里插入图片描述"></p>
+<hr>
+<h2 id="3-一叶障目"><a href="#3-一叶障目" class="headerlink" title="3. 一叶障目"></a>3. 一叶障目</h2><p>直接上 101</p>
+<p><img src="/images/BUUCTF-Misc/image_6.png" alt="在这里插入图片描述"><br>出现这个CRC不匹配的错误，一般是图片的宽高有问题，手动修改爆破可以，但是太慢了，直接上在线修复工具</p>
+<p><img src="/images/BUUCTF-Misc/image_7.png" alt="在这里插入图片描述"></p>
+<p>也可以使用python脚本进行爆破</p>
+<p><img src="/images/BUUCTF-Misc/image_8.png" alt="在这里插入图片描述"></p>
+<p> crc偏移实际上不需要自己找了，直接调用库它自己可以定位到（如下面脚本）</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> binascii,struct</span><br><span class="line"></span><br><span class="line">data=<span class="built_in">open</span>(<span class="string">&quot;1.png&quot;</span>,<span class="string">&quot;rb&quot;</span>).read()</span><br><span class="line">ihdr=<span class="built_in">bytearray</span>(data[<span class="number">12</span>:<span class="number">29</span>])</span><br><span class="line">crc_target=<span class="built_in">int</span>.from_bytes(data[<span class="number">29</span>:<span class="number">33</span>],<span class="string">&quot;big&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> w <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4096</span>):</span><br><span class="line">    <span class="keyword">for</span> h <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4096</span>):</span><br><span class="line">        ihdr[<span class="number">4</span>:<span class="number">8</span>]=struct.pack(<span class="string">&quot;&gt;I&quot;</span>,w)</span><br><span class="line">        ihdr[<span class="number">8</span>:<span class="number">12</span>]=struct.pack(<span class="string">&quot;&gt;I&quot;</span>,h)</span><br><span class="line">        <span class="keyword">if</span> binascii.crc32(ihdr)&amp;<span class="number">0xffffffff</span> == crc_target:</span><br><span class="line">            new=<span class="built_in">bytearray</span>(data)</span><br><span class="line">            new[<span class="number">16</span>:<span class="number">20</span>]=struct.pack(<span class="string">&quot;&gt;I&quot;</span>,w)</span><br><span class="line">            new[<span class="number">20</span>:<span class="number">24</span>]=struct.pack(<span class="string">&quot;&gt;I&quot;</span>,h)</span><br><span class="line">            <span class="built_in">open</span>(<span class="string">&quot;fixed.png&quot;</span>,<span class="string">&quot;wb&quot;</span>).write(new)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;w=<span class="subst">&#123;w&#125;</span>,h=<span class="subst">&#123;h&#125;</span>&quot;</span>)</span><br><span class="line">            exit()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;not found&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>结果如下：<br><img src="/images/BUUCTF-Misc/image_9.png" alt="在这里插入图片描述"></p>
+<hr>
+<h2 id="4-LSB"><a href="#4-LSB" class="headerlink" title="4. LSB"></a>4. LSB</h2><p>上stegsolve</p>
+<p><img src="/images/BUUCTF-Misc/image_10.png" alt="在这里插入图片描述"></p>
+<p>设置</p>
+<p><img src="/images/BUUCTF-Misc/image_11.png" alt="在这里插入图片描述"><br>然后报错图片数据（save bin）, 在当前目录下有一张二维码图片，扫一下就出flag了</p>
+<p>实际上正常的流程是要先分别查看三通道的，其过程参考这个：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/zzkkk1h/p/18115837">https://www.cnblogs.com/zzkkk1h/p/18115837</a></p>
+<p>对于LSB的隐写，可以使用更加现代的工具</p>
+<p><img src="/images/BUUCTF-Misc/image_12.png" alt="在这里插入图片描述"><br>其中</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">b1,rgb,lsb,xy       .. file: PNG image data, 280 x 280, 8-bit/color RGB, non-interlaced</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>b1</code>：bit0（最低位 LSB）</li>
+<li><code>rgb</code>：RGB 通道</li>
+<li><code>lsb</code>：LSB 顺序（LSB First）</li>
+<li><code>xy</code>：按行扫描（Row）<br>提取出来的数据本身就是一张 PNG 图片，这就是 BUU LSB 原题的隐藏内容。</li>
+</ul>
+<p>提取输出（重定向）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">zsteg -E <span class="string">&quot;b1,rgb,lsb,xy&quot;</span> flag11.png &gt; hidden.png</span><br></pre></td></tr></table></figure>
+
+<p>此时工作目录下就会产生一张二维码</p>
+<p>或使用其他工具也可以检测出来<br><img src="/images/BUUCTF-Misc/image_13.png" alt="在这里插入图片描述"></p>
+<ol>
+<li>SVImage &#x3D; StegoVeritas 的<strong>图片隐写分析模块（专门扫描 LSB 比特平面）</strong></li>
+<li>原图 EXIF 里明确写：原图尺寸 <strong>268 × 268</strong></li>
+<li>SVImage 扫描比特平面后，<strong>额外找到了另一张图片：280 × 280 PNG</strong></li>
+</ol>
+<blockquote>
+<p>矛盾点：图片文件本身只有一张 268×268 的 PNG，文件头部定义的分辨率就是 268×268。<br>正常情况下，解析这张图片的所有像素，不可能跑出一个尺寸不一样的 280×280 图片。</p>
+<p> 这个<strong>多出的、尺寸不同的图像</strong>，就是从图片像素低位（LSB 比特平面）提取出来的隐藏图片。<br>这就是 stegoveritas 判断存在 LSB 隐写的证据。</p>
+</blockquote>
+<hr>
+<h2 id="5-湖南省赛-2019-Findme"><a href="#5-湖南省赛-2019-Findme" class="headerlink" title="5. [湖南省赛 2019] Findme"></a>5. [湖南省赛 2019] Findme</h2><p>下在之后，发现有5张png</p>
+<p><img src="/images/BUUCTF-Misc/image_14.png" alt="在这里插入图片描述"></p>
+<p>101代开第一张照片，发现存在CRC错误， 所以先测试宽高</p>
+<p>但是，修改宽高之后发现图片仍然是“花”的，丢进101进行分析，发现两个异常块</p>
+<p><img src="/images/BUUCTF-Misc/image_15.png" alt="在这里插入图片描述"></p>
+<p>修改chunk[2]的type（chunk[3]也是同理）<br><img src="/images/BUUCTF-Misc/image_16.png" alt="在这里插入图片描述"></p>
+<p>修改后图片就可以正常显示了，那就使用stegoveritas工具看看其是否存在隐写，有新的发现如下<br><img src="/images/BUUCTF-Misc/image_17.png" alt="在这里插入图片描述"><br>扫一下二维码得到：<code>ZmxhZ3s0X3</code></p>
+<p>但是如果使用zsteg工具就会有这样的结果<br><img src="/images/BUUCTF-Misc/image_18.png" alt="在这里插入图片描述"></p>
+<p>原因是现在的<code>fixed.png</code>：<strong>只修复了 IDAT 块 Type，以及IHDR 宽高，但是IHDR的crc忘记修改了</strong><br>PNG 像素解析是错的，zsteg 拿错误像素去读 LSB，输出一堆乱码伪结果，<code>OpenPGP Secret Key</code>属于典型误报。</p>
+<blockquote>
+<p>zsteg 依赖 PNG 正确解码像素；<strong>PNG 结构损坏，zsteg 输出完全不可信</strong>。</p>
+</blockquote>
+<p>pngcheck一下<br><img src="/images/BUUCTF-Misc/image_19.png" alt="在这里插入图片描述"><br>继续修改，然后发下有另一处错误，zsteg还是一样的结果。实际上，这就是出题人故意搞的。 所以不要依赖于某一款工具</p>
+<p>处理2.png，使用101打开</p>
+<p><img src="/images/BUUCTF-Misc/image_20.png" alt="在这里插入图片描述"><br>从文本区域可以看到有“7z”，可以确定的是这是文件结合，至于是什么那写文件结合在一起需要进一步分析</p>
+<p>观察文件头：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">zip：ZIP  4B 03 04 (PK…)</span><br><span class="line">7z：37 7A BC AF 27 1C</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>很显然，出题人是将zip 的 004B 改为了 377A，为了方便操作，直接修改所有文本为7z的为PK（ascii对应）</p>
+<p><img src="/images/BUUCTF-Misc/image_21.png" alt="在这里插入图片描述"></p>
+<p>实际上不应该全部替换的，可能会替换了其他正常的内容，不过这题为了方便，直接全部替换好吧</p>
+<p>然后 binwalk 一下检测到1000个文件</p>
+<p><img src="/images/BUUCTF-Misc/image_22.png" alt="在这里插入图片描述"></p>
+<p>随后就 binwalk -e 将文件分离出来</p>
+<p>随便找几个文件，发现均是 <code>N0thIng h3re</code>， 所以直接使用grep大的反查询（还有一种查询方式是按照文件大小排序）</p>
+<p><img src="/images/BUUCTF-Misc/image_23.png" alt="在这里插入图片描述"></p>
+<p>得到：<code>1RVcmVfc</code></p>
+<p>处理3.png，101打开查看<br><img src="/images/BUUCTF-Misc/image_24.png" alt="在这里插入图片描述"></p>
+<p>可以知道7个chunk的crc都报错，那就先重点关注crc的情况</p>
+<p>正常crc<br><img src="/images/BUUCTF-Misc/image_25.png" alt="在这里插入图片描述"></p>
+<p>当前crc<br><img src="/images/BUUCTF-Misc/image_26.png" alt="在这里插入图片描述"><br>把这7段crc都提取出来：<code>33 52 6C 5A 33 30 3D</code>  转ascii之后：<code>3RlZ30=</code></p>
+<p>处理4.png，101打开查看<br><img src="/images/BUUCTF-Misc/image_27.png" alt="在这里插入图片描述"></p>
+<p>使用exiftool更加直观<br><img src="/images/BUUCTF-Misc/image_28.png" alt="在这里插入图片描述"><br>即：<code>cExlX1BsY</code></p>
+<p>处理5.png，101打开查看</p>
+<p><img src="/images/BUUCTF-Misc/image_29.png" alt="在这里插入图片描述"><br>即：<code>Yzcllfc0lN</code></p>
+<table>
+<thead>
+<tr>
+<th>片段</th>
+<th>Base64</th>
+<th>单独解码</th>
+<th>对应 flag 位置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>P1</td>
+<td><code>ZmxhZ3s0X3</code></td>
+<td><code>flag{4_v</code></td>
+<td>头（含 <code>flag{</code> 开头）</td>
+</tr>
+<tr>
+<td>P2</td>
+<td><code>1RVcmVfc</code></td>
+<td><code>1RVcmVfc</code>（不足4字节无法解码）</td>
+<td>正文片段</td>
+</tr>
+<tr>
+<td>P3</td>
+<td><code>3RlZ30=</code></td>
+<td><code>3re}</code></td>
+<td>尾（含 <code>}</code> 结束符）</td>
+</tr>
+<tr>
+<td>P4</td>
+<td><code>cExlX1BsY</code></td>
+<td><code>cExlX1BsY</code>（不足4字节无法解码）</td>
+<td>正文片段</td>
+</tr>
+<tr>
+<td>P5</td>
+<td><code>Yzcllfc0lN</code></td>
+<td><code>Yzcllfc0lN</code>（不足4字节无法解码）</td>
+<td>正文片段</td>
+</tr>
+</tbody></table>
+<p>所以 P1 是头，P3是尾。剩下的组合一下</p>
+<p>最后拼接起来：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">P1-P5-P4-P2-P3</span><br><span class="line">ZmxhZ3s0X3Yzcllfc0lNcExlX1BsY1RVcmVfc3RlZ30=</span><br><span class="line">即：</span><br><span class="line"> flag&#123;4_v3rY_sIMpLe_PlcTUre_steg</span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<h2 id="6-图片容差"><a href="#6-图片容差" class="headerlink" title="6. 图片容差"></a>6. 图片容差</h2><table>
+  <tr>
+    <td style="border: none; text-align: center;">
+      <img src="https://i-blog.csdnimg.cn/direct/1260c6ce2d354d73a69060719f24103b.png" alt="图片1" style="width: 100%; display: block;">
+      <p style="text-align: center; margin-top: 8px; color: #666;">图片1</p>
+    </td>
+    <td style="border: none; text-align: center;">
+      <img src="https://i-blog.csdnimg.cn/direct/3780555283334d7a9c2608088c866cd8.png" alt="图片2" style="width: 100%; display: block;">
+      <p style="text-align: center; margin-top: 8px; color: #666;">图片2</p>
+    </td>
+  </tr>
+</table>
+
+<p>执行指令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">compare -fuzz 3% pub_ball.png pub_mon.png diff.png</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-fuzz 3%</code>：颜色差距在 3% 以内视为相同，超出则标红</li>
+<li>输出 <code>diff.png</code>，红色像素就是两张图不一样的地方，打开看红点图案</li>
+</ul>
+<p>结果：<br><img src="/images/BUUCTF-Misc/image_30.png" alt="在这里插入图片描述"></p>
+<hr>
+<h2 id="7-BJDCTF2020-鸡你太美"><a href="#7-BJDCTF2020-鸡你太美" class="headerlink" title="7. [BJDCTF2020]鸡你太美"></a>7. [BJDCTF2020]鸡你太美</h2><p>as you can see ， 第二张图是打不开的<br><img src="/images/BUUCTF-Misc/image_31.png" alt="在这里插入图片描述"></p>
+<p>101打开查看，很明显是文件头的问题，而我们知道gif的文件头：<code>47 49 46 38</code>，那就插入一下<br><img src="/images/BUUCTF-Misc/image_32.png" alt="在这里插入图片描述"></p>
+<p>点击之后，发现报错，查资料之后发现是插入的值太大了，所以可以先插入<code>00 00 00 00</code><br><img src="/images/BUUCTF-Misc/image_33.png" alt="在这里插入图片描述"></p>
+<p>随后手动逐个修改，但是发现修改字节最后只能插入三个字节（见鬼了）</p>
+<p>然后我就逐个逐个字节覆盖，这样才可以<br><img src="/images/BUUCTF-Misc/image_34.png" alt="在这里插入图片描述"></p>
+<p>然后就修复了<br><img src="/images/BUUCTF-Misc/image_35.png" alt="在这里插入图片描述"></p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">flag&#123;zhi_yin_you_are_beautiful&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="8-金三胖"><a href="#8-金三胖" class="headerlink" title="8. 金三胖"></a>8. 金三胖</h2><p>一张将军的gif，由于政治敏感性就不放上来了</p>
+<p>直接上工具拆帧：<br><img src="/images/BUUCTF-Misc/image_36.png" alt="在这里插入图片描述"><br>找到三张gif<br><img src="/images/BUUCTF-Misc/image_37.png" alt="在这里插入图片描述"><br>拼接一下：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">flag&#123;he11ohongke&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="9-gif空间轴隐写"><a href="#9-gif空间轴隐写" class="headerlink" title="9. gif空间轴隐写"></a>9. gif空间轴隐写</h2><p>现有一完整二维码的局部显示的动图。对于每一帧的间隔时间很段的gif，可以通过修改gif中的结构，使得每一帧的时间间隔变长</p>
+<p>修改：<br><img src="/images/BUUCTF-Misc/image_38.png" alt="在这里插入图片描述"><br>其速度就会变慢（就不再贴图了），但是还是无法扫二维码的（因为每一帧均是二维码的局部图），直接使用分帧工具吧</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">convert cake.gif -coalesce out.png</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/BUUCTF-Misc/image_39.png" alt="在这里插入图片描述"></p>
+<p>这四张图是一个完整的二维码的4个部分，所以接下来需要拼接</p>
+<p>可以使用ps工具什么的，拼起来就可以</p>
+<p>如果使用ps，最好使用这条指令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">convert -background transparent cake.gif -coalesce out_%d.png</span><br></pre></td></tr></table></figure>
+<p>其脱帧结果都是背景是透明的，ps直接选中所有就可以了，不需要再很麻烦的各种图层操作</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">imgs = [np.array(Image.<span class="built_in">open</span>(<span class="string">f&#x27;out-<span class="subst">&#123;i&#125;</span>.png&#x27;</span>).convert(<span class="string">&#x27;L&#x27;</span>)) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>)]</span><br><span class="line">out = np.ones_like(imgs[<span class="number">0</span>])*<span class="number">255</span></span><br><span class="line"><span class="keyword">for</span> a <span class="keyword">in</span> imgs:</span><br><span class="line">    out[a &lt; <span class="number">128</span>] = <span class="number">0</span></span><br><span class="line">Image.fromarray(out).save(<span class="string">&#x27;qr.png&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这个脚本执行之后就可以拼出一张完整的二维码</p>
+<p>识别一下：<br><img src="/images/BUUCTF-Misc/image_40.png" alt="在这里插入图片描述"></p>
+<p>这串十六进制数据实际上是 Python 2.7 的 marshal 序列化字节码（编译后的 .pyc 文件内容）</p>
+<p>将16进制转为二进制文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">xxd -r -p code.hex &gt; bbb.pyc</span><br></pre></td></tr></table></figure>
+
+<p>反编译</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">uncompyle6 bbb.pyc &gt; bbb.py</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># uncompyle6 version 3.9.3</span></span><br><span class="line"><span class="comment"># Python bytecode version base 2.7 (62211)</span></span><br><span class="line"><span class="comment"># Decompiled from: Python 3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]</span></span><br><span class="line"><span class="comment"># Embedded file name: /home/ctf/bbb.py</span></span><br><span class="line"><span class="comment"># Compiled at: 2017-09-02 22:35:36</span></span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line">key = <span class="string">&#x27;ctf&#x27;</span></span><br><span class="line">strr = <span class="string">&#x27;186,98,180,154,139,192,114,14,102,168,43,136,52,218,85,100,43&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func1</span>(<span class="params">str1, key</span>):</span><br><span class="line">    random.seed(key)</span><br><span class="line">    str2 = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> str1:</span><br><span class="line">        str2 += <span class="built_in">str</span>(<span class="built_in">ord</span>(c) ^ random.randint(<span class="number">0</span>, <span class="number">255</span>)) + <span class="string">&#x27;,&#x27;</span></span><br><span class="line"></span><br><span class="line">    str2 = str2.strip(<span class="string">&#x27;,&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> str2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func2</span>(<span class="params">str2, key</span>):</span><br><span class="line">    random.seed(key)</span><br><span class="line">    str1 = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> str2.split(<span class="string">&#x27;,&#x27;</span>):</span><br><span class="line">        i = <span class="built_in">int</span>(i)</span><br><span class="line">        str1 += <span class="built_in">chr</span>(i ^ random.randint(<span class="number">0</span>, <span class="number">255</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> str1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># okay decompiling bbb.pyc</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>加一个打印输出，就可以输出flag了</p>
+<hr>
+<h2 id="10-gif时间轴隐写"><a href="#10-gif时间轴隐写" class="headerlink" title="10. gif时间轴隐写"></a>10. gif时间轴隐写</h2><p>gif格式，静止<br><img src="/images/BUUCTF-Misc/image_41.png" alt="在这里插入图片描述"></p>
+<p>先脱帧看看这么个事</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">convert 100.gif -coalesce out.png</span><br></pre></td></tr></table></figure>
+<p><img src="/images/BUUCTF-Misc/image_42.png" alt="在这里插入图片描述"><br>这么多张，粗略的查看也没有发现什么东西。101查看一下</p>
+<p><img src="/images/BUUCTF-Misc/image_43.png" alt="在这里插入图片描述"><br>每一帧的大小不一样，且延迟时间不一样（后面的帧的延迟时间存在规律），用工具看一下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">identify -format <span class="string">&quot;%s %T\n&quot;</span> test.gif</span><br></pre></td></tr></table></figure>
+
+<p>可以安装 gnuplot，用于描点画图</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">identify -format <span class="string">&quot;%s %T\n&quot;</span> test.gif | gnuplot -e <span class="string">&quot;</span></span><br><span class="line"><span class="string">set terminal png size 800,400;</span></span><br><span class="line"><span class="string">set output &#x27;delay_plot.png&#x27;;</span></span><br><span class="line"><span class="string">set title &#x27;GIF帧延时折线图（单位：1/100秒）&#x27;;</span></span><br><span class="line"><span class="string">set xlabel &#x27;帧序号&#x27;;</span></span><br><span class="line"><span class="string">set ylabel &#x27;Delay&#x27;;</span></span><br><span class="line"><span class="string">set grid;</span></span><br><span class="line"><span class="string">plot &#x27;-&#x27; using 1:2 with linespoints pointtype 7 title &#x27;帧延时&#x27;;</span></span><br><span class="line"><span class="string">&quot;</span></span><br></pre></td></tr></table></figure>
+<p>结果：<br><img src="/images/BUUCTF-Misc/image_44.png" alt="在这里插入图片描述"></p>
+<p>实际上延迟时间可以看作一组二进制信号：<code>“20”为“1”、“10”为“0”</code>  或 <code>“10”为“1”、“20”为“0”</code> 。 下面我就只举一个例子</p>
+<p>先导出数据</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">identify -format <span class="string">&quot;%T\n&quot;</span> 100.gif &gt; flag.py</span><br></pre></td></tr></table></figure>
+
+<p>vscode 多行操作：<code>Shift + Alt +鼠标拖动</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">lists = [<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">10</span>]</span><br><span class="line"></span><br><span class="line">s = <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> lists:</span><br><span class="line">    <span class="keyword">if</span> i == <span class="number">10</span>:</span><br><span class="line">        s += <span class="string">&#x27;1&#x27;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        s += <span class="string">&#x27;0&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">flag_bytes = <span class="built_in">bytes</span>.fromhex(<span class="built_in">hex</span>(<span class="built_in">int</span>(s, <span class="number">2</span>))[<span class="number">2</span>:])</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(flag_bytes.decode(<span class="string">&#x27;utf-8&#x27;</span>, errors=<span class="string">&#x27;replace&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># XMAN&#123;96575beed4dea18ded4735643aecfa35&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<h2 id="11-来首歌吧"><a href="#11-来首歌吧" class="headerlink" title="11. 来首歌吧"></a>11. 来首歌吧</h2><p>直接将得到音频丢进Audacity，可以发现有两条音轨，上面的音轨是摩斯密码<br><img src="/images/BUUCTF-Misc/image_45.png" alt="在这里插入图片描述"></p>
+<p>放大查看，<code>短的为 . </code>，<code>长的为 -</code></p>
+<p>记录有：（<code>注意不要连在一起</code>）</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">..... -... -.-. ----. ..--- ..... -.... ....- ----. -.-. -... ----- .---- ---.. ---.. ..-. ..... ..--- . -.... .---- --... -.. --... ----- ----. ..--- ----. .---- ----. .---- -.-.</span><br></pre></td></tr></table></figure>
+
+<p>解码后有：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">5BC925649CB0188F52E617D70929191C</span><br><span class="line">即：</span><br><span class="line">	flag&#123;5BC925649CB0188F52E617D70929191C&#125;</span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<h2 id="12-UTCTF2020-spectogram"><a href="#12-UTCTF2020-spectogram" class="headerlink" title="12. [UTCTF2020]spectogram"></a>12. [UTCTF2020]spectogram</h2><p>使用Audacity打开<br><img src="/images/BUUCTF-Misc/image_46.png" alt="在这里插入图片描述"></p>
+<p>切换为频谱图<br><img src="/images/BUUCTF-Misc/image_47.png" alt="在这里插入图片描述"><br>结果<br><img src="/images/BUUCTF-Misc/image_48.png" alt="在这里插入图片描述"></p>
+<p>很难看清，调一下窗口大小<br><img src="/images/BUUCTF-Misc/image_49.png" alt="在这里插入图片描述"></p>
+<p><code>flag{sp3tr0gr4m0ph0n3}</code></p>
+<hr>
+<h2 id="13-SCTF2019-电单车"><a href="#13-SCTF2019-电单车" class="headerlink" title="13. [SCTF2019]电单车"></a>13. [SCTF2019]电单车</h2><p>使用Audacity打开，发现两种波形<br><img src="/images/BUUCTF-Misc/image_50.png" alt="在这里插入图片描述"><br>长波为“1”，短波为“0”，上图中的两段波是一样的，只需分析一部分</p>
+<p>插入：这里的音频其实是PT224X信号，一种固定码遥控信号</p>
+<p>PT224X 是电动车遥控钥匙常用的编码芯片，发射串行脉冲信号：</p>
+<ul>
+<li>窄脉冲（短波形）代表二进制 0</li>
+<li>宽脉冲（长波形）代表二进制 1</li>
+</ul>
+<p>其结构是：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">同步引导码(8bit) + 地址位(20bit) + 数据位(4bit) + 停止码(1bit)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>同步引导码：帧头，用来告诉接收芯片 “开始传输数据”</li>
+<li>地址位（本题 flag）：遥控器唯一身份 ID，20bit，题目要求提取这一段</li>
+<li>数据位：按键信息（开锁 &#x2F; 关锁）</li>
+<li>停止码：帧结束标记</li>
+</ul>
+<p><img src="/images/BUUCTF-Misc/image_51.png" alt="在这里插入图片描述"><br>取地址码：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">flag&#123;01110100101010100110&#125;</span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<h2 id="14-MRCTF2020-Unravel"><a href="#14-MRCTF2020-Unravel" class="headerlink" title="14. [MRCTF2020]Unravel!!"></a>14. [MRCTF2020]Unravel!!</h2><p>WAV 是无损 PCM 音频，声音是一堆数字采样值，比如 128, 130, 129, 131…<br>每个数字用二进制存储，举例子：129 → 二进制 10000001<br>二进制最右边那一位，就叫最低有效位 LSB。</p>
+<ul>
+<li>修改最右边这一位：129 (10000001) → 128 (10000000)</li>
+<li>数值只变化了 1，人耳完全听不出声音差别</li>
+</ul>
+<p><code>注意</code>：只能是 WAV！<code>MP3 是有损压缩</code>，会自动丢弃微小比特，LSB 信息直接丢失</p>
+<p>查看文件情况<br><img src="/images/BUUCTF-Misc/image_52.png" alt="在这里插入图片描述"></p>
+<p>先分析一下JM.png，内容一个zip，zip中有一张png图片<br><img src="/images/BUUCTF-Misc/image_53.png" alt="在这里插入图片描述"></p>
+<p>binwalk验证一下<br><img src="/images/BUUCTF-Misc/image_54.png" alt="在这里插入图片描述"></p>
+<p>分离后得到aes.png</p>
+<p><img src="/images/BUUCTF-Misc/image_55.png" alt="在这里插入图片描述"><br>继续分析这张图片，发现没有什么结果</p>
+<p>那图片没有什么可分析的了，接下来打开音频，拖进010查看文件末尾有一串字符</p>
+<p><img src="/images/BUUCTF-Misc/image_56.png" alt="在这里插入图片描述"></p>
+<p>提取一下<br><img src="/images/BUUCTF-Misc/image_57.png" alt="在这里插入图片描述"><br><code>key=U2FsdGVkX1/nSQN+hoHL8OwV9iJB/mSdKk5dmusulz4=</code></p>
+<p>密文开头U2FsdGVk base64 解码后是 Salted__，这是 openssl 命令行加密的标记：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl enc -aes-128-cbc -salt -<span class="keyword">in</span> plain.txt -out cipher.bin</span><br></pre></td></tr></table></figure>
+
+<p>机密命令：（注意要指定md5，新版的openssl默认是SHA256）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> -n <span class="string">&quot;U2FsdGVkX1/nSQN+hoHL8OwV9iJB/mSdKk5dmusulz4=&quot;</span> | openssl enc -d -aes-128-cbc -a -salt -md md5</span><br></pre></td></tr></table></figure>
+<p>但是尝试解密失败了，参考了别人的文章： <a target="_blank" rel="noopener" href="https://www.sojson.com/encrypt_aes.html">https://www.sojson.com/encrypt_aes.html</a><br><img src="/images/BUUCTF-Misc/image_58.png" alt="在这里插入图片描述"></p>
+<p>成功解密，然后用slienteye提取信息即可<br><img src="/images/BUUCTF-Misc/image_59.png" alt="在这里插入图片描述"></p>
+<hr>
+<h2 id="15-菜刀流量"><a href="#15-菜刀流量" class="headerlink" title="15. 菜刀流量"></a>15. 菜刀流量</h2><p>菜刀是常见的连接webshell的工具，连接webshell会有明显的GET 或POST请求。所以我们只需要找数据包的HTTP请求就行了<br><img src="/images/BUUCTF-Misc/image_60.png" alt="在这里插入图片描述"><br>红框框起来的就是后门</p>
+<p>对value的base64进行解密</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">@<span class="title function_ invoke__">ini_set</span>(<span class="string">&quot;display_errors&quot;</span>,<span class="string">&quot;0&quot;</span>);@<span class="title function_ invoke__">set_time_limit</span>(<span class="number">0</span>);@<span class="title function_ invoke__">set_magic_quotes_runtime</span>(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">echo</span>(<span class="string">&quot;-&gt;|&quot;</span>);</span><br><span class="line"><span class="variable">$D</span>=<span class="title function_ invoke__">dirname</span>(<span class="variable">$_SERVER</span>[<span class="string">&quot;SCRIPT_FILENAME&quot;</span>]);</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$D</span>==<span class="string">&quot;&quot;</span>)<span class="variable">$D</span>=<span class="title function_ invoke__">dirname</span>(<span class="variable">$_SERVER</span>[<span class="string">&quot;PATH_TRANSLATED&quot;</span>]);</span><br><span class="line"><span class="variable">$R</span>=<span class="string">&quot;<span class="subst">&#123;$D&#125;</span>\t&quot;</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">substr</span>(<span class="variable">$D</span>,<span class="number">0</span>,<span class="number">1</span>)!=<span class="string">&quot;/&quot;</span>)&#123;<span class="keyword">foreach</span>(<span class="title function_ invoke__">range</span>(<span class="string">&quot;A&quot;</span>,<span class="string">&quot;Z&quot;</span>) <span class="keyword">as</span> <span class="variable">$L</span>)<span class="keyword">if</span>(<span class="title function_ invoke__">is_dir</span>(<span class="string">&quot;<span class="subst">&#123;$L&#125;</span>:&quot;</span>))<span class="variable">$R</span>.=<span class="string">&quot;<span class="subst">&#123;$L&#125;</span>:&quot;</span>;&#125;</span><br><span class="line"><span class="variable">$R</span>.=<span class="string">&quot;\t&quot;</span>;</span><br><span class="line"><span class="variable">$u</span>=(<span class="title function_ invoke__">function_exists</span>(<span class="string">&#x27;posix_getegid&#x27;</span>))?@<span class="title function_ invoke__">posix_getpwuid</span>(@<span class="title function_ invoke__">posix_geteuid</span>()):<span class="string">&#x27;&#x27;</span>;</span><br><span class="line"><span class="variable">$usr</span>=(<span class="variable">$u</span>)?<span class="variable">$u</span>[<span class="string">&#x27;name&#x27;</span>]:@<span class="title function_ invoke__">get_current_user</span>();</span><br><span class="line"><span class="variable">$R</span>.=<span class="title function_ invoke__">php_uname</span>();<span class="variable">$R</span>.=<span class="string">&quot;(<span class="subst">&#123;$usr&#125;</span>)&quot;</span>;</span><br><span class="line"><span class="keyword">print</span> <span class="variable">$R</span>;</span><br><span class="line"><span class="keyword">echo</span>(<span class="string">&quot;|&lt;-&quot;</span>);<span class="keyword">die</span>();</span><br></pre></td></tr></table></figure>
+
+<p>从流量可以看到，这很明显是菜刀特征的webshell，先跟踪第一个伤处数据包的http流<br><img src="/images/BUUCTF-Misc/image_61.png" alt="在这里插入图片描述"></p>
+<p>结果：<br><img src="/images/BUUCTF-Misc/image_62.png" alt="在这里插入图片描述"></p>
+<table>
+<thead>
+<tr>
+<th align="left">数据包</th>
+<th align="left">关键参数（解码后）</th>
+<th align="left">实际执行的操作</th>
+<th align="left">返回结果（关键部分）</th>
+<th align="left">目的</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>第 1 个</strong></td>
+<td align="left"><code>action</code> 解码后为 PHP 代码：<br>使用 <code>php_uname()</code>、<code>posix_getpwuid()</code>、<code>get_current_user()</code> 等函数</td>
+<td align="left">不调用系统命令，直接通过 PHP 函数收集环境信息</td>
+<td align="left">&#96;-&gt;</td>
+<td align="left">&#x2F;var&#x2F;www&#x2F;html&#x2F;admin&#x2F;upload		Linux 25c9dc316909 4.4.0-146-generic #172-Ubuntu SMP Wed Apr 3 09:00:08 UTC 2019 x86_64(www-data)</td>
+</tr>
+<tr>
+<td align="left"><strong>第 2 个</strong></td>
+<td align="left"><code>z1</code> &#x3D; <code>/bin/sh</code><br><code>z2</code> &#x3D; <code>cd &quot;/var/www/html/admin/upload/&quot;;ls;echo [S];pwd;echo [E]</code></td>
+<td align="left">进入目录，执行 <code>ls</code> 列出文件，并用 <code>[S]</code>&#x2F;<code>[E]</code> 标记输出</td>
+<td align="left"><code>1569496537.php</code><br><code>flag.rar</code><br><code>password.txt</code><br><code>[S]</code><br><code>/var/www/html/admin/upload</code><br><code>[E]</code></td>
+<td align="left">列出目标目录下的文件名</td>
+</tr>
+<tr>
+<td align="left"><strong>第 3 个</strong></td>
+<td align="left"><code>z1</code> &#x3D; <code>/bin/sh</code><br><code>z2</code> &#x3D; <code>cd &quot;/var/www/html/admin/upload/&quot;;ls -l;echo [S];pwd;echo [E]</code></td>
+<td align="left">进入目录，执行 <code>ls -l</code> 查看文件详细属性</td>
+<td align="left"><code>total 12</code><br><code>-rw-r--r-- 1 www-data www-data  28 Sep 26 11:15 1569496537.php</code><br><code>-rw-r--r-- 1 www-data www-data 434 Sep 26 11:27 flag.rar</code><br><code>-rw-r--r-- 1 www-data www-data  21 Sep 26 11:16 password.txt</code><br><code>[S]</code><br><code>/var/www/html/admin/upload</code><br><code>[E]</code></td>
+<td align="left">获取文件的权限、大小、修改时间等详细信息</td>
+</tr>
+</tbody></table>
+<p>可以发现flag.rar password.txt 等文件。那思路很简单，先找到flag.rar</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">http contains <span class="string">&quot;flag&quot;</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/BUUCTF-Misc/image_63.png" alt="在这里插入图片描述"></p>
+<p>跟踪一下，看看是什么指令的回显<br><img src="/images/BUUCTF-Misc/image_64.png" alt="在这里插入图片描述"><br>所以，这就是我们想要的flag.rar<br><img src="/images/BUUCTF-Misc/image_65.png" alt="在这里插入图片描述"><br>导出为<code>flag.bin</code></p>
+<p>指令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">file flag.bin</span><br><span class="line">xxd flag.bin | <span class="built_in">head</span></span><br><span class="line">grep -abo <span class="string">&quot;Rar!&quot;</span> flag.bin</span><br><span class="line">grep -abo <span class="string">&quot;\[S\]&quot;</span> flag.bin</span><br><span class="line"></span><br><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=flag.bin of=flag.rar bs=1 skip=252 count=434</span><br><span class="line">	<span class="keyword">if</span>=flag.bin：输入文件（input file）。</span><br><span class="line">	of=flag.rar：输出文件（output file）。</span><br><span class="line">	bs=1：块大小（block size）为 1 字节，这样 skip 和 count 都以字节为单位，精确控制。</span><br><span class="line">	skip=252：跳过输入文件开头的 252 字节（即跳过 HTTP 头和 -&gt;| 等，直接到达第一个 Rar!）。</span><br><span class="line">	count=434：复制 434 字节。这个数字来自 [S] 的偏移 686 减去起始偏移 252：686 - 252 = 434。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="/images/BUUCTF-Misc/image_66.png" alt="在这里插入图片描述"><br>解压需要密码，那就找密码</p>
+<p>过滤指令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">http contains <span class="string">&quot;password&quot;</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/BUUCTF-Misc/image_67.png" alt="在这里插入图片描述"></p>
+<p>但是这条指令就收索不到了。原有很简单，<code>cat flag.rar</code>其返回结果中是很有flag字样的，而<code>cat password.txt</code>就不一定有password。 那改为 <code>http contains &quot;cat password.txt 的base64编码&quot;</code> 可以吗？依然不可以，因为指令是与后门代码一同编码的，单独编码依然不可取。</p>
+<p>所以还是老老实实：<code>http.request.method == &quot;POST&quot;</code></p>
+<p><img src="/images/BUUCTF-Misc/image_68.png" alt="在这里插入图片描述"></p>
+<p>跟踪一下<br><img src="/images/BUUCTF-Misc/image_69.png" alt="在这里插入图片描述"><br>密码：<code>SuperHer0....Masters.</code>   但是解压错误！这是为什么？？？</p>
+<p>眼见不为实啊<br><img src="/images/BUUCTF-Misc/image_70.png" alt="在这里插入图片描述"><br>0x7F 是 DEL，那实际上的密码如下</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">原始：S u p e r H e r 0 [0x7f,0x7f,0x7f,0x7f] M a s t e r s [0x7f]</span><br><span class="line">1. 0 删除 → SuperHer</span><br><span class="line">2. r 删除 → SuperHe</span><br><span class="line">3. e 删除 → SuperH</span><br><span class="line">4. H 删除 → Super</span><br><span class="line">现在得到：Super</span><br><span class="line">拼接后面：Super + Masters → SuperMasters</span><br><span class="line">末尾0x7f删掉末尾s → SuperMaster</span><br></pre></td></tr></table></figure>
+
+<p>成功解压，得到：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="symbol">&amp;#102;</span><span class="symbol">&amp;#108;</span><span class="symbol">&amp;#97;</span><span class="symbol">&amp;#103;</span><span class="symbol">&amp;#123;</span><span class="symbol">&amp;#51;</span><span class="symbol">&amp;#48;</span><span class="symbol">&amp;#54;</span><span class="symbol">&amp;#98;</span><span class="symbol">&amp;#100;</span><span class="symbol">&amp;#48;</span><span class="symbol">&amp;#53;</span><span class="symbol">&amp;#100;</span><span class="symbol">&amp;#55;</span><span class="symbol">&amp;#56;</span><span class="symbol">&amp;#99;</span><span class="symbol">&amp;#99;</span><span class="symbol">&amp;#98;</span><span class="symbol">&amp;#57;</span><span class="symbol">&amp;#48;</span><span class="symbol">&amp;#100;</span><span class="symbol">&amp;#50;</span><span class="symbol">&amp;#97;</span><span class="symbol">&amp;#52;</span><span class="symbol">&amp;#52;</span><span class="symbol">&amp;#50;</span><span class="symbol">&amp;#53;</span><span class="symbol">&amp;#51;</span><span class="symbol">&amp;#57;</span><span class="symbol">&amp;#100;</span><span class="symbol">&amp;#55;</span><span class="symbol">&amp;#48;</span><span class="symbol">&amp;#99;</span><span class="symbol">&amp;#101;</span><span class="symbol">&amp;#52;</span><span class="symbol">&amp;#99;</span><span class="symbol">&amp;#50;</span><span class="symbol">&amp;#125;</span></span><br></pre></td></tr></table></figure>
+
+<p> HTML 数字实体编码，解码后得到：<code>flag{306bd05d78ccb90d2a442539d70ce4c2}</code></p>
+
+		  <div class="article-footer-copyright">
+
+    本博客采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议(CC BY-NC-SA 4.0) 发布.</a>
+</div>
+
+
+		  <script>
+		    // 计算字数与阅读时长，同时更新阅读进度条
+		    (function() {
+		      var content = document.querySelector('.mypage');
+		      if (content) {
+		        var text = content.innerText || content.textContent;
+		        // 中文字符（含 CJK 扩展区 + 标点），按字符计数
+		        var chineseChars = (text.match(/[一-鿿㐀-䶿豈-﫿　-〿＀-￯]/g) || []).length;
+		        // 英文/数字按字符计（非词），与 CSDN 统计方式一致
+		        var latinChars = (text.match(/[a-zA-Z0-9]/g) || []).length;
+		        var wordCount = chineseChars + latinChars;
+		        // 阅读时长：中文约 300 字/分钟，英文约 200 词/分钟
+		        var englishWords = (text.match(/[a-zA-Z0-9]+/g) || []).length;
+		        var readingTime = Math.max(1, Math.ceil(chineseChars / 300 + englishWords / 200));
+		        var wcEl = document.getElementById('word-count');
+		        var rtEl = document.getElementById('reading-time');
+		        if (wcEl) wcEl.textContent = '~' + wordCount + ' 字';
+		        if (rtEl) rtEl.textContent = '约 ' + readingTime + ' 分钟';
+		      }
+		      // 阅读进度条
+		      var bar = document.getElementById('reading-progress-bar');
+		      if (bar) {
+		        window.addEventListener('scroll', function() {
+		          var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+		          var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+		          var progress = docHeight > 0 ? Math.min(100, (scrollTop / docHeight) * 100) : 0;
+		          bar.style.width = progress + '%';
+		        });
+		      }
+		    })();
+		  </script>
+		</div>
+
+		
+		<span id="" class="leancloud-visitors view" data-flag-title="Misc合集">
+			<em class="post-meta-item-text"> Page View </em> <i class="leancloud-visitors-count"></i>
+		</span>
+		
+		
+		<div>
+	  	<center>
+
+		<div class="pagination">
+
+    
+    
+    <a type="button" class="btn btn-default disabled"><i class="fa fa-arrow-circle-o-left"></i>上一页</a>
+    
+
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="/2026/09/10/红队思路v1.0.0/" type="button" class="btn btn-default ">下一页<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
+</div>
+
+
+	    </center>
+		</div>
+
+		<!-- comment -->
+		
+			<section id="comments" class="comments">
+				<style>
+				.comments{margin:30px;padding:10px;background:rgb(0, 0, 0)}
+				@media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#000}}
+				</style>
+				<div id="vcomment" class="comment"></div>
+<script>
+// 延迟加载评论系统
+window.addEventListener('load', function() {
+  setTimeout(function() {
+    var script = document.createElement('script');
+    script.src = 'https://unpkg.com/valine@1.5.1/dist/Valine.min.js';
+    script.onload = function() {
+      var valineConfig = {"enable":true,"appId":"22F2XnoONZRtEbXvXO1SDcjS-gzGzoHsz","appKey":"bIFSRG6LeUO90VdfRBHUXNQs","placeholder":"说点什么吧~","visitor":true,"avatar":"monsterid","requiredFields":["nick","mail"],"pageView":true}
+      valineConfig.el = '#vcomment';
+      valineConfig.recordIP = true;
+      valineConfig.serverURLs = 'https://22f2xnoo.api.lncldglobal.com';
+      new Valine(valineConfig);
+    };
+    document.head.appendChild(script);
+  }, 1000); // 延迟1秒加载
+});
+</script>
+			</section>
+		
+		
+		
+		</div> <!-- col-md-9/col-md-12 -->
+
+
+		
+		<div id="side_meta">
+			<div class="col-md-3 sticky-meta" id="post_meta"> 
+
+	<!-- small fixed card (date + brief meta) -->
+	<div class="top-card">
+		<!-- date -->
+		
+		<div class="meta-widget">
+		<i class="fa fa-clock-o"></i>
+		2026-10-09
+		</div>
+		
+
+		<!-- brief categories/tags inside fixed card -->
+		
+		<div class="meta-widget small-cats">
+			<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>
+			<ul id="categorys" class="tag_box list-unstyled collapse in">
+				  
+  <li>
+    <li><a href="/categories/CTF/">CTF<span>3</span></a></li> <li><a href="/categories/CTF/BUUCTF/">BUUCTF<span>3</span></a></li> <li><a href="/categories/CTF/BUUCTF/Misc/">Misc<span>1</span></a></li>
+  </li>
+
+			</ul>
+		</div>
+		
+
+		
+		<div class="meta-widget small-tags">
+			<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>
+			<ul id="tags" class="tag_box list-unstyled collapse in">
+				  
+  <li><a href="/tags/Misc/">Misc<span>1</span></a></li>
+			</ul>
+		</div>
+		
+	</div>
+
+	<!-- All Categories: sticky within sidebar area -->
+	<div class="category-stick" id="category-stick">
+		
+<div class="widget-wrap">
+  <h3 class="widget-title" style="font-family: monospace; font-size: 1.3em; font-weight: bold; color: #fff;">Categories</h3>
+  <div class="widget category-tree">
+    <ul class="hacker-category-list"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/408/">408</a><span class="hacker-category-list-count">7</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/408/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="hacker-category-list-count">7</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/AI/">AI</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/AI/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="hacker-category-list-count">2</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/">CTF</a><span class="hacker-category-list-count">3</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/">BUUCTF</a><span class="hacker-category-list-count">3</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/Misc/">Misc</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/PWN/">PWN</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/WEB/">WEB</a><span class="hacker-category-list-count">1</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%9F%A5%E8%AF%86%E6%9D%82%E7%A2%8E/">知识杂碎</a><span class="hacker-category-list-count">3</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Java/">Java</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/python/">python</a><span class="hacker-category-list-count">1</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a><span class="hacker-category-list-count">41</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC/">SRC</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">信息收集</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%86%85%E7%BD%91/">内网</a><span class="hacker-category-list-count">3</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="hacker-category-list-count">19</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/Linux/">Linux</a><span class="hacker-category-list-count">4</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/windows/">windows</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E5%89%8D%E7%AB%AF/">前端</a><span class="hacker-category-list-count">6</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E5%90%8E%E7%AB%AF/">后端</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E9%80%9A%E7%94%A8/">通用</a><span class="hacker-category-list-count">7</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/">渗透&&攻防</a><span class="hacker-category-list-count">1</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/%E7%BA%A2%E9%98%9F/">红队</a><span class="hacker-category-list-count">1</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/">漏洞</a><span class="hacker-category-list-count">14</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/PWN/">PWN</a><span class="hacker-category-list-count">3</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB/">WEB</a><span class="hacker-category-list-count">10</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB/Top10/">Top10</a><span class="hacker-category-list-count">10</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/%E5%A4%8D%E7%8E%B0/">复现</a><span class="hacker-category-list-count">1</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E8%AF%81%E4%B9%A6/">证书</a><span class="hacker-category-list-count">1</span></li></ul>
+  </div>
+</div>
+
+
+<style>
+/* Hacker / Terminal Style Category Tree */
+.category-tree .hacker-category-list {
+  padding-left: 20px;
+  font-family: 'Consolas', 'Courier New', monospace;
+  color: #fff;
+  list-style-type: circle; /* 'o' bullet */
+}
+
+.category-tree .hacker-category-list .hacker-category-list {
+  list-style-type: square; /* '■' bullet */
+}
+
+.category-tree .hacker-category-list .hacker-category-list .hacker-category-list {
+  list-style-type: square;
+}
+
+.category-tree .hacker-category-list-item {
+  margin: 6px 0;
+}
+
+.category-tree .hacker-category-list-link {
+  background-color: rgba(43, 188, 138, 0.1);
+  color: #2bbc8a;
+  text-decoration: none;
+  padding: 1px 6px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.category-tree .hacker-category-list-link:hover {
+  background-color: rgba(43, 188, 138, 0.2);
+  text-decoration: none;
+}
+
+.category-tree .hacker-category-list-count {
+  color: #2bbc8a;
+  margin-left: 5px;
+}
+</style>
+
+	</div>
+
+	<!-- article TOC placed below the category list; should scroll with page -->
+	<div class="toc-wrapper">
+		<div class="toc-widget">
+		
+			 <div class="toc">
+				 <span class="toc-title"><i class="fa fa-list"></i> Contents</span>
+				<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-article-text">前言</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-article-text">一、基础知识</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#1-%E6%96%87%E4%BB%B6%E5%A4%B4"><span class="toc-article-text">1. 文件头</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-%E5%9B%BE%E7%89%87%E9%9A%90%E5%86%99%E7%9A%84%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7"><span class="toc-article-text">2. 图片隐写的常用工具</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#pngcheck"><span class="toc-article-text">pngcheck</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#stegg"><span class="toc-article-text">stegg</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#3-%E5%9B%BE%E7%89%87%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-article-text">3. 图片的基本概念</span></a></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E4%BA%8C%E3%80%81JPG%E5%9B%BE%E7%89%87%E9%9A%90%E5%86%99"><span class="toc-article-text">二、JPG图片隐写</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#1-JPG%E7%9A%84%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="toc-article-text">1. JPG的文件结构</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-%E5%B8%B8%E8%A7%81%E7%9A%84%E9%9A%90%E5%86%99%E6%96%B9%E5%BC%8F"><span class="toc-article-text">2. 常见的隐写方式</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-1-exif%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F"><span class="toc-article-text">2.1 exif信息隐藏</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-2-%E5%AD%97%E7%AC%A6%E9%99%84%E5%8A%A0"><span class="toc-article-text">2.2 字符附加</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-3-%E6%96%87%E4%BB%B6%E7%BB%93%E5%90%88"><span class="toc-article-text">2.3 文件结合</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-4-%E5%9F%BA%E4%BA%8EDCT%E5%9F%9F%E7%9A%84JPG%E5%9B%BE%E7%89%87%E9%9A%90%E5%86%99"><span class="toc-article-text">2.4 基于DCT域的JPG图片隐写</span></a></li></ol></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E4%B8%89%E3%80%81PNG%E5%9B%BE%E7%89%87%E9%9A%90%E5%86%99"><span class="toc-article-text">三、PNG图片隐写</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#1-PNG%E7%9A%84%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="toc-article-text">1. PNG的文件结构</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#IHDR"><span class="toc-article-text">IHDR</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#PLTE"><span class="toc-article-text">PLTE</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#IDAT"><span class="toc-article-text">IDAT</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#IEND"><span class="toc-article-text">IEND</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-%E5%B8%B8%E8%A7%81%E7%9A%84%E9%9A%90%E5%86%99%E6%96%B9%E5%BC%8F-1"><span class="toc-article-text">2. 常见的隐写方式</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-1-LSB-%E9%9A%90%E5%86%99"><span class="toc-article-text">2.1 LSB 隐写</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-3-%E8%B0%83%E8%89%B2%E6%9D%BF%E9%9A%90%E5%86%99"><span class="toc-article-text">2.3 调色板隐写</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-3-IDAT-%E5%9D%97%E9%9A%90%E5%86%99-%E6%95%B0%E6%8D%AE%E4%BF%AE%E6%94%B9"><span class="toc-article-text">2.3 IDAT 块隐写 &#x2F; 数据修改</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-4-%E5%AD%97%E7%AC%A6%E9%99%84%E5%8A%A0"><span class="toc-article-text">2.4 字符附加</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-5-%E6%96%87%E4%BB%B6%E7%BB%93%E5%90%88%EF%BC%88%E5%9B%BE%E7%A7%8D%EF%BC%89"><span class="toc-article-text">2.5 文件结合（图种）</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-6-%E6%96%87%E6%9C%AC%E5%9D%97%E9%9A%90%E5%86%99%EF%BC%88tEXt-zTXt-iTXt%EF%BC%89"><span class="toc-article-text">2.6 文本块隐写（tEXt &#x2F; zTXt &#x2F; iTXt）</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-7-%E5%9F%BA%E4%BA%8EPNG%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E7%9A%84%E9%9A%90%E5%86%99"><span class="toc-article-text">2.7 基于PNG文件格式的隐写</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-8-%E5%9B%BE%E7%89%87%E5%AE%B9%E5%B7%AE%E9%9A%90%E5%86%99"><span class="toc-article-text">2.8 图片容差隐写</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-9-%E5%9B%BE%E5%B1%82%E5%8F%A0%E5%8A%A0"><span class="toc-article-text">2.9  图层叠加</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-0-%E5%85%B6%E4%BB%96%E9%9A%90%E5%86%99%E6%96%B9%E5%BC%8F"><span class="toc-article-text">3.0 其他隐写方式</span></a></li></ol></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E5%9B%9B%E3%80%81GIF%E9%9A%90%E5%86%99"><span class="toc-article-text">四、GIF隐写</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#1-GIF%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="toc-article-text">1. GIF文件结构</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B4"><span class="toc-article-text">文件头</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#GIF%E6%95%B0%E6%8D%AE%E6%B5%81%E9%83%A8%E5%88%86"><span class="toc-article-text">GIF数据流部分</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E5%85%A8%E5%B1%80%E9%A2%9C%E8%89%B2%E5%88%97%E8%A1%A8"><span class="toc-article-text">全局颜色列表</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E5%9B%BE%E5%BD%A2%E6%8E%A7%E5%88%B6%E6%89%A9%E5%B1%95"><span class="toc-article-text">图形控制扩展</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E6%96%87%E4%BB%B6%E7%BB%88%E7%BB%93%E5%99%A8-Trailer"><span class="toc-article-text">文件终结器(Trailer)</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-%E5%B8%B8%E8%A7%81%E7%9A%84%E9%9A%90%E5%86%99%E6%96%B9%E5%BC%8F-2"><span class="toc-article-text">2. 常见的隐写方式</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-1-%E5%9F%BA%E4%BA%8E%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E9%9A%90%E5%86%99"><span class="toc-article-text">2.1 基于文件结构隐写</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-2-%E5%9F%BA%E4%BA%8E%E7%A9%BA%E9%97%B4%E8%BD%B4%E9%9A%90%E8%97%8F%E4%BF%A1%E6%81%AF"><span class="toc-article-text">2.2 基于空间轴隐藏信息</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-3-%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E8%BD%B4%E9%9A%90%E8%97%8F%E4%BF%A1%E6%81%AF"><span class="toc-article-text">2.3 基于时间轴隐藏信息</span></a></li></ol></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E4%BA%94%E3%80%81%E9%9F%B3%E9%A2%91%E9%9A%90%E5%86%99"><span class="toc-article-text">五、音频隐写</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#1-MP3%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="toc-article-text">1. MP3文件格式</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-WAV%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="toc-article-text">2. WAV文件结构</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Format-chunk%EF%BC%88fmt-%E5%AD%90%E5%9D%97%EF%BC%89"><span class="toc-article-text">Format chunk（fmt 子块）</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Data-chunk"><span class="toc-article-text">Data chunk</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#3-%E9%9A%90%E5%86%99%E6%96%B9%E5%BC%8F"><span class="toc-article-text">3. 隐写方式</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-1-%E6%91%A9%E6%96%AF%E5%AF%86%E7%A0%81"><span class="toc-article-text">3.1 摩斯密码</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-2-%E9%A2%91%E8%B0%B1%E9%9A%90%E5%86%99"><span class="toc-article-text">3.2 频谱隐写</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-3-%E6%B3%A2%E5%BD%A2%E9%9A%90%E5%86%99"><span class="toc-article-text">3.3 波形隐写</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-4-%E5%9F%BA%E4%BA%8ELSB%E7%9A%84%E9%9F%B3%E9%A2%91%E9%9A%90%E5%86%99"><span class="toc-article-text">3.4 基于LSB的音频隐写</span></a></li></ol></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#BUUCTF"><span class="toc-article-text">BUUCTF</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#1-%E5%9B%BE%E7%89%87%E4%B8%AD%E7%9A%84%E5%AF%86%E7%A0%81"><span class="toc-article-text">1. 图片中的密码</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-%E4%BD%A0%E7%AB%9F%E7%84%B6%E8%B5%B6%E6%88%91%E8%B5%B0"><span class="toc-article-text">2. 你竟然赶我走</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#3-%E4%B8%80%E5%8F%B6%E9%9A%9C%E7%9B%AE"><span class="toc-article-text">3. 一叶障目</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#4-LSB"><span class="toc-article-text">4. LSB</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#5-%E6%B9%96%E5%8D%97%E7%9C%81%E8%B5%9B-2019-Findme"><span class="toc-article-text">5. [湖南省赛 2019] Findme</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#6-%E5%9B%BE%E7%89%87%E5%AE%B9%E5%B7%AE"><span class="toc-article-text">6. 图片容差</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#7-BJDCTF2020-%E9%B8%A1%E4%BD%A0%E5%A4%AA%E7%BE%8E"><span class="toc-article-text">7. [BJDCTF2020]鸡你太美</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#8-%E9%87%91%E4%B8%89%E8%83%96"><span class="toc-article-text">8. 金三胖</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#9-gif%E7%A9%BA%E9%97%B4%E8%BD%B4%E9%9A%90%E5%86%99"><span class="toc-article-text">9. gif空间轴隐写</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#10-gif%E6%97%B6%E9%97%B4%E8%BD%B4%E9%9A%90%E5%86%99"><span class="toc-article-text">10. gif时间轴隐写</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#11-%E6%9D%A5%E9%A6%96%E6%AD%8C%E5%90%A7"><span class="toc-article-text">11. 来首歌吧</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#12-UTCTF2020-spectogram"><span class="toc-article-text">12. [UTCTF2020]spectogram</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#13-SCTF2019-%E7%94%B5%E5%8D%95%E8%BD%A6"><span class="toc-article-text">13. [SCTF2019]电单车</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#14-MRCTF2020-Unravel"><span class="toc-article-text">14. [MRCTF2020]Unravel!!</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#15-%E8%8F%9C%E5%88%80%E6%B5%81%E9%87%8F"><span class="toc-article-text">15. 菜刀流量</span></a></li></ol></li></ol>
+			</div>
+		
+		</div>
+	</div>
+
+</div><!-- col-md-3 -->
+
+
+		</div>
+
+		
+
+	</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  
+  &copy; 2026 Qexzi's Blog
+  
+      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/toc.js"></script>
+<script src="/js/copy-code.js"></script>
+
+   <script type="text/javascript">
+     var searchPath = "/search.xml";
+   </script>
+
+
+<script src="/js/search.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

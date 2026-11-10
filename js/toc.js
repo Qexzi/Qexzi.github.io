@@ -15,22 +15,57 @@ document.addEventListener('DOMContentLoaded', function(){
 
     var toc = document.querySelector('.toc-article');
     if(!toc) return;
+    var tocBox = toc.closest('.toc');
 
-    // Limit depth (1 -> h2, 2 -> h3)
-    var maxDepth = 2;
-    var lis = toc.querySelectorAll('li');
-    lis.forEach(function(li){
-      var depth = 0;
-      var p = li.parentElement;
-      while(p && p !== toc){
-        if(p.tagName.toLowerCase() === 'li') depth++;
-        p = p.parentElement;
-      }
-      if(depth >= maxDepth){
-        // hide deeper items to limit TOC depth
-        li.style.display = 'none';
-      }
+    /* ---------- 全量显示多级标题，构建可折叠树 ---------- */
+    // 有子级的条目插入折叠箭头；一级（h2）默认展开，更深层级默认收起
+    var items = Array.prototype.slice.call(toc.querySelectorAll('li.toc-article-item'));
+    items.forEach(function(li){
+      var childOl = li.querySelector(':scope > ol.toc-article-child');
+      var link = li.querySelector(':scope > a.toc-article-link');
+      if(!childOl || !link) return;
+
+      var m = /toc-article-level-(\d+)/.exec(li.className);
+      var level = m ? parseInt(m[1], 10) : 1;
+      if (level >= 2) li.classList.add('toc-collapsed');
+
+      var btn = document.createElement('span');
+      btn.className = 'toc-toggle';
+      btn.setAttribute('role', 'button');
+      btn.setAttribute('aria-label', '展开/收起');
+      btn.textContent = '▸';
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        li.classList.toggle('toc-collapsed');
+      });
+      link.appendChild(btn);
     });
+
+    /* ---------- 全部展开/收起按钮 ---------- */
+    if (tocBox) {
+      var titleEl = tocBox.querySelector('.toc-title');
+      if (titleEl) {
+        var allBtn = document.createElement('span');
+        allBtn.className = 'toc-toggle-all';
+        allBtn.textContent = '展开全部';
+        allBtn.addEventListener('click', function(){
+          var anyCollapsed = toc.querySelectorAll('li.toc-article-item.toc-collapsed').length > 0;
+          if (anyCollapsed) {
+            toc.querySelectorAll('li.toc-article-item.toc-collapsed').forEach(function(li){
+              li.classList.remove('toc-collapsed');
+            });
+            allBtn.textContent = '收起全部';
+          } else {
+            items.forEach(function(li){
+              if (li.querySelector(':scope > ol.toc-article-child')) li.classList.add('toc-collapsed');
+            });
+            allBtn.textContent = '展开全部';
+          }
+        });
+        titleEl.appendChild(allBtn);
+      }
+    }
 
     // Smooth scroll for TOC links with header offset to avoid navigation overlay
     var anchors = toc.querySelectorAll('a');
@@ -60,8 +95,8 @@ document.addEventListener('DOMContentLoaded', function(){
       });
     });
 
-    // Active section highlight using IntersectionObserver
-    var headingSelector = '.mypage h2, .mypage h3';
+    // Active section highlight using IntersectionObserver（含 h4/h5，滚动时自动展开所在分支）
+    var headingSelector = '.mypage h2[id], .mypage h3[id], .mypage h4[id], .mypage h5[id]';
     var headings = Array.prototype.slice.call(document.querySelectorAll(headingSelector));
     if(headings.length){
       var idToLink = {};
@@ -86,6 +121,12 @@ document.addEventListener('DOMContentLoaded', function(){
               var l = idToLink[k]; if(l) l.classList.remove('toc-active');
             });
             link.classList.add('toc-active');
+            // 自动展开当前小节所在的各级分支
+            var p = link.parentElement;
+            while(p && p !== toc){
+              if(p.classList && p.classList.contains('toc-article-item')) p.classList.remove('toc-collapsed');
+              p = p.parentElement;
+            }
             // ensure active link is visible inside TOC scroll container
             try{
               // find nearest scrollable ancestor (the .toc element)
@@ -104,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function(){
         });
       }, options);
 
-      headings.forEach(function(h){ if(h.id) observer.observe(h); });
+      headings.forEach(function(h){ observer.observe(h); });
     }
   }catch(e){ console && console.error && console.error('toc.js error', e); }
   });

@@ -7,27 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>clc-hack指南 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2026/04/28/clc-hack指南/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="一份文档讲清楚：快速安装 → 架构原理 → 脚本源码 → 验证排错
-
-
-一、概述：配置完成后你会得到什么
-
-
-序号
-能力
-实现方式
-
-
-
-1
-免拒绝：不会被”我无法协助安全攻击”拒绝
-Rules 层声明白帽身份
-
-
-2
-场景识别：自动判断你在做 CTF &amp;#x2F; 漏洞分析 &amp;#x2F; 渗透 &amp;">
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -40,6 +23,8 @@ Rules 层声明白帽身份
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -50,7 +35,6 @@ Rules 层声明白帽身份
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -58,41 +42,36 @@ Rules 层声明白帽身份
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
-
-
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
+  
+  <!-- MathJax（仅含公式的页面加载，由 scripts/mathjax-injector.js 检测标记） -->
+  <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    startup: {
+      pageReady: () => {
+        return MathJax.startup.defaultPageReady();
+      }
     }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+  };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+
+  
+
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -1197,6 +1176,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

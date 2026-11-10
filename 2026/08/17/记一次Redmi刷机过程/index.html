@@ -7,21 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>记一次Redmi刷机过程 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2026/08/17/记一次Redmi刷机过程/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="引入
-在root之前，需要解除BL锁，本文只是记录了root过程
-
-主要过程是通过 Magisk 获取 root 权限
-
-
-
-1.过程原理在fastboot模式下读取手机分区信息，目的是确认当前激活槽位是a且引导分区明确存在，这决定了后续只能针对这个分区操作；
-接着通过下载与系统版本完全一致的官方卡刷包，从中解压出payload.bin文件，并借助payload-dumper-go工具单独提取出原厂boot.img，这一步不能直接在手机上读取是因为运行中的系统会锁定该分区，只能从官方固件包里取料；
-将提取的boot.img传入手机后，由Magisk App对其进行修补，它实际上是在内核的ramdisk中注入自身的初始化代码，这种修补必须在目标手机上即时完成，以确保生成的镜像与当前系统环境完全匹配；
-将修补好的镜像拉回电脑，再让手机重启到fastboot模式，执行fastboot flash boot_a命令，其目的就是利用底层硬件接口直接将该镜像写入当前正在使用的a槽位，而明确指定a槽位是为了绕过fastboot工具可能存在的自动映射错误，避免误写入闲置的b槽位导致root无效或下次切换分区时无法开机；
-刷入完成后重启设备，只要magisk应用能识别出版本号，就代表内核已被成功接管，root权限就此获得。
-1.手机型号信息"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -34,6 +23,8 @@
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -44,7 +35,6 @@
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -52,41 +42,18 @@
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"记一次Redmi刷机过程","datePublished":"2026-08-17T05:00:00.000Z","dateModified":"2026-08-17T05:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2026/08/17/记一次Redmi刷机过程/","description":"引入 在root之前，需要解除BL锁，本文只是记录了root过程 主要过程是通过 Magisk 获取 root 权限 1.过程原理在fastboot模式下读取手机分区信息，目的是确认当前激活槽位是a且引导分区明确存在，这决定了后续只能针对这个分区操作； 接着通过下载与系统版本完全一致的官方卡刷包，从中解压出payload.bin文件，并借助payload-dumper-go工具单独提取出原厂boo"}</script>
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -219,7 +186,7 @@ MathJax = {
 <hr>
 <h2 id="3-设备信息确认"><a href="#3-设备信息确认" class="headerlink" title="3. 设备信息确认"></a>3. 设备信息确认</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">fastboot devices</span><br><span class="line">fastboot getvar all</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/%E8%AE%B0%E4%B8%80%E6%AC%A1Redmi%E5%88%B7%E6%9C%BA%E8%BF%87%E7%A8%8B/image_1.png" alt="在这里插入图片描述"></p>
+<p><img src="/images/%E8%AE%B0%E4%B8%80%E6%AC%A1Redmi%E5%88%B7%E6%9C%BA%E8%BF%87%E7%A8%8B/image_1.png" alt="记一次Redmi刷机过程·图1"></p>
 <p><strong>需要记录的关键信息</strong>：</p>
 <table>
 <thead>
@@ -266,10 +233,10 @@ MathJax = {
 <p>解压 <code>payload-dumper-go_xxx_windows_amd64.tar.gz</code>，得到 <code>payload-dumper-go.exe</code></p>
 <p>执行命令提取boot.img</p>
 <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">payload-dumper-go.exe -partitions boot payload.bin</span><br></pre></td></tr></table></figure>
-<p><img src="/images/%E8%AE%B0%E4%B8%80%E6%AC%A1Redmi%E5%88%B7%E6%9C%BA%E8%BF%87%E7%A8%8B/image_2.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E8%AE%B0%E4%B8%80%E6%AC%A1Redmi%E5%88%B7%E6%9C%BA%E8%BF%87%E7%A8%8B/image_2.png" alt="记一次Redmi刷机过程·图2"></p>
 <hr>
 <h2 id="6-第四阶段：修补-boot-img"><a href="#6-第四阶段：修补-boot-img" class="headerlink" title="6. 第四阶段：修补 boot.img"></a>6. 第四阶段：修补 boot.img</h2><p>将提取出的 <code>boot.img</code>（约 134 MB）复制到手机 <code>Download</code> 文件夹。然后在 Magisk 中修补</p>
-<p><img src="/images/%E8%AE%B0%E4%B8%80%E6%AC%A1Redmi%E5%88%B7%E6%9C%BA%E8%BF%87%E7%A8%8B/image_3.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E8%AE%B0%E4%B8%80%E6%AC%A1Redmi%E5%88%B7%E6%9C%BA%E8%BF%87%E7%A8%8B/image_3.png" alt="记一次Redmi刷机过程·图3"></p>
 <ol>
 <li>打开手机 <strong>Magisk App</strong></li>
 <li>点击主界面顶部的 <strong>「安装」</strong> 按钮</li>
@@ -277,7 +244,7 @@ MathJax = {
 <li>在文件管理器中找到并选中 <code>boot.img</code></li>
 <li>点击右上角 <strong>「开始」</strong>，等待修补完成（几秒钟）</li>
 </ol>
-<p><img src="/images/%E8%AE%B0%E4%B8%80%E6%AC%A1Redmi%E5%88%B7%E6%9C%BA%E8%BF%87%E7%A8%8B/image_4.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E8%AE%B0%E4%B8%80%E6%AC%A1Redmi%E5%88%B7%E6%9C%BA%E8%BF%87%E7%A8%8B/image_4.png" alt="记一次Redmi刷机过程·图4"></p>
 <p>修补完成后，手机 <code>Download</code> 文件夹会生成一个文件，文件名类似：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">magisk_patched-30700_wZfnM.img</span><br></pre></td></tr></table></figure>
 
@@ -294,7 +261,7 @@ MathJax = {
 
 
 <hr>
-<h2 id="8-验证"><a href="#8-验证" class="headerlink" title="8. 验证"></a>8. 验证</h2><p><img src="/images/%E8%AE%B0%E4%B8%80%E6%AC%A1Redmi%E5%88%B7%E6%9C%BA%E8%BF%87%E7%A8%8B/image_5.png" alt="在这里插入图片描述"></p>
+<h2 id="8-验证"><a href="#8-验证" class="headerlink" title="8. 验证"></a>8. 验证</h2><p><img loading="lazy" decoding="async" src="/images/%E8%AE%B0%E4%B8%80%E6%AC%A1Redmi%E5%88%B7%E6%9C%BA%E8%BF%87%E7%A8%8B/image_5.png" alt="记一次Redmi刷机过程·图5"></p>
 <p>magisk成功安装到boot区，且超级用户功能可以是使用，即已经完成root操作</p>
 
 		  <div class="article-footer-copyright">
@@ -505,6 +472,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

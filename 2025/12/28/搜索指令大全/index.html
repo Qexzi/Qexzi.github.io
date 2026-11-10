@@ -7,21 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>搜索指令大全 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2025/12/28/搜索指令大全/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="Google Dork 实战速查
-Google 不支持 | 作为 OR，必须用大写 OR；inurl:(a OR b) 的括号分组写法部分场景可能不生效，保守写法为 inurl:a OR inurl:b。
-
-资产发现查找后台地址：
-site:target.com inurl:(login OR admin OR manage OR member OR admin_login OR login_admin OR system OR user OR main OR cms)site:target.com intext:(管理 OR 后台 OR 后台管理 OR 登陆 OR 登录 OR 用户名 OR 密码 OR 系统 OR 账号 OR login OR system)site:target.com inurl:(login OR admin OR manage OR manager OR admin_login OR system OR backend)site:target.com intitle:(管理 OR 后台 OR 后台管理 OR 登陆 OR 登录)site:target.com 默认密码
-
-特定系统&amp;#x2F;设备指纹：
-inurl:&amp;quot;cgi-bin/koha&amp;quot;# 注意不是 -checkpoint.comintitle:&amp;quot;SSL Network Extender Login&amp;quot; -site:checkpoint.com    intext:&amp;quot;siemens&amp;quot; inurl:&amp;quot;/portal/portal.mwsl&amp;quot;# 如果不加双引号其匹配精度变低intext:&amp;quot;GlobalProtect Portal&amp;quot;   
-
-目录遍历：
-# intitle: 后多词短语必须加引号，intitle:&amp;quot;index of&amp;quot; 而非 intitle:index of（后者只匹配 index 在标题）site:target.com intitle:&amp;quot;index of&amp;quot;# 组合&amp;quot;父目录&amp;quot;特征，减少误报，同时也可以在末尾加 &amp;quot;-&amp;quot; 来排除干扰页面site:target.com intitle:&amp;quot;index of&amp;quot; intext:&amp;quot;[To Parent Directory]&amp;quot;
-
-迂回策略入侵（目录结构探测）："> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -34,6 +23,8 @@ inurl:&amp;quot;cgi-bin/koha&amp;quot;# 注意不是 -checkpoint.comintitle:&amp
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -44,7 +35,6 @@ inurl:&amp;quot;cgi-bin/koha&amp;quot;# 注意不是 -checkpoint.comintitle:&amp
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -52,41 +42,18 @@ inurl:&amp;quot;cgi-bin/koha&amp;quot;# 注意不是 -checkpoint.comintitle:&amp
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"搜索指令大全","datePublished":"2025-12-28T04:00:00.000Z","dateModified":"2025-12-28T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2025/12/28/搜索指令大全/","description":"Google Dork 实战速查 Google 不支持 | 作为 OR，必须用大写 OR；inurl:(a OR b) 的括号分组写法部分场景可能不生效，保守写法为 inurl:a OR inurl:b。 资产发现查找后台地址： site:target.com inurl:(login OR admin OR manage OR member OR admin_login OR login_adm"}</script>
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -1112,6 +1079,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

@@ -7,22 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>HTML基础 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2025/12/05/HTML基础/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="1. 简单的HTML页面架构HTML5标准文档结构是网页的基础框架，包含文档类型声明、根元素、头部和主体部分。
-&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html lang=&amp;quot;zh-CN&amp;quot;&amp;gt;&amp;lt;head&amp;gt;    &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;    &amp;lt;title&amp;gt;WEB安全学习平台&amp;lt;/title&amp;gt;&amp;lt;/head&amp;gt;&amp;lt;body&amp;gt;    &amp;lt;!-- 页面内容将放置在这里 --&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;
-
-关键点解析：
-
-&amp;lt;!DOCTYPE html&amp;gt;：声明文档类型为HTML5，确保浏览器以标准模式渲染页面
-&amp;lt;html lang=&amp;quot;zh-CN&amp;quot;&amp;gt;：根元素，lang属性指定页面语言为中文
-&amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;：设置字符编码为UTF-8，确保中文等特殊字符正常显示
-&amp;lt;title&amp;gt;：定义浏览器标签页显示的标题
-&amp;lt;body&amp;gt;：包含所有页面可见内容的容器
-
-安全提示：UTF-8编码是安全首选，避免使用GBK等编码，防止编码转换导致的XSS漏洞。
-2. HTML常见标签详解2.1 meta标签&amp;lt;meta&amp;gt; 元素用于提供关于HTML文档的元数据，对SEO和安全配置至关重要。
-&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html lang=&amp;quot;zh-CN&amp;quot;&amp;gt;&amp;lt;head&amp;gt;    &amp;lt;!-- 字符编码 --&amp;gt;    &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;        &amp;lt;!-- 页面描述（SEO优化） --&amp;gt;    &amp;lt;meta name=&amp;quot;description&amp;quot; content=&amp;quot;WEB安全HTML基础教程 - 安全渗透必备技能&amp;quot;&amp;gt;        &amp;lt;!-- 关键词（现代搜索引擎已不依赖，但部分场景仍有用） --&amp;gt;    &amp;lt;meta name=&amp;quot;keywords&amp;quot; content=&amp;quot;网络安全, WEB渗透, 数据安全, 渗透测试, 安全培训&amp;quot;&amp;gt;        &amp;lt;!-- 作者信息 --&amp;gt;    &amp;lt;meta name=&amp;quot;author&amp;quot; content=&amp;quot;moonsec&amp;quot;&amp;gt;        &amp;lt;!-- 移动设备适配 --&amp;gt;    &amp;lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&amp;gt;        &amp;lt;!-- 内容安全策略（CSP）- 重要安全配置 --&amp;gt;    &amp;lt;meta http-equiv=&amp;quot;Content-Security-Policy&amp;quot;           content=&amp;quot;default-src &amp;#x27;self&amp;#x27;; script-src &amp;#x27;self&amp;#x27; https://trusted.cdn.com; style-src &amp;#x27;self&amp;#x27; &amp;#x27;unsafe-inline&amp;#x27;&amp;quot;&amp;gt;        &amp;lt;!-- X-Frame-Options - 防止点击劫持 --&amp;gt;    &amp;lt;meta http-equiv=&amp;quot;X-Frame-Options&amp;quot; content=&amp;quot;DENY&amp;quot;&amp;gt;        &amp;lt;!-- 刷新页面（5秒后跳转） --&amp;gt;    &amp;lt;meta http-equiv=&amp;quot;refresh&amp;quot; content=&amp;quot;5;url=https://www.example.com&amp;quot;&amp;gt;&amp;lt;/head&amp;gt;&amp;lt;body&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -35,6 +23,8 @@
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -45,7 +35,6 @@
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -53,41 +42,18 @@
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"HTML基础","datePublished":"2025-12-05T04:00:00.000Z","dateModified":"2025-12-05T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2025/12/05/HTML基础/","description":"1. 简单的HTML页面架构HTML5标准文档结构是网页的基础框架，包含文档类型声明、根元素、头部和主体部分。 &lt;!DOCTYPE html&gt;&lt;html lang=&quot;zh-CN&quot;&gt;&lt;head&gt; &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;title&gt;WEB安全学习平台&lt;/title&gt;"}</script>
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -587,6 +553,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

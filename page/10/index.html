@@ -7,7 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>第 10 页 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/page/10/index.html">
   <meta name="author" content="Qexzi">
+  
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -20,6 +23,8 @@
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -30,7 +35,6 @@
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -38,41 +42,15 @@
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -108,8 +86,44 @@ MathJax = {
   <div class="container">
   	<div class="content">
     	 <div class="page-header logo">
-  <h1>Attacking ...<span class="blink-fast">|</span></h1>
+  <h1><span id="typewriter-text">Attacking ...</span><span class="blink-fast" id="typewriter-caret">|</span></h1>
 </div>
+<script>
+(function () {
+  var txt = document.getElementById('typewriter-text');
+  var caret = document.getElementById('typewriter-caret');
+  if (!txt || !caret) return;
+  var FULL = txt.textContent;
+  if (!FULL) return;
+  // 系统开启“减弱动态效果”时不做打字动画，保持完整标题
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  txt.textContent = '';
+  var i = 0, dir = 1;
+  function tick() {
+    if (dir === 1) {
+      // 打字：光标实心
+      i++; txt.textContent = FULL.slice(0, i); caret.classList.remove('idle');
+      if (i >= FULL.length) {
+        // 打完短暂停留后进入空闲，光标硬闪
+        dir = 0;
+        setTimeout(function () {
+          caret.classList.add('idle');
+          setTimeout(function () { dir = -1; tick(); }, 2200);
+        }, 350);
+        return;
+      }
+      setTimeout(tick, 120);
+    } else {
+      // 删除：光标实心，速度加快
+      caret.classList.remove('idle');
+      i--; txt.textContent = FULL.slice(0, i);
+      if (i <= 0) { dir = 1; setTimeout(tick, 700); return; }
+      setTimeout(tick, 38);
+    }
+  }
+  setTimeout(tick, 400);
+})();
+</script>
 
 <div class="row page">
 
@@ -155,9 +169,9 @@ MathJax = {
 <li>任务：先列举一个有效的用户名，暴力破解该用户的密码，然后访问他们的账户页面</li>
 <li>提示：该环境易受用户名枚举和密码暴力破解攻击的攻击。</li>
 </ul>
-<p><img src="/images/%E8%AE%A4%E8%AF%81/image_1.png" alt="在这里插入图片描述"><br>在换一个密码，发现回显依然是 <code>Invalid username</code> 说明服务器优先检查用户名</p>
-<p>爆破username<br><img src="/images/%E8%AE%A4%E8%AF%81/image_2.png" alt="在这里插入图片描述"></p>
-<p>爆破密码<br><img src="/images/%E8%AE%A4%E8%AF%81/image_3.png" alt="在这里插入图片描述"></p>
+<p><img src="/images/%E8%AE%A4%E8%AF%81/image_1.png" alt="认证·图1"><br>在换一个密码，发现回显依然是 <code>Invalid username</code> 说明服务器优先检查用户名</p>
+<p>爆破username<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_2.png" alt="认证·图2"></p>
+<p>爆破密码<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_3.png" alt="认证·图3"></p>
 <p>登录访问即可</p>
 <hr>
 <h3 id="0x02-2FA简单绕过"><a href="#0x02-2FA简单绕过" class="headerlink" title="0x02.2FA简单绕过"></a>0x02.2FA简单绕过</h3><ul>
@@ -169,7 +183,7 @@ MathJax = {
 </ul>
 </li>
 </ul>
-<p><img src="/images/%E8%AE%A4%E8%AF%81/image_4.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_4.png" alt="认证·图4"></p>
 	
 	</div>
   <a type="button" href="/2026/04/06/认证/#more" class="btn btn-default more">阅读此文</a>
@@ -199,14 +213,14 @@ MathJax = {
 		<h2 id="业务逻辑漏洞"><a href="#业务逻辑漏洞" class="headerlink" title="业务逻辑漏洞"></a>业务逻辑漏洞</h2><h3 id="0x01-对客户端控制的过度信任"><a href="#0x01-对客户端控制的过度信任" class="headerlink" title="0x01.对客户端控制的过度信任"></a>0x01.对客户端控制的过度信任</h3><ul>
 <li>任务：买夹克衫</li>
 </ul>
-<p><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_1.png" alt="在这里插入图片描述"></p>
-<p>抓取添加物品的数据包<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_2.png" alt="在这里插入图片描述"></p>
-<p>结果<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_3.png" alt="在这里插入图片描述"></p>
+<p><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_1.png" alt="业务逻辑漏洞·图1"></p>
+<p>抓取添加物品的数据包<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_2.png" alt="业务逻辑漏洞·图2"></p>
+<p>结果<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_3.png" alt="业务逻辑漏洞·图3"></p>
 <hr>
 <h3 id="0x02-高级逻辑漏洞"><a href="#0x02-高级逻辑漏洞" class="headerlink" title="0x02.高级逻辑漏洞"></a>0x02.高级逻辑漏洞</h3><ul>
 <li>任务：买夹克衫</li>
 </ul>
-<p><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_4.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_4.png" alt="业务逻辑漏洞·图4"></p>
 	
 	</div>
   <a type="button" href="/2026/04/01/业务逻辑漏洞/#more" class="btn btn-default more">阅读此文</a>
@@ -311,45 +325,45 @@ MathJax = {
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/python/">python<span>1</span></a></li>
+			<li><a href="/tags/Java/">Java<span>1</span></a></li>
 		
-			<li><a href="/tags/计算机体系架构/">计算机体系架构<span>1</span></a></li>
+			<li><a href="/tags/Google-Hacking/">Google Hacking<span>1</span></a></li>
 		
-			<li><a href="/tags/PHP/">PHP<span>1</span></a></li>
+			<li><a href="/tags/Linux/">Linux<span>1</span></a></li>
+		
+			<li><a href="/tags/深度学习/">深度学习<span>2</span></a></li>
+		
+			<li><a href="/tags/信息安全工程师/">信息安全工程师<span>1</span></a></li>
+		
+			<li><a href="/tags/文件上传/">文件上传<span>1</span></a></li>
 		
 			<li><a href="/tags/内网/">内网<span>2</span></a></li>
 		
-			<li><a href="/tags/邮箱解析/">邮箱解析<span>1</span></a></li>
-		
-			<li><a href="/tags/Hexo/">Hexo<span>1</span></a></li>
-		
 			<li><a href="/tags/服务器/">服务器<span>1</span></a></li>
 		
-			<li><a href="/tags/XXE/">XXE<span>1</span></a></li>
+			<li><a href="/tags/软考/">软考<span>1</span></a></li>
 		
-			<li><a href="/tags/GitHub-Dork/">GitHub Dork<span>1</span></a></li>
+			<li><a href="/tags/DIV/">DIV<span>1</span></a></li>
 		
 			<li><a href="/tags/WEB/">WEB<span>1</span></a></li>
 		
-			<li><a href="/tags/PWN/">PWN<span>1</span></a></li>
+			<li><a href="/tags/python/">python<span>1</span></a></li>
 		
-			<li><a href="/tags/Docker/">Docker<span>1</span></a></li>
+			<li><a href="/tags/计算机网络/">计算机网络<span>7</span></a></li>
 		
-			<li><a href="/tags/物理层/">物理层<span>1</span></a></li>
+			<li><a href="/tags/VPN/">VPN<span>1</span></a></li>
 		
-			<li><a href="/tags/代理/">代理<span>1</span></a></li>
-		
-			<li><a href="/tags/栈/">栈<span>1</span></a></li>
-		
-			<li><a href="/tags/红队/">红队<span>1</span></a></li>
+			<li><a href="/tags/JWT/">JWT<span>1</span></a></li>
 		
 			<li><a href="/tags/Git/">Git<span>1</span></a></li>
 		
 			<li><a href="/tags/堆/">堆<span>1</span></a></li>
 		
-			<li><a href="/tags/root/">root<span>1</span></a></li>
+			<li><a href="/tags/Nginx/">Nginx<span>1</span></a></li>
 		
-			<li><a href="/tags/应急响应/">应急响应<span>1</span></a></li>
+			<li><a href="/tags/Java安全/">Java安全<span>1</span></a></li>
+		
+			<li><a href="/tags/Docker/">Docker<span>1</span></a></li>
 		
 		
 		   <li><a href="/tags">...<span>68</span></a></li>
@@ -410,6 +424,7 @@ MathJax = {
 	
 	
 </div> <!-- row-fluid -->
+
 	</div>
   </div>
   <div class="container-narrow">
@@ -434,6 +449,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

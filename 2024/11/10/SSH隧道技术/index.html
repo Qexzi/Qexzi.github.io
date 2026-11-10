@@ -7,18 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>SSH隧道技术 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2024/11/10/SSH隧道技术/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="1.什么是SSH隧道+为什么需要SSH隧道？
-SSH 隧道就像是一条加密的地下通道，让你在不安全的网络上安全地传输数据。比如：你想从家里访问公司内网的数据库，但数据库只能在公司内网访问，这时候 SSH 隧道就能帮你 “穿墙” 访问。
-
-2.SSH的隧道类型SSH反向连接（远程端口转发）
-  因此可以通过访问内网2来访问内网1的主机（因为内网2是允许外网主机访问的）
-
-
-
-
-如果此时就是想访问server 1 可以修改命令为 ssh -L 80:127.0.0.1 用户@server1_ip"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -31,6 +23,8 @@ SSH 隧道就像是一条加密的地下通道，让你在不安全的网络上�
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -41,7 +35,6 @@ SSH 隧道就像是一条加密的地下通道，让你在不安全的网络上�
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -49,41 +42,39 @@ SSH 隧道就像是一条加密的地下通道，让你在不安全的网络上�
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
-
-
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
+  
+  <!-- MathJax（仅含公式的页面加载，由 scripts/mathjax-injector.js 检测标记） -->
+  <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    startup: {
+      pageReady: () => {
+        return MathJax.startup.defaultPageReady();
+      }
     }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+  };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"SSH隧道技术","datePublished":"2024-11-10T04:00:00.000Z","dateModified":"2024-11-11T02:30:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2024/11/10/SSH隧道技术/","description":"1.什么是SSH隧道+为什么需要SSH隧道？ SSH 隧道就像是一条加密的地下通道，让你在不安全的网络上安全地传输数据。比如：你想从家里访问公司内网的数据库，但数据库只能在公司内网访问，这时候 SSH 隧道就能帮你 “穿墙” 访问。 2.SSH的隧道类型SSH反向连接（远程端口转发） 因此可以通过访问内网2来访问内网1的主机（因为内网2是允许外网主机访问的） 如果此时就是想访问server 1 可"}</script>
+  
+
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -155,23 +146,23 @@ MathJax = {
 		  <h2 id="1-什么是SSH隧道-为什么需要SSH隧道？"><a href="#1-什么是SSH隧道-为什么需要SSH隧道？" class="headerlink" title="1.什么是SSH隧道+为什么需要SSH隧道？"></a><code>1.什么是SSH隧道+为什么需要SSH隧道？</code></h2><blockquote>
 <p>SSH 隧道就像是一条加密的地下通道，让你在不安全的网络上安全地传输数据。<br>比如：你想从家里访问公司内网的数据库，但数据库只能在公司内网访问，这时候 SSH 隧道就能帮你 “穿墙” 访问。</p>
 </blockquote>
-<h2 id="2-SSH的隧道类型"><a href="#2-SSH的隧道类型" class="headerlink" title="2.SSH的隧道类型"></a><code>2.SSH的隧道类型</code></h2><h3 id="SSH反向连接（远程端口转发）"><a href="#SSH反向连接（远程端口转发）" class="headerlink" title="SSH反向连接（远程端口转发）"></a><code>SSH反向连接</code>（远程端口转发）</h3><p><img src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_1.png" alt="在这里插入图片描述"></p>
+<h2 id="2-SSH的隧道类型"><a href="#2-SSH的隧道类型" class="headerlink" title="2.SSH的隧道类型"></a><code>2.SSH的隧道类型</code></h2><h3 id="SSH反向连接（远程端口转发）"><a href="#SSH反向连接（远程端口转发）" class="headerlink" title="SSH反向连接（远程端口转发）"></a><code>SSH反向连接</code>（远程端口转发）</h3><p><img src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_1.png" alt="SSH隧道技术·图1"></p>
 <p>  因此可以通过访问内网2来访问内网1的主机（因为内网2是允许外网主机访问的）</p>
-<p><img src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_2.png" alt="在这里插入图片描述"></p>
-<p><img src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_3.png" alt="在这里插入图片描述"></p>
-<p><img src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_4.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_2.png" alt="SSH隧道技术·图2"></p>
+<p><img loading="lazy" decoding="async" src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_3.png" alt="SSH隧道技术·图3"></p>
+<p><img loading="lazy" decoding="async" src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_4.png" alt="SSH隧道技术·图4"></p>
 <blockquote>
 <p>如果此时就是想访问server 1 可以修改命令为 ssh -L 80:127.0.0.1 用户@server1_ip</p>
 </blockquote>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment">#ssh反向连接命令格式</span></span><br><span class="line">ssh <span class="literal">-R</span> 远程主机监听端口:本地主机地址:本地服务端口 用户名<span class="selector-tag">@</span>远程服务器地址</span><br></pre></td></tr></table></figure>
 
-<h3 id="SSH正向连接（本地端口转发）"><a href="#SSH正向连接（本地端口转发）" class="headerlink" title="SSH正向连接（本地端口转发）"></a><code>SSH正向连接</code>（本地端口转发）</h3><p><img src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_5.png" alt="在这里插入图片描述"><br><img src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_6.png" alt="在这里插入图片描述"><br><img src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_7.png" alt="在这里插入图片描述"></p>
+<h3 id="SSH正向连接（本地端口转发）"><a href="#SSH正向连接（本地端口转发）" class="headerlink" title="SSH正向连接（本地端口转发）"></a><code>SSH正向连接</code>（本地端口转发）</h3><p><img loading="lazy" decoding="async" src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_5.png" alt="SSH隧道技术·图5"><br><img loading="lazy" decoding="async" src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_6.png" alt="SSH隧道技术·图6"><br><img loading="lazy" decoding="async" src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_7.png" alt="SSH隧道技术·图7"></p>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment">#指令格式</span></span><br><span class="line">ssh <span class="literal">-L</span> 本地端口:内网目标IP:内网目标端口 SSH服务器用户名@SSH服务器IP</span><br></pre></td></tr></table></figure>
 
 <hr>
-<h3 id="ssh动态连接（动态端口转发）"><a href="#ssh动态连接（动态端口转发）" class="headerlink" title="ssh动态连接（动态端口转发）"></a><code>ssh动态连接</code>（动态端口转发）</h3><p><img src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_8.png" alt="在这里插入图片描述"></p>
+<h3 id="ssh动态连接（动态端口转发）"><a href="#ssh动态连接（动态端口转发）" class="headerlink" title="ssh动态连接（动态端口转发）"></a><code>ssh动态连接</code>（动态端口转发）</h3><p><img loading="lazy" decoding="async" src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_8.png" alt="SSH隧道技术·图8"></p>
 <hr>
-<h2 id="3-SSH的密钥"><a href="#3-SSH的密钥" class="headerlink" title="3.SSH的密钥"></a><code>3.SSH的密钥</code></h2><p><img src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_9.png" alt="在这里插入图片描述"></p>
+<h2 id="3-SSH的密钥"><a href="#3-SSH的密钥" class="headerlink" title="3.SSH的密钥"></a><code>3.SSH的密钥</code></h2><p><img loading="lazy" decoding="async" src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_9.png" alt="SSH隧道技术·图9"></p>
 <blockquote>
 <p>ssh最重要是第一次连接，这是漏洞的所在点</p>
 </blockquote>
@@ -547,6 +538,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

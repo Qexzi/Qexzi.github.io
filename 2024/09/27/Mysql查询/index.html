@@ -7,58 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>Mysql查询 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2024/09/27/Mysql查询/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="关键字select,show,create,drop,alter,as（起别名）,grant,revoke,
-
-mysql用户操作一、用户存在查询1.直接查询（查询mysql库）：select User, Host from mysql.user where user = &amp;#x27;要查询的用户名&amp;#x27; and Host = &amp;#x27;对应的主机&amp;#x27;;//注意具体字段名字的大小写，要与mysql库中匹配示例：&amp;gt;&amp;gt;select User,Host from mysql.user where User=&amp;#x27;root&amp;#x27; and Host=&amp;#x27;localhost&amp;#x27;;//查询为空则不存在//查询所有用户-- 查看所有用户（显示用户名和允许连接的主机）select user, Host from mysql.user; //使用exists函数select exists(select User,Host from mysql.user where User=&amp;#x27;root&amp;#x27; and Host=&amp;#x27;localhost&amp;#x27;); //用户存在返回1，不存在返回02.间接查询（权限查询）--&amp;gt;一下会提到，暂不解释
-
-
-
-二、用户创建与删除//创建语法格式create user &amp;#x27;用户名&amp;#x27;@&amp;#x27;主机&amp;#x27; identified by &amp;#x27;密码&amp;#x27;;&amp;gt;&amp;gt;&amp;#x27;用户名&amp;#x27;@&amp;#x27;主机&amp;#x27;：&amp;gt;用户名 是自定义的账号&amp;gt;主机 限制用户从哪里连接（localhost 仅本地、% 允许任意主机、固定ip地址、模糊网段、CIDR 子网）//删除语法drop user &amp;#x27;用户名&amp;#x27;@&amp;#x27;主机&amp;#x27;;
-
-
-
-主机格式
-含义
-适用场景
-
-
-
-&amp;#39;user&amp;#39;@&amp;#39;localhost&amp;#39;
-仅本机连接
-本地管理用户（安全）
-
-
-&amp;#39;user&amp;#39;@&amp;#39;192.168.1.100&amp;#39;
-固定 IP 连接
-特定机器的服务账号
-
-
-&amp;#39;user2&amp;#39;@&amp;#39;db.server.com&amp;#39;
-固定域名
-
-
-
-&amp;#39;user&amp;#39;@&amp;#39;192.168.1.%&amp;#39; （也可使用_）
-模糊网段连接
-企业内网用户（控制一个网段）
-
-
-&amp;#39;user&amp;#39;@&amp;#39;192.168.1.0/24&amp;#39;
-CIDR 子网连接
-精准网段控制（专业场景）
-
-
-&amp;#39;user&amp;#39;@&amp;#39;%&amp;#39;
-任意主机连接
-测试环境（生产慎用）
-
-
-
-用 CREATE USER 创建的用户，默认几乎没有实际操作权限，仅具备最基础的登录能力，可执行少量无需特殊权限的操作例如：
-
-SHOW ENGINES（查看所有存储引擎列表 ）SHOW CHARACTER SET（查看字符集信息 ）这类语句，用于了解 MySQL 服务器的基础配置，无需额外权限就能执行。"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -71,6 +23,8 @@ SHOW ENGINES（查看所有存储引擎列表 ）SHOW CHARACTER SET（查看字�
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -81,7 +35,6 @@ SHOW ENGINES（查看所有存储引擎列表 ）SHOW CHARACTER SET（查看字�
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -89,41 +42,18 @@ SHOW ENGINES（查看所有存储引擎列表 ）SHOW CHARACTER SET（查看字�
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Mysql查询","datePublished":"2024-09-27T04:00:00.000Z","dateModified":"2024-09-27T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2024/09/27/Mysql查询/","description":"关键字select,show,create,drop,alter,as（起别名）,grant,revoke, mysql用户操作一、用户存在查询1.直接查询（查询mysql库）：select User, Host from mysql.user where user = &#x27;要查询的用户名&#x27; and Host = &#x27;对应的主机&#x27;;//注意具体字段名字的大小写，"}</script>
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -246,7 +176,7 @@ MathJax = {
 </blockquote>
 <p>具体实例：</p>
 <blockquote>
-<p><img src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_1.png" alt="在这里插入图片描述"></p>
+<p><img src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_1.png" alt="Mysql查询·图1"></p>
 </blockquote>
 <hr>
 <h2 id="三、用户赋权与撤权"><a href="#三、用户赋权与撤权" class="headerlink" title="三、用户赋权与撤权"></a>三、用户赋权与撤权</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="operator">/</span><span class="operator">/</span>赋权语法格式</span><br><span class="line"><span class="keyword">grant</span> 权限列表 <span class="keyword">on</span> 具体数据库.具体表 <span class="keyword">to</span> <span class="string">&#x27;用户名&#x27;</span>@<span class="string">&#x27;主机&#x27;</span> </span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;identified by &#x27;</span>密码<span class="string">&#x27; with 选项;&#x27;</span> 为可选参数 </span><br><span class="line">创建新用户：若用户不存在，会创建用户并设置密码。</span><br><span class="line">修改已有用户密码：若用户已存在，会修改其密码。</span><br><span class="line"></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span>撤权语法格式</span><br><span class="line"><span class="keyword">revoke</span> 权限列表 <span class="keyword">on</span> 具体数据库.具体表 <span class="keyword">from</span> <span class="string">&#x27;用户名&#x27;</span>@<span class="string">&#x27;主机&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span>注意：赋权和撤权之后都要执行：flush privileges  刷新权限</span><br></pre></td></tr></table></figure>
@@ -514,10 +444,10 @@ MathJax = {
 
 <p>具体实例：</p>
 <blockquote>
-<p><img src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_2.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_2.png" alt="Mysql查询·图2"></p>
 </blockquote>
 <hr>
-<h2 id="四、用户权限查询"><a href="#四、用户权限查询" class="headerlink" title="四、用户权限查询"></a>四、用户权限查询</h2><p><img src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_3.png" alt="在这里插入图片描述"></p>
+<h2 id="四、用户权限查询"><a href="#四、用户权限查询" class="headerlink" title="四、用户权限查询"></a>四、用户权限查询</h2><p><img loading="lazy" decoding="async" src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_3.png" alt="Mysql查询·图3"></p>
 <h3 id="1-权限概览"><a href="#1-权限概览" class="headerlink" title="1.权限概览"></a>1.权限概览</h3><h4 id="（1）权限层级"><a href="#（1）权限层级" class="headerlink" title="（1）权限层级"></a>（1）权限层级</h4><table>
 <thead>
 <tr>
@@ -562,7 +492,7 @@ MathJax = {
 <p>1.所谓的全局查询，就是使用查询语句show grants 查询用户的权限信息，	其查询结果的信息条数不定，每一条查询结果就对应一次赋权（当然，用户可以被一次性赋予多个权限，此处讨论的是用户被·赋权的次数），全局查询结果包含各种级别的权限信息（或存在权级覆盖）<br>2.所谓数据库级查询，是查询用户对数据库的操作权限</p>
 </blockquote>
 <h3 id="2-全局级权限查询"><a href="#2-全局级权限查询" class="headerlink" title="2.全局级权限查询"></a>2.全局级权限查询</h3><h4 id="（1）使用show-grants"><a href="#（1）使用show-grants" class="headerlink" title="（1）使用show grants"></a>（1）使用show grants</h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="operator">/</span><span class="operator">/</span>查询当前用户权限</span><br><span class="line"><span class="keyword">show</span> grants <span class="keyword">for</span> <span class="built_in">current_user</span></span><br><span class="line"><span class="keyword">show</span> grants;</span><br><span class="line"></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span>查询指定用户的权限（前提：当前用户具有管理员权限）</span><br><span class="line">查询格式： <span class="keyword">show</span> grants <span class="keyword">for</span> <span class="string">&#x27;用户名&#x27;</span>@<span class="string">&#x27;主机&#x27;</span></span><br><span class="line"><span class="keyword">show</span> grants <span class="keyword">for</span> <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>权限查询结果分析：<br><img src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_4.png" alt="在这里插入图片描述"></p>
+<p>权限查询结果分析：<br><img loading="lazy" decoding="async" src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_4.png" alt="Mysql查询·图4"></p>
 <ol>
 <li><code>GRANT</code> 是授予权限的关键字</li>
 <li><code>ALL PRIVILEGES</code> 表示所有权限（像对数据库、表的增删改查、创建、删除等各类操作权限 ）</li>
@@ -639,11 +569,11 @@ MathJax = {
 </tbody></table>
 <p>如果用户没有表级，列级的权限，则查询为空，如</p>
 <blockquote>
-<p><img src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_5.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_5.png" alt="Mysql查询·图5"></p>
 </blockquote>
 <p>现先赋权，后查权</p>
 <blockquote>
-<p>数据库级查询<img src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_6.png" alt="在这里插入图片描述"><br>表级查询<br><img src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_7.png" alt="在这里插入图片描述"></p>
+<p>数据库级查询<img loading="lazy" decoding="async" src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_6.png" alt="Mysql查询·图6"><br>表级查询<br><img loading="lazy" decoding="async" src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_7.png" alt="Mysql查询·图7"></p>
 </blockquote>
 <h4 id="（2）mysql-tables-priv-表（表级权限）"><a href="#（2）mysql-tables-priv-表（表级权限）" class="headerlink" title="（2）mysql.tables_priv&#96; 表（表级权限）"></a>（2）mysql.tables_priv&#96; 表（表级权限）</h4><table>
 <thead>
@@ -745,10 +675,10 @@ MathJax = {
 <li>用户：app_user</li>
 </ul>
 <blockquote>
-<p>app_user<img src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_8.png" alt="在这里插入图片描述"><br>赋权:<br><img src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_9.png" alt="在这里插入图片描述"><br>USAGE：允许用户连接到 MySQL 服务器，但无任何数据库操作权限。<br>SELECT, INSERT, UPDATE：用户可以查询、插入和更新所有数据库的表。</p>
+<p>app_user<img loading="lazy" decoding="async" src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_8.png" alt="Mysql查询·图8"><br>赋权:<br><img loading="lazy" decoding="async" src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_9.png" alt="Mysql查询·图9"><br>USAGE：允许用户连接到 MySQL 服务器，但无任何数据库操作权限。<br>SELECT, INSERT, UPDATE：用户可以查询、插入和更新所有数据库的表。</p>
 </blockquote>
 <blockquote>
-<p><code>1.</code>全局权限被数据库级权限覆盖<br><img src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_10.png" alt="在这里插入图片描述"></p>
+<p><code>1.</code>全局权限被数据库级权限覆盖<br><img loading="lazy" decoding="async" src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_10.png" alt="Mysql查询·图10"></p>
 </blockquote>
 <table>
 <thead>
@@ -776,7 +706,7 @@ MathJax = {
 </tr>
 </tbody></table>
 <blockquote>
-<p><code>2.</code>全局权限被表级权限覆盖<br><img src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_11.png" alt="在这里插入图片描述"></p>
+<p><code>2.</code>全局权限被表级权限覆盖<br><img loading="lazy" decoding="async" src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_11.png" alt="Mysql查询·图11"></p>
 </blockquote>
 <table>
 <thead>
@@ -823,7 +753,7 @@ MathJax = {
 </tr>
 </tbody></table>
 <blockquote>
-<p><code>3.</code>全局权限被列级覆盖<br><img src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_12.png" alt="在这里插入图片描述"><br>app_user被授予<code>全局查询</code>权限<br><img src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_13.png" alt="在这里插入图片描述"><br>app_user被授予<code>表级查询</code>权限<br><img src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_14.png" alt="在这里插入图片描述"></p>
+<p><code>3.</code>全局权限被列级覆盖<br><img loading="lazy" decoding="async" src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_12.png" alt="Mysql查询·图12"><br>app_user被授予<code>全局查询</code>权限<br><img loading="lazy" decoding="async" src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_13.png" alt="Mysql查询·图13"><br>app_user被授予<code>表级查询</code>权限<br><img loading="lazy" decoding="async" src="/images/Mysql%E6%9F%A5%E8%AF%A2/image_14.png" alt="Mysql查询·图14"></p>
 </blockquote>
 <table>
 <thead>
@@ -1069,6 +999,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

@@ -7,20 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>邮箱地址解析 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2026/04/20/邮箱地址解析/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="从协议原理到实战攻破GitHub&amp;#x2F;GitLab——复刻PortSwigger研究思路本文完整保留《Splitting the email atom》原文研究逻辑、试错过程、Payload案例，融合邮箱解析库原理、规则差异、漏洞本质等精华内容，以零基础可懂的语言，还原安全研究者从发现异常→挖掘原理→绕过防护→实战攻破大厂的全流程，无核心知识点遗漏。
-
-前言：颠覆对电子邮件地址的认知常规认知中，邮箱格式为本地部分@域名，系统仅做简单格式校验，但真实情况为：
-
-邮箱解析无统一标准，完全依赖解析库、邮件服务器的自定义规则；
-解析库为轻量级字符串处理，仅做基础匹配运算，不会消耗大量硬件资源；
-邮箱RFC协议为兼容老旧技术，保留大量冗余、宽松的解析规则；
-解析规则不统一+协议过度宽松+第三方库违规实现，催生了域名验证绕过、内网入侵、企业服务器控制等高危漏洞。
-
-本文将跟随研究者思考路径，从邮件路由异常切入，逐层揭开邮箱解析漏洞的完整体系。
-
-第一章 基础铺垫：邮箱解析核心知识1.1 理论标准与现实解析差异"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -33,6 +23,8 @@
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -43,7 +35,6 @@
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -51,41 +42,18 @@
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"邮箱地址解析","datePublished":"2026-04-20T04:00:00.000Z","dateModified":"2026-04-20T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2026/04/20/邮箱地址解析/","description":"从协议原理到实战攻破GitHub&#x2F;GitLab——复刻PortSwigger研究思路本文完整保留《Splitting the email atom》原文研究逻辑、试错过程、Payload案例，融合邮箱解析库原理、规则差异、漏洞本质等精华内容，以零基础可懂的语言，还原安全研究者从发现异常→挖掘原理→绕过防护→实战攻破大厂的全流程，无核心知识点遗漏。 前言：颠覆对电子邮件地址的认知常规认知中"}</script>
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -532,6 +500,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

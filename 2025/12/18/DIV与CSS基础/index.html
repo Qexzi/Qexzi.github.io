@@ -7,24 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>DIV与CSS基础 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2025/12/18/DIV与CSS基础/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="1. DIV和CSS样式详细解释：
-
-DIV 是HTML中的一个块级元素，用于将文档分割为独立的区块。它本身没有特定的语义，主要作为容器使用，通过CSS来定义其外观和布局。
-CSS（层叠样式表）是一种描述HTML或XML文档外观和格式的样式表语言。CSS的核心理念是将内容与表现分离，使网页结构更清晰、更易于维护。
-
-为什么使用DIV+CSS：
-
-与传统的表格布局相比，DIV+CSS布局更加灵活、代码更简洁
-提高网页加载速度（减少冗余HTML标签）
-更好的SEO优化（搜索引擎更容易抓取内容）
-便于后期维护和修改
-
-示例：
-&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html&amp;gt;&amp;lt;head&amp;gt;    &amp;lt;title&amp;gt;DIV+CSS示例&amp;lt;/title&amp;gt;    &amp;lt;style&amp;gt;        .container &amp;#123;            width: 80%;            margin: 0 auto;            border: 1px solid #ccc;        &amp;#125;        .header &amp;#123;            background-color: #333;            color: white;            padding: 20px;            text-align: center;        &amp;#125;        .content &amp;#123;            padding: 20px;            display: flex;        &amp;#125;        .sidebar &amp;#123;            width: 25%;            background-color: #f0f0f0;            padding: 15px;        &amp;#125;        .main &amp;#123;            width: 75%;            padding: 15px;        &amp;#125;        .footer &amp;#123;            background-color: #333;            color: white;            text-align: center;            padding: 10px;            margin-top: 20px;        &amp;#125;    &amp;lt;/style&amp;gt;&amp;lt;/head&amp;gt;&amp;lt;body&amp;gt;    &amp;lt;div class=&amp;quot;container&amp;quot;&amp;gt;        &amp;lt;div class=&amp;quot;header&amp;quot;&amp;gt;            &amp;lt;h1&amp;gt;我的网站&amp;lt;/h1&amp;gt;        &amp;lt;/div&amp;gt;        &amp;lt;div class=&amp;quot;content&amp;quot;&amp;gt;            &amp;lt;div class=&amp;quot;sidebar&amp;quot;&amp;gt;                &amp;lt;h2&amp;gt;导航栏&amp;lt;/h2&amp;gt;                &amp;lt;ul&amp;gt;                    &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;首页&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;                    &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;关于&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;                    &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;服务&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;                &amp;lt;/ul&amp;gt;            &amp;lt;/div&amp;gt;            &amp;lt;div class=&amp;quot;main&amp;quot;&amp;gt;                &amp;lt;h2&amp;gt;主要内容区域&amp;lt;/h2&amp;gt;                &amp;lt;p&amp;gt;这里是网站的主要内容...&amp;lt;/p&amp;gt;            &amp;lt;/div&amp;gt;        &amp;lt;/div&amp;gt;        &amp;lt;div class=&amp;quot;footer&amp;quot;&amp;gt;            &amp;lt;p&amp;gt;© 2023 我的网站. 保留所有权利.&amp;lt;/p&amp;gt;        &amp;lt;/div&amp;gt;    &amp;lt;/div&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;
-
-2. 样式表类型2.1 嵌入样式表详细解释："> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -37,6 +23,8 @@ CSS（层叠样式表）是一种描述HTML或XML文档外观和格式的样式�
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -47,7 +35,6 @@ CSS（层叠样式表）是一种描述HTML或XML文档外观和格式的样式�
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -55,41 +42,18 @@ CSS（层叠样式表）是一种描述HTML或XML文档外观和格式的样式�
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"DIV与CSS基础","datePublished":"2025-12-18T04:00:00.000Z","dateModified":"2025-12-18T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2025/12/18/DIV与CSS基础/","description":"1. DIV和CSS样式详细解释： DIV 是HTML中的一个块级元素，用于将文档分割为独立的区块。它本身没有特定的语义，主要作为容器使用，通过CSS来定义其外观和布局。 CSS（层叠样式表）是一种描述HTML或XML文档外观和格式的样式表语言。CSS的核心理念是将内容与表现分离，使网页结构更清晰、更易于维护。 为什么使用DIV+CSS： 与传统的表格布局相比，DIV+CSS布局更加灵活、代码更简"}</script>
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -963,6 +927,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

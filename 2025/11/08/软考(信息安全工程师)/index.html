@@ -7,44 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>软考(信息安全工程师) | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2025/11/08/软考(信息安全工程师)/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="一、信息安全基础概念1. 信息安全基本属性
-机密性：确保信息不泄露给未授权的个体、进程或实体
-完整性：保护数据和系统的准确性和完备性，防止未授权篡改
-可用性：确保授权用户在需要时可以正常访问和使用资源
-可控性：对信息传播及内容具有控制能力
-抗抵赖性：确保行为发起者无法否认其行为（如发送消息、签署文件）
-
-2. 网络信息安全基本功能
-防御：事前采取的安全措施（防火墙、加密、访问控制）
-检测：事中或持续性的监控（IDS、态势感知）
-应急：事件发生后的紧急响应措施
-恢复：将受影响系统恢复到正常状态
-
-3. 信息安全管理流程
-确定管理对象
-评估对象价值
-识别对象威胁
-识别对象脆弱性
-确定对象风险级别
-制定防范措施
-实施和落实防范措施
-运行与维护网络信息安全管理设备
-
-4. 国家网络安全体系
-中国网络安全审查技术与认证中心(CCRC)：负责网络安全设备审查
-入网许可证：由工信部下属实验室（泰尔实验室、威尔实验室）认证
-无线产品核准：由国家无线电管理委员会负责
-网络安全等级保护制度：
-工作流程：定级→备案→建设整改→等级测评→运营维护
-等级划分：1-5级（从用户自主保护级到访问验证保护级）
-
-
-国家计算机网络应急技术处理协调中心(CNCERT&amp;#x2F;CC)：负责网络安全事件应急处理
-四大顶级安全会议：S&amp;amp;P、CCS、NDSS、USENIX Security
-
-5. 网络安全组织结构"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -57,6 +23,8 @@
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -67,7 +35,6 @@
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -75,41 +42,39 @@
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
-
-
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
+  
+  <!-- MathJax（仅含公式的页面加载，由 scripts/mathjax-injector.js 检测标记） -->
+  <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    startup: {
+      pageReady: () => {
+        return MathJax.startup.defaultPageReady();
+      }
     }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+  };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"软考(信息安全工程师)","datePublished":"2025-11-08T04:00:00.000Z","dateModified":"2025-11-08T02:30:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2025/11/08/软考(信息安全工程师)/","description":"一、信息安全基础概念1. 信息安全基本属性 机密性：确保信息不泄露给未授权的个体、进程或实体 完整性：保护数据和系统的准确性和完备性，防止未授权篡改 可用性：确保授权用户在需要时可以正常访问和使用资源 可控性：对信息传播及内容具有控制能力 抗抵赖性：确保行为发起者无法否认其行为（如发送消息、签署文件） 2. 网络信息安全基本功能 防御：事前采取的安全措施（防火墙、加密、访问控制） 检测：事中或持续"}</script>
+  
+
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -1367,16 +1332,16 @@ MathJax = {
 </ul>
 <hr>
 <h2 id="十二、案例分析"><a href="#十二、案例分析" class="headerlink" title="十二、案例分析"></a>十二、案例分析</h2><h3 id="1-安全配置"><a href="#1-安全配置" class="headerlink" title="1.安全配置"></a>1.安全配置</h3><h4 id="Windows安全配置"><a href="#Windows安全配置" class="headerlink" title="Windows安全配置"></a>Windows安全配置</h4><ol>
-<li>默认情况下，终端服务接入服务器时，登录对话框中会显示上次登录的账号名。为增强系统安全，通过修改注册表，将<br>HKLM\software\MicrosoftIWindowsNT\CurrentVersion\winlogon\DontdisplayLastUserName下的REG_SZ的键值改成多少?<br><img src="/images/%E8%BD%AF%E8%80%83(%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88)/image.png" alt="在这里插入图片描述"></li>
+<li>默认情况下，终端服务接入服务器时，登录对话框中会显示上次登录的账号名。为增强系统安全，通过修改注册表，将<br>HKLM\software\MicrosoftIWindowsNT\CurrentVersion\winlogon\DontdisplayLastUserName下的REG_SZ的键值改成多少?<br><img src="/images/%E8%BD%AF%E8%80%83(%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88)/image.png" alt="软考(信息安全工程师)·图1"></li>
 </ol>
 <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">问题1：请写出查看计算机上的用户帐号列表的命令</span><br><span class="line">net user / net users</span><br><span class="line"></span><br><span class="line">问题2：请写出创建一个用户名为51cto$，口令是123456的命令</span><br><span class="line">net user &quot;51cto$&quot; &quot;123456&quot; /add</span><br><span class="line">用户名 51cto$ 包含特殊字符 $（在命令行中 $ 是环境变量符号），必须用双引号包裹整个用户名和密码，否则系统会报错（如 The user name could not be found）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">问题3：此时是否能够使用问题1中的net命令查看到刚刚创建的51cto$用户?为什么?</span><br><span class="line">不能；用户名最后用$符号，则创建的用户是隐藏用户，不可以单纯使用net user 查看</span><br><span class="line"></span><br><span class="line">问题4：管理员账号Administrator对应图4-1注册表中Users键值下的哪一项?</span><br><span class="line">默认情况下 Users键值下的000001F4是管理员账号Administrator，(000001F5是Guest账号)</span><br><span class="line"></span><br><span class="line">问题5：图4-1中，51cto$账号对应Users键值下的000003F0，若需要将51cto$账号克隆为管理员账号，需要复制管理员账号的哪个键值?</span><br><span class="line">F (细节)</span><br><span class="line"></span><br><span class="line">问题6：使用克隆账号登入到该计算机，使用什么命令查看当前用户的有效用户名?</span><br><span class="line">whoami</span><br><span class="line"></span><br><span class="line">1：启用该策略，不显示上次登录的用户名。</span><br><span class="line">0（默认值）：显示上次登录的用户名。 </span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <ol start="2">
 <li>某公司安全管理员小工针对针对公司中的两个连接了VPN的电脑PC1和PC2进行巡查，图3-1是PC1的windows系统中”事件查看器”的事件截图，图3-2为图3-1中第二条事件(红框标记)的详细信息:图3-3是PC2的网络抓包经过某条件语句过滤后的截图。</li>
 </ol>
-<p><img src="/images/%E8%BD%AF%E8%80%83(%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88)/image-1.png" alt="在这里插入图片描述"></p>
-<p><img src="/images/%E8%BD%AF%E8%80%83(%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88)/image-2.png" alt="在这里插入图片描述"></p>
-<p><img src="/images/%E8%BD%AF%E8%80%83(%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88)/image-3.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E8%BD%AF%E8%80%83(%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88)/image-1.png" alt="软考(信息安全工程师)·图2"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E8%BD%AF%E8%80%83(%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88)/image-2.png" alt="软考(信息安全工程师)·图3"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E8%BD%AF%E8%80%83(%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88)/image-3.png" alt="软考(信息安全工程师)·图4"></p>
 <ul>
 <li>问题1：Windows 日志类型，及其查看方式</li>
 </ul>
@@ -1423,7 +1388,7 @@ MathJax = {
 <ol start="2">
 <li>某公司的网站服务器系统为Linux&#x2F;UNIX，李工作为公司的安全运维工程师，由于工作需要，需要随时随地对服务器远程开展处置工作。李工使用的PC的IP地址为192.168.1.23</li>
 </ol>
-<p><img src="/images/%E8%BD%AF%E8%80%83(%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88)/image-6.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E8%BD%AF%E8%80%83(%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88)/image-6.png" alt="软考(信息安全工程师)·图5"></p>
 <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">(1)李工可以通过两种远程方式访问服务器进行运维，请写出两种方式?</span><br><span class="line">  ssh telnet</span><br><span class="line"></span><br><span class="line">(2)请写出上述两种通信协议的默认端口号。</span><br><span class="line">  ssh:22 telnet:23</span><br><span class="line"></span><br><span class="line">(3)出于安全考虑，李工应该选择那种方式进行远程运维?</span><br><span class="line">  ssh</span><br><span class="line"></span><br><span class="line">(4)请写出李工可以选择远程安全登录运维管理的开源工具。</span><br><span class="line">  OpenSSH</span><br><span class="line"></span><br><span class="line">李亮通过SSH登入到服务后，执行cat /etc/passwd 命今点显示如图2-1的画面。文件中的一行记录对应着一个用户,每行记录用冒号(:)分隔为 7 个字段。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(1)第2个字段“X&quot;表示用来验证用户合法性的口令，真正的口令存放在什么文件中?(写出完整路径和名称)</span><br><span class="line">  /etc/shadow</span><br><span class="line"></span><br><span class="line">(2)请写出图2-1中权限最低的用户名称。</span><br><span class="line">  bin</span><br><span class="line">(3)请写出图2-1中系统允许远程登陆的用户名称。</span><br><span class="line">  user1 user2 root</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">UID=0→ root(最高权限)</span><br><span class="line">UID=1~999→系统账户(如 bin, daemon, sshd)</span><br><span class="line">普通用户UID&gt;1000</span><br><span class="line"></span><br><span class="line">若：/bin/bash /bin/sh /usr/bin/zsh 等可交互 Shell → 允许登录</span><br><span class="line">若：/sbin/nologin/bin/false→禁止登录</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Linux中可通过/etc/hosts,allow和/etc/hosts,denv这两个文件分许和禁止远程丰机对本地服务的访问运维。李工对服务器的这两个进行配置，实现禁止除了李工之外的任何主机进行远程，</span><br><span class="line">请写出在这两个文件中加入的配置。</span><br><span class="line"></span><br><span class="line">在/etc/hosts.deny中加入sshd:all:deny(:deny可以不写)</span><br><span class="line">在/etc/hosts.allow中加入sshd:192.168.1.23:allow(:allow可以不写)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">李工通过网络安全监测对系统的网络活动和内部活动进行分析，获取系统当前的状态信息，以发现有可能的异常行为。</span><br><span class="line">(1)李工需要查看系统的活动进程，可以使用什么命令查看?</span><br><span class="line">  ps</span><br><span class="line"></span><br><span class="line">(2)李工需要查看系统中在线的用户信息，可以使用什么命令查看?</span><br><span class="line">  who</span><br><span class="line"></span><br><span class="line">(3)李工需要查看系统中的地址解析缓存表，可以使用什么命令查看?</span><br><span class="line">  arp</span><br><span class="line"></span><br><span class="line">(4)李工需要检查系统中进程使用的文件、tcp/udp端口、用户等相关信息，可以使用什么命令查看?</span><br><span class="line">  lsof</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Linux服务器的日志文件可提供审计，有助于系统管理员及时发现系统入侵行为或系统安全隐患。</span><br><span class="line">李工根据安全需求查看相关日志:</span><br><span class="line">(1)查看每一次用户登录和注销的历史信息的日志文件是哪个?</span><br><span class="line">(2)查看不良的登入尝试记录的日志文件是哪个?</span><br><span class="line"></span><br><span class="line">(1)-(2)备选答案:</span><br><span class="line">A. lastlog</span><br><span class="line">B. loginlog</span><br><span class="line">C.utmp</span><br><span class="line">D.wtmp</span><br><span class="line">E.sulog</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">审计机制是 UNIXinux系统安全的重要组成部分,审计有助于系统管理员及时发现系统入侵行为或系统安全隐患。不同版本的 UNIXLinux日志文件的目录是不同的,早期版本UNx的审计日志目录放在/usr/adm:较新版本的在/arladm; Solaris,Linux和BSD在 UNIXarlog。常见日志文件如下:lastlog:记录用户最近成功登录的时间;</span><br><span class="line">·loginlog:不良的登录尝试记录;</span><br><span class="line">·messages:记录输出到系统主控台以及由 syslog系统服务程序产生的消息；</span><br><span class="line">·utmp:记录当前登录的每个用户;</span><br><span class="line">·utmpx:扩展的utmp;</span><br><span class="line">·wtmp:记录每一次用户登录和注销的历史信息;</span><br><span class="line">·wimp:扩展的wmp;</span><br><span class="line">·vold.log:记录使用外部介质出现的错误;</span><br><span class="line">·xferkig:记录fp的存取情况,</span><br><span class="line">·sulog:记录su命令的使用情况;</span><br><span class="line">·acct:记录每个用户使用过的命令。</span><br></pre></td></tr></table></figure>
 		  <div class="article-footer-copyright">
 
@@ -1633,6 +1598,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

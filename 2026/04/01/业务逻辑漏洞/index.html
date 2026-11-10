@@ -7,17 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>业务逻辑漏洞 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2026/04/01/业务逻辑漏洞/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="业务逻辑漏洞0x01.对客户端控制的过度信任
-任务：买夹克衫
-
-
-抓取添加物品的数据包
-结果
-
-0x02.高级逻辑漏洞
-任务：买夹克衫"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -30,6 +23,8 @@
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -40,7 +35,6 @@
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -48,41 +42,18 @@
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"业务逻辑漏洞","datePublished":"2026-04-01T04:00:00.000Z","dateModified":"2026-04-01T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2026/04/01/业务逻辑漏洞/","description":"业务逻辑漏洞0x01.对客户端控制的过度信任 任务：买夹克衫 抓取添加物品的数据包 结果 0x02.高级逻辑漏洞 任务：买夹克衫"}</script>
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -154,49 +125,49 @@ MathJax = {
 		  <h2 id="业务逻辑漏洞"><a href="#业务逻辑漏洞" class="headerlink" title="业务逻辑漏洞"></a>业务逻辑漏洞</h2><h3 id="0x01-对客户端控制的过度信任"><a href="#0x01-对客户端控制的过度信任" class="headerlink" title="0x01.对客户端控制的过度信任"></a>0x01.对客户端控制的过度信任</h3><ul>
 <li>任务：买夹克衫</li>
 </ul>
-<p><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_1.png" alt="在这里插入图片描述"></p>
-<p>抓取添加物品的数据包<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_2.png" alt="在这里插入图片描述"></p>
-<p>结果<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_3.png" alt="在这里插入图片描述"></p>
+<p><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_1.png" alt="业务逻辑漏洞·图1"></p>
+<p>抓取添加物品的数据包<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_2.png" alt="业务逻辑漏洞·图2"></p>
+<p>结果<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_3.png" alt="业务逻辑漏洞·图3"></p>
 <hr>
 <h3 id="0x02-高级逻辑漏洞"><a href="#0x02-高级逻辑漏洞" class="headerlink" title="0x02.高级逻辑漏洞"></a>0x02.高级逻辑漏洞</h3><ul>
 <li>任务：买夹克衫</li>
 </ul>
-<p><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_4.png" alt="在这里插入图片描述"></p>
-<p>抓取添加物品的数据包，没有price参数<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_5.png" alt="在这里插入图片描述"></p>
-<p>在物品数量上操作<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_6.png" alt="在这里插入图片描述"></p>
-<p>抓取数据包<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_7.png" alt="在这里插入图片描述"></p>
-<p>结果<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_8.png" alt="在这里插入图片描述"></p>
-<p>但是此时是无法付款的，因为购物总金额不是正数 -&gt; 正确购买其他商品，使总金额变正<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_9.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_4.png" alt="业务逻辑漏洞·图4"></p>
+<p>抓取添加物品的数据包，没有price参数<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_5.png" alt="业务逻辑漏洞·图5"></p>
+<p>在物品数量上操作<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_6.png" alt="业务逻辑漏洞·图6"></p>
+<p>抓取数据包<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_7.png" alt="业务逻辑漏洞·图7"></p>
+<p>结果<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_8.png" alt="业务逻辑漏洞·图8"></p>
+<p>但是此时是无法付款的，因为购物总金额不是正数 -&gt; 正确购买其他商品，使总金额变正<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_9.png" alt="业务逻辑漏洞·图9"></p>
 <p>但是，靶场没有解决成功，因为最终购买到的物品没有目标物品 -&gt; 倒过来，正常买夹克衫</p>
-<p><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_10.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_10.png" alt="业务逻辑漏洞·图10"></p>
 <hr>
 <h3 id="0x03-安全控制不一致"><a href="#0x03-安全控制不一致" class="headerlink" title="0x03.安全控制不一致"></a>0x03.安全控制不一致</h3><ul>
 <li>任务：进入管理面板并删除用户 <code>carlos</code></li>
 </ul>
-<p>用环境所给的邮箱注册账号<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_11.png" alt="在这里插入图片描述"></p>
-<p>搜后台 <code>/admin</code><br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_12.png" alt="在这里插入图片描述"></p>
-<p>禁止访问 -&gt; 伪装<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_13.png" alt="在这里插入图片描述"></p>
-<p>遗漏的信息,管理员的邮箱域名是 <code>@dontwannacry.com</code><br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_14.png" alt="在这里插入图片描述"></p>
-<p>修改<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_15.png" alt="在这里插入图片描述"></p>
+<p>用环境所给的邮箱注册账号<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_11.png" alt="业务逻辑漏洞·图11"></p>
+<p>搜后台 <code>/admin</code><br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_12.png" alt="业务逻辑漏洞·图12"></p>
+<p>禁止访问 -&gt; 伪装<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_13.png" alt="业务逻辑漏洞·图13"></p>
+<p>遗漏的信息,管理员的邮箱域名是 <code>@dontwannacry.com</code><br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_14.png" alt="业务逻辑漏洞·图14"></p>
+<p>修改<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_15.png" alt="业务逻辑漏洞·图15"></p>
 <ul>
 <li>补充</li>
 </ul>
 <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">如果没有给.com就需要一个一个试</span><br><span class="line"></span><br><span class="line">通用后缀</span><br><span class="line">.com.net.org.cn.com.cn.net.cn.org.cn</span><br><span class="line">企业/办公常用</span><br><span class="line">.cc.co.info.io</span><br><span class="line">政府/教育/机构</span><br><span class="line">.gov.gov.cn.edu.edu.cn</span><br><span class="line">国际邮箱常用</span><br><span class="line">.me.pro.cloud.app</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>再次访问<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_16.png" alt="在这里插入图片描述"></p>
+<p>再次访问<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_16.png" alt="业务逻辑漏洞·图16"></p>
 <hr>
 <h3 id="0x04-商业规则执行有缺陷"><a href="#0x04-商业规则执行有缺陷" class="headerlink" title="0x04.商业规则执行有缺陷"></a>0x04.商业规则执行有缺陷</h3><ul>
 <li>任务：利用这个缺陷买一件“轻便l33t皮夹克”</li>
 </ul>
-<p>给了一个优惠码<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_17.png" alt="在这里插入图片描述"></p>
-<p>优惠卷用过了就不可以在使用了<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_18.png" alt="在这里插入图片描述"></p>
-<p>有一个特别的地方，注册订阅就送优惠卷<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_19.png" alt="在这里插入图片描述"></p>
+<p>给了一个优惠码<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_17.png" alt="业务逻辑漏洞·图17"></p>
+<p>优惠卷用过了就不可以在使用了<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_18.png" alt="业务逻辑漏洞·图18"></p>
+<p>有一个特别的地方，注册订阅就送优惠卷<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_19.png" alt="业务逻辑漏洞·图19"></p>
 <p>如何检查优惠卷使用？正确的逻辑跟上一次的状态以及之前的状态都进行比较。<br>而此题仅检查上一次的状态</p>
-<p><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_20.png" alt="在这里插入图片描述"></p>
-<p>注意，最后一次的优惠卷金额太大了，导致购物总金额为0<br>解决方法：买多点其他物品<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_21.png" alt="在这里插入图片描述"></p>
-<p>发现很抽象的东西<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_22.png" alt="在这里插入图片描述"></p>
-<p>我在购买3个95.5，然后优惠卷的金额居然变了<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_23.png" alt="在这里插入图片描述"></p>
-<p>但是0元居然可以购买!<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_24.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_20.png" alt="业务逻辑漏洞·图20"></p>
+<p>注意，最后一次的优惠卷金额太大了，导致购物总金额为0<br>解决方法：买多点其他物品<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_21.png" alt="业务逻辑漏洞·图21"></p>
+<p>发现很抽象的东西<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_22.png" alt="业务逻辑漏洞·图22"></p>
+<p>我在购买3个95.5，然后优惠卷的金额居然变了<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_23.png" alt="业务逻辑漏洞·图23"></p>
+<p>但是0元居然可以购买!<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_24.png" alt="业务逻辑漏洞·图24"></p>
 <hr>
 <h3 id="0x05-低级逻辑缺陷"><a href="#0x05-低级逻辑缺陷" class="headerlink" title="0x05.低级逻辑缺陷"></a>0x05.低级逻辑缺陷</h3><ul>
 <li><p>任务：买一件“轻便l33t皮夹克</p>
@@ -219,21 +190,21 @@ MathJax = {
 </blockquote>
 </li>
 </ul>
-<p>注册账号hacker<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_25.png" alt="在这里插入图片描述"></p>
-<p>注册账号hacker2 -&gt; 在hacker的注册邮箱上使用其子域名注册账号<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_26.png" alt="在这里插入图片描述"></p>
+<p>注册账号hacker<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_25.png" alt="业务逻辑漏洞·图25"></p>
+<p>注册账号hacker2 -&gt; 在hacker的注册邮箱上使用其子域名注册账号<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_26.png" alt="业务逻辑漏洞·图26"></p>
 <blockquote>
 <p>其子域名的邮件发到父域名的邮箱</p>
 </blockquote>
 <p>要登录到后台，就需要邮箱域名是 @<code>DontWannaCry</code>  -&gt; 输入截断</p>
-<p>可以成功注册<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_27.png" alt="在这里插入图片描述"></p>
-<p>登录后发现原有的字符被截断了<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_28.png" alt="在这里插入图片描述"></p>
+<p>可以成功注册<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_27.png" alt="业务逻辑漏洞·图27"></p>
+<p>登录后发现原有的字符被截断了<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_28.png" alt="业务逻辑漏洞·图28"></p>
 <blockquote>
 <p>只识别到255个字符，那也就是说可以通过控制字符，实现精准截断</p>
 </blockquote>
 <p>payload:</p>
 <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbattacker@dontwannacry.com.exploit-0aa000dc03c3d6c0805ec51501f6004b.exploit-server.net</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_29.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_29.png" alt="业务逻辑漏洞·图29"></p>
 <hr>
 <h3 id="0x07-双重用途终端的弱隔离"><a href="#0x07-双重用途终端的弱隔离" class="headerlink" title="0x07.双重用途终端的弱隔离"></a>0x07.双重用途终端的弱隔离</h3><ul>
 <li><p>任务：访问账户并删除用户 <code>administrator</code> <code>carlos</code></p>
@@ -252,10 +223,10 @@ MathJax = {
 </blockquote>
 </li>
 </ul>
-<p>尝试修改密码<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_30.png" alt="在这里插入图片描述"></p>
+<p>尝试修改密码<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_30.png" alt="业务逻辑漏洞·图30"></p>
 <p>由回显可知，后端认为我是administrator，但是我的一些用户信息(csrf、cookie等)是没有改变的，依然是原来的用户信息<br>这就很致命了，因为管理修改其他用户包含管理员本身的密码是不用验证被修改账号的当前密码的</p>
-<p><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_31.png" alt="在这里插入图片描述"></p>
-<p>结果<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_32.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_31.png" alt="业务逻辑漏洞·图31"></p>
+<p>结果<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_32.png" alt="业务逻辑漏洞·图32"></p>
 <p>登录后台删除账号即可</p>
 <hr>
 <h3 id="0x08-工作流程验证不足"><a href="#0x08-工作流程验证不足" class="headerlink" title="0x08.工作流程验证不足"></a>0x08.工作流程验证不足</h3><ul>
@@ -273,9 +244,9 @@ MathJax = {
 </blockquote>
 </li>
 </ul>
-<p>正常付款 -&gt; 返回包存在重定向<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_33.png" alt="在这里插入图片描述"></p>
-<p>在购买夹克衫的响应包增加一样的location字段<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_34.png" alt="在这里插入图片描述"></p>
-<p>结果<img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_35.png" alt="在这里插入图片描述"></p>
+<p>正常付款 -&gt; 返回包存在重定向<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_33.png" alt="业务逻辑漏洞·图33"></p>
+<p>在购买夹克衫的响应包增加一样的location字段<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_34.png" alt="业务逻辑漏洞·图34"></p>
+<p>结果<img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_35.png" alt="业务逻辑漏洞·图35"></p>
 <hr>
 <h3 id="0x09-通过有缺陷的状态机实现的认证绕过"><a href="#0x09-通过有缺陷的状态机实现的认证绕过" class="headerlink" title="0x09.通过有缺陷的状态机实现的认证绕过"></a>0x09.通过有缺陷的状态机实现的认证绕过</h3><ul>
 <li>任务：访问管理员界面，删除用户 <code>carlos</code></li>
@@ -297,18 +268,18 @@ MathJax = {
 </blockquote>
 </blockquote>
 </blockquote>
-<p>登录之后需要选择一个角色，说明后端不知道账户的角色<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_36.png" alt="在这里插入图片描述"></p>
-<p>登录的时候就进行劫持，转到&#x2F;admin<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_37.png" alt="在这里插入图片描述"></p>
-<p>结果<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_38.png" alt="在这里插入图片描述"></p>
+<p>登录之后需要选择一个角色，说明后端不知道账户的角色<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_36.png" alt="业务逻辑漏洞·图36"></p>
+<p>登录的时候就进行劫持，转到&#x2F;admin<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_37.png" alt="业务逻辑漏洞·图37"></p>
+<p>结果<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_38.png" alt="业务逻辑漏洞·图38"></p>
 <p>原因也说过了，因为在不知道用户角色的时候默认是admin,不进入选择角色页面，直接重定向到&#x2F;admin （此时的权限即admin权限是可以访问的）</p>
 <hr>
 <h3 id="0x0a-无限货币逻辑缺陷"><a href="#0x0a-无限货币逻辑缺陷" class="headerlink" title="0x0a.无限货币逻辑缺陷"></a>0x0a.无限货币逻辑缺陷</h3><ul>
 <li>任务：买一件“轻便l33t皮夹克”</li>
 <li>提示：采购流程存在逻辑缺陷</li>
 </ul>
-<p><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_39.png" alt="在这里插入图片描述"></p>
-<p>查看列表<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_40.png" alt="在这里插入图片描述"></p>
-<p>走遍一兑换优惠卷以及购买 gift card 的全流程<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_41.png" alt="在这里插入图片描述"><br>跳转页面<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_42.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_39.png" alt="业务逻辑漏洞·图39"></p>
+<p>查看列表<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_40.png" alt="业务逻辑漏洞·图40"></p>
+<p>走遍一兑换优惠卷以及购买 gift card 的全流程<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_41.png" alt="业务逻辑漏洞·图41"><br>跳转页面<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_42.png" alt="业务逻辑漏洞·图42"></p>
 <blockquote>
 <p>1.加入购物车<br>2.使用优惠卷<br>3.付款<br>4.跳转页面 -&gt; 启动3xx 重定向<br>5.兑换礼品卡</p>
 </blockquote>
@@ -316,31 +287,31 @@ MathJax = {
 <ul>
 <li>使用宏自动化执行</li>
 </ul>
-<p><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_43.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_43.png" alt="业务逻辑漏洞·图43"></p>
 <ul>
 <li>新键新规则，目标包括所有url</li>
 </ul>
-<p><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_44.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_44.png" alt="业务逻辑漏洞·图44"></p>
 <ul>
 <li>新建宏指令</li>
 </ul>
-<p><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_45.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_45.png" alt="业务逻辑漏洞·图45"></p>
 <ul>
 <li>添加相关数据包</li>
 </ul>
-<p><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_46.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_46.png" alt="业务逻辑漏洞·图46"></p>
 <ul>
 <li>编辑第四个数据包</li>
 </ul>
-<p><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_47.png" alt="在这里插入图片描述"></p>
-<p> 寻找变量code<br> <img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_48.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_47.png" alt="业务逻辑漏洞·图47"></p>
+<p> 寻找变量code<br> <img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_48.png" alt="业务逻辑漏洞·图48"></p>
 <p>注意，这里的变量名字命名不是随意的即 gift-card -&gt; 最后的数据包的参数</p>
 <ul>
 <li>编辑第5个数据包</li>
 </ul>
-<p><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_49.png" alt="在这里插入图片描述"><br>最后测试宏，发现多了三块钱就说明创建成功</p>
-<p>注意要勾选对话规则<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_50.png" alt="在这里插入图片描述"></p>
-<p>在攻击器中设置payload<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_51.png" alt="在这里插入图片描述"><br>注意要单线程</p>
+<p><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_49.png" alt="业务逻辑漏洞·图49"><br>最后测试宏，发现多了三块钱就说明创建成功</p>
+<p>注意要勾选对话规则<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_50.png" alt="业务逻辑漏洞·图50"></p>
+<p>在攻击器中设置payload<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_51.png" alt="业务逻辑漏洞·图51"><br>注意要单线程</p>
 <ul>
 <li>tips<ul>
 <li><ol>
@@ -361,7 +332,7 @@ MathJax = {
 </ul>
 </li>
 </ul>
-<p>结果<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_52.png" alt="在这里插入图片描述"></p>
+<p>结果<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_52.png" alt="业务逻辑漏洞·图52"></p>
 <hr>
 <h3 id="0x0b-通过加密预言机绕过认证"><a href="#0x0b-通过加密预言机绕过认证" class="headerlink" title="0x0b.通过加密预言机绕过认证"></a>0x0b.通过加密预言机绕过认证</h3><ul>
 <li>任务：删除该用户 <code>carlos</code></li>
@@ -384,16 +355,16 @@ MathJax = {
 </li>
 </ol>
 </blockquote>
-<p><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_53.png" alt="在这里插入图片描述"></p>
-<p>评论时提交<code>正确</code>的邮箱格式<br><code>请求包</code><br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_54.png" alt="在这里插入图片描述"></p>
-<p><code>重定向请求包</code><br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_55.png" alt="在这里插入图片描述"></p>
-<p>评论时提交<code>错误</code>的邮箱格式<br><code>请求包</code><br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_56.png" alt="在这里插入图片描述"></p>
-<p><code>重定向请求包</code><br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_57.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_53.png" alt="业务逻辑漏洞·图53"></p>
+<p>评论时提交<code>正确</code>的邮箱格式<br><code>请求包</code><br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_54.png" alt="业务逻辑漏洞·图54"></p>
+<p><code>重定向请求包</code><br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_55.png" alt="业务逻辑漏洞·图55"></p>
+<p>评论时提交<code>错误</code>的邮箱格式<br><code>请求包</code><br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_56.png" alt="业务逻辑漏洞·图56"></p>
+<p><code>重定向请求包</code><br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_57.png" alt="业务逻辑漏洞·图57"></p>
 <blockquote>
 <p>错误的邮箱格式，会多返回一个notification（密文），重定向后交给服务器然后返回错误信息，也就说存在对notification的解密<br>由题目可知，目标是伪装administrator,那cookie就需要研究研究了</p>
 </blockquote>
-<p><code>stay-logged-in</code>与<code>notification</code>的密文长度以及密文特点有点像，是否是同一加密机制？<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_58.png" alt="在这里插入图片描述"></p>
-<p>将<code>stay-logged-in</code>赋值给<code>notification</code> 发现cookie被解密了<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_59.png" alt="在这里插入图片描述"></p>
+<p><code>stay-logged-in</code>与<code>notification</code>的密文长度以及密文特点有点像，是否是同一加密机制？<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_58.png" alt="业务逻辑漏洞·图58"></p>
+<p>将<code>stay-logged-in</code>赋值给<code>notification</code> 发现cookie被解密了<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_59.png" alt="业务逻辑漏洞·图59"></p>
 <blockquote>
 <ol>
 <li>成功解密，说明是同一加密机制</li>
@@ -402,8 +373,8 @@ MathJax = {
 <li>存在利用email处的加密点伪造administrator的cookie,从而登录后台</li>
 </ol>
 </blockquote>
-<p>尝试<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_60.png" alt="在这里插入图片描述"></p>
-<p>结果<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_61.png" alt="在这里插入图片描述"></p>
+<p>尝试<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_60.png" alt="业务逻辑漏洞·图60"></p>
+<p>结果<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_61.png" alt="业务逻辑漏洞·图61"></p>
 <blockquote>
 <p>Invalid email address: administrator:1774939875390<br>除去 <code>Invalid email address:</code> 就保留了正确的cookie格式 <code>administrator:1774939875390</code></p>
 </blockquote>
@@ -411,24 +382,24 @@ MathJax = {
 <blockquote>
 <p>oW7xYTFPJL%2bDAE%2bF365rC1SRPFy9tckMymejLoJRKaANcbK0ILZuJnvm343wuadapsCFSHDmirnC58eqrGLvJw%3d%3d<br>经url+base64解码后发现是一个64位的密文，推测其是AES分组密码算法<br>AES 块大小固定为 16 字节</p>
 </blockquote>
-<p><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_62.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_62.png" alt="业务逻辑漏洞·图62"></p>
 <p>模拟器加密过程</p>
 <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">X假设为AES填充的字符</span><br><span class="line">Q是手动填充的字符</span><br><span class="line"></span><br><span class="line">注意：AES填充的字符是不会对加解密产生影响的，这是由其自己的算法决定</span><br><span class="line"></span><br><span class="line">email=administrator:1774939875390</span><br><span class="line">	Invalid email ad</span><br><span class="line">	dress: administr</span><br><span class="line">	ator:17749398753</span><br><span class="line">	90XXXXXXXXXXXXXx</span><br><span class="line"></span><br><span class="line">要删除 Invalid email address: 利用AES块为16个字符</span><br><span class="line">	Invalid email ad</span><br><span class="line">	dress: QQQQQQQQQ</span><br><span class="line">	administrator:17</span><br><span class="line">	74939875390XXXXX</span><br><span class="line"></span><br><span class="line">则 email=QQQQQQQQQadministrator:1774939875390</span><br><span class="line"></span><br><span class="line">对与这个的密文</span><br><span class="line">	Invalid email ad</span><br><span class="line">	dress: QQQQQQQQQ</span><br><span class="line">	administrator:17</span><br><span class="line">	74939875390XXXXX</span><br><span class="line">删除这段密文前32字节后即：</span><br><span class="line">	administrator:17</span><br><span class="line">	74939875390XXXXX</span><br><span class="line">解密时，AES会自动不到64位</span><br><span class="line">	administrator:17</span><br><span class="line">	74939875390XXXXX</span><br><span class="line">即：</span><br><span class="line">	administrator:17</span><br><span class="line">	74939875390XXXXX</span><br><span class="line">	XXXXXXXXXXXXXXXX</span><br><span class="line">	XXXXXXXXXXXXXXXX</span><br><span class="line">注意之前提到的AES填充的字符不会影响加解密，所以解密的结果是 administrator:1774939875390</span><br></pre></td></tr></table></figure>
 
 
-<p>发送payload<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_63.png" alt="在这里插入图片描述"></p>
-<p>对<code>notification</code>操作<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_64.png" alt="在这里插入图片描述"></p>
-<p>解密<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_65.png" alt="在这里插入图片描述"></p>
+<p>发送payload<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_63.png" alt="业务逻辑漏洞·图63"></p>
+<p>对<code>notification</code>操作<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_64.png" alt="业务逻辑漏洞·图64"></p>
+<p>解密<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_65.png" alt="业务逻辑漏洞·图65"></p>
 <blockquote>
 <p>也就是说 	<code>xJJTLbPidUaRP21pzYfotsV7BKn9enoHJY98hwcBq/4=</code>	就是管理员持续登录的cookie</p>
 </blockquote>
 <p>随便抓取一个包（以home页面为例），修改 <code>stay-logged-in</code></p>
-<p><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_66.png" alt="在这里插入图片描述"></p>
-<p>原因：没有删除session参数，依然保持着wiener用户的会话<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_67.png" alt="在这里插入图片描述"></p>
-<p>路径<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_68.png" alt="在这里插入图片描述"><br>随后一步一步根据回显删除账户即可</p>
-<p>补充：不通过抓包，修改<code>浏览器</code>的cookie （注意，记得url编码）<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_69.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_66.png" alt="业务逻辑漏洞·图66"></p>
+<p>原因：没有删除session参数，依然保持着wiener用户的会话<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_67.png" alt="业务逻辑漏洞·图67"></p>
+<p>路径<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_68.png" alt="业务逻辑漏洞·图68"><br>随后一步一步根据回显删除账户即可</p>
+<p>补充：不通过抓包，修改<code>浏览器</code>的cookie （注意，记得url编码）<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_69.png" alt="业务逻辑漏洞·图69"></p>
 <p>实际也可以删除<code>session</code>,也可以像我一样赋值别的值</p>
-<p>补充一下第一种方法的图片<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_70.png" alt="在这里插入图片描述"></p>
+<p>补充一下第一种方法的图片<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_70.png" alt="业务逻辑漏洞·图70"></p>
 <hr>
 <h3 id="0x0c-利用电子邮件地址解析差异绕过访问控制"><a href="#0x0c-利用电子邮件地址解析差异绕过访问控制" class="headerlink" title="0x0c.利用电子邮件地址解析差异绕过访问控制"></a>0x0c.利用电子邮件地址解析差异绕过访问控制</h3><ul>
 <li><p>任务：注册账户并删除 <code>carlos</code></p>
@@ -438,19 +409,19 @@ MathJax = {
 <li><p>文章链接：<a target="_blank" rel="noopener" href="https://portswigger.net/research/splitting-the-email-atom">Splitting the email atom: exploiting parsers to bypass access controls</a></p>
 </li>
 </ul>
-<p>邮箱地址是  <code>hack@qq.com@163.com</code> 在没有过滤的情况下其过程是 <code>163.com</code> 邮件服务器解析后发送邮件到<code>hack@qq.com</code>，即在这个过程中 <code>163.com</code> 只是充当一个中继服务<br>可是，在现实中，不可能允许你输入多个@，所以需要找到绕过的方法，下图就是利用编码绕过<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_71.png" alt="在这里插入图片描述"><br><code>charset</code>即字符集，有 <code>utf-8</code> 、<code>utf-7</code>、<code>iso-8859-1</code> 、<code>gb2312/gbk/big5</code>（可用于中文场景绕过）…</p>
+<p>邮箱地址是  <code>hack@qq.com@163.com</code> 在没有过滤的情况下其过程是 <code>163.com</code> 邮件服务器解析后发送邮件到<code>hack@qq.com</code>，即在这个过程中 <code>163.com</code> 只是充当一个中继服务<br>可是，在现实中，不可能允许你输入多个@，所以需要找到绕过的方法，下图就是利用编码绕过<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_71.png" alt="业务逻辑漏洞·图71"><br><code>charset</code>即字符集，有 <code>utf-8</code> 、<code>utf-7</code>、<code>iso-8859-1</code> 、<code>gb2312/gbk/big5</code>（可用于中文场景绕过）…</p>
 <p><code>q</code>即 Quoted-Printable （Q编码），所在位置是编码方式。 <code>b</code>代表base64编码</p>
-<p>补充：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Hanford/article/details/53364021">utf-7</a> 是一个很古老的编码，基本只应用在邮箱中。其中一些字符经普通的utf-7编码后会在首尾分别加<code>+</code>  <code>-</code> ，如：<code>+xxxx-</code>。而<code>+</code>在邮箱解析有其他特殊意义,所以专门给邮箱 &#x2F; IMAP 协议用的 <code>Modified UTF-7</code>（修改版 UTF-7），它为了避开 + 在邮件里的冲突，把起始符号从 <code>+ </code>改成了<code> &amp;</code> ,即 <code>&amp;xxxx-</code><br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_72.png" alt="在这里插入图片描述"></p>
-<p>很显然所需注册账号的邮箱后缀应为 <code>@ginandjuice.shop</code><br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_73.png" alt="在这里插入图片描述"></p>
+<p>补充：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Hanford/article/details/53364021">utf-7</a> 是一个很古老的编码，基本只应用在邮箱中。其中一些字符经普通的utf-7编码后会在首尾分别加<code>+</code>  <code>-</code> ，如：<code>+xxxx-</code>。而<code>+</code>在邮箱解析有其他特殊意义,所以专门给邮箱 &#x2F; IMAP 协议用的 <code>Modified UTF-7</code>（修改版 UTF-7），它为了避开 + 在邮件里的冲突，把起始符号从 <code>+ </code>改成了<code> &amp;</code> ,即 <code>&amp;xxxx-</code><br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_72.png" alt="业务逻辑漏洞·图72"></p>
+<p>很显然所需注册账号的邮箱后缀应为 <code>@ginandjuice.shop</code><br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_73.png" alt="业务逻辑漏洞·图73"></p>
 <p>构造payload</p>
 <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">经过尝试，邮箱地址不可以有多个@，且只有utf-7可以</span><br><span class="line">=?utf-7?q?attacker@exploit-0a3e005b03724f5c8427b23901c1005a.exploit-server.net?=@ginandjuice.shop</span><br><span class="line"></span><br><span class="line">@ 的utf-7编码：&amp;AEA-</span><br><span class="line"></span><br><span class="line">=?utf-7?q?attacker&amp;AEA-exploit-0a3e005b03724f5c8427b23901c1005a.exploit-server.net?=@ginandjuice.shop</span><br><span class="line"></span><br><span class="line">发现还是错误</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_74.png" alt="在这里插入图片描述"><br>&#x3D;00 即 \x00 即 null，作者在尾部放置了一个空字符，其原理是： 空字符截断 + 邮箱解析缺陷，导致后续内容被完全忽略</p>
+<p><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_74.png" alt="业务逻辑漏洞·图74"><br>&#x3D;00 即 \x00 即 null，作者在尾部放置了一个空字符，其原理是： 空字符截断 + 邮箱解析缺陷，导致后续内容被完全忽略</p>
 <p>新paylaod</p>
 <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">空格的utf-7编码：&amp;ACA-</span><br><span class="line">=?utf-7?q?attacker&amp;AEA-exploit-0a3e005b03724f5c8427b23901c1005a.exploit-server.net&amp;ACA-?=@ginandjuice.shop</span><br></pre></td></tr></table></figure>
 
-<p>邮箱成功获取邮件<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_75.png" alt="在这里插入图片描述"></p>
-<p>登录验证<br><img src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_76.png" alt="在这里插入图片描述"></p>
+<p>邮箱成功获取邮件<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_75.png" alt="业务逻辑漏洞·图75"></p>
+<p>登录验证<br><img loading="lazy" decoding="async" src="/images/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image_76.png" alt="业务逻辑漏洞·图76"></p>
 <p>进入后台删除即可</p>
 <hr>
 <h2 id="思路总结"><a href="#思路总结" class="headerlink" title="思路总结"></a>思路总结</h2><ol>
@@ -712,6 +683,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

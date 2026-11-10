@@ -7,281 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>网络层 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2025/12/05/网络层/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="4.1   网络层的功能4.1.1   异构网络互连
-定义
-互联网由全球范围内数以百万计的异构网络互连
-网络层任务之一是实现异构网络互连
-网络互连：将两个以上计算机网络通过中继系统相互连接
-
-
-中继系统分类（按层次）
-物理层中继系统
-转发器
-集线器
-
-
-数据链路层中继系统
-网桥
-交换机
-
-
-网络层中继系统
-路由器
-
-
-网络层以上中继系统
-网关
-
-
-
-
-网络互连特点
-通常指用路由器进行连接和路由选择
-路由器是专用计算机
-历史原因：路由器有时被称为网关
-
-
-TCP&amp;#x2F;IP网络互连方案
-网络层采用标准化协议
-可连接异构网络
-IP网络概念
-实际互连网络（通过路由器连接）
-虚拟IP网络（统一网络视图）
-
-
-
-
-IP网络优势
-主机通信时如同在单个网络上
-隐藏底层网络异构细节
-
-
-
-4.1.2   路由与转发
-路由器主要完成两个功能
-路由选择(确定哪一条路径)
-根据路由选择协议构造并维护路由表
-经常或定期与相邻路由器交换信息
-获取网络最新拓扑
-动态更新维护路由表
-决定分组到达目的地节点的最优路径
-
-
-分组转发(分组到达时所采取的动作)
-处理通过路由器的数据流
-关键操作
-转发表查询
-转发
-队列管理
-任务调度
-
-
-
-
-
-
-路由表与转发表的关系
-路由表根据路由选择算法得出
-转发表从路由表得出
-转发表结构优化查找过程
-路由表优化网络拓扑变化计算
-
-
-注意
-讨论路由选择原理时
-不区分转发表和路由表
-笼统使用路由表一词
-
-
-
-
-
-4.1.3    网络层提供的两种服务
-网络层提供两种通信服务方式
-
-面向连接的虚电路服务
-无连接的数据报服务
-
-
-①. 虚电路（Virtual Circuit, VC）
-
-基本概念
-计算机通信前先建立网络层连接
-连接是一条逻辑上的路径（非物理专用）
-分为三个阶段：建立、传输、释放
-
-
-虚电路号（VCID）
-每次建立时分配唯一编号
-区分不同虚电路
-
-
-数据传输特点
-首部仅携带VCID，不重复目的地址
-每个节点维护虚电路表
-包含VCID、入链路、出链路、前后节点等信息
-
-
-
-
-工作流程
-建立连接：发送“呼叫请求”分组 → 接收方确认“呼叫应答”
-数据传输：通过已建立路径传输数据分组
-释放连接：发送“释放请求”分组 → 逐段拆除连接
-
-
-特点总结
-建立&amp;#x2F;拆除需要开销，适合长时间频繁通信
-路由选择在连接建立时确定
-提供可靠传输、有序到达、流量控制
-对网络故障适应性差
-节点或链路失效 → 所有相关虚电路中断
-
-
-分组首部开销小（只用VCID）
-
-
-
-
-②. 数据报（Datagram）
-
-基本概念
-发送前不需要建立连接
-每个分组独立路由转发
-网络层不承诺服务质量
-
-
-数据传输特点
-每个分组包含完整源和目的地址
-中间节点缓存并查找转发表进行转发
-不保证顺序、可靠性、流量控制
-
-
-工作流程
-主机A将分组发给相邻交换节点A
-节点A查找转发表决定下一跳
-其他节点类似转发，直到到达主机B
-
-
-特点总结
-无需连接建立，灵活高效
-尽最大努力交付，可能出错、丢失、乱序
-支持资源复用，利用率高
-对网络故障适应性强
-可动态更新路由避开故障节点
-
-
-分组需排队转发，可能造成延迟或丢包
-
-
-
-
-③. 数据报服务与虚电路服务比较
-
-连接的建立
-数据报服务：不需要
-虚电路服务：必须有
-
-
-目的地址
-数据报服务：每个分组都有完整的目的地址
-虚电路服务：连接阶段
-
-
-
-
-
-4.1.4   SDN 的基本概念
-网络层抽象划分
-数据平面（转发层面）
-功能：转发
-
-
-控制平面
-功能：路由选择
-
-
-
-
-SDN架构特点
-集中式的控制平面
-分布式的数据平面
-控制平面与数据平面分离
-控制平面通过控制-数据接口集中控制路由器
-
-
-传统路由器 vs SDN路由器
-传统路由器
-包含转发表和路由选择软件
-既有数据平面又有控制平面
-
-
-SDN路由器
-简化设计
-无需路由选择软件
-路由器间不交换路由信息
-
-
-
-
-SDN结构
-远程控制器
-逻辑上的控制中心
-掌握网络状态
-计算最佳路由
-通过Openflow协议下发流表
-
-
-路由器工作流程
-收到分组
-查找转发表
-转发分组
-
-
-
-
-SDN应用场景
-大型数据中心之间的广域网
-
-
-SDN接口
-北向接口
-面向应用开发者的编程接口
-提供丰富API
-
-
-南向接口
-控制器与转发设备间的双向会话接口
-协议示例：Openflow
-
-
-东西向接口
-控制器集群内部通信接口
-
-
-
-
-SDN优点
-全局集中式控制和分布式高速转发
-灵活可编程与性能的平衡
-降低成本
-
-
-SDN问题
-安全风险
-集中管理易受攻击
-
-
-瓶颈问题
-控制器可能成为性能瓶颈
-
-
-
-
-
-4.1.5    拥塞控制"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -294,6 +23,8 @@ SDN问题
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -304,7 +35,6 @@ SDN问题
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -312,41 +42,18 @@ SDN问题
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"网络层","datePublished":"2025-12-05T04:00:00.000Z","dateModified":"2025-12-05T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2025/12/05/网络层/","description":"4.1 网络层的功能4.1.1 异构网络互连 定义 互联网由全球范围内数以百万计的异构网络互连 网络层任务之一是实现异构网络互连 网络互连：将两个以上计算机网络通过中继系统相互连接 中继系统分类（按层次） 物理层中继系统 转发器 集线器 数据链路层中继系统 网桥 交换机 网络层中继系统 路由器 网络层以上中继系统 网关 网络互连特点 通常指用路由器进行连接和路由选择 路由器是专用计算机 历史原因："}</script>
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -2518,13 +2225,13 @@ MathJax = {
 
     
     
-    <a href="/2025/12/05/计算机网络体系结构/" type="button" class="btn btn-default"><i
+    <a href="/2025/12/05/物理层/" type="button" class="btn btn-default"><i
                 class="fa fa-arrow-circle-o-left"></i> 上一页</a>
     
 
     <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
     
-    <a href="/2025/11/13/VPN代理与流量流向分析/" type="button" class="btn btn-default ">下一页<i
+    <a href="/2025/12/05/计算机网络体系结构/" type="button" class="btn btn-default ">下一页<i
                 class="fa fa-arrow-circle-o-right"></i></a>
     
 
@@ -2679,6 +2386,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

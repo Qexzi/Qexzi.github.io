@@ -7,23 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>认证 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2026/04/06/认证/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="0x01.用户名通过不同回复枚举
-任务：先列举一个有效的用户名，暴力破解该用户的密码，然后访问他们的账户页面
-提示：该环境易受用户名枚举和密码暴力破解攻击的攻击。
-
-在换一个密码，发现回显依然是 Invalid username 说明服务器优先检查用户名
-爆破username
-爆破密码
-登录访问即可
-
-0x02.2FA简单绕过
-任务：访问carlos的账户页面
-提示：双重认证可以被绕过。已经获得了有效的用户名和密码，但无法访问用户的双重身份验证码
-信息
-己账号信息：wiener:peter
-受害者账号信息：carlos:montoya"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -36,6 +23,8 @@
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -46,7 +35,6 @@
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -54,41 +42,18 @@
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"认证","datePublished":"2026-04-06T04:00:00.000Z","dateModified":"2026-04-06T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2026/04/06/认证/","description":"0x01.用户名通过不同回复枚举 任务：先列举一个有效的用户名，暴力破解该用户的密码，然后访问他们的账户页面 提示：该环境易受用户名枚举和密码暴力破解攻击的攻击。 在换一个密码，发现回显依然是 Invalid username 说明服务器优先检查用户名 爆破username 爆破密码 登录访问即可 0x02.2FA简单绕过 任务：访问carlos的账户页面 提示：双重认证可以被绕过。已经获得了有效"}</script>
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -161,9 +126,9 @@ MathJax = {
 <li>任务：先列举一个有效的用户名，暴力破解该用户的密码，然后访问他们的账户页面</li>
 <li>提示：该环境易受用户名枚举和密码暴力破解攻击的攻击。</li>
 </ul>
-<p><img src="/images/%E8%AE%A4%E8%AF%81/image_1.png" alt="在这里插入图片描述"><br>在换一个密码，发现回显依然是 <code>Invalid username</code> 说明服务器优先检查用户名</p>
-<p>爆破username<br><img src="/images/%E8%AE%A4%E8%AF%81/image_2.png" alt="在这里插入图片描述"></p>
-<p>爆破密码<br><img src="/images/%E8%AE%A4%E8%AF%81/image_3.png" alt="在这里插入图片描述"></p>
+<p><img src="/images/%E8%AE%A4%E8%AF%81/image_1.png" alt="认证·图1"><br>在换一个密码，发现回显依然是 <code>Invalid username</code> 说明服务器优先检查用户名</p>
+<p>爆破username<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_2.png" alt="认证·图2"></p>
+<p>爆破密码<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_3.png" alt="认证·图3"></p>
 <p>登录访问即可</p>
 <hr>
 <h3 id="0x02-2FA简单绕过"><a href="#0x02-2FA简单绕过" class="headerlink" title="0x02.2FA简单绕过"></a>0x02.2FA简单绕过</h3><ul>
@@ -175,10 +140,10 @@ MathJax = {
 </ul>
 </li>
 </ul>
-<p><img src="/images/%E8%AE%A4%E8%AF%81/image_4.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_4.png" alt="认证·图4"></p>
 <p>可以知道正常的登录过程是：正确的<code>账号密码</code>+<code>邮箱code</code>验证</p>
 <p>尝试登录 <code>carlos</code></p>
-<p><img src="/images/%E8%AE%A4%E8%AF%81/image_5.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_5.png" alt="认证·图5"></p>
 <blockquote>
 <p><code>奇怪的认知</code>:<br>1.原子化认证</p>
 <blockquote>
@@ -194,7 +159,7 @@ MathJax = {
 </blockquote>
 </blockquote>
 <p>这个环境的漏洞是 <code>资源隔离</code> 存在漏洞，即 系统未对仅完成密码验证、未通过 2FA 的半登录态 Session 实施严格的访问控制，导致该 Session 可直接越权访问需完整 2FA 认证的受保护资源（如&#x2F;my-account），从而绕过双因素认证流程</p>
-<p><img src="/images/%E8%AE%A4%E8%AF%81/image_6.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_6.png" alt="认证·图6"></p>
 <hr>
 <h3 id="0x03-密码重置错误逻辑"><a href="#0x03-密码重置错误逻辑" class="headerlink" title="0x03.密码重置错误逻辑"></a>0x03.密码重置错误逻辑</h3><ul>
 <li>任务：先重置<code>carlos</code>的密码，然后登录进入他的“我的账户”页面</li>
@@ -205,10 +170,10 @@ MathJax = {
 </ul>
 </li>
 </ul>
-<p>要求填入用户名或邮箱，但是我们只知道用户名，所以先尝试<br><img src="/images/%E8%AE%A4%E8%AF%81/image_7.png" alt="在这里插入图片描述"></p>
-<p>需要接受carlos的邮箱的邮件<br><img src="/images/%E8%AE%A4%E8%AF%81/image_8.png" alt="在这里插入图片描述"></p>
-<p>到头了，尝试输入自己的邮箱<br><img src="/images/%E8%AE%A4%E8%AF%81/image_9.png" alt="在这里插入图片描述"></p>
-<p>比较抽象的是居然收到了<br><img src="/images/%E8%AE%A4%E8%AF%81/image_10.png" alt="在这里插入图片描述"></p>
+<p>要求填入用户名或邮箱，但是我们只知道用户名，所以先尝试<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_7.png" alt="认证·图7"></p>
+<p>需要接受carlos的邮箱的邮件<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_8.png" alt="认证·图8"></p>
+<p>到头了，尝试输入自己的邮箱<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_9.png" alt="认证·图9"></p>
+<p>比较抽象的是居然收到了<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_10.png" alt="认证·图10"></p>
 <p>但是，我修改密码后，还是无法登录成功。反而发现wiener的密码被修改了。</p>
 <ul>
 <li>可以获取一些信息：<ul>
@@ -218,7 +183,7 @@ MathJax = {
 </li>
 </ul>
 <p>再次对密码重置页面进行抓包，有新的发现</p>
-<p><img src="/images/%E8%AE%A4%E8%AF%81/image_11.png" alt="在这里插入图片描述"><br>数据包情况<br><img src="/images/%E8%AE%A4%E8%AF%81/image_12.png" alt="在这里插入图片描述"><br>将username改为carlos，其密码就被重置了</p>
+<p><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_11.png" alt="认证·图11"><br>数据包情况<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_12.png" alt="认证·图12"><br>将username改为carlos，其密码就被重置了</p>
 <ul>
 <li>补充<blockquote>
 <p>整个过程中session是没有改变的（截图中的session不相等是因为我之前在尝试）</p>
@@ -261,12 +226,12 @@ MathJax = {
 <h3 id="0x04-通过细微不同的响应进行用户名枚举"><a href="#0x04-通过细微不同的响应进行用户名枚举" class="headerlink" title="0x04.通过细微不同的响应进行用户名枚举"></a>0x04.通过细微不同的响应进行用户名枚举</h3><ul>
 <li>任务：先枚举一个有效的用户名，暴力破解该用户的密码，然后访问他们的账户页面</li>
 </ul>
-<p> <img src="/images/%E8%AE%A4%E8%AF%81/image_13.png" alt="在这里插入图片描述"></p>
-<p>加载username与password的字典<br><img src="/images/%E8%AE%A4%E8%AF%81/image_14.png" alt="在这里插入图片描述"><br>挺难崩的，我直接burpsuite就出来了，没有遇到根据响应报的细微差别来判断账号密码是否正确</p>
-<p>另一种方法是先只对username进行爆破，通过细微的回显确定可以的username，随后进行password爆破<br><img src="/images/%E8%AE%A4%E8%AF%81/image_15.png" alt="在这里插入图片描述"></p>
-<p>从攻击的结果来看,数据包在长度方面存在细微的差异<br><img src="/images/%E8%AE%A4%E8%AF%81/image_16.png" alt="在这里插入图片描述"><br>随便点击,发现大部分回显均是 <code>Invalid username or password.</code> ， 所以过滤这个回显<br><img src="/images/%E8%AE%A4%E8%AF%81/image_17.png" alt="在这里插入图片描述"></p>
+<p> <img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_13.png" alt="认证·图13"></p>
+<p>加载username与password的字典<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_14.png" alt="认证·图14"><br>挺难崩的，我直接burpsuite就出来了，没有遇到根据响应报的细微差别来判断账号密码是否正确</p>
+<p>另一种方法是先只对username进行爆破，通过细微的回显确定可以的username，随后进行password爆破<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_15.png" alt="认证·图15"></p>
+<p>从攻击的结果来看,数据包在长度方面存在细微的差异<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_16.png" alt="认证·图16"><br>随便点击,发现大部分回显均是 <code>Invalid username or password.</code> ， 所以过滤这个回显<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_17.png" alt="认证·图17"></p>
 <p>对<code>aq</code>密码爆破</p>
-<p><img src="/images/%E8%AE%A4%E8%AF%81/image_18.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_18.png" alt="认证·图18"></p>
 <hr>
 <h3 id="0x05-用户名通过响应时间枚举"><a href="#0x05-用户名通过响应时间枚举" class="headerlink" title="0x05.用户名通过响应时间枚举"></a>0x05.用户名通过响应时间枚举</h3><ul>
 <li>任务：先枚举一个有效的用户名，暴力破解该用户的密码，然后访问他们的账户页面</li>
@@ -276,12 +241,12 @@ MathJax = {
 </ul>
 </li>
 </ul>
-<p>先爆破一下username,随机查看了几个返回包<br><img src="/images/%E8%AE%A4%E8%AF%81/image_19.png" alt="在这里插入图片描述"><br>从回显可知，服务器阻止了大量来自同一个<code>IP</code>(因为此次还没有登录，所以服务器不是通过用户进行识别)的快速请求，即存在<code>IP限制</code>。在网络传输中，服务器可以通过网络层（TCP&#x2F;IP 协议栈）的数据直接获取请求端的真实源 IP 地址，用于限流、风控等安全策略。需要注意的是：HTTP 请求头属于应用层数据，无法修改网络层的源 IP；<code>仅当</code>服务器依赖<code>X-Forwarded-For</code>、<code>X-Real-IP</code>等 HTTP 头识别客户端 IP（如服务器部署在反向代理 &#x2F; CDN 之后）时，伪造这些头字段<code>才能</code>欺骗服务器，实现 IP 限流的绕过。绝大多数直接读取 TCP 源 IP 的服务器，修改 HTTP 头无法绕过 IP 识别。</p>
-<p>wiener密码正确的时间延迟<br><img src="/images/%E8%AE%A4%E8%AF%81/image_20.png" alt="在这里插入图片描述"></p>
-<p>wiener密码错误的时间延迟<br><img src="/images/%E8%AE%A4%E8%AF%81/image_21.png" alt="在这里插入图片描述"></p>
-<p>wiener更长的错误密码的时间延迟<br><img src="/images/%E8%AE%A4%E8%AF%81/image_22.png" alt="在这里插入图片描述"></p>
-<p>不存在用户的时间延迟<br><img src="/images/%E8%AE%A4%E8%AF%81/image_23.png" alt="在这里插入图片描述"></p>
-<p>不存在用户的更长密码的时间延迟<br><img src="/images/%E8%AE%A4%E8%AF%81/image_24.png" alt="在这里插入图片描述"></p>
+<p>先爆破一下username,随机查看了几个返回包<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_19.png" alt="认证·图19"><br>从回显可知，服务器阻止了大量来自同一个<code>IP</code>(因为此次还没有登录，所以服务器不是通过用户进行识别)的快速请求，即存在<code>IP限制</code>。在网络传输中，服务器可以通过网络层（TCP&#x2F;IP 协议栈）的数据直接获取请求端的真实源 IP 地址，用于限流、风控等安全策略。需要注意的是：HTTP 请求头属于应用层数据，无法修改网络层的源 IP；<code>仅当</code>服务器依赖<code>X-Forwarded-For</code>、<code>X-Real-IP</code>等 HTTP 头识别客户端 IP（如服务器部署在反向代理 &#x2F; CDN 之后）时，伪造这些头字段<code>才能</code>欺骗服务器，实现 IP 限流的绕过。绝大多数直接读取 TCP 源 IP 的服务器，修改 HTTP 头无法绕过 IP 识别。</p>
+<p>wiener密码正确的时间延迟<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_20.png" alt="认证·图20"></p>
+<p>wiener密码错误的时间延迟<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_21.png" alt="认证·图21"></p>
+<p>wiener更长的错误密码的时间延迟<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_22.png" alt="认证·图22"></p>
+<p>不存在用户的时间延迟<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_23.png" alt="认证·图23"></p>
+<p>不存在用户的更长密码的时间延迟<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_24.png" alt="认证·图24"></p>
 <p>通过以上尝试可以得到一下信息：</p>
 <ol>
 <li>不存在用户无论其输入的密码长度是多少，其回显延迟差距不大。</li>
@@ -291,9 +256,9 @@ MathJax = {
 </li>
 </ol>
 <p>可以存在的可利用漏洞：<code>响应时间枚举用户名</code></p>
-<p>具体枚举思路：使用 <code>Pitchfork Attack</code> 实现 <code>用户</code>+<code>绕IP</code><br><img src="/images/%E8%AE%A4%E8%AF%81/image_25.png" alt="在这里插入图片描述"></p>
-<p><code>Response received</code>：从发送请求到服务器返回第一个响应字节的时间，单位：毫秒（ms）。<br><code>Response completed</code>：从发送请求到服务器返回完整响应的时间，单位：毫秒（ms）。<br><img src="/images/%E8%AE%A4%E8%AF%81/image_26.png" alt="在这里插入图片描述"></p>
-<p>爆破密码<br><img src="/images/%E8%AE%A4%E8%AF%81/image_27.png" alt="在这里插入图片描述"></p>
+<p>具体枚举思路：使用 <code>Pitchfork Attack</code> 实现 <code>用户</code>+<code>绕IP</code><br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_25.png" alt="认证·图25"></p>
+<p><code>Response received</code>：从发送请求到服务器返回第一个响应字节的时间，单位：毫秒（ms）。<br><code>Response completed</code>：从发送请求到服务器返回完整响应的时间，单位：毫秒（ms）。<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_26.png" alt="认证·图26"></p>
+<p>爆破密码<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_27.png" alt="认证·图27"></p>
 <hr>
 <h3 id="0x06-存在缺陷的暴力破解防护（IP-封禁绕过）"><a href="#0x06-存在缺陷的暴力破解防护（IP-封禁绕过）" class="headerlink" title="0x06.存在缺陷的暴力破解防护（IP 封禁绕过）"></a>0x06.存在缺陷的暴力破解防护（IP 封禁绕过）</h3><ul>
 <li><p>任务：暴力破解受害者密码，然后登录访问他们的账户页面</p>
@@ -314,20 +279,20 @@ MathJax = {
 </li>
 </ul>
 <p><code>说明</code>：服务器不认 XFF，只认真实 IP；失败次数是按 IP 全局累计，不是按用户<br><code>发现</code>：如果在尝试爆破三次之后，正常登录一次<code>wiener</code>，又可以继续爆破<code>carlos</code><br><code>猜测</code>：后端维护一个变量：ip_failed_count[你的IP] &#x3D; 登录失败总次数。当成功登录时，服务器会立刻把 ip_failed_count 重置为 0</p>
-<p>设置宏与规则<br><img src="/images/%E8%AE%A4%E8%AF%81/image_28.png" alt="在这里插入图片描述"></p>
-<p>设置每发送两次包就执行一次宏<br><img src="/images/%E8%AE%A4%E8%AF%81/image_29.png" alt="在这里插入图片描述"><br>值得注意的使用，攻击时记得使用单线程</p>
-<p><img src="/images/%E8%AE%A4%E8%AF%81/image_30.png" alt="在这里插入图片描述"></p>
+<p>设置宏与规则<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_28.png" alt="认证·图28"></p>
+<p>设置每发送两次包就执行一次宏<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_29.png" alt="认证·图29"><br>值得注意的使用，攻击时记得使用单线程</p>
+<p><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_30.png" alt="认证·图30"></p>
 <hr>
 <h3 id="0x07-通过账户锁定进行用户名枚举"><a href="#0x07-通过账户锁定进行用户名枚举" class="headerlink" title="0x07.通过账户锁定进行用户名枚举"></a>0x07.通过账户锁定进行用户名枚举</h3><ul>
 <li>任务：先枚举一个有效的用户名，暴力破解该用户的密码，然后访问他们的账户页面</li>
 <li>提示：存在用户名枚举的风险（使用了账户锁定，但这存在逻辑缺陷）</li>
 </ul>
 <p>尝试之后发现<br><code>无效用户名</code>：当尝试登录一个不存在的用户名时，无论尝试多少次，服务器都只返回统一的 “Invalid username or password”。<br><code>有效用户名</code>：当使用有效用户名尝试登录，并在短时间内多次输入错误密码，触发了账户锁定阈值时，服务器返回的错误消息会变成 “You have made too many incorrect login attempts”</p>
-<p><img src="/images/%E8%AE%A4%E8%AF%81/image_31.png" alt="在这里插入图片描述"><br>值得注意的是：在现在的burpsuite中，Null payloads 确实不再提供 Placeholder 选项。它只会生成空字符串。（即密码字段变成 password&#x3D; 后面什么都没有），所以 <code>password=dddfwssdwdd</code>+变量 就可以实现password非空的问题</p>
-<p><img src="/images/%E8%AE%A4%E8%AF%81/image_32.png" alt="在这里插入图片描述"></p>
-<p>结果<br><img src="/images/%E8%AE%A4%E8%AF%81/image_33.png" alt="在这里插入图片描述"></p>
-<p>爆破<code>as</code>密码<br><img src="/images/%E8%AE%A4%E8%AF%81/image_34.png" alt="在这里插入图片描述"></p>
-<p>结果<br><img src="/images/%E8%AE%A4%E8%AF%81/image_35.png" alt="在这里插入图片描述"><br>登录即可</p>
+<p><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_31.png" alt="认证·图31"><br>值得注意的是：在现在的burpsuite中，Null payloads 确实不再提供 Placeholder 选项。它只会生成空字符串。（即密码字段变成 password&#x3D; 后面什么都没有），所以 <code>password=dddfwssdwdd</code>+变量 就可以实现password非空的问题</p>
+<p><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_32.png" alt="认证·图32"></p>
+<p>结果<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_33.png" alt="认证·图33"></p>
+<p>爆破<code>as</code>密码<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_34.png" alt="认证·图34"></p>
+<p>结果<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_35.png" alt="认证·图35"><br>登录即可</p>
 <p>思考：注意观察 <code>143</code> ，此时账号是被锁定的。这种逻辑就很抽象。</p>
 <table>
 <thead>
@@ -384,16 +349,16 @@ MathJax = {
 </ul>
 </li>
 </ul>
-<p>正常登录wiener<br><img src="/images/%E8%AE%A4%E8%AF%81/image_36.png" alt="在这里插入图片描述"><br>输入邮箱code<br><img src="/images/%E8%AE%A4%E8%AF%81/image_37.png" alt="在这里插入图片描述"></p>
-<p>尝试登录carlos<br><img src="/images/%E8%AE%A4%E8%AF%81/image_38.png" alt="在这里插入图片描述"><br>根据正常的登录流程来看，很显然需要爆破密码，不然无法进行下一步 (此时的想法还是有点偏差)<br><img src="/images/%E8%AE%A4%E8%AF%81/image_39.png" alt="在这里插入图片描述"><br>这个数据包可以正常爆破出密码（密码：<code>master</code>）。<code>verify</code> 是 <code>wiener</code>，这就有点奇怪了。</p>
-<p>抓取code数据包<br><img src="/images/%E8%AE%A4%E8%AF%81/image_40.png" alt="在这里插入图片描述"></p>
-<p>修改之后，显示错误。如果同时修改code为之前登录的<code>wiener</code>时的code呢？<br><img src="/images/%E8%AE%A4%E8%AF%81/image_41.png" alt="在这里插入图片描述"><br>修改了<code>id</code>后直接跳回登录页面，不修改的话会登录到<code>wiener</code>（但是之前已经使用code登录过了）</p>
+<p>正常登录wiener<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_36.png" alt="认证·图36"><br>输入邮箱code<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_37.png" alt="认证·图37"></p>
+<p>尝试登录carlos<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_38.png" alt="认证·图38"><br>根据正常的登录流程来看，很显然需要爆破密码，不然无法进行下一步 (此时的想法还是有点偏差)<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_39.png" alt="认证·图39"><br>这个数据包可以正常爆破出密码（密码：<code>master</code>）。<code>verify</code> 是 <code>wiener</code>，这就有点奇怪了。</p>
+<p>抓取code数据包<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_40.png" alt="认证·图40"></p>
+<p>修改之后，显示错误。如果同时修改code为之前登录的<code>wiener</code>时的code呢？<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_41.png" alt="认证·图41"><br>修改了<code>id</code>后直接跳回登录页面，不修改的话会登录到<code>wiener</code>（但是之前已经使用code登录过了）</p>
 <p>目前得到的信息是：邮箱的code可以再次利用，即没有使用次数的限制<br>疑问：这个<code>code</code>到底有没有使用时效性？这个问题对另一种解法有决定性作用,既然对code没有次数限制，大概率也不会有时效性</p>
-<p>carlos是正常登录的，时效性就不需要考虑了（必然满足），而code就4位数，那就先爆破一下吧<br><img src="/images/%E8%AE%A4%E8%AF%81/image_42.png" alt="在这里插入图片描述"></p>
-<p>结果<br><img src="/images/%E8%AE%A4%E8%AF%81/image_43.png" alt="在这里插入图片描述"><br>登录即可</p>
-<p>继续思考<br><img src="/images/%E8%AE%A4%E8%AF%81/image_44.png" alt="在这里插入图片描述"><br>显然<code>verify</code>这个参数与用户的身份相关。若<code>session</code>不是对用户身份其决定性作用，则session将毫无意义。正常情况下verify应该融合经session才对。又有邮箱code没有时效性与次数限制</p>
+<p>carlos是正常登录的，时效性就不需要考虑了（必然满足），而code就4位数，那就先爆破一下吧<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_42.png" alt="认证·图42"></p>
+<p>结果<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_43.png" alt="认证·图43"><br>登录即可</p>
+<p>继续思考<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_44.png" alt="认证·图44"><br>显然<code>verify</code>这个参数与用户的身份相关。若<code>session</code>不是对用户身份其决定性作用，则session将毫无意义。正常情况下verify应该融合经session才对。又有邮箱code没有时效性与次数限制</p>
 <p>如果成立的话，那我们就不需要进行最现实中<code>艰难的一步</code> - 爆破carlos的密码</p>
-<p>正常登录wiener后<br><img src="/images/%E8%AE%A4%E8%AF%81/image_45.png" alt="在这里插入图片描述"><br>成功登录</p>
+<p>正常登录wiener后<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_45.png" alt="认证·图45"><br>成功登录</p>
 <hr>
 <h3 id="0x09-暴力破解“保持登录”Cookie"><a href="#0x09-暴力破解“保持登录”Cookie" class="headerlink" title="0x09.暴力破解“保持登录”Cookie"></a>0x09.暴力破解“保持登录”Cookie</h3><ul>
 <li>任务：以通过暴力破解carlos的cookie，访问他的“我的账户”页面</li>
@@ -405,10 +370,10 @@ MathJax = {
 </li>
 </ul>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1ob4y1Y7Ep/?spm_id_from=333.337.search-card.all.click&vd_source=2930edc0a0a5de758ae391419e05182b">Cookie&amp;&amp;Session&amp;&amp;Token</a></p>
-<p>在正常的认证逻辑中 <code>session</code>应是短期会话凭证，也是具备唯一身份认证功能。 <code>stay-logged-in</code>应是具备长期身份认证功能<br><img src="/images/%E8%AE%A4%E8%AF%81/image_46.png" alt="在这里插入图片描述"><br>可知，爆破cookie选择 <code>stay-logged-in</code>更加容易 <code>wiener:51dc30ddc473d43a6011e9ebba6ca770</code>，密位32个字符（hex），也就是128位，猜测是md5</p>
-<p>挺抽象的，居然是peter<br><img src="/images/%E8%AE%A4%E8%AF%81/image_47.png" alt="在这里插入图片描述"></p>
-<p>其cookie格式：<code>base64(username:md5(password))</code><br><img src="/images/%E8%AE%A4%E8%AF%81/image_48.png" alt="在这里插入图片描述"></p>
-<p>结果<br><img src="/images/%E8%AE%A4%E8%AF%81/image_49.png" alt="在这里插入图片描述"></p>
+<p>在正常的认证逻辑中 <code>session</code>应是短期会话凭证，也是具备唯一身份认证功能。 <code>stay-logged-in</code>应是具备长期身份认证功能<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_46.png" alt="认证·图46"><br>可知，爆破cookie选择 <code>stay-logged-in</code>更加容易 <code>wiener:51dc30ddc473d43a6011e9ebba6ca770</code>，密位32个字符（hex），也就是128位，猜测是md5</p>
+<p>挺抽象的，居然是peter<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_47.png" alt="认证·图47"></p>
+<p>其cookie格式：<code>base64(username:md5(password))</code><br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_48.png" alt="认证·图48"></p>
+<p>结果<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_49.png" alt="认证·图49"></p>
 <p>不知道为什么会有两个，补充一下<code>53</code>号回去查字典就可以知道carlos的密码的，虽然在这题没有什么作用 </p>
 <hr>
 <h3 id="0x0a-离线密码破解"><a href="#0x0a-离线密码破解" class="headerlink" title="0x0a.离线密码破解"></a>0x0a.离线密码破解</h3><ul>
@@ -420,9 +385,9 @@ MathJax = {
 </ul>
 </li>
 </ul>
-<p>思路：利用xss漏洞窃取carlos的cookie,然后离线爆破<br><img src="/images/%E8%AE%A4%E8%AF%81/image_50.png" alt="在这里插入图片描述"></p>
-<p>服务器的日志<br><img src="/images/%E8%AE%A4%E8%AF%81/image_51.png" alt="在这里插入图片描述"><br><code>d2llbmVyOjUxZGMzMGRkYzQ3M2Q0M2E2MDExZTllYmJhNmNhNzcw</code> - base64解码随后MD5爆破 - wiener:peter</p>
-<p>为了方便模拟，该环境直接返回carlos的cookie<br><img src="/images/%E8%AE%A4%E8%AF%81/image_52.png" alt="在这里插入图片描述"></p>
+<p>思路：利用xss漏洞窃取carlos的cookie,然后离线爆破<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_50.png" alt="认证·图50"></p>
+<p>服务器的日志<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_51.png" alt="认证·图51"><br><code>d2llbmVyOjUxZGMzMGRkYzQ3M2Q0M2E2MDExZTllYmJhNmNhNzcw</code> - base64解码随后MD5爆破 - wiener:peter</p>
+<p>为了方便模拟，该环境直接返回carlos的cookie<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_52.png" alt="认证·图52"></p>
 <p>解密之后为：carlos:onceuponatime  登录删除即可</p>
 <hr>
 <h3 id="0x0b-通过中间件实现的密码重置投毒"><a href="#0x0b-通过中间件实现的密码重置投毒" class="headerlink" title="0x0b.通过中间件实现的密码重置投毒"></a>0x0b.通过中间件实现的密码重置投毒</h3><ul>
@@ -434,9 +399,9 @@ MathJax = {
 </ul>
 </li>
 </ul>
-<p>正常重置密码流程<br><img src="/images/%E8%AE%A4%E8%AF%81/image_53.png" alt="在这里插入图片描述"></p>
-<p>直接就给wiener的邮箱发链接了<br><img src="/images/%E8%AE%A4%E8%AF%81/image_54.png" alt="在这里插入图片描述">那也就说，用户名是与邮箱绑定的</p>
-<p>抓取邮件链接数据包<br><img src="/images/%E8%AE%A4%E8%AF%81/image_55.png" alt="在这里插入图片描述"><br>修改密码<br><img src="/images/%E8%AE%A4%E8%AF%81/image_56.png" alt="在这里插入图片描述"><br>修改密码的token只能使用一次，且进行了加密，无法爆破。要重置carlos的密码，就需要拿到carlos重置密码的token</p>
+<p>正常重置密码流程<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_53.png" alt="认证·图53"></p>
+<p>直接就给wiener的邮箱发链接了<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_54.png" alt="认证·图54">那也就说，用户名是与邮箱绑定的</p>
+<p>抓取邮件链接数据包<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_55.png" alt="认证·图55"><br>修改密码<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_56.png" alt="认证·图56"><br>修改密码的token只能使用一次，且进行了加密，无法爆破。要重置carlos的密码，就需要拿到carlos重置密码的token</p>
 <p><code>引入知识</code></p>
 <table>
 <thead>
@@ -472,13 +437,13 @@ MathJax = {
 <td>非官方标准，被RFC 7239部分采纳</td>
 </tr>
 </tbody></table>
-<p><img src="/images/%E8%AE%A4%E8%AF%81/image_57.png" alt="在这里插入图片描述"></p>
-<p><code>知识点的用途</code>是劫持用户的密码重置令牌，从而完全接管其账户。<br>其核心是利用中间件（Middleware）或应用对HTTP头部的信任，篡改密码重置邮件中的链接，当受害者点击该链接时，其密码重置令牌就会被发送到攻击者控制的服务器上<br><img src="/images/%E8%AE%A4%E8%AF%81/image_58.png" alt="在这里插入图片描述"></p>
-<p>具体实现<br><img src="/images/%E8%AE%A4%E8%AF%81/image_59.png" alt="在这里插入图片描述"></p>
-<p>再次发送<br><img src="/images/%E8%AE%A4%E8%AF%81/image_60.png" alt="在这里插入图片描述"></p>
-<p>但是日志里依然为没有观察到token，删除 <code>session</code> 试试？<br><img src="/images/%E8%AE%A4%E8%AF%81/image_61.png" alt="在这里插入图片描述"><br>还是没有观察到token,后来发现删不删出session是无影响的，是这个靶场的延迟而已</p>
-<p><img src="/images/%E8%AE%A4%E8%AF%81/image_62.png" alt="在这里插入图片描述"></p>
-<p>修改密码登录即可<br><img src="/images/%E8%AE%A4%E8%AF%81/image_63.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_57.png" alt="认证·图57"></p>
+<p><code>知识点的用途</code>是劫持用户的密码重置令牌，从而完全接管其账户。<br>其核心是利用中间件（Middleware）或应用对HTTP头部的信任，篡改密码重置邮件中的链接，当受害者点击该链接时，其密码重置令牌就会被发送到攻击者控制的服务器上<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_58.png" alt="认证·图58"></p>
+<p>具体实现<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_59.png" alt="认证·图59"></p>
+<p>再次发送<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_60.png" alt="认证·图60"></p>
+<p>但是日志里依然为没有观察到token，删除 <code>session</code> 试试？<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_61.png" alt="认证·图61"><br>还是没有观察到token,后来发现删不删出session是无影响的，是这个靶场的延迟而已</p>
+<p><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_62.png" alt="认证·图62"></p>
+<p>修改密码登录即可<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_63.png" alt="认证·图63"></p>
 <hr>
 <h3 id="0x0c-通过修改密码功能进行密码暴力破解"><a href="#0x0c-通过修改密码功能进行密码暴力破解" class="headerlink" title="0x0c.通过修改密码功能进行密码暴力破解"></a>0x0c.通过修改密码功能进行密码暴力破解</h3><ul>
 <li>任务：利用候选密码列表暴力破解carlos的账户，进入他的“我的账户”页面</li>
@@ -489,14 +454,14 @@ MathJax = {
 </ul>
 </li>
 </ul>
-<p>修改密码<br><img src="/images/%E8%AE%A4%E8%AF%81/image_64.png" alt="在这里插入图片描述"></p>
+<p>修改密码<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_64.png" alt="认证·图64"></p>
 <p>探测其修改密码的验证逻辑</p>
-<p>当前密码正确，新密码与确认密码不一致<br><img src="/images/%E8%AE%A4%E8%AF%81/image_65.png" alt="在这里插入图片描述"></p>
-<p>当前密码错误，新密码与确认密码不一致<br><img src="/images/%E8%AE%A4%E8%AF%81/image_66.png" alt="在这里插入图片描述"></p>
-<p>当前密码错误，新密码与确认密码一致<br><img src="/images/%E8%AE%A4%E8%AF%81/image_67.png" alt="在这里插入图片描述"></p>
+<p>当前密码正确，新密码与确认密码不一致<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_65.png" alt="认证·图65"></p>
+<p>当前密码错误，新密码与确认密码不一致<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_66.png" alt="认证·图66"></p>
+<p>当前密码错误，新密码与确认密码一致<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_67.png" alt="认证·图67"></p>
 <p>所以，可以利用第一种与第二种回显来对carlos的密码进行爆破</p>
-<p><img src="/images/%E8%AE%A4%E8%AF%81/image_68.png" alt="在这里插入图片描述"></p>
-<p>结果<br><img src="/images/%E8%AE%A4%E8%AF%81/image_69.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_68.png" alt="认证·图68"></p>
+<p>结果<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_69.png" alt="认证·图69"></p>
 <p>登录即可</p>
 <p><code>补充</code>：这套密码重置的逻辑是没有问题的，只是忽略了修改密码的用户的身份认证。</p>
 <hr>
@@ -508,7 +473,7 @@ MathJax = {
 </ul>
 </li>
 </ul>
-<p>删除cookie或是使用XFF等均是无法绕过多次提交限制<br><img src="/images/%E8%AE%A4%E8%AF%81/image_70.png" alt="在这里插入图片描述"></p>
+<p>删除cookie或是使用XFF等均是无法绕过多次提交限制<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_70.png" alt="认证·图70"></p>
 <p>引入json相关知识：<code>{&quot;username&quot;: &quot;carlos&quot;, &quot;password&quot;: [&quot;123456&quot;, &quot;password&quot;, &quot;qwerty&quot;]}</code> 是完全合法的。JSON 规范允许一个字段的值是数组类型，数组内可以包含字符串、数字等</p>
 <p>这题的漏洞正是没有对password的值进行限制</p>
 <p>对应后端可能存在的处理情况：</p>
@@ -517,11 +482,11 @@ MathJax = {
 <li>只比对数组的第一个元素，即使错误也不进行封禁</li>
 <li>将传入数组的元素进行拼接 （少见）</li>
 </ol>
-<p>开头替换为引号<br><img src="/images/%E8%AE%A4%E8%AF%81/image_71.png" alt="在这里插入图片描述"></p>
-<p>末尾替换为引号<br><img src="/images/%E8%AE%A4%E8%AF%81/image_72.png" alt="在这里插入图片描述"></p>
-<p>换行符替换为逗号<br><img src="/images/%E8%AE%A4%E8%AF%81/image_73.png" alt="在这里插入图片描述"></p>
-<p>结果<br><img src="/images/%E8%AE%A4%E8%AF%81/image_74.png" alt="在这里插入图片描述"><br><code>注意</code>：Burp Repeater 只跟随 Location 头，但不会自动应用响应中返回的 Set-Cookie。所以点击 <code>Follow redirection</code> 没有作用</p>
-<p><img src="/images/%E8%AE%A4%E8%AF%81/image_75.png" alt="在这里插入图片描述"><br>然后<br><img src="/images/%E8%AE%A4%E8%AF%81/image_76.png" alt="在这里插入图片描述"></p>
+<p>开头替换为引号<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_71.png" alt="认证·图71"></p>
+<p>末尾替换为引号<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_72.png" alt="认证·图72"></p>
+<p>换行符替换为逗号<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_73.png" alt="认证·图73"></p>
+<p>结果<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_74.png" alt="认证·图74"><br><code>注意</code>：Burp Repeater 只跟随 Location 头，但不会自动应用响应中返回的 Set-Cookie。所以点击 <code>Follow redirection</code> 没有作用</p>
+<p><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_75.png" alt="认证·图75"><br>然后<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_76.png" alt="认证·图76"></p>
 <hr>
 <h3 id="0x0e-利用暴力破解攻击绕过2FA"><a href="#0x0e-利用暴力破解攻击绕过2FA" class="headerlink" title="0x0e.利用暴力破解攻击绕过2FA"></a>0x0e.利用暴力破解攻击绕过2FA</h3><ul>
 <li>任务：访问Carlos的账户页面</li>
@@ -531,16 +496,16 @@ MathJax = {
 </ul>
 </li>
 </ul>
-<p>尝试爆破一下<br><img src="/images/%E8%AE%A4%E8%AF%81/image_77.png" alt="在这里插入图片描述"></p>
-<p>结果分析<br><img src="/images/%E8%AE%A4%E8%AF%81/image_78.png" alt="在这里插入图片描述"></p>
-<p>寻在csrf的踪迹-观察登录页面<br><img src="/images/%E8%AE%A4%E8%AF%81/image_79.png" alt="在这里插入图片描述"></p>
+<p>尝试爆破一下<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_77.png" alt="认证·图77"></p>
+<p>结果分析<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_78.png" alt="认证·图78"></p>
+<p>寻在csrf的踪迹-观察登录页面<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_79.png" alt="认证·图79"></p>
 <p>为了更加了解整个过程，还是要老老实实抓取每一部分的包</p>
-<p><code>login</code>界面<br><img src="/images/%E8%AE%A4%E8%AF%81/image_80.png" alt="在这里插入图片描述"></p>
-<p><code>login2</code>界面<br><img src="/images/%E8%AE%A4%E8%AF%81/image_81.png" alt="在这里插入图片描述"></p>
+<p><code>login</code>界面<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_80.png" alt="认证·图80"></p>
+<p><code>login2</code>界面<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_81.png" alt="认证·图81"></p>
 <p>可以，攻击逻辑是：<code>刷新login登录界面（获取csrf1）</code> &#x3D;&gt; <code>login界面发送账号密码（携带csrf1）</code> &#x3D;&gt; <code>回包含有csrf2与session</code> &#x3D;&gt; <code>爆破code（携带csrf2与session）</code></p>
-<p>影响数据包范围尽可能小<br><img src="/images/%E8%AE%A4%E8%AF%81/image_82.png" alt="在这里插入图片描述"><br><img src="/images/%E8%AE%A4%E8%AF%81/image_83.png" alt="在这里插入图片描述"></p>
-<p>宏攻击链<br><img src="/images/%E8%AE%A4%E8%AF%81/image_84.png" alt="在这里插入图片描述"></p>
-<p>攻击，主要单线程以及code格式（0000-9999）<br><img src="/images/%E8%AE%A4%E8%AF%81/image_85.png" alt="在这里插入图片描述"></p>
+<p>影响数据包范围尽可能小<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_82.png" alt="认证·图82"><br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_83.png" alt="认证·图83"></p>
+<p>宏攻击链<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_84.png" alt="认证·图84"></p>
+<p>攻击，主要单线程以及code格式（0000-9999）<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_85.png" alt="认证·图85"></p>
 <p>从攻击结果来看，<code>宏的攻击链</code>是没有问题的。很折磨的是：单线程+10000次攻击，也就是50000次数据包发送，就当0.5s一次完整的请求响应，也要<code>7.8小时</code>，实在是没有这么多时间</p>
 <hr>
 <h2 id="补充知识"><a href="#补充知识" class="headerlink" title="补充知识"></a>补充知识</h2><h3 id="0x01-burpsuite-session-handling-rule"><a href="#0x01-burpsuite-session-handling-rule" class="headerlink" title="0x01.burpsuite- session handling rule"></a>0x01.burpsuite- session handling rule</h3><ul>
@@ -796,6 +761,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

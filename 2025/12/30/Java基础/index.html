@@ -7,128 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>Java基础 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2025/12/30/Java基础/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="一、Java虚拟机与平台特性1. JVM架构详解
-类加载器子系统：
-
-启动类加载器（Bootstrap）：加载rt.jar等核心库
-扩展类加载器（Extension）：加载jre/lib/ext目录
-应用类加载器（Application）：加载CLASSPATH路径
-自定义类加载器：继承ClassLoader实现热部署
-
-
-运行时数据区：
-
-
-垃圾回收机制：
-
-分代收集：新生代（Eden+S0+S1）和老年代
-GC算法：
-标记-清除：产生内存碎片
-复制算法：适用于新生代（90%对象存活率低）
-标记-整理：适用于老年代
-
-
-常见GC器：
-Serial：单线程，适合客户端应用
-Parallel：多线程吞吐量优先
-CMS：低延迟，但会产生碎片
-G1：分区收集，预测停顿时间
-
-
-
-
-
-2. 跨平台原理
-字节码文件（.class）：
-由Java编译器生成，与操作系统无关
-包含：常量池、字段表、方法表、属性表
-
-
-JVM执行过程：public class Test &amp;#123;    public static void main(String[] args) &amp;#123;        System.out.println(&amp;quot;Hello&amp;quot;);    &amp;#125;&amp;#125;
-编译后字节码（javap -c Test.class）：  public static void main(java.lang.String[]);  Code:     0: getstatic     #2  // Field java/lang/System.out:Ljava/io/PrintStream;     3: ldc           #3  // String Hello     5: invokevirtual #4  // Method java/io/PrintStream.println:(Ljava/lang/String;)V     8: return
-
-二、基础语法与数据类型1. 基本数据类型解析
-
-
-基本类型
-包装类
-大小
-默认值
-取值范围
-特殊说明
-
-
-
-byte
-Byte
-1字节
-0
--128~127
-适合存储小整数
-
-
-short
-Short
-2字节
-0
--32768~32767
-
-
-
-int
-Integer
-4字节
-0
--2^31~2^31-1
-最常用整型
-
-
-long
-Long
-8字节
-0L
--2^63~2^63-1
-后缀L
-
-
-float
-Float
-4字节
-0.0f
-±3.40282347E+38F
-后缀f
-
-
-double
-Double
-8字节
-0.0d
-±1.79769313486231570E+308
-默认浮点类型
-
-
-char
-Character
-2字节
-‘\u0000’
-0~65535
-Unicode字符
-
-
-boolean
-Boolean
-1位
-false
-true&amp;#x2F;false
-无具体大小
-
-
-关键说明
-
-包装类均为引用类型，首字母大写（两个特殊情况：int 对应 Integer、char 对应 Character，其余基本类型直接首字母大写即可）
-包装类主要用于需要使用对象的场景（如集合框架、反射等），可实现基本类型与包装类的自动装箱&amp;#x2F;拆箱"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -141,6 +23,8 @@ true&amp;#x2F;false
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -151,7 +35,6 @@ true&amp;#x2F;false
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -159,41 +42,39 @@ true&amp;#x2F;false
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
-
-
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
+  
+  <!-- MathJax（仅含公式的页面加载，由 scripts/mathjax-injector.js 检测标记） -->
+  <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    startup: {
+      pageReady: () => {
+        return MathJax.startup.defaultPageReady();
+      }
     }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+  };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Java基础","datePublished":"2025-12-30T04:00:00.000Z","dateModified":"2025-12-30T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2025/12/30/Java基础/","description":"一、Java虚拟机与平台特性1. JVM架构详解 类加载器子系统： 启动类加载器（Bootstrap）：加载rt.jar等核心库 扩展类加载器（Extension）：加载jre/lib/ext目录 应用类加载器（Application）：加载CLASSPATH路径 自定义类加载器：继承ClassLoader实现热部署 运行时数据区： 垃圾回收机制： 分代收集：新生代（Eden+S0+S1）和老年代"}</script>
+  
+
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -272,7 +153,7 @@ MathJax = {
 </ul>
 </li>
 <li><p><strong>运行时数据区</strong>：</p>
-<p><img src="/images/Java%E5%9F%BA%E7%A1%80/image_1.png" alt="在这里插入图片描述"></p>
+<p><img src="/images/Java%E5%9F%BA%E7%A1%80/image_1.png" alt="Java基础·图1"></p>
 </li>
 <li><p><strong>垃圾回收机制</strong>：</p>
 <ul>
@@ -868,7 +749,7 @@ MathJax = {
 </ul>
 <h3 id="4-抽象类与接口的联系总结"><a href="#4-抽象类与接口的联系总结" class="headerlink" title="4. 抽象类与接口的联系总结"></a>4. 抽象类与接口的联系总结</h3><figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">1.  抽象类可以没有抽象方法（但通常会有普通方法）；即使无抽象方法，抽象类依然无法直接实例化。</span><br><span class="line">2.  抽象方法不能被 private/final/static 修饰（冲突特性）；核心原因：这三个修饰符会限制子类重写抽象方法（private不可访问、final不可重写、static不属于实例无法重写）。</span><br><span class="line">3.  抽象类的构造器不能私有化（否则无法被继承）。</span><br><span class="line">4.  抽象类可作为方法参数 / 返回值（体现多态）；实际传入/返回的是抽象类的子类实例（向上转型）。</span><br><span class="line">5.  抽象类可以继承抽象类:</span><br><span class="line">    子抽象类可选择性实现父抽象类的抽象方法（实现部分、实现全部、一个都不实现都可以），未实现的抽象方法会向下传递，由最终的非抽象子类统一实现。</span><br><span class="line">    从中也可以反映：抽象类可以有非抽象方法。</span><br><span class="line">6.  抽象类可以实现接口的部分方法:</span><br><span class="line">    抽象类可以实现接口的部分方法（即实现接口的抽象方法），甚至可以一个都不实现；未实现的方法可以在抽象类中保持抽象状态，继续向下传递。</span><br><span class="line">7.  普通类必须实现接口的所有抽象方法，否则类必须声明为抽象类。</span><br><span class="line">8.  普通类继承抽象类时，必须实现抽象类的所有抽象方法，否则类必须声明为抽象类；此处的“所有抽象方法”包括抽象类自身定义的、继承父抽象类遗留的、实现接口传递下来的所有未完成抽象方法。</span><br><span class="line">9.  类（普通类，内部类，抽象类）只能单继承，但可以实现多个接口。</span><br><span class="line">10. 接口与抽象类的抽象方法：</span><br><span class="line">    接口：</span><br><span class="line">      1.  抽象方法默认修饰符是 public abstract，可省略不写（三种写法等价：void method(); / public void method(); / public abstract void method();）。</span><br><span class="line">      2.  有且仅有 public abstract 这一种修饰符组合，不允许使用 private、protected 等其他任何修饰符，否则编译报错。</span><br><span class="line">      3.  子类重写该抽象方法时，必须使用 public 修饰符（权限不能更严格）。</span><br><span class="line">    抽象类：</span><br><span class="line">      1.  abstract 修饰符必须手动指定（不写则不是抽象方法），无默认的 public abstract/protected abstract 组合。</span><br><span class="line">      2.  访问修饰符支持 2 种：public、protected（可手动指定）；若不指定任何访问修饰符，默认是「包访问权限（default 权限，无关键字）」，非 protected。</span><br><span class="line">      3.  不支持的修饰符：private、final、static（与 abstract 互斥，编译报错）。</span><br><span class="line">      4.  子类重写该抽象方法时，访问权限不能比父类更严格（如父类 protected → 子类 protected/public；父类 public → 子类只能 public）。</span><br></pre></td></tr></table></figure>
 
-<h2 id="六、异常处理解析"><a href="#六、异常处理解析" class="headerlink" title="六、异常处理解析"></a>六、异常处理解析</h2><h3 id="1-异常体系结构"><a href="#1-异常体系结构" class="headerlink" title="1. 异常体系结构"></a>1. 异常体系结构</h3><p> <img src="/images/Java%E5%9F%BA%E7%A1%80/image_2.png" alt="在这里插入图片描述"></p>
+<h2 id="六、异常处理解析"><a href="#六、异常处理解析" class="headerlink" title="六、异常处理解析"></a>六、异常处理解析</h2><h3 id="1-异常体系结构"><a href="#1-异常体系结构" class="headerlink" title="1. 异常体系结构"></a>1. 异常体系结构</h3><p> <img loading="lazy" decoding="async" src="/images/Java%E5%9F%BA%E7%A1%80/image_2.png" alt="Java基础·图2"></p>
 <ul>
 <li><strong>Checked Exception vs Unchecked Exception</strong>：<table>
 <thead>
@@ -1400,7 +1281,7 @@ MathJax = {
 </ul>
 <h3 id="3-反射性能优化"><a href="#3-反射性能优化" class="headerlink" title="3. 反射性能优化"></a>3. 反射性能优化</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1. 缓存Method对象</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Method</span> <span class="variable">METHOD</span> <span class="operator">=</span> MyClass.class.getMethod(<span class="string">&quot;method&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 使用MethodHandle（JDK7+）</span></span><br><span class="line"><span class="type">MethodHandle</span> <span class="variable">handle</span> <span class="operator">=</span> MethodHandles.lookup().findVirtual(MyClass.class, <span class="string">&quot;method&quot;</span>, MethodType.methodType(<span class="keyword">void</span>.class));</span><br><span class="line">handle.invokeExact(obj);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 使用VarHandle（JDK9+）进行字段访问</span></span><br><span class="line"><span class="type">VarHandle</span> <span class="variable">handle</span> <span class="operator">=</span> MethodHandles.lookup().findVarHandle(MyClass.class, <span class="string">&quot;field&quot;</span>, <span class="type">int</span>.class);</span><br><span class="line">handle.set(obj, <span class="number">10</span>);</span><br></pre></td></tr></table></figure>
 
-<h2 id="十六、JVM内存模型（JMM）"><a href="#十六、JVM内存模型（JMM）" class="headerlink" title="十六、JVM内存模型（JMM）"></a>十六、JVM内存模型（JMM）</h2><h3 id="1-主内存与工作内存"><a href="#1-主内存与工作内存" class="headerlink" title="1. 主内存与工作内存"></a>1. 主内存与工作内存</h3><p> <img src="/images/Java%E5%9F%BA%E7%A1%80/image_3.png" alt="在这里插入图片描述"></p>
+<h2 id="十六、JVM内存模型（JMM）"><a href="#十六、JVM内存模型（JMM）" class="headerlink" title="十六、JVM内存模型（JMM）"></a>十六、JVM内存模型（JMM）</h2><h3 id="1-主内存与工作内存"><a href="#1-主内存与工作内存" class="headerlink" title="1. 主内存与工作内存"></a>1. 主内存与工作内存</h3><p> <img loading="lazy" decoding="async" src="/images/Java%E5%9F%BA%E7%A1%80/image_3.png" alt="Java基础·图3"></p>
 <h3 id="2-关键内存屏障"><a href="#2-关键内存屏障" class="headerlink" title="2. 关键内存屏障"></a>2. 关键内存屏障</h3><table>
 <thead>
 <tr>
@@ -1694,6 +1575,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

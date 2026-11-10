@@ -7,42 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>windows常用指令 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2025/09/20/windows常用指令/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="网络配置与信息基本网络信息
-ifconfig /all - 获取域名、IP地址、DHCP服务器、网关、MAC地址、主机名
-net config workstation - 查看域名、机器名等
-route print - 显示IP路由，主要显示网络地址、子网掩码、网关地址和接口地址
-arp - 查看和处理ARP缓存，ARP是名字解析的意思，负责把一个IP解析成一个物理性的MAC地址
-arp -a - 查看ARP缓存信息
-nslookup - IP地址侦测器
-
-网络连接状态
-netstat -a - 查看开启了哪些端口（常用netstat -an）
-netstat -n - 查看端口的网络连接情况（常用netstat -an）
-netstat -o - 查看所有网络连接的进程ID（PID）
-netstat -ano | findstr &amp;quot;:80&amp;quot; - 查找包含”80”的连接（最常用）
-netstat -v - 查看正在进行的工作
-netstat -p 协议名 - 查看某协议使用情况，如：netstat -p tcp
-netstat -s - 查看所有协议使用情况
-
-域网络信息
-net time /domain - 查看域名、时间
-net view /domain - 查看域内所有共享
-net view ip - 查看对方局域网内开启了哪些共享
-nbtstat -A ip - 查看对方最近登录的用户名（需136-139端口开放，参数-A要大写）
-
-用户与组管理用户管理
-net user 用户名 密码 /add - 创建新用户
-net user 用户名 /del - 删除用户
-net user guest /active:yes - 激活guest账户
-net user - 查看所有账户
-net user 账户名 - 查看指定账户信息
-net user /domain - 查看域内有哪些用户（Windows NT Workstation计算机上可用，可判断用户是否是域成员）
-net user 用户名 /domain - 查看域内指定账户信息
-query user - 查看当前在线的用户
-whoami - 查看当前用户及权限
-whoami /all - 查看当前用户的详细权限信息"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -55,6 +23,8 @@ whoami /all - 查看当前用户的详细权限信息">
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -65,7 +35,6 @@ whoami /all - 查看当前用户的详细权限信息">
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -73,41 +42,39 @@ whoami /all - 查看当前用户的详细权限信息">
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
-
-
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
+  
+  <!-- MathJax（仅含公式的页面加载，由 scripts/mathjax-injector.js 检测标记） -->
+  <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    startup: {
+      pageReady: () => {
+        return MathJax.startup.defaultPageReady();
+      }
     }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+  };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"windows常用指令","datePublished":"2025-09-20T04:00:00.000Z","dateModified":"2025-09-20T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2025/09/20/windows常用指令/","description":"网络配置与信息基本网络信息 ifconfig /all - 获取域名、IP地址、DHCP服务器、网关、MAC地址、主机名 net config workstation - 查看域名、机器名等 route print - 显示IP路由，主要显示网络地址、子网掩码、网关地址和接口地址 arp - 查看和处理ARP缓存，ARP是名字解析的意思，负责把一个IP解析成一个物理性的MAC地址 arp -a -"}</script>
+  
+
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -474,6 +441,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

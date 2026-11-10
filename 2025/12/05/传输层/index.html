@@ -7,265 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>传输层 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2025/12/05/传输层/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="5.1   传输层提供的服务5.1.1   传输层的功能
-基本概念
-位于网络层之上、应用层之下
-为运行在不同主机上的进程之间提供逻辑通信
-面向通信部分的最高层，用户功能中的最低层
-即使网络层协议不可靠，也能为应用程序提供可靠服务
-
-
-通信特点
-只有主机协议栈才有传输层
-路由器转发分组只用到下三层功能
-传输层只存在于通信子网以外的主机中
-
-
-主要功能
-应用进程之间的逻辑通信
-通信的真正端点是主机中的进程
-端到端的逻辑通信
-
-
-复用和分用
-复用：不同应用进程使用同一传输协议
-分用：正确交付数据到目的应用进程
-
-
-差错检测
-检测报文首部和数据部分
-TCP：出错则要求重发
-UDP：出错则直接丢弃
-网络层只检验IP首部
-
-
-提供两种传输协议
-面向连接的TCP
-提供可靠的全双工信道
-
-
-无连接的UDP
-提供不可靠信道
-
-
-
-
-
-
-
-5.1.2   传输层的寻址与端口
-①. 端口的作用
-端口能让应用层的各种进程将其数据通过端口向下交付给传输层
-
-让传输层知道应当将其报文段中的数据向上通过端口交付给应用层相应的进程
-
-端口在传输层的作用类似于IP地址在网络层的作用
-
-IP地址标识的是主机
-端口标识的是主机中的应用进程
-
-
-各层服务访问点：
-
-数据链路层：帧的”类型”字段
-网络层：IP数据报的”协议”字段
-传输层：”端口号”字段
-应用层：”用户界面”
-
-
-协议端口与硬件端口的区别
-
-协议端口是软件端口
-硬件端口是不同硬件设备交互的接口
-软件端口是应用层协议进程与传输实体交互的地址
-传输层使用软件端口
-
-
-②. 端口号
-
-应用进程通过端口号进行标识
-端口号长度为16比特，可表示65536(2¹⁶)个不同端口号
-端口号只具有本地意义
-只标识本计算机应用层中的各进程
-不同计算机的相同端口号没有联系
-
-
-端口号分类：
-服务器端使用的端口号
-熟知端口号(0～1023)
-IANA指派给TCP&amp;#x2F;IP重要应用程序
-常用熟知端口号：
-FTP: 21
-TELNET: 23
-SMTP: 25
-DNS: 53
-TFTP: 69
-HTTP: 80
-SNMP: 161
-
-
-
-
-登记端口号(1024～49151)
-供没有熟知端口号的应用程序使用
-必须在IANA登记以防止重复
-
-
-
-
-客户端使用的端口号(49152～65535)
-也称短暂端口号
-仅在客户进程运行时动态选择
-通信结束后端口号可复用
-
-
-
-
-
-
-③. 套接字
-
-网络中通过IP地址标识不同主机
-通过端口号标识主机中的不同应用进程
-套接字(Socket) &amp;#x3D; IP地址:端口号
-唯一标识网络中的一台主机上的一个应用进程
-是一个通信端点
-
-
-通信过程：
-主机A发给主机B的报文包含目的端口号和源端口号
-源端口号是”返回地址”的一部分
-B发回A的报文中的目的端口号是A到B报文的源端口号
-完整返回地址是A的IP地址和源端口号
-
-
-
-
-
-
-
-5.1.3   无连接服务与面向连接服务
-TCP&amp;#x2F;IP传输协议
-面向连接的传输控制协议 (TCP)
-特点
-全双工的可靠逻辑信道
-通信前需建立连接
-数据传输结束后释放连接
-不提供广播&amp;#x2F;多播服务
-
-
-可靠性措施
-确认机制
-流量控制
-计时器
-连接管理
-
-
-适用场景
-文件传输协议(FTP)
-超文本传输协议(HTTP)
-远程登录(TELNET)
-
-
-
-
-无连接的用户数据报协议 (UDP)
-特点
-不可靠的逻辑信道
-通信前无需建立连接
-无确认机制
-
-
-附加服务
-多路复用
-数据错误检查
-
-
-优势
-协议简单
-执行速度快
-实时性好
-
-
-适用场景
-小文件传送协议(TFTP)
-DNS
-SNMP
-实时传输协议(RTP)
-
-
-
-
-
-
-
-5.2   UDP 协议5.2.1    UDP 数据报
-UDP概述
-UDP特点
-仅在IP数据报服务上增加复用、分用和差错检测功能
-优点
-
-无须建立连接
-
-
-
-无连接状态
-
-
-
-首部开销小(8B)
-
-
-
-没有拥塞控制
-
-
-
-支持多种交互通信方式
-
-
-
-
-应用场景
-DNS、SNMP等一次性传输较少数据的应用
-多媒体应用(IP电话、视频会议、流媒体等)
-
-
-
-
-UDP可靠性
-不保证可靠交付
-可靠性可由应用层实现
-
-
-UDP报文处理
-面向报文
-保留报文边界
-报文不可分割
-
-
-
-
-UDP首部格式
-组成
-源端口(2B)
-目的端口(2B)
-长度(2B)
-检验和(2B)
-
-
-字段说明
-源端口：源端口号，可选
-目的端口：目的端口号，必须
-长度：UDP数据报总长度(最小8)
-检验和：可选，全0表示不计算
-
-
-处理流程
-根据目的端口交付应用进程
-端口错误处理：丢弃报文并发送ICMP差错报文"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -278,6 +23,8 @@ UDP首部格式
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -288,7 +35,6 @@ UDP首部格式
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -296,41 +42,18 @@ UDP首部格式
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"传输层","datePublished":"2025-12-05T04:00:00.000Z","dateModified":"2025-12-05T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2025/12/05/传输层/","description":"5.1 传输层提供的服务5.1.1 传输层的功能 基本概念 位于网络层之上、应用层之下 为运行在不同主机上的进程之间提供逻辑通信 面向通信部分的最高层，用户功能中的最低层 即使网络层协议不可靠，也能为应用程序提供可靠服务 通信特点 只有主机协议栈才有传输层 路由器转发分组只用到下三层功能 传输层只存在于通信子网以外的主机中 主要功能 应用进程之间的逻辑通信 通信的真正端点是主机中的进程 端到端的逻"}</script>
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -1361,6 +1084,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

@@ -7,38 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>Kali常用命令 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2025/12/13/kali的常用命令/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="1. 系统基本操作系统控制
-reboot - 重启系统
-shutdown -h now - 立即关闭系统
-shutdown -h hours:minutes &amp;amp; - 按预定时间关闭系统
-shutdown -c - 取消预定的关机操作
-shutdown -r now - 立即重启系统
-init 0 - 关闭系统
-telinit 0 - 关闭系统
-clear - 清屏
-
-环境变量
-env - 显示当前所有环境变量
-echo $PATH - 查看PATH环境变量
-echo $JAVA_HOME - 查看JAVA_HOME环境变量
-echo $PATH | grep jdk - 检查PATH中是否包含JDK路径
-
-用户切换与管理
-su -l - 切换登录用户
-su - root - 切换到root用户
-su 用户名 - 切换到普通用户
-logout - 注销当前用户
-passwd - 修改当前用户密码
-passwd root - 修改root用户密码
-
-历史命令
-history - 查看历史命令
-!! - 重复上一条命令
-!n - 重复第n条命令
-
-2. 文件和目录操作"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -51,6 +23,8 @@ history - 查看历史命令
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -61,7 +35,6 @@ history - 查看历史命令
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -69,41 +42,18 @@ history - 查看历史命令
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Kali常用命令","datePublished":"2025-12-13T04:00:00.000Z","dateModified":"2025-12-13T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2025/12/13/kali的常用命令/","description":"1. 系统基本操作系统控制 reboot - 重启系统 shutdown -h now - 立即关闭系统 shutdown -h hours:minutes &amp; - 按预定时间关闭系统 shutdown -c - 取消预定的关机操作 shutdown -r now - 立即重启系统 init 0 - 关闭系统 telinit 0 - 关闭系统 clear - 清屏 环境变量 env - 显"}</script>
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -825,6 +775,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

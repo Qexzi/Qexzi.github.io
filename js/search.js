@@ -68,6 +68,14 @@
   // Preload
   // ============================================================
 
+  var dataRequested = false;
+  // 惰性加载：首次打开搜索浮层时才请求索引（此前每个页面加载都拉取整个 search.xml）
+  function ensureData() {
+    if (dataRequested) return;
+    dataRequested = true;
+    preloadData();
+  }
+
   function preloadData() {
     var url = (typeof searchPath !== 'undefined' && searchPath) ? searchPath : '/search.xml';
     var xhr = new XMLHttpRequest();
@@ -221,6 +229,7 @@
 
   function openOverlay() {
     if (!document.body) return;
+    ensureData();
     if (!overlay) buildOverlay();
     overlay.classList.add('active');
     inputEl.value = '';
@@ -443,7 +452,6 @@
   // ============================================================
 
   function init() {
-    preloadData();
     var btn = document.getElementById('search-trigger-btn');
     if (btn) btn.addEventListener('click', function (e) { e.preventDefault(); openOverlay(); });
     document.addEventListener('keydown', onGlobalKeydown);

@@ -7,19 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>有道翻译js逆向分析 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2025/12/09/有道翻译js逆向/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="0x01:堆栈找逻辑
-先大致查看一下请求
-重点关注参数 sign 并进行跟踪，使用全局搜索取定位sign的产生逻辑
-全局搜素sign会发现很多结果（sign: 的结果也很多），所以全局搜索pointParam  或  pointParam:  (经判断两者关系密切)
-那就对这个所有搜索结果（粗略判断后）的外层函数或者是关键变量（可以清楚对目标参数的赋值关系）处断点
-断点1：
-断点2： 
-
-有一个小插曲，*app…. 此时的文件是不可以下断点的，表示文件已被本地修改（通过 DevTools 的 Overrides 功能）后来我有重新抓包，就可以下断点了（原因未知，待议）
-
-还有 t = cf41bbc6c60a46ff 似乎就sign加密的密钥了，Me()() 是连续调用的格式"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -32,6 +23,8 @@
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -42,7 +35,6 @@
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -50,41 +42,39 @@
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
-
-
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
+  
+  <!-- MathJax（仅含公式的页面加载，由 scripts/mathjax-injector.js 检测标记） -->
+  <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    startup: {
+      pageReady: () => {
+        return MathJax.startup.defaultPageReady();
+      }
     }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+  };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"有道翻译js逆向分析","datePublished":"2025-12-09T04:00:00.000Z","dateModified":"2025-12-09T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2025/12/09/有道翻译js逆向/","description":"0x01:堆栈找逻辑 先大致查看一下请求 重点关注参数 sign 并进行跟踪，使用全局搜索取定位sign的产生逻辑 全局搜素sign会发现很多结果（sign: 的结果也很多），所以全局搜索pointParam 或 pointParam: (经判断两者关系密切) 那就对这个所有搜索结果（粗略判断后）的外层函数或者是关键变量（可以清楚对目标参数的赋值关系）处断点 断点1： 断点2： 有一个小插曲，*a"}</script>
+  
+
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -153,38 +143,38 @@ MathJax = {
 		  
 		  
 
-		  <h3 id="0x01-堆栈找逻辑"><a href="#0x01-堆栈找逻辑" class="headerlink" title="0x01:堆栈找逻辑"></a>0x01:堆栈找逻辑</h3><p><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_1.png" alt="在这里插入图片描述"></p>
-<p>先大致查看一下请求<br><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_2.png" alt="在这里插入图片描述"></p>
-<p>重点关注参数 <code>sign</code> 并进行跟踪，使用全局搜索取定位sign的产生逻辑<br><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_3.png" alt="在这里插入图片描述"></p>
-<p>全局搜素sign会发现很多结果（sign: 的结果也很多），所以全局搜索<code>pointParam</code>  或  <code>pointParam:</code>  (经判断两者关系密切)<br><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_4.png" alt="在这里插入图片描述"></p>
+		  <h3 id="0x01-堆栈找逻辑"><a href="#0x01-堆栈找逻辑" class="headerlink" title="0x01:堆栈找逻辑"></a>0x01:堆栈找逻辑</h3><p><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_1.png" alt="有道翻译js逆向·图1"></p>
+<p>先大致查看一下请求<br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_2.png" alt="有道翻译js逆向·图2"></p>
+<p>重点关注参数 <code>sign</code> 并进行跟踪，使用全局搜索取定位sign的产生逻辑<br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_3.png" alt="有道翻译js逆向·图3"></p>
+<p>全局搜素sign会发现很多结果（sign: 的结果也很多），所以全局搜索<code>pointParam</code>  或  <code>pointParam:</code>  (经判断两者关系密切)<br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_4.png" alt="有道翻译js逆向·图4"></p>
 <p>那就对这个所有搜索结果（粗略判断后）的外层函数或者是关键变量（可以清楚对目标参数的赋值关系）处断点</p>
-<p><strong>断点1：</strong><br><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_5.png" alt="在这里插入图片描述"></p>
+<p><strong>断点1：</strong><br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_5.png" alt="有道翻译js逆向·图5"></p>
 <p><strong>断点2：</strong> </p>
 <blockquote>
 <p>有一个小插曲，*app…. 此时的文件是不可以下断点的，表示文件已被本地修改（通过 DevTools 的 Overrides 功能）<br>后来我有重新抓包，就可以下断点了（原因未知，待议）</p>
 </blockquote>
-<p><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_6.png" alt="在这里插入图片描述"><br>还有 <code>t = cf41bbc6c60a46ff</code> 似乎就sign加密的密钥了，Me()() 是连续调用的格式</p>
+<p><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_6.png" alt="有道翻译js逆向·图6"><br>还有 <code>t = cf41bbc6c60a46ff</code> 似乎就sign加密的密钥了，Me()() 是连续调用的格式</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 第一步：Me() 返回一个函数</span></span><br><span class="line"><span class="keyword">const</span> encryptFunction = <span class="title class_">Me</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二步：调用返回的函数，传入要加密的字符串</span></span><br><span class="line"><span class="keyword">const</span> encryptedResult = <span class="title function_">encryptFunction</span>(<span class="string">`keyid=<span class="subst">$&#123;e&#125;</span>&amp;mysticTime=<span class="subst">$&#123;o&#125;</span>&amp;product=<span class="subst">$&#123;a&#125;</span>&amp;key=<span class="subst">$&#123;t&#125;</span>`</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第三步：将结果转为字符串（通常是 hex 或 base64）</span></span><br><span class="line"><span class="keyword">const</span> i = encryptedResult.<span class="title function_">toString</span>();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p><strong>断点3：</strong><br><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_7.png" alt="在这里插入图片描述"></p>
+<p><strong>断点3：</strong><br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_7.png" alt="有道翻译js逆向·图7"></p>
 <p>很明显的 sign:func() 赋值，在外层函数断点比较好</p>
-<p><strong>断点4：</strong><br><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_8.png" alt="在这里插入图片描述"></p>
-<p><strong>断点5：</strong><br><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_9.png" alt="在这里插入图片描述"></p>
-<p><strong>断点6：</strong><br><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_10.png" alt="在这里插入图片描述"></p>
+<p><strong>断点4：</strong><br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_8.png" alt="有道翻译js逆向·图8"></p>
+<p><strong>断点5：</strong><br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_9.png" alt="有道翻译js逆向·图9"></p>
+<p><strong>断点6：</strong><br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_10.png" alt="有道翻译js逆向·图10"></p>
 <p>后面的操作也是类似的，都打上断点，10多个不算多（因为我们不知道sign处理逻辑，没办法）还有就是打了断点程序不一定会执行到这里（分支）</p>
-<p>再次出发翻译，跳过函数执行<br><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_11.png" alt="在这里插入图片描述"></p>
-<p>不断的调试，发现LLM翻译接口的封装请求逻辑<br><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_12.png" alt="在这里插入图片描述"><br>同时在网络面板查看其响应包，返回的不是翻译结果而是：</p>
+<p>再次出发翻译，跳过函数执行<br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_11.png" alt="有道翻译js逆向·图11"></p>
+<p>不断的调试，发现LLM翻译接口的封装请求逻辑<br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_12.png" alt="有道翻译js逆向·图12"><br>同时在网络面板查看其响应包，返回的不是翻译结果而是：</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;data&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span><span class="attr">&quot;translateDirection&quot;</span><span class="punctuation">:</span><span class="string">&quot;zh-CHS2en&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">,</span><span class="attr">&quot;code&quot;</span><span class="punctuation">:</span><span class="number">0</span><span class="punctuation">,</span><span class="attr">&quot;msg&quot;</span><span class="punctuation">:</span><span class="string">&quot;OK&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
 
-<p>不断调试，又发现了简单的 POST 请求封装，在之前的网络面版中，这请求是将需要翻译的内容发送给后端<br><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_13.png" alt="在这里插入图片描述"></p>
+<p>不断调试，又发现了简单的 POST 请求封装，在之前的网络面版中，这请求是将需要翻译的内容发送给后端<br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_13.png" alt="有道翻译js逆向·图13"></p>
 <p>这些断电只是让我大概清楚其调用逻辑，但是其sign产生逻辑还是没有没断出来。</p>
-<p>实际上sign的产生是很明显的<br><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_14.png" alt="在这里插入图片描述"><br>重新触发执行<br><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_15.png" alt="在这里插入图片描述"><br>此时打印w(1)<br><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_16.png" alt="在这里插入图片描述"><br>结果是32位，md5算法</p>
+<p>实际上sign的产生是很明显的<br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_14.png" alt="有道翻译js逆向·图14"><br>重新触发执行<br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_15.png" alt="有道翻译js逆向·图15"><br>此时打印w(1)<br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_16.png" alt="有道翻译js逆向·图16"><br>结果是32位，md5算法</p>
 <h3 id="0x02-hook脚本找逻辑"><a href="#0x02-hook脚本找逻辑" class="headerlink" title="0x02:hook脚本找逻辑"></a>0x02:hook脚本找逻辑</h3><p>使用hook脚本</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> my_parse = <span class="title class_">JSON</span>.<span class="property">parse</span>;</span><br><span class="line"><span class="title class_">JSON</span>.<span class="property">parse</span> = <span class="keyword">function</span> (<span class="params">params</span>) &#123;</span><br><span class="line">    <span class="comment">//这里可以添加其他逻辑比如 </span></span><br><span class="line">    <span class="keyword">debugger</span>;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;json_parse params:&quot;</span>,params);</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">my_parse</span>(params);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_17.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_17.png" alt="有道翻译js逆向·图17"></p>
 <p>触发后去查看堆栈</p>
-<p><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_18.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_18.png" alt="有道翻译js逆向·图18"></p>
 <p>似乎没有发现密文，所以hook到的这个接口返回的数据不要解密？真正的数据在其他接口返回并解密？到此位置吧</p>
 
 		  <div class="article-footer-copyright">
@@ -395,6 +385,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

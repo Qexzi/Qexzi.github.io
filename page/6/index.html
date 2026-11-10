@@ -7,7 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>第 6 页 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/page/6/index.html">
   <meta name="author" content="Qexzi">
+  
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -20,6 +23,8 @@
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -30,7 +35,6 @@
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -38,41 +42,15 @@
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -108,8 +86,44 @@ MathJax = {
   <div class="container">
   	<div class="content">
     	 <div class="page-header logo">
-  <h1>Attacking ...<span class="blink-fast">|</span></h1>
+  <h1><span id="typewriter-text">Attacking ...</span><span class="blink-fast" id="typewriter-caret">|</span></h1>
 </div>
+<script>
+(function () {
+  var txt = document.getElementById('typewriter-text');
+  var caret = document.getElementById('typewriter-caret');
+  if (!txt || !caret) return;
+  var FULL = txt.textContent;
+  if (!FULL) return;
+  // 系统开启“减弱动态效果”时不做打字动画，保持完整标题
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  txt.textContent = '';
+  var i = 0, dir = 1;
+  function tick() {
+    if (dir === 1) {
+      // 打字：光标实心
+      i++; txt.textContent = FULL.slice(0, i); caret.classList.remove('idle');
+      if (i >= FULL.length) {
+        // 打完短暂停留后进入空闲，光标硬闪
+        dir = 0;
+        setTimeout(function () {
+          caret.classList.add('idle');
+          setTimeout(function () { dir = -1; tick(); }, 2200);
+        }, 350);
+        return;
+      }
+      setTimeout(tick, 120);
+    } else {
+      // 删除：光标实心，速度加快
+      caret.classList.remove('idle');
+      i--; txt.textContent = FULL.slice(0, i);
+      if (i <= 0) { dir = 1; setTimeout(tick, 700); return; }
+      setTimeout(tick, 38);
+    }
+  }
+  setTimeout(tick, 400);
+})();
+</script>
 
 <div class="row page">
 
@@ -152,9 +166,9 @@ MathJax = {
 	
 	
 		<h2 id="0x00-基础知识"><a href="#0x00-基础知识" class="headerlink" title="0x00.基础知识"></a>0x00.基础知识</h2><p><strong>1. XIMIL是一种标记语言</strong><br>XML指可扩展标记语言(EXtensible Markup Language)把<strong>数据结构化</strong>后<strong>传输</strong>给对方让对方在结构化的数据中进行读取。</p>
-<p>假设你要告诉同事“张三的座机是010-8888，手机是1380000，邮箱是<a href="mailto:&#x7a;&#x68;&#97;&#110;&#x67;&#x40;&#120;&#x78;&#46;&#x63;&#x6f;&#109;">zhang@xx.com</a>”。</p>
+<p>假设你要告诉同事“张三的座机是010-8888，手机是1380000，邮箱是<a href="mailto:&#x7a;&#104;&#x61;&#110;&#x67;&#x40;&#x78;&#120;&#46;&#x63;&#111;&#109;">zhang@xx.com</a>”。</p>
 <ul>
-<li><p><strong>非结构化（纯文本）</strong>：你发微信：“张三电话010-8888，手机1380000，邮箱<a href="mailto:&#122;&#104;&#97;&#x6e;&#x67;&#64;&#x78;&#120;&#x2e;&#x63;&#x6f;&#x6d;">zhang@xx.com</a>”。<br>如果同事的电脑要提取“手机号”，得写复杂的模糊匹配（万一张三写了“Tel”或者“Mobile”呢？）。</p>
+<li><p><strong>非结构化（纯文本）</strong>：你发微信：“张三电话010-8888，手机1380000，邮箱<a href="mailto:&#122;&#104;&#x61;&#x6e;&#x67;&#64;&#x78;&#x78;&#46;&#99;&#111;&#x6d;">zhang@xx.com</a>”。<br>如果同事的电脑要提取“手机号”，得写复杂的模糊匹配（万一张三写了“Tel”或者“Mobile”呢？）。</p>
 </li>
 <li><p><strong>结构化（XML）</strong>：</p>
   <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">员工</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">姓名</span>&gt;</span>张三<span class="tag">&lt;/<span class="name">姓名</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">座机</span>&gt;</span>010-8888<span class="tag">&lt;/<span class="name">座机</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">手机</span>&gt;</span>1380000<span class="tag">&lt;/<span class="name">手机</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">邮箱</span>&gt;</span>zhang@xx.com<span class="tag">&lt;/<span class="name">邮箱</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">员工</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
@@ -197,10 +211,10 @@ MathJax = {
 		<h2 id="1-复现"><a href="#1-复现" class="headerlink" title="1. 复现"></a>1. 复现</h2><p>基础指令</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">redis-cli -h 10.62.60.167 -p 8589   (自建靶场的ip与端口，默认是6397)</span><br><span class="line"></span><br><span class="line">ping -&gt; pong 说明存在未授权</span><br><span class="line"></span><br><span class="line">keys *  打印所有的key</span><br><span class="line">get mykey 测试读取</span><br><span class="line"><span class="built_in">set</span> test1_key <span class="string">&quot;This is test1_key&quot;</span> 测试写入</span><br><span class="line"></span><br><span class="line">info server 服务信息</span><br><span class="line">CONFIG GET <span class="built_in">dir</span> 查询工作目录，RDB 文件、AOF 日志文件都会保存在这个目录下</span><br><span class="line">CONFIG GET dbfilename 查询RDB快照文件名称（内存快照）</span><br><span class="line">CONFIG GET rdbcompression 查询RDB快照文件是否开启压缩</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/Redis4-unacc/image_1.png" alt="在这里插入图片描述"><br>当前redis版本是4.0.14，是老版本了。 </p>
+<p><img src="/images/Redis4-unacc/image_1.png" alt="Redis4-unacc·图1"><br>当前redis版本是4.0.14，是老版本了。 </p>
 <p>那就先做拉取数据库文件，然后本地解析</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">BGSAVE 触发后台生成RDB快照，防止操作阻塞</span><br><span class="line">LASTSAVE 返回一个最新快照时间戳</span><br></pre></td></tr></table></figure>
-<p><img src="/images/Redis4-unacc/image_2.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/Redis4-unacc/image_2.png" alt="Redis4-unacc·图2"></p>
 <p>但是redis没有可供下载的地方，所以一般都是在线读信息，如果硬是要下载，就要寻在http文件下载端点，这个过程有点麻烦</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 备份原有配置（后面必须恢复！）</span></span><br><span class="line">CONFIG GET <span class="built_in">dir</span></span><br><span class="line">CONFIG GET dbfilename</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改保存目录（为下载端点目录）</span></span><br><span class="line">CONFIG SET <span class="built_in">dir</span> <span class="string">&quot;/var/www/html/....下载端点&quot;</span></span><br><span class="line">CONFIG SET dbfilename <span class="string">&quot;dump.rdb&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 触发快照，把rdb写入该目录</span></span><br><span class="line">BGSAVE</span><br></pre></td></tr></table></figure>
 
@@ -310,45 +324,45 @@ MathJax = {
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/指令/">指令<span>3</span></a></li>
+			<li><a href="/tags/Misc/">Misc<span>1</span></a></li>
 		
-			<li><a href="/tags/Pwn/">Pwn<span>3</span></a></li>
+			<li><a href="/tags/Java安全/">Java安全<span>1</span></a></li>
 		
-			<li><a href="/tags/内网/">内网<span>2</span></a></li>
+			<li><a href="/tags/Nginx/">Nginx<span>1</span></a></li>
 		
-			<li><a href="/tags/应急响应/">应急响应<span>1</span></a></li>
+			<li><a href="/tags/域渗透/">域渗透<span>2</span></a></li>
 		
-			<li><a href="/tags/Google-Hacking/">Google Hacking<span>1</span></a></li>
+			<li><a href="/tags/信息安全工程师/">信息安全工程师<span>1</span></a></li>
 		
-			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
+			<li><a href="/tags/CSS/">CSS<span>1</span></a></li>
+		
+			<li><a href="/tags/网络层/">网络层<span>1</span></a></li>
+		
+			<li><a href="/tags/同源策略/">同源策略<span>1</span></a></li>
+		
+			<li><a href="/tags/虚拟机网络/">虚拟机网络<span>1</span></a></li>
 		
 			<li><a href="/tags/软考/">软考<span>1</span></a></li>
 		
-			<li><a href="/tags/深度学习/">深度学习<span>2</span></a></li>
+			<li><a href="/tags/SQL注入/">SQL注入<span>1</span></a></li>
 		
-			<li><a href="/tags/物理层/">物理层<span>1</span></a></li>
+			<li><a href="/tags/Redis/">Redis<span>1</span></a></li>
 		
-			<li><a href="/tags/业务逻辑漏洞/">业务逻辑漏洞<span>1</span></a></li>
+			<li><a href="/tags/PHP/">PHP<span>1</span></a></li>
 		
-			<li><a href="/tags/代理/">代理<span>1</span></a></li>
+			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
 		
-			<li><a href="/tags/FOFA/">FOFA<span>1</span></a></li>
-		
-			<li><a href="/tags/Misc/">Misc<span>1</span></a></li>
-		
-			<li><a href="/tags/认证/">认证<span>2</span></a></li>
-		
-			<li><a href="/tags/神经网络基础/">神经网络基础<span>1</span></a></li>
-		
-			<li><a href="/tags/应用层/">应用层<span>1</span></a></li>
+			<li><a href="/tags/Docker/">Docker<span>1</span></a></li>
 		
 			<li><a href="/tags/计算机体系架构/">计算机体系架构<span>1</span></a></li>
 		
-			<li><a href="/tags/Jenkins/">Jenkins<span>1</span></a></li>
+			<li><a href="/tags/邮箱解析/">邮箱解析<span>1</span></a></li>
 		
-			<li><a href="/tags/windows/">windows<span>1</span></a></li>
+			<li><a href="/tags/数据链路层/">数据链路层<span>1</span></a></li>
 		
-			<li><a href="/tags/Java安全/">Java安全<span>1</span></a></li>
+			<li><a href="/tags/CSRF/">CSRF<span>1</span></a></li>
+		
+			<li><a href="/tags/HTML/">HTML<span>1</span></a></li>
 		
 		
 		   <li><a href="/tags">...<span>68</span></a></li>
@@ -409,6 +423,7 @@ MathJax = {
 	
 	
 </div> <!-- row-fluid -->
+
 	</div>
   </div>
   <div class="container-narrow">
@@ -433,6 +448,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

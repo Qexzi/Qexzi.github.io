@@ -7,24 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>js基础 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2025/12/06/js基础/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="1. 概述JavaScript是一种解释型、基于对象、动态类型的脚本语言，主要用于增强网页的交互性。它与Java没有关系，只是在诞生初期为了借助Java的热度而取了类似的名字。
-
-解释型：不需要编译，由浏览器直接解释执行
-基于对象：支持面向对象编程，但没有类的概念（ES6之前）
-动态类型：变量类型在运行时确定，无需声明类型
-
-JavaScript主要运行在客户端浏览器中，但随着Node.js的发展，现在也可以在服务器端运行。
-为什么需要JavaScript？
-交互性：创建动态网页效果（如表单验证、动画效果）
-异步通信：通过AJAX实现与服务器的异步通信
-操作DOM：动态修改网页内容和结构
-操作BOM：控制浏览器行为（如窗口、历史记录等）
-
-示例// 简单的JavaScript代码示例console.log(&amp;quot;Hello, JavaScript!&amp;quot;);// 表单验证示例function validateForm() &amp;#123;    const username = document.getElementById(&amp;#x27;username&amp;#x27;).value;    if (username.length &amp;lt; 5) &amp;#123;        alert(&amp;quot;用户名至少需要5个字符&amp;quot;);        return false;    &amp;#125;    return true;&amp;#125;
-
-2. 嵌入方法2.1 内嵌式"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -37,6 +23,8 @@ JavaScript主要运行在客户端浏览器中，但随着Node.js的发展，现
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -47,7 +35,6 @@ JavaScript主要运行在客户端浏览器中，但随着Node.js的发展，现
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -55,41 +42,39 @@ JavaScript主要运行在客户端浏览器中，但随着Node.js的发展，现
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
-
-
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
+  
+  <!-- MathJax（仅含公式的页面加载，由 scripts/mathjax-injector.js 检测标记） -->
+  <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    startup: {
+      pageReady: () => {
+        return MathJax.startup.defaultPageReady();
+      }
     }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+  };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"js基础","datePublished":"2025-12-06T04:00:00.000Z","dateModified":"2025-12-06T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2025/12/06/js基础/","description":"1. 概述JavaScript是一种解释型、基于对象、动态类型的脚本语言，主要用于增强网页的交互性。它与Java没有关系，只是在诞生初期为了借助Java的热度而取了类似的名字。 解释型：不需要编译，由浏览器直接解释执行 基于对象：支持面向对象编程，但没有类的概念（ES6之前） 动态类型：变量类型在运行时确定，无需声明类型 JavaScript主要运行在客户端浏览器中，但随着Node.js的发展，现"}</script>
+  
+
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -1032,6 +1017,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

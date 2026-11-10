@@ -7,16 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>Pwn的Docker环境配置与操作 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2025/09/10/Pwn专属Docker环境配置与操作/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="一、环境前置准备1. 验证现有Ubuntu镜像docker images
-
-预期结果：需包含 ubuntu:16.04、ubuntu:18.04、ubuntu:20.04 三个镜像
-
-2. 拉取缺失镜像（若验证不通过）# Ubuntu 16.04（对应libc-2.23，端口9997）docker pull ubuntu:16.04# Ubuntu 18.04（对应libc-2.27，端口9998）docker pull ubuntu:18.04# Ubuntu 20.04（对应libc-2.31，端口9999）docker pull ubuntu:20.04
-
-二、核心容器创建（3个Pwn专用环境）容器1：Ubuntu 16.04 + libc-2.23docker run -it --privileged \  -v ~/Pwn/myPwn:/root/myPwn \  # 本地仓库挂载到容器  -p 9997:9997 \                                  # 端口映射（主机:容器）  --name pwn-2.23 \                               # 容器名称  ubuntu:16.04 /bin/bash
-容器内首次启动需执行（安装调试工具）："> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -29,6 +23,8 @@
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -39,7 +35,6 @@
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -47,41 +42,39 @@
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
-
-
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
+  
+  <!-- MathJax（仅含公式的页面加载，由 scripts/mathjax-injector.js 检测标记） -->
+  <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    startup: {
+      pageReady: () => {
+        return MathJax.startup.defaultPageReady();
+      }
     }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+  };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Pwn的Docker环境配置与操作","datePublished":"2025-09-10T04:00:00.000Z","dateModified":"2025-09-10T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2025/09/10/Pwn专属Docker环境配置与操作/","description":"一、环境前置准备1. 验证现有Ubuntu镜像docker images 预期结果：需包含 ubuntu:16.04、ubuntu:18.04、ubuntu:20.04 三个镜像 2. 拉取缺失镜像（若验证不通过）# Ubuntu 16.04（对应libc-2.23，端口9997）docker pull ubuntu:16.04# Ubuntu 18.04（对应libc-2.27，端口9998）d"}</script>
+  
+
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -502,6 +495,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

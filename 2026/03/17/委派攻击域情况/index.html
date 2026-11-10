@@ -7,109 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>委派攻击域情况 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2026/03/17/委派攻击域情况/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="一、环境拓扑概览
-域名：REDTEAM（NetBIOS 名称），DNS 域名为 REDTEAM.com
-主域控制器：主机名 DC1，IP 192.168.18.10，同时作为主 DNS 服务器
-备份域控制器：主机名 DC2，IP 192.168.18.20，作为备用 DNS 服务器
-成员服务器1：12server1，IP 192.168.18.30，已加入域
-成员服务器2：12server2，IP 192.168.18.40，已加入域
-攻击机：Kali-2025，IP 192.168.18.100，模拟外部攻击者（为实验方便置于同一网络）
-网络模式：仅主机（Host-Only），所有虚拟机处于同一隔离网络 192.168.18.0/24
-
-
-二、Mermaid 域关系图
-
-三、核心表格：账号密码及登录关系
-
-
-账号标识
-密码
-账号类型
-登录格式示例
-认证位置
-可登录主机
-
-
-
-域管理员 Administrator
-QWEasd123
-域账号
-REDTEAM\Administrator 或 administrator@REDTEAM.com
-域控制器
-域内所有计算机（DC&amp;#x2F;成员服务器）
-
-
-域用户 test
-pass@123
-域账号
-REDTEAM\test 或 test@REDTEAM.com
-域控制器
-域内所有计算机
-
-
-域用户 hack
-pass@123
-域账号
-REDTEAM\hack 或 hack@REDTEAM.com
-域控制器
-域内所有计算机
-
-
-域用户 web
-123456
-域账号
-REDTEAM\web 或 web@REDTEAM.com
-域控制器
-域内所有计算机
-
-
-域用户 websec
-123456
-域账号
-REDTEAM\websec 或 websec@REDTEAM.com
-域控制器
-域内所有计算机
-
-
-DC1本地管理员
-（默认）
-本地账号
-.\Administrator 或 DC1\Administrator
-DC1本地SAM
-仅主域控制器 DC1
-
-
-DC2本地管理员
-（默认）
-本地账号
-.\Administrator 或 DC2\Administrator
-DC2本地SAM
-仅备份域控制器 DC2
-
-
-12server1本地管理员
-456789
-本地账号
-.\Administrator 或 12server1\Administrator
-12server1本地SAM
-仅成员服务器 12server1
-
-
-12server2本地管理员
-123456
-本地账号
-.\Administrator 或 12server2\Administrator
-12server2本地SAM
-仅成员服务器 12server2
-
-
-
-登录格式说明：  
-
-域登录：REDTEAM\用户名 或 用户名@REDTEAM.com  
-本地登录：.\用户名 或 计算机名\用户名"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -122,6 +23,8 @@ DC2本地SAM
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -132,7 +35,6 @@ DC2本地SAM
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -140,41 +42,39 @@ DC2本地SAM
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
-
-
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
+  
+  <!-- MathJax（仅含公式的页面加载，由 scripts/mathjax-injector.js 检测标记） -->
+  <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    startup: {
+      pageReady: () => {
+        return MathJax.startup.defaultPageReady();
+      }
     }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+  };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"委派攻击域情况","datePublished":"2026-03-17T04:00:00.000Z","dateModified":"2026-03-17T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2026/03/17/委派攻击域情况/","description":"一、环境拓扑概览 域名：REDTEAM（NetBIOS 名称），DNS 域名为 REDTEAM.com 主域控制器：主机名 DC1，IP 192.168.18.10，同时作为主 DNS 服务器 备份域控制器：主机名 DC2，IP 192.168.18.20，作为备用 DNS 服务器 成员服务器1：12server1，IP 192.168.18.30，已加入域 成员服务器2：12server2，IP"}</script>
+  
+
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -253,7 +153,7 @@ MathJax = {
 <li><strong>网络模式</strong>：仅主机（Host-Only），所有虚拟机处于同一隔离网络 <code>192.168.18.0/24</code></li>
 </ul>
 <hr>
-<h3 id="二、Mermaid-域关系图"><a href="#二、Mermaid-域关系图" class="headerlink" title="二、Mermaid 域关系图"></a>二、Mermaid 域关系图</h3><p><img src="/images/%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB%E5%9F%9F%E6%83%85%E5%86%B5/image_1.png" alt="在这里插入图片描述"></p>
+<h3 id="二、Mermaid-域关系图"><a href="#二、Mermaid-域关系图" class="headerlink" title="二、Mermaid 域关系图"></a>二、Mermaid 域关系图</h3><p><img src="/images/%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB%E5%9F%9F%E6%83%85%E5%86%B5/image_1.png" alt="委派攻击域情况·图1"></p>
 <hr>
 <h3 id="三、核心表格：账号密码及登录关系"><a href="#三、核心表格：账号密码及登录关系" class="headerlink" title="三、核心表格：账号密码及登录关系"></a>三、核心表格：账号密码及登录关系</h3><table>
 <thead>
@@ -429,7 +329,7 @@ MathJax = {
 </ul>
 <hr>
 <h2 id="七、Kerberos-票据权限层级"><a href="#七、Kerberos-票据权限层级" class="headerlink" title="七、Kerberos 票据权限层级"></a>七、Kerberos 票据权限层级</h2><p>在 Kerberos 认证体系及委派攻击中，攻击者捕获的票据类型决定了其所能模拟的用户权限和后续攻击价值。理解不同票据的权限层级，有助于判断攻击目标的优先级和利用方式。下图展示了 Kerberos 票据的权限金字塔：</p>
-<p><img src="/images/%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB%E5%9F%9F%E6%83%85%E5%86%B5/image_2.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB%E5%9F%9F%E6%83%85%E5%86%B5/image_2.png" alt="委派攻击域情况·图2"></p>
 <h3 id="7-1-各层级票据的价值说明"><a href="#7-1-各层级票据的价值说明" class="headerlink" title="7.1 各层级票据的价值说明"></a>7.1 各层级票据的价值说明</h3><table>
 <thead>
 <tr>
@@ -585,7 +485,7 @@ MathJax = {
 <p>在 Kerberos 环境中，用户的身份由票据（Ticket）证明。如果前端服务能够获得用户的 TGT（票据授予票据），那么它就可以代表用户向 Kerberos 域控制器申请任何服务的票据，从而实现“模拟用户”访问任意后端资源。<strong>非约束委派正是为了实现这种灵活的模拟能力而设计的</strong>：当一台服务器被标记为“信任此用户作为任何服务的委派”时，域控制器在向该服务器发放服务票据的同时，会附带将用户的 TGT 也发送给服务器。这样，服务器就可以在内存中缓存用户的 TGT，后续需要访问其他服务时直接用该 TGT 请求新票据。</p>
 <p>然而，这种设计存在明显安全缺陷：一旦服务器被攻陷，攻击者可以获取所有访问过该服务器的用户的 TGT，进而完全模拟这些用户，造成权限滥用的严重后果。正是由于非约束委派过于宽松，微软后来引入了约束委派和基于资源的约束委派，对委派的范围和目标进行限制，以降低风险。</p>
 <h3 id="9-2-工作原理"><a href="#9-2-工作原理" class="headerlink" title="9.2 工作原理"></a>9.2 工作原理</h3><p>下图展示了非约束委派在正常情况下的工作流程：</p>
-<p><img src="/images/%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB%E5%9F%9F%E6%83%85%E5%86%B5/image_3.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB%E5%9F%9F%E6%83%85%E5%86%B5/image_3.png" alt="委派攻击域情况·图3"></p>
 <p><strong>关键点说明</strong>：</p>
 <ul>
 <li><strong>步骤③</strong>：域控在返回服务票据（ST）时，额外附带了用户的<strong>TGT（票据授予票据）</strong>，这是非约束委派的核心特征。</li>
@@ -594,7 +494,7 @@ MathJax = {
 </ul>
 <p>这种机制虽然方便了多层服务调用，但也带来了严重的安全风险：一旦服务A被攻陷，攻击者即可获取所有访问过该服务的用户的 TGT，进而模拟这些用户访问域内任何资源。</p>
 <h3 id="9-3-攻击流程"><a href="#9-3-攻击流程" class="headerlink" title="9.3 攻击流程"></a>9.3 攻击流程</h3><p>在域环境中，如果一台服务器（如 <code>12server2</code>）被配置了<strong>非约束委派</strong>，攻击者控制该服务器后，可诱导域管理员访问它，从而获取管理员的 TGT 票据，进而模拟管理员访问域内任何服务。下图展示了基于当前环境的非约束委派攻击流程：</p>
-<p><img src="/images/%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB%E5%9F%9F%E6%83%85%E5%86%B5/image_4.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB%E5%9F%9F%E6%83%85%E5%86%B5/image_4.png" alt="委派攻击域情况·图4"></p>
 <p><strong>攻击步骤详细说明</strong>：</p>
 <ol>
 <li><strong>触发条件</strong>：域管理员（<code>REDTEAM\Administrator</code>）使用其账号登录（如通过 WinRM、RDP）到一台配置了<strong>非约束委派</strong>的服务器（<code>12server2</code>）。</li>
@@ -666,7 +566,7 @@ MathJax = {
 <h4 id="9-5-2-原理概述"><a href="#9-5-2-原理概述" class="headerlink" title="9.5.2 原理概述"></a>9.5.2 原理概述</h4><p>打印机漏洞（SpoolSample，也称为“打印机Bug”）利用了 Windows 打印系统远程协议（MS-RPRN）的一个功能：任何经过身份验证的用户都可以远程强制另一台机器（通常为域控制器）向任意第三台机器发起 Kerberos 或 NTLM 认证。结合非约束委派，如果攻击者控制了一台开启了非约束委派的主机（如 <code>12server2</code>），并强制域控制器（DC1）向该主机进行认证，那么域控制器在认证过程中会将自身的 TGT 发送给 <code>12server2</code>，并缓存于其 LSASS 内存中。攻击者随后可导出该 TGT，进而模拟域控制器机器账户。</p>
 <p>虽然机器账户的权限通常低于域管理员，但在特定条件下（例如域控制器机器账户默认具有 DCSync 权限），攻击者可利用该 TGT 导出域内所有用户哈希，从而实现与域管理员等效的控制。</p>
 <h4 id="9-5-3-攻击流程"><a href="#9-5-3-攻击流程" class="headerlink" title="9.5.3 攻击流程"></a>9.5.3 攻击流程</h4><p>下图展示了基于当前环境的非约束委派 + Spooler 攻击流程：</p>
-<p><img src="/images/%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB%E5%9F%9F%E6%83%85%E5%86%B5/image_5.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB%E5%9F%9F%E6%83%85%E5%86%B5/image_5.png" alt="委派攻击域情况·图5"></p>
 <h4 id="9-5-4-攻击步骤详细说明"><a href="#9-5-4-攻击步骤详细说明" class="headerlink" title="9.5.4 攻击步骤详细说明"></a>9.5.4 攻击步骤详细说明</h4><ol>
 <li><strong>准备阶段</strong>：确保所有前置条件已满足。攻击者已在 <code>12server2</code> 上获得本地管理员权限，并验证其非约束委派属性已开启。同时，确认域控 DC1 的 Print Spooler 服务正在运行（默认状态）。</li>
 <li><strong>触发漏洞</strong>：攻击者在某台域内机器（可以是 <code>12server2</code> 自身，也可以是其他如 <code>12server1</code> 或通过已控主机远程执行）上运行 SpoolSample 漏洞利用程序，强制域控制器 DC1 向攻击者控制的主机 <code>12server2</code> 发起认证。常用工具包括 <code>SpoolSample.exe</code>（Windows）或 <code>printerbug.py</code>（Impacket）。命令示例：<ul>
@@ -721,7 +621,7 @@ MathJax = {
 </ol>
 <p>关键点是：服务 A <strong>从未获得用户的 TGT</strong>，只能获得用于特定目标服务的 ST2。这大大限制了攻击者滥用服务账号的后果。</p>
 <p>下图展示了约束委派的正常流程：</p>
-<p><img src="/images/%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB%E5%9F%9F%E6%83%85%E5%86%B5/image_6.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB%E5%9F%9F%E6%83%85%E5%86%B5/image_6.png" alt="委派攻击域情况·图6"></p>
 <h3 id="10-3-关于-ST1-与-ST2-的说明"><a href="#10-3-关于-ST1-与-ST2-的说明" class="headerlink" title="10.3 关于 ST1 与 ST2 的说明"></a>10.3 关于 ST1 与 ST2 的说明</h3><p>在约束委派的描述中，我们使用了 <strong>ST1</strong> 和 <strong>ST2</strong> 来区分两个不同阶段获得的票据，它们本质上都是服务票据（TGS），但用途和属性有所区别：</p>
 <table>
 <thead>
@@ -772,7 +672,7 @@ MathJax = {
 </ol>
 <p>该攻击无需高权限用户实际登录，只要攻击者有服务账号的凭据，就能模拟任意用户访问被允许的后端服务。</p>
 <p>下图展示了约束委派攻击流程：</p>
-<p><img src="/images/%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB%E5%9F%9F%E6%83%85%E5%86%B5/image_7.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB%E5%9F%9F%E6%83%85%E5%86%B5/image_7.png" alt="委派攻击域情况·图7"></p>
 <h4 id="攻击步骤详细说明"><a href="#攻击步骤详细说明" class="headerlink" title="攻击步骤详细说明"></a>攻击步骤详细说明</h4><ol>
 <li><strong>获取服务账号凭据</strong>：攻击者通过密码猜测、内存读取、域控导出等方式获得配置了约束委派的服务账号（例如 <code>websec</code>）的明文密码或 NTLM 哈希。在环境中，<code>websec</code> 用户已设置约束委派，密码为 <code>123456</code>，并已注册 SPN：<code>cifs/12server2.redteam.club</code>。假设其委派配置允许委派给 <code>cifs/DC1.redteam.club</code>（即域控的文件共享服务）。</li>
 <li><strong>请求服务账号 TGT</strong>：使用工具请求该服务账号的 TGT。例如用 <code>kekeo</code>：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tgt::ask /user:websec /domain:redteam.club /password:123456 /ticket:websec.kirbi</span><br></pre></td></tr></table></figure>
@@ -838,7 +738,7 @@ MathJax = {
 
 <h4 id="11-3-3-复现1：利用普通域账号提升到域本地管理员（攻击域控）"><a href="#11-3-3-复现1：利用普通域账号提升到域本地管理员（攻击域控）" class="headerlink" title="11.3.3 复现1：利用普通域账号提升到域本地管理员（攻击域控）"></a>11.3.3 复现1：利用普通域账号提升到域本地管理员（攻击域控）</h4><p>该复现结合打印机漏洞和 NTLM 中继，通过强制域控回连，修改域控的 RBCD 属性，进而获取域控权限。中继主机为攻击机（<code>192.168.18.100</code>）。</p>
 <p><strong>攻击流程图：</strong></p>
-<p><img src="/images/%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB%E5%9F%9F%E6%83%85%E5%86%B5/image_8.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB%E5%9F%9F%E6%83%85%E5%86%B5/image_8.png" alt="委派攻击域情况·图8"></p>
 <p><strong>步骤详细说明</strong>（所有命令在攻击机 Kali 上执行，假设 Impacket 脚本在 <code>~/impacket/examples/</code>）：</p>
 <ol>
 <li><p><strong>添加机器账号</strong>：使用 <code>addcomputer.py</code> 创建机器账号 <code>hack2026$</code>，密码 <code>pass@123</code>。  </p>
@@ -863,7 +763,7 @@ MathJax = {
 </ol>
 <h4 id="11-3-4-复现2：资源委派攻击其他域主机获取-system-权限"><a href="#11-3-4-复现2：资源委派攻击其他域主机获取-system-权限" class="headerlink" title="11.3.4 复现2：资源委派攻击其他域主机获取 system 权限"></a>11.3.4 复现2：资源委派攻击其他域主机获取 system 权限</h4><p>该复现针对普通成员服务器（如 <code>12server2</code>），通过查询创建者 SID，利用创建机器的用户权限配置 RBCD，进而获取该主机的 system 权限。</p>
 <p><strong>攻击流程图：</strong></p>
-<p><img src="/images/%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB%E5%9F%9F%E6%83%85%E5%86%B5/image_9.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB%E5%9F%9F%E6%83%85%E5%86%B5/image_9.png" alt="委派攻击域情况·图9"></p>
 <p><strong>步骤详细说明</strong>：</p>
 <ol>
 <li><p><strong>查询计算机创建者</strong>：使用工具（如 <code>ConsoleApp9.exe</code>）查询域内计算机的 <code>mS-DS-CreatorSID</code>，找到目标主机 <code>12server2</code> 的创建者为 <code>hack</code>。  </p>
@@ -1129,6 +1029,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

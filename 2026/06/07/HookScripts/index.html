@@ -7,18 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>HookScripts | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2026/06/07/HookScripts/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="0x00:为什么可以hook？Hook 之所以能生效，是 JavaScript 语言特性与浏览器架构共同决定的。
-浏览器提供了可拦截的 API 层
-浏览器将底层能力（网络请求、DOM 操作、Cookie 读写等）通过 Web API 暴露给 JS。这些 API 在底层由 C++ 实现，但在 JS 层面，它们以对象属性和方法的形式挂在 window、document、XMLHttpRequest.prototype 等全局对象上。关键在于：浏览器没有对这些 JS 层的绑定做只读保护，所以我们可以在 JS 层替换它们。
-同时，浏览器是单线程执行模型，我们的 hook 脚本和目标页面代码运行在同一个 JS 上下文中，共享同一个全局作用域和对象引用。这意味着你修改了 JSON.parse，目标代码调用 JSON.parse 时就会走进你注入的函数。
-在此基础上，JS 的三个语言特性让 hook 变得简单：
-1. 函数是第一类对象（First-class Object）
-在 JS 中，函数和普通对象一样可以被赋值、传递、覆盖。浏览器内置的 API（如 document.cookie 的 setter、XMLHttpRequest.prototype.open）本质上也是挂载在对象上的属性，所以可以直接被替换：
-// 保存原函数引用var original = JSON.parse;// 用自己的函数覆盖JSON.parse = function(params) &amp;#123;    console.log(&amp;quot;拦截到:&amp;quot;, params);    return original(params); // 调用原函数&amp;#125;;
-
-这就是最基础的 hook —— 保存原引用，替换为新函数，新函数内部再调用原引用。"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -31,6 +23,8 @@
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -41,7 +35,6 @@
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -49,41 +42,39 @@
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
-
-
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
+  
+  <!-- MathJax（仅含公式的页面加载，由 scripts/mathjax-injector.js 检测标记） -->
+  <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    startup: {
+      pageReady: () => {
+        return MathJax.startup.defaultPageReady();
+      }
     }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+  };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"HookScripts","datePublished":"2026-06-07T04:00:00.000Z","dateModified":"2026-06-07T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2026/06/07/HookScripts/","description":"0x00:为什么可以hook？Hook 之所以能生效，是 JavaScript 语言特性与浏览器架构共同决定的。 浏览器提供了可拦截的 API 层 浏览器将底层能力（网络请求、DOM 操作、Cookie 读写等）通过 Web API 暴露给 JS。这些 API 在底层由 C++ 实现，但在 JS 层面，它们以对象属性和方法的形式挂在 window、document、XMLHttpRequest.p"}</script>
+  
+
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -441,6 +432,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

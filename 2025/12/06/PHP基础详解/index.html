@@ -7,30 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>PHP基础详解 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2025/12/06/PHP基础详解/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="1. PHP简述详细解释PHP（Hypertext Preprocessor，超文本预处理器）是一种通用开源脚本语言，主要用于Web开发。它最初被设计为服务器端脚本语言，现在已发展成为一种通用编程语言。
-核心特点：
-开源免费：PHP是完全开源的，可以自由使用和修改
-跨平台：可以在Windows、Linux、macOS等操作系统上运行
-嵌入HTML：PHP代码可以嵌入到HTML中，便于Web开发
-服务器端执行：PHP代码在服务器上执行，结果以纯HTML形式返回给浏览器
-丰富的库：PHP拥有超过1000个内置函数，支持各种功能
-
-PHP在Web开发中的角色：
-生成动态网页内容
-处理表单数据
-与数据库交互
-创建会话和Cookie
-生成图像和PDF
-与其他系统通信
-
-PHP与Java&amp;#x2F;JavaScript的区别：
-PHP是服务器端语言，Java可以是客户端也可以是服务器端
-Java与JavaScript没有关系，只是名字相似
-PHP执行在服务器上，JavaScript执行在客户端
-
-示例"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -43,6 +23,8 @@ PHP执行在服务器上，JavaScript执行在客户端
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -53,7 +35,6 @@ PHP执行在服务器上，JavaScript执行在客户端
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -61,41 +42,39 @@ PHP执行在服务器上，JavaScript执行在客户端
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
-
-
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
+  
+  <!-- MathJax（仅含公式的页面加载，由 scripts/mathjax-injector.js 检测标记） -->
+  <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    startup: {
+      pageReady: () => {
+        return MathJax.startup.defaultPageReady();
+      }
     }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+  };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"PHP基础详解","datePublished":"2025-12-06T04:00:00.000Z","dateModified":"2025-12-06T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2025/12/06/PHP基础详解/","description":"1. PHP简述详细解释PHP（Hypertext Preprocessor，超文本预处理器）是一种通用开源脚本语言，主要用于Web开发。它最初被设计为服务器端脚本语言，现在已发展成为一种通用编程语言。 核心特点： 开源免费：PHP是完全开源的，可以自由使用和修改 跨平台：可以在Windows、Linux、macOS等操作系统上运行 嵌入HTML：PHP代码可以嵌入到HTML中，便于Web开发 服"}</script>
+  
+
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -723,6 +702,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

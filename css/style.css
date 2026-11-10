@@ -246,23 +246,23 @@ a {
     transition: color 0.15s ease, border-color 0.15s ease;
 }
 
-/* 正文链接绿色 — 排除按钮 */
-.post a:not(.btn),
-.page a:not(.btn) {
+/* 正文链接绿色 — 排除按钮/目录链接/标题锚点（目录有独立层级配色） */
+.post a:not(.btn):not(.toc-article-link):not(.heading-anchor),
+.page a:not(.btn):not(.toc-article-link):not(.heading-anchor) {
     color: #2bbc8a !important;
     border-bottom: 1px solid rgba(43, 188, 138, 0.3);
     padding-bottom: 1px;
 }
 
-.post a:not(.btn):hover,
-.page a:not(.btn):hover {
+.post a:not(.btn):not(.toc-article-link):not(.heading-anchor):hover,
+.page a:not(.btn):not(.toc-article-link):not(.heading-anchor):hover {
     color: #2bbc8a !important;
     border-bottom-color: #2bbc8a;
     background: none !important;
 }
 
-.post a:not(.btn):focus,
-.page a:not(.btn):focus {
+.post a:not(.btn):not(.toc-article-link):not(.heading-anchor):focus,
+.page a:not(.btn):not(.toc-article-link):not(.heading-anchor):focus {
     color: #2bbc8a !important;
     outline: 2px solid rgba(43, 188, 138, 0.5);
     outline-offset: 2px;
@@ -270,28 +270,33 @@ a {
     background: none !important;
 }
 
-.post a:not(.btn):active,
-.page a:not(.btn):active {
+.post a:not(.btn):not(.toc-article-link):not(.heading-anchor):active,
+.page a:not(.btn):not(.toc-article-link):not(.heading-anchor):active {
     color: #2bbc8a !important;
     background: none !important;
 }
 
-.post a:not(.btn):visited,
-.page a:not(.btn):visited {
+.post a:not(.btn):not(.toc-article-link):not(.heading-anchor):visited,
+.page a:not(.btn):not(.toc-article-link):not(.heading-anchor):visited {
     color: #2bbc8a !important;
 }
 
-/* 标签云覆盖回黑色 */
+/* 标签云覆盖回黑色（高特异性版本对齐全局绿链规则，否则 !important 打平后按源顺序会输） */
 .tag_box a,
 .post .tag_box a,
-.page .tag_box a {
+.page .tag_box a,
+.post .tag_box a:not(.btn):not(.toc-article-link):not(.heading-anchor),
+.page .tag_box a:not(.btn):not(.toc-article-link):not(.heading-anchor) {
     color: #000 !important;
     border-bottom: none !important;
     padding-bottom: 0 !important;
 }
 
-.tag_box a:hover {
+.tag_box a:hover,
+.post .tag_box a:not(.btn):not(.toc-article-link):not(.heading-anchor):hover,
+.page .tag_box a:not(.btn):not(.toc-article-link):not(.heading-anchor):hover {
     color: #fff !important;
+    background-color: #397bdd !important;
 }
 
 /* 按钮内文字黑色 — 所有 btn 变体 */
@@ -449,14 +454,6 @@ video {
     color: #fff;
     display: block;
     margin-bottom: 1.2em
-}
-
-.blink-fast {
-    animation-duration: .5s;
-    animation-name: blink;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    animation-timing-function: ease-in-out
 }
 
 .blink-slow {
@@ -714,10 +711,6 @@ h2 {
     }
 }
 
-.toc .toc-title {
-    font-size: 125%
-}
-
 /* ==============================================
    TOC — Apple Notes 风格，清晰层次
    ============================================== */
@@ -751,15 +744,17 @@ h2 {
 }
 
 /* 链接基础 */
-.toc-article-link {
+/* 提高特异性：避免被主题全局 a 色规则压过 */
+.toc .toc-article a.toc-article-link {
     display: block;
+    position: relative;
     text-decoration: none;
     border: none !important;
     border-bottom: none !important;
     border-radius: 6px;
     transition: all 0.15s ease;
     line-height: 1.5;
-    padding: 5px 10px;
+    padding: 5px 26px 5px 10px;
     margin: 1px 0;
     color: #a1a1a6;
     font-size: 13px;
@@ -778,33 +773,130 @@ h2 {
     background: rgba(43, 188, 138, 0.12);
 }
 
-/* h1 — 最大最亮 */
-.toc-level-1 > .toc-article-link {
+/* 层级视觉：h2 最大最亮，逐级递减（注意实际类名是 toc-article-level-N） */
+.toc .toc-article .toc-article-level-1 > .toc-article-link {
     font-size: 14px;
     font-weight: 700;
     color: #f5f5f7;
-    padding: 7px 10px;
+    padding-top: 7px;
+    padding-bottom: 7px;
 }
 
-/* h2 */
-.toc-level-2 > .toc-article-link {
+/* h3 */
+.toc .toc-article .toc-article-level-2 > .toc-article-link {
     font-size: 13px;
     font-weight: 600;
     color: #c7c7cc;
 }
 
-/* h3 */
-.toc-level-3 > .toc-article-link {
+/* h4 */
+.toc .toc-article .toc-article-level-3 > .toc-article-link {
     font-size: 12.5px;
     font-weight: 500;
     color: #a1a1a6;
 }
 
-/* h4 */
-.toc-level-4 > .toc-article-link {
+/* h5 及更深 */
+.toc .toc-article .toc-article-level-4 > .toc-article-link,
+.toc .toc-article .toc-article-level-5 > .toc-article-link,
+.toc .toc-article .toc-article-level-6 > .toc-article-link {
     font-size: 12px;
     font-weight: 400;
     color: #8e8e93;
+}
+
+/* ---------- 折叠交互 ---------- */
+/* 折叠箭头（绝对定位于条目右侧） */
+.toc .toc-toggle {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    margin-top: -9px;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    font-size: 11px;
+    color: #8e8e93;
+    cursor: pointer;
+    border-radius: 4px;
+    user-select: none;
+    transform: rotate(0deg);
+    transition: transform 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+
+.toc .toc-toggle:hover {
+    color: #2bbc8a;
+    background: rgba(43, 188, 138, 0.12);
+}
+
+/* 展开时箭头转向下方 */
+.toc li.toc-article-item:not(.toc-collapsed) > .toc-article-link > .toc-toggle {
+    transform: rotate(90deg);
+}
+
+/* 收起的分支隐藏子列表 */
+.toc li.toc-collapsed > ol.toc-article-child {
+    display: none;
+}
+
+/* Contents 标题行的"展开全部"按钮 */
+.toc .toc-toggle-all {
+    float: right;
+    font-size: 11px;
+    font-weight: 400;
+    color: #8e8e93;
+    text-transform: none;
+    letter-spacing: 0;
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+
+.toc .toc-toggle-all:hover {
+    color: #2bbc8a;
+}
+
+/* ---------- 阅读体验 ---------- */
+/* 顶部阅读进度条 */
+#reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0;
+    background: linear-gradient(90deg, #2bbc8a, #fefe54);
+    z-index: 2000;
+    pointer-events: none;
+}
+
+/* 标题悬停锚点：hover 显示 #，点击复制本节链接 */
+.mypage h2,
+.mypage h3,
+.mypage h4,
+.mypage h5 {
+    position: relative;
+}
+
+.mypage .heading-anchor {
+    opacity: 0;
+    margin-left: 8px;
+    color: #2bbc8a;
+    font-weight: 400;
+    text-decoration: none;
+    border: none;
+    transition: opacity 0.15s ease;
+}
+
+.mypage h2:hover .heading-anchor,
+.mypage h3:hover .heading-anchor,
+.mypage h4:hover .heading-anchor,
+.mypage h5:hover .heading-anchor {
+    opacity: 0.85;
+}
+
+.mypage .heading-anchor:hover {
+    opacity: 1;
+    text-decoration: none;
 }
 
 /* h5 */
@@ -1238,10 +1330,33 @@ abbr[title] {
     text-shadow: none;
 }
 
-/* 光标颜色改为绿色 */
+/* 光标颜色改为绿色；打字机模式：打字/删除时实心，空闲等待时硬闪 */
 .logo .blink-fast {
     -webkit-text-fill-color: #2bbc8a;
     text-shadow: 0 0 8px rgba(43, 188, 138, 0.6);
+}
+
+.logo .blink-fast.idle {
+    animation: caret-blink 1s step-end infinite;
+}
+
+@keyframes caret-blink {
+
+    0%,
+    100% {
+        opacity: 1
+    }
+
+    50% {
+        opacity: 0
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .logo .blink-fast,
+    .logo .blink-fast.idle {
+        animation: none
+    }
 }
 
 .fa-heart:before {

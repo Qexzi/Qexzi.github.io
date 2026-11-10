@@ -7,25 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>文件上传绕过 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2026/08/17/文件上传绕过/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="引言本文参考文章：https://mp.weixin.qq.com/s/b3tj-8yBXyZ69xr8RzVVsg在此基础基础上补充自己的理解，以及可以尝试的方法以及思路。
-服务端的检测与绕过方法
-浏览器检测：直接关闭浏览器 JavaScript 检查、或者上传正常文件抓包即可。
-后端服务器校验，常见检测点与绕过方向：
-后缀名检测绕过
-MIME 类型检测与绕过
-文件内容检测与绕过
-00 截断绕过
-条件竞争检测与绕过
-
-
-
-MIME 编码参考：https://mp.weixin.qq.com/s/COLw_Edxst-lZsi8MhL6kA
-（注意，这里说的 MIME 编码可不是将 Content-Type 修改为 image&amp;#x2F;png 等类似的方式进行绕过的，这种方式修改的是 MIME type。）
-Multipurpose Internet Mail Extensions (MIME)，通常也称为多用途互联网邮件扩展，从字面意思可以看出，它的出现是为了扩展了电子邮件的格式，支持 ASCII 字符集以外二进制数据（例如图像、音频、视频或其他文件）转换为文本数据，以便能够安全地传输和处理。从 commons-fileupload 库版本 1.3 开始，FileUpload 可以处理 RFC 2047 编码的标头值。
-取 &amp;#x3D; 后的两个两个十六进制数字，并将其转换为 ascii 码值对应的字符。所以 MIME 编码的格式为：
-=?charset?encoding?encoded text?="> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -38,6 +23,8 @@ Multipurpose Internet Mail Extensions (MIME)，通常也称为多用途互联网
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -48,7 +35,6 @@ Multipurpose Internet Mail Extensions (MIME)，通常也称为多用途互联网
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -56,41 +42,18 @@ Multipurpose Internet Mail Extensions (MIME)，通常也称为多用途互联网
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"文件上传绕过","datePublished":"2026-08-17T04:00:00.000Z","dateModified":"2026-08-17T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2026/08/17/文件上传绕过/","description":"引言本文参考文章：https://mp.weixin.qq.com/s/b3tj-8yBXyZ69xr8RzVVsg在此基础基础上补充自己的理解，以及可以尝试的方法以及思路。 服务端的检测与绕过方法 浏览器检测：直接关闭浏览器 JavaScript 检查、或者上传正常文件抓包即可。 后端服务器校验，常见检测点与绕过方向： 后缀名检测绕过 MIME 类型检测与绕过 文件内容检测与绕过 00 截断绕过"}</script>
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -484,6 +447,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

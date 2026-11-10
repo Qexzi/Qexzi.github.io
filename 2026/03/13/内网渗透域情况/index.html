@@ -7,92 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>内网渗透域情况 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2026/03/13/内网渗透域情况/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="一、环境拓扑概览
-域名：HACKING（NetBIOS 名称），DNS 域名为 hacking.com
-域控制器：DC_2012_R2（Windows Server 2012 R2，IP：192.168.64.10）
-成员服务器：winserv12R2（已加入域，IP：192.168.64.20）
-加入域的 Windows 10 主机：win10（已加入域，IP：192.168.64.30）
-攻击机：Kali-2025（IP：192.168.64.100，模拟外部攻击者，为实验方便置于同一网络）
-网络模式：仅主机（Host-Only），所有虚拟机处于同一隔离网络（192.168.64.0&amp;#x2F;24）
-
-
-二、Mermaid 域关系图
-
-三、核心表格：账号密码及登录关系
-
-
-账号标识
-密码
-账号类型
-登录格式示例
-认证位置
-可登录主机
-
-
-
-域管理员 Administrator
-默认密码
-域账号
-HACKING\Administrator 或 administrator@hacking.com
-域控制器
-域内所有计算机（DC&amp;#x2F;成员服务器&amp;#x2F;Win10）
-
-
-域用户 user1
-qwER1234.
-域账号
-HACKING\user1 或 user1@hacking.com
-域控制器
-域内所有计算机
-
-
-域用户 test
-qwER1234.
-域账号
-HACKING\test 或 test@hacking.com
-域控制器
-域内所有计算机
-
-
-DC本地管理员
-默认密码
-本地账号
-.\Administrator 或 DC_2012_R2\Administrator
-DC本地SAM
-仅域控制器 DC_2012_R2
-
-
-成员服务器本地管理员
-默认密码
-本地账号
-.\Administrator 或 winserv12R2\Administrator
-成员服务器本地SAM
-仅成员服务器 winserv12R2
-
-
-成员服务器本地用户 kdy1
-qwER1234.
-本地账号
-.\kdy1 或 winserv12R2\kdy1
-成员服务器本地SAM
-仅成员服务器 winserv12R2
-
-
-Win10本地管理员
-默认密码
-本地账号
-.\Administrator 或 win10\Administrator
-Win10本地SAM
-仅 Win10 主机
-
-
-
-登录格式说明：
-
-域登录：HACKING\用户名 或 用户名@hacking.com
-本地登录：.\用户名 或 计算机名\用户名"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -105,6 +23,8 @@ Win10本地SAM
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -115,7 +35,6 @@ Win10本地SAM
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -123,41 +42,18 @@ Win10本地SAM
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"内网渗透域情况","datePublished":"2026-03-13T04:00:00.000Z","dateModified":"2026-03-13T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2026/03/13/内网渗透域情况/","description":"一、环境拓扑概览 域名：HACKING（NetBIOS 名称），DNS 域名为 hacking.com 域控制器：DC_2012_R2（Windows Server 2012 R2，IP：192.168.64.10） 成员服务器：winserv12R2（已加入域，IP：192.168.64.20） 加入域的 Windows 10 主机：win10（已加入域，IP：192.168.64.30） 攻击"}</script>
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -235,7 +131,7 @@ MathJax = {
 <li><strong>网络模式</strong>：仅主机（Host-Only），所有虚拟机处于同一隔离网络（192.168.64.0&#x2F;24）</li>
 </ul>
 <hr>
-<h3 id="二、Mermaid-域关系图"><a href="#二、Mermaid-域关系图" class="headerlink" title="二、Mermaid 域关系图"></a>二、Mermaid 域关系图</h3><p><img src="/images/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E5%9F%9F%E6%83%85%E5%86%B5/image_1.png" alt="在这里插入图片描述"></p>
+<h3 id="二、Mermaid-域关系图"><a href="#二、Mermaid-域关系图" class="headerlink" title="二、Mermaid 域关系图"></a>二、Mermaid 域关系图</h3><p><img src="/images/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E5%9F%9F%E6%83%85%E5%86%B5/image_1.png" alt="内网渗透域情况·图1"></p>
 <hr>
 <h3 id="三、核心表格：账号密码及登录关系"><a href="#三、核心表格：账号密码及登录关系" class="headerlink" title="三、核心表格：账号密码及登录关系"></a>三、核心表格：账号密码及登录关系</h3><table>
 <thead>
@@ -446,8 +342,8 @@ MathJax = {
 <td>Active Directory的物理存储文件，包含所有对象及哈希。</td>
 </tr>
 </tbody></table>
-<h4 id="8-2-域登录认证详解：Kerberos-主流程与-NTLM-回退机制"><a href="#8-2-域登录认证详解：Kerberos-主流程与-NTLM-回退机制" class="headerlink" title="8.2 域登录认证详解：Kerberos 主流程与 NTLM 回退机制"></a>8.2 域登录认证详解：Kerberos 主流程与 NTLM 回退机制</h4><p><img src="/images/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E5%9F%9F%E6%83%85%E5%86%B5/image_2.png" alt="在这里插入图片描述"></p>
-<p><img src="/images/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E5%9F%9F%E6%83%85%E5%86%B5/image_3.png" alt="在这里插入图片描述"></p>
+<h4 id="8-2-域登录认证详解：Kerberos-主流程与-NTLM-回退机制"><a href="#8-2-域登录认证详解：Kerberos-主流程与-NTLM-回退机制" class="headerlink" title="8.2 域登录认证详解：Kerberos 主流程与 NTLM 回退机制"></a>8.2 域登录认证详解：Kerberos 主流程与 NTLM 回退机制</h4><p><img loading="lazy" decoding="async" src="/images/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E5%9F%9F%E6%83%85%E5%86%B5/image_2.png" alt="内网渗透域情况·图2"></p>
+<p><img loading="lazy" decoding="async" src="/images/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E5%9F%9F%E6%83%85%E5%86%B5/image_3.png" alt="内网渗透域情况·图3"></p>
 <h4 id="8-4-PTH攻击实操示例（针对当前环境）"><a href="#8-4-PTH攻击实操示例（针对当前环境）" class="headerlink" title="8.4 PTH攻击实操示例（针对当前环境）"></a>8.4 PTH攻击实操示例（针对当前环境）</h4><p>假设已通过Web漏洞获得<code>winserv12R2</code>的SYSTEM权限：</p>
 <ol>
 <li><p><strong>在winserv12R2上运行mimikatz抓取域用户<code>user1</code>的哈希</strong>：</p>
@@ -681,6 +577,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

@@ -7,63 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>Git 常用操作手册 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2024/12/10/git/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="基础命令速查
-
-
-命令
-功能
-
-
-
-git init
-初始化仓库
-
-
-git add .
-添加所有修改到暂存区
-
-
-git commit -m &amp;quot;msg&amp;quot;
-提交到本地仓库
-
-
-git status
-查看状态
-
-
-git log --oneline
-简洁查看提交历史
-
-
-git branch
-查看本地分支
-
-
-git branch -a
-查看所有分支（含远程）
-
-
-git checkout -b &amp;lt;branch&amp;gt;
-创建并切换分支
-
-
-git branch -d &amp;lt;branch&amp;gt;
-删除已合并分支
-
-
-git branch -D &amp;lt;branch&amp;gt;
-强制删除分支
-
-
-
-远程仓库操作# 添加远程仓库git remote add origin &amp;lt;仓库地址&amp;gt;# 查看远程仓库git remote -v# 修改远程地址git remote set-url origin &amp;lt;新地址&amp;gt;# 克隆仓库git clone &amp;lt;仓库地址&amp;gt;# 克隆指定分支git clone -b &amp;lt;分支名&amp;gt; --single-branch &amp;lt;仓库地址&amp;gt;
-
-
-分支操作推送与拉取# 首次推送并关联远程git push -u origin &amp;lt;分支名&amp;gt;# 后续推送git push origin &amp;lt;分支名&amp;gt;# 拉取远程分支git pull origin &amp;lt;分支名&amp;gt;# 获取远程所有分支信息git fetch origin# 基于远程分支创建本地分支git checkout -b &amp;lt;本地分支&amp;gt; origin/&amp;lt;远程分支&amp;gt;
-
-分支切换问题处理"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -76,6 +23,8 @@ git branch -D &amp;lt;branch&amp;gt;
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -86,7 +35,6 @@ git branch -D &amp;lt;branch&amp;gt;
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -94,41 +42,18 @@ git branch -D &amp;lt;branch&amp;gt;
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Git 常用操作手册","datePublished":"2024-12-10T04:00:00.000Z","dateModified":"2026-05-31T16:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2024/12/10/git/","description":"基础命令速查 命令 功能 git init 初始化仓库 git add . 添加所有修改到暂存区 git commit -m &quot;msg&quot; 提交到本地仓库 git status 查看状态 git log --oneline 简洁查看提交历史 git branch 查看本地分支 git branch -a 查看所有分支（含远程） git checkout -b &lt;branch"}</script>
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -498,6 +423,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

@@ -7,17 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>红队思路v1.0.0 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2026/09/10/红队思路v1.0.0/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="前言以前一直在挖SRC，这是我第一次参与红队渗透测试。红队渗透和SRC在资产收集、攻击范围、工作强度等方面差别很大。这篇文章算是我对自己打法思路的整理（主要是资产信息收集），也记录下第一次红队渗透测试的过程。
-
-每天上午9点上班，下午5点半收报告，每天需要交两个外网漏洞。内网漏洞不收，原因是甲方认为hacker很难进入内网，所以内网漏洞利用不了，认为“价值不大”。
-那内网漏洞不收，那只能打外网呗，但是项目负责人给我们的靶标资产几乎是：目标名字+内网网段ip。 这就让人很难绷了，这就意味着我目前掌握的有效资产信息只有 目标的名字 。 所以这是很存粹的“给我一个目标名字，然后打穿它” ，工资和工作强度不对等。已经释怀了，就当历练吧
-目标大多都是幼儿园、小学、中学，只有少量的技校、大学等。 前者的资产比较少，后者可能会更多一点。那就先从技校、大学开始打起。
-技校、大学随便浏览器搜索一下就会找到目标的官网以及域名。有了域名就可以打一套了 – 子域名爆破+敏感文件目录等等。其过程就是很经典的SRC挖掘过程，这里就不再赘述了。
-说点特别的，幼儿园、小学、中学怎么办？我一开始也是“打一套”，但是每一步都很困难。
-比如你搜索一间学校，你会发现你不能直接搜索到他的官网，而已一堆乱七八糟的东西，你压根就找不到他的官网（就算找到也很耗时间），也就找不到他的域名。
-由于此类目标的资产比较少，如果使用搜索指令过滤的话，结果很大概率是空。所以我们必须以收集边缘资产的思路取收集这些“目标的资产”。"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -30,6 +23,8 @@
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -40,7 +35,6 @@
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -48,41 +42,18 @@
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"红队思路v1.0.0","datePublished":"2026-09-10T04:00:00.000Z","dateModified":"2026-09-10T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2026/09/10/红队思路v1.0.0/","description":"前言以前一直在挖SRC，这是我第一次参与红队渗透测试。红队渗透和SRC在资产收集、攻击范围、工作强度等方面差别很大。这篇文章算是我对自己打法思路的整理（主要是资产信息收集），也记录下第一次红队渗透测试的过程。 每天上午9点上班，下午5点半收报告，每天需要交两个外网漏洞。内网漏洞不收，原因是甲方认为hacker很难进入内网，所以内网漏洞利用不了，认为“价值不大”。 那内网漏洞不收，那只能打外网呗，但"}</script>
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -178,24 +149,24 @@ MathJax = {
 <p>实际上，这个问题的最核心的是找到 <code>mmgz</code>。那就去微信公众号找</p>
 <p>在我微信公众号中找到一个<code>汪汪市鼠鼠汽车技术学校</code>的公众号，发现里面有官网</p>
 <div align="center">
- <img src="/images/红队思路v1.0.0/image_2.png" alt="公众号主页中的学校官网入口" style="width: 100%;">
+ <img loading="lazy" decoding="async" src="/images/红队思路v1.0.0/image_2.png" alt="公众号主页中的学校官网入口" style="width: 100%;">
 </div>
 
 
 <p>点击，在url栏中得到域名，我记为 <a target="_blank" rel="noopener" href="http://www.wwssqx.com/">www.wwssqx.com</a></p>
 <div align="center">
- <img src="/images/红队思路v1.0.0/image_3.png" alt="在地址栏中获取到目标域名" style="width: 100%;">
+ <img loading="lazy" decoding="async" src="/images/红队思路v1.0.0/image_3.png" alt="在地址栏中获取到目标域名" style="width: 100%;">
 </div>
 
 <p>很显然这个域名并不是挂在 <code>wwjy.com</code> 域名下，即不是我们想象中的 <code>wwssqx.wwjy.com</code>。 出现这种情况可能是上面提到的资产分散的后3种情况，但是有没有可能，这个资产就是在wwjy（即这个城市的教育局下）</p>
 <p>这是后就要上点小手段了，得到ip地址</p>
 <div align="center">
- <img src="/images/红队思路v1.0.0/image_4.png" alt="在浏览器开发者工具中查看请求对应的 IP 地址" style="width: 100%;">
+ <img loading="lazy" decoding="async" src="/images/红队思路v1.0.0/image_4.png" alt="在浏览器开发者工具中查看请求对应的 IP 地址" style="width: 100%;">
 </div>
 
 <p>使用ip反查工具</p>
 <div align="center">
- <img src="/images/红队思路v1.0.0/image_5.png" alt="IP 反查得到同一 IP 下绑定的大量学校域名" style="width: 100%;">
+ <img loading="lazy" decoding="async" src="/images/红队思路v1.0.0/image_5.png" alt="IP 反查得到同一 IP 下绑定的大量学校域名" style="width: 100%;">
 </div>
 
 
@@ -418,6 +389,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

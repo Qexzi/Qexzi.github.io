@@ -7,138 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>Misc合集 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2026/10/09/BUUCTF-Misc/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="前言处理原有的“烂尾楼”笔记
-
-一、基础知识1. 文件头文件头（File Header），也称为魔数（Magic Number） 或文件签名（File Signature），是文件开头的一段固定字节序列，用于标识文件的真实格式。它比文件后缀名更可靠，因为后缀可以被轻易修改。
-
-
-
-文件类型
-常用扩展名
-文件头 (十六进制 Hex)
-文件尾 (部分格式)
-简要说明
-
-
-
-PNG 图像
-.png
-89 50 4E 47 0D 0A 1A 0A
-AE 42 60 82
-8字节签名，开头\x89PNG非常独特
-
-
-JPEG 图像
-.jpg, .jpeg
-FF D8 FF
-FF D9
-最常见的照片格式
-
-
-GIF 图像
-.gif
-47 49 46 38 (GIF8)
-00 3B
-支持动图，文件头后常跟39 61或37 61
-
-
-BMP 图像
-.bmp
-42 4D (BM)
--
-位图文件，开头两个字母即为”BM”
-
-
-TIFF 图像
-.tif, .tiff
-49 49 2A 00 或 4D 4D 00 2A
--
-两种字节序，分别对应小端和大端
-
-
-PDF 文档
-.pdf
-25 50 44 46 2D (%PDF-)
--
-文档格式，开头为%PDF-
-
-
-ZIP 压缩包
-.zip
-50 4B 03 04 (PK..)
-50 4B
-常见压缩格式，很多Office新格式也基于它
-
-
-RAR 压缩包
-.rar
-52 61 72 21 1A 07 00
--
-另一种常见压缩格式
-
-
-7-Zip 压缩包
-.7z
-37 7A BC AF 27 1C
--
-高压缩比格式
-
-
-GZIP 压缩包
-.gz
-1F 8B
--
-常用于Linux系统的压缩格式
-
-
-MS Office (旧)
-.doc, .xls, .ppt
-D0 CF 11 E0 A1 B1 1A E1
--
-传统的复合文档格式，Word&amp;#x2F;Excel&amp;#x2F;PPT共用
-
-
-MP3 音频
-.mp3
-49 44 33 (ID3) 或 FF FB
--
-常见音频格式，ID3表示有元数据标签
-
-
-WAV 音频
-.wav
-52 49 46 46 (RIFF)
--
-无损音频，文件头为RIFF
-
-
-AVI 视频
-.avi
-41 56 49 20 (AVI )
--
-常见视频容器格式
-
-
-MP4 视频
-.mp4
-66 74 79 70 (ftyp)
--
-现代视频格式，通常在文件偏移量4的位置出现ftyp
-
-
-ELF 可执行文件
-(Linux)
-7F 45 4C 46 (\x7FELF)
--
-Linux下的可执行文件格式
-
-
-
-注意：FF D8 FF 是JPEG文件头的前三个字节，但完整的JPEG文件头通常是 FF D8 FF E0 (JFIF) 或 FF D8 FF E1 (EXIF)，FF D8 是其固定起始。
-
-2. 图片隐写的常用工具file"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -151,6 +23,8 @@ Linux下的可执行文件格式
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -161,7 +35,6 @@ Linux下的可执行文件格式
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -169,41 +42,39 @@ Linux下的可执行文件格式
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
-
-
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
+  
+  <!-- MathJax（仅含公式的页面加载，由 scripts/mathjax-injector.js 检测标记） -->
+  <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    startup: {
+      pageReady: () => {
+        return MathJax.startup.defaultPageReady();
+      }
     }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+  };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Misc合集","datePublished":"2026-10-09T04:00:00.000Z","dateModified":"2026-10-09T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2026/10/09/BUUCTF-Misc/","description":"前言处理原有的“烂尾楼”笔记 一、基础知识1. 文件头文件头（File Header），也称为魔数（Magic Number） 或文件签名（File Signature），是文件开头的一段固定字节序列，用于标识文件的真实格式。它比文件后缀名更可靠，因为后缀可以被轻易修改。 文件类型 常用扩展名 文件头 (十六进制 Hex) 文件尾 (部分格式) 简要说明 PNG 图像 .png 89 50 4E "}</script>
+  
+
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -999,7 +870,7 @@ MathJax = {
 </li>
 </ol>
 <h3 id="2-9-图层叠加"><a href="#2-9-图层叠加" class="headerlink" title="2.9  图层叠加"></a>2.9  图层叠加</h3><p>图像由图层叠加而成，图层由像素组成，每一张图层可以理解为一层透明的 “玻璃”，它们各自包含独立的内容，可以理解为将各个图层从上到下依次重叠，然后俯视观测第一张图层，各个图层显示的叠加效果为图像最后的显示效果。</p>
-<p><img src="/images/BUUCTF-Misc/image_1.png" alt="在这里插入图片描述"></p>
+<p><img src="/images/BUUCTF-Misc/image_1.png" alt="BUUCTF-Misc·图1"></p>
 <ol>
 <li><strong>Photoshop（图形化工具）</strong><br>打开 PSD 源文件，直接单独显示 &#x2F; 隐藏各个图层，取出被遮挡的隐藏内容；也可以调整图层混合模式、不透明度做差分。</li>
 <li><strong>Stegsolve（CTF 最常用）</strong><br>专门针对帧、通道、位平面，<code>Frame Browser</code>浏览多帧 GIF&#x2F;APNG，切换各个通道、bit 平面，等效拆分图层，比赛首选。</li>
@@ -1390,7 +1261,7 @@ MathJax = {
 <blockquote>
 <p>CTF重点：MP3为有损压缩，存储的是频域压缩后的数据，<strong>不适合PCM采样LSB隐写</strong>，隐写多考察ID3标签、帧结构保留位、帧间隙隐藏文件。</p>
 </blockquote>
-<h2 id="2-WAV文件结构"><a href="#2-WAV文件结构" class="headerlink" title="2. WAV文件结构"></a>2. WAV文件结构</h2><p>WAVE 文件是非常简单的一种 RIFF 文件（资源互换文件格式），它的格式类型为<code>WAVE</code>。RIFF 块包含两个子块，这两个子块的 ID 分别是<code>fmt</code>和<code>data</code>，其中<code>fmt</code>子块由结构 PCMWAVEFORMAT 所组成，其子块的大小就是 sizeofof (PCMWAVEFORMAT)，数据组成就是 PCMWAVEFORMAT 结构中的数据。WAV 是最接近无损的音乐格式，所以文件大小相对也比较大。<br><img src="/images/BUUCTF-Misc/image_2.png" alt="在这里插入图片描述"></p>
+<h2 id="2-WAV文件结构"><a href="#2-WAV文件结构" class="headerlink" title="2. WAV文件结构"></a>2. WAV文件结构</h2><p>WAVE 文件是非常简单的一种 RIFF 文件（资源互换文件格式），它的格式类型为<code>WAVE</code>。RIFF 块包含两个子块，这两个子块的 ID 分别是<code>fmt</code>和<code>data</code>，其中<code>fmt</code>子块由结构 PCMWAVEFORMAT 所组成，其子块的大小就是 sizeofof (PCMWAVEFORMAT)，数据组成就是 PCMWAVEFORMAT 结构中的数据。WAV 是最接近无损的音乐格式，所以文件大小相对也比较大。<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_2.png" alt="BUUCTF-Misc·图2"></p>
 <h3 id="Format-chunk（fmt-子块）"><a href="#Format-chunk（fmt-子块）" class="headerlink" title="Format chunk（fmt 子块）"></a>Format chunk（fmt 子块）</h3><p>以 <code>&#39;fmt &#39;</code> 为标识，Size 表示该区块数据长度（不含 ID 和 Size 自身）。</p>
 <table>
 <thead>
@@ -1538,28 +1409,28 @@ MathJax = {
 </ul>
 <hr>
 <h1 id="BUUCTF"><a href="#BUUCTF" class="headerlink" title="BUUCTF"></a>BUUCTF</h1><h2 id="1-图片中的密码"><a href="#1-图片中的密码" class="headerlink" title="1. 图片中的密码"></a>1. 图片中的密码</h2><p>直接exiftools查看</p>
-<p><img src="/images/BUUCTF-Misc/image_3.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_3.png" alt="BUUCTF-Misc·图3"></p>
 <hr>
-<h2 id="2-你竟然赶我走"><a href="#2-你竟然赶我走" class="headerlink" title="2. 你竟然赶我走"></a>2. 你竟然赶我走</h2><p>使用101打开查看<br><img src="/images/BUUCTF-Misc/image_4.png" alt="在这里插入图片描述"></p>
-<p>可以到直接找到flag, 实际上可以直接 ctrl+f 文本搜索“flag”,也可以使用stings<br><img src="/images/BUUCTF-Misc/image_5.png" alt="在这里插入图片描述"></p>
+<h2 id="2-你竟然赶我走"><a href="#2-你竟然赶我走" class="headerlink" title="2. 你竟然赶我走"></a>2. 你竟然赶我走</h2><p>使用101打开查看<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_4.png" alt="BUUCTF-Misc·图4"></p>
+<p>可以到直接找到flag, 实际上可以直接 ctrl+f 文本搜索“flag”,也可以使用stings<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_5.png" alt="BUUCTF-Misc·图5"></p>
 <hr>
 <h2 id="3-一叶障目"><a href="#3-一叶障目" class="headerlink" title="3. 一叶障目"></a>3. 一叶障目</h2><p>直接上 101</p>
-<p><img src="/images/BUUCTF-Misc/image_6.png" alt="在这里插入图片描述"><br>出现这个CRC不匹配的错误，一般是图片的宽高有问题，手动修改爆破可以，但是太慢了，直接上在线修复工具</p>
-<p><img src="/images/BUUCTF-Misc/image_7.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_6.png" alt="BUUCTF-Misc·图6"><br>出现这个CRC不匹配的错误，一般是图片的宽高有问题，手动修改爆破可以，但是太慢了，直接上在线修复工具</p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_7.png" alt="BUUCTF-Misc·图7"></p>
 <p>也可以使用python脚本进行爆破</p>
-<p><img src="/images/BUUCTF-Misc/image_8.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_8.png" alt="BUUCTF-Misc·图8"></p>
 <p> crc偏移实际上不需要自己找了，直接调用库它自己可以定位到（如下面脚本）</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> binascii,struct</span><br><span class="line"></span><br><span class="line">data=<span class="built_in">open</span>(<span class="string">&quot;1.png&quot;</span>,<span class="string">&quot;rb&quot;</span>).read()</span><br><span class="line">ihdr=<span class="built_in">bytearray</span>(data[<span class="number">12</span>:<span class="number">29</span>])</span><br><span class="line">crc_target=<span class="built_in">int</span>.from_bytes(data[<span class="number">29</span>:<span class="number">33</span>],<span class="string">&quot;big&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> w <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4096</span>):</span><br><span class="line">    <span class="keyword">for</span> h <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4096</span>):</span><br><span class="line">        ihdr[<span class="number">4</span>:<span class="number">8</span>]=struct.pack(<span class="string">&quot;&gt;I&quot;</span>,w)</span><br><span class="line">        ihdr[<span class="number">8</span>:<span class="number">12</span>]=struct.pack(<span class="string">&quot;&gt;I&quot;</span>,h)</span><br><span class="line">        <span class="keyword">if</span> binascii.crc32(ihdr)&amp;<span class="number">0xffffffff</span> == crc_target:</span><br><span class="line">            new=<span class="built_in">bytearray</span>(data)</span><br><span class="line">            new[<span class="number">16</span>:<span class="number">20</span>]=struct.pack(<span class="string">&quot;&gt;I&quot;</span>,w)</span><br><span class="line">            new[<span class="number">20</span>:<span class="number">24</span>]=struct.pack(<span class="string">&quot;&gt;I&quot;</span>,h)</span><br><span class="line">            <span class="built_in">open</span>(<span class="string">&quot;fixed.png&quot;</span>,<span class="string">&quot;wb&quot;</span>).write(new)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;w=<span class="subst">&#123;w&#125;</span>,h=<span class="subst">&#123;h&#125;</span>&quot;</span>)</span><br><span class="line">            exit()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;not found&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>结果如下：<br><img src="/images/BUUCTF-Misc/image_9.png" alt="在这里插入图片描述"></p>
+<p>结果如下：<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_9.png" alt="BUUCTF-Misc·图9"></p>
 <hr>
 <h2 id="4-LSB"><a href="#4-LSB" class="headerlink" title="4. LSB"></a>4. LSB</h2><p>上stegsolve</p>
-<p><img src="/images/BUUCTF-Misc/image_10.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_10.png" alt="BUUCTF-Misc·图10"></p>
 <p>设置</p>
-<p><img src="/images/BUUCTF-Misc/image_11.png" alt="在这里插入图片描述"><br>然后报错图片数据（save bin）, 在当前目录下有一张二维码图片，扫一下就出flag了</p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_11.png" alt="BUUCTF-Misc·图11"><br>然后报错图片数据（save bin）, 在当前目录下有一张二维码图片，扫一下就出flag了</p>
 <p>实际上正常的流程是要先分别查看三通道的，其过程参考这个：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/zzkkk1h/p/18115837">https://www.cnblogs.com/zzkkk1h/p/18115837</a></p>
 <p>对于LSB的隐写，可以使用更加现代的工具</p>
-<p><img src="/images/BUUCTF-Misc/image_12.png" alt="在这里插入图片描述"><br>其中</p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_12.png" alt="BUUCTF-Misc·图12"><br>其中</p>
 <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">b1,rgb,lsb,xy       .. file: PNG image data, 280 x 280, 8-bit/color RGB, non-interlaced</span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -1572,7 +1443,7 @@ MathJax = {
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">zsteg -E <span class="string">&quot;b1,rgb,lsb,xy&quot;</span> flag11.png &gt; hidden.png</span><br></pre></td></tr></table></figure>
 
 <p>此时工作目录下就会产生一张二维码</p>
-<p>或使用其他工具也可以检测出来<br><img src="/images/BUUCTF-Misc/image_13.png" alt="在这里插入图片描述"></p>
+<p>或使用其他工具也可以检测出来<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_13.png" alt="BUUCTF-Misc·图13"></p>
 <ol>
 <li>SVImage &#x3D; StegoVeritas 的<strong>图片隐写分析模块（专门扫描 LSB 比特平面）</strong></li>
 <li>原图 EXIF 里明确写：原图尺寸 <strong>268 × 268</strong></li>
@@ -1584,40 +1455,40 @@ MathJax = {
 </blockquote>
 <hr>
 <h2 id="5-湖南省赛-2019-Findme"><a href="#5-湖南省赛-2019-Findme" class="headerlink" title="5. [湖南省赛 2019] Findme"></a>5. [湖南省赛 2019] Findme</h2><p>下在之后，发现有5张png</p>
-<p><img src="/images/BUUCTF-Misc/image_14.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_14.png" alt="BUUCTF-Misc·图14"></p>
 <p>101代开第一张照片，发现存在CRC错误， 所以先测试宽高</p>
 <p>但是，修改宽高之后发现图片仍然是“花”的，丢进101进行分析，发现两个异常块</p>
-<p><img src="/images/BUUCTF-Misc/image_15.png" alt="在这里插入图片描述"></p>
-<p>修改chunk[2]的type（chunk[3]也是同理）<br><img src="/images/BUUCTF-Misc/image_16.png" alt="在这里插入图片描述"></p>
-<p>修改后图片就可以正常显示了，那就使用stegoveritas工具看看其是否存在隐写，有新的发现如下<br><img src="/images/BUUCTF-Misc/image_17.png" alt="在这里插入图片描述"><br>扫一下二维码得到：<code>ZmxhZ3s0X3</code></p>
-<p>但是如果使用zsteg工具就会有这样的结果<br><img src="/images/BUUCTF-Misc/image_18.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_15.png" alt="BUUCTF-Misc·图15"></p>
+<p>修改chunk[2]的type（chunk[3]也是同理）<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_16.png" alt="BUUCTF-Misc·图16"></p>
+<p>修改后图片就可以正常显示了，那就使用stegoveritas工具看看其是否存在隐写，有新的发现如下<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_17.png" alt="BUUCTF-Misc·图17"><br>扫一下二维码得到：<code>ZmxhZ3s0X3</code></p>
+<p>但是如果使用zsteg工具就会有这样的结果<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_18.png" alt="BUUCTF-Misc·图18"></p>
 <p>原因是现在的<code>fixed.png</code>：<strong>只修复了 IDAT 块 Type，以及IHDR 宽高，但是IHDR的crc忘记修改了</strong><br>PNG 像素解析是错的，zsteg 拿错误像素去读 LSB，输出一堆乱码伪结果，<code>OpenPGP Secret Key</code>属于典型误报。</p>
 <blockquote>
 <p>zsteg 依赖 PNG 正确解码像素；<strong>PNG 结构损坏，zsteg 输出完全不可信</strong>。</p>
 </blockquote>
-<p>pngcheck一下<br><img src="/images/BUUCTF-Misc/image_19.png" alt="在这里插入图片描述"><br>继续修改，然后发下有另一处错误，zsteg还是一样的结果。实际上，这就是出题人故意搞的。 所以不要依赖于某一款工具</p>
+<p>pngcheck一下<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_19.png" alt="BUUCTF-Misc·图19"><br>继续修改，然后发下有另一处错误，zsteg还是一样的结果。实际上，这就是出题人故意搞的。 所以不要依赖于某一款工具</p>
 <p>处理2.png，使用101打开</p>
-<p><img src="/images/BUUCTF-Misc/image_20.png" alt="在这里插入图片描述"><br>从文本区域可以看到有“7z”，可以确定的是这是文件结合，至于是什么那写文件结合在一起需要进一步分析</p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_20.png" alt="BUUCTF-Misc·图20"><br>从文本区域可以看到有“7z”，可以确定的是这是文件结合，至于是什么那写文件结合在一起需要进一步分析</p>
 <p>观察文件头：</p>
 <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">zip：ZIP  4B 03 04 (PK…)</span><br><span class="line">7z：37 7A BC AF 27 1C</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>很显然，出题人是将zip 的 004B 改为了 377A，为了方便操作，直接修改所有文本为7z的为PK（ascii对应）</p>
-<p><img src="/images/BUUCTF-Misc/image_21.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_21.png" alt="BUUCTF-Misc·图21"></p>
 <p>实际上不应该全部替换的，可能会替换了其他正常的内容，不过这题为了方便，直接全部替换好吧</p>
 <p>然后 binwalk 一下检测到1000个文件</p>
-<p><img src="/images/BUUCTF-Misc/image_22.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_22.png" alt="BUUCTF-Misc·图22"></p>
 <p>随后就 binwalk -e 将文件分离出来</p>
 <p>随便找几个文件，发现均是 <code>N0thIng h3re</code>， 所以直接使用grep大的反查询（还有一种查询方式是按照文件大小排序）</p>
-<p><img src="/images/BUUCTF-Misc/image_23.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_23.png" alt="BUUCTF-Misc·图23"></p>
 <p>得到：<code>1RVcmVfc</code></p>
-<p>处理3.png，101打开查看<br><img src="/images/BUUCTF-Misc/image_24.png" alt="在这里插入图片描述"></p>
+<p>处理3.png，101打开查看<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_24.png" alt="BUUCTF-Misc·图24"></p>
 <p>可以知道7个chunk的crc都报错，那就先重点关注crc的情况</p>
-<p>正常crc<br><img src="/images/BUUCTF-Misc/image_25.png" alt="在这里插入图片描述"></p>
-<p>当前crc<br><img src="/images/BUUCTF-Misc/image_26.png" alt="在这里插入图片描述"><br>把这7段crc都提取出来：<code>33 52 6C 5A 33 30 3D</code>  转ascii之后：<code>3RlZ30=</code></p>
-<p>处理4.png，101打开查看<br><img src="/images/BUUCTF-Misc/image_27.png" alt="在这里插入图片描述"></p>
-<p>使用exiftool更加直观<br><img src="/images/BUUCTF-Misc/image_28.png" alt="在这里插入图片描述"><br>即：<code>cExlX1BsY</code></p>
+<p>正常crc<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_25.png" alt="BUUCTF-Misc·图25"></p>
+<p>当前crc<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_26.png" alt="BUUCTF-Misc·图26"><br>把这7段crc都提取出来：<code>33 52 6C 5A 33 30 3D</code>  转ascii之后：<code>3RlZ30=</code></p>
+<p>处理4.png，101打开查看<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_27.png" alt="BUUCTF-Misc·图27"></p>
+<p>使用exiftool更加直观<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_28.png" alt="BUUCTF-Misc·图28"><br>即：<code>cExlX1BsY</code></p>
 <p>处理5.png，101打开查看</p>
-<p><img src="/images/BUUCTF-Misc/image_29.png" alt="在这里插入图片描述"><br>即：<code>Yzcllfc0lN</code></p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_29.png" alt="BUUCTF-Misc·图29"><br>即：<code>Yzcllfc0lN</code></p>
 <table>
 <thead>
 <tr>
@@ -1667,11 +1538,11 @@ MathJax = {
 <h2 id="6-图片容差"><a href="#6-图片容差" class="headerlink" title="6. 图片容差"></a>6. 图片容差</h2><table>
   <tr>
     <td style="border: none; text-align: center;">
-      <img src="/images/BUUCTF-Misc/image_71.png" alt="图片1" style="width: 100%; display: block;">
+      <img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_71.png" alt="图片1" style="width: 100%; display: block;">
       <p style="text-align: center; margin-top: 8px; color: #666;">图片1</p>
     </td>
     <td style="border: none; text-align: center;">
-      <img src="/images/BUUCTF-Misc/image_72.png" alt="图片2" style="width: 100%; display: block;">
+      <img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_72.png" alt="图片2" style="width: 100%; display: block;">
       <p style="text-align: center; margin-top: 8px; color: #666;">图片2</p>
     </td>
   </tr>
@@ -1684,27 +1555,27 @@ MathJax = {
 <li><code>-fuzz 3%</code>：颜色差距在 3% 以内视为相同，超出则标红</li>
 <li>输出 <code>diff.png</code>，红色像素就是两张图不一样的地方，打开看红点图案</li>
 </ul>
-<p>结果：<br><img src="/images/BUUCTF-Misc/image_30.png" alt="在这里插入图片描述"></p>
+<p>结果：<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_30.png" alt="BUUCTF-Misc·图30"></p>
 <hr>
-<h2 id="7-BJDCTF2020-鸡你太美"><a href="#7-BJDCTF2020-鸡你太美" class="headerlink" title="7. [BJDCTF2020]鸡你太美"></a>7. [BJDCTF2020]鸡你太美</h2><p>as you can see ， 第二张图是打不开的<br><img src="/images/BUUCTF-Misc/image_31.png" alt="在这里插入图片描述"></p>
-<p>101打开查看，很明显是文件头的问题，而我们知道gif的文件头：<code>47 49 46 38</code>，那就插入一下<br><img src="/images/BUUCTF-Misc/image_32.png" alt="在这里插入图片描述"></p>
-<p>点击之后，发现报错，查资料之后发现是插入的值太大了，所以可以先插入<code>00 00 00 00</code><br><img src="/images/BUUCTF-Misc/image_33.png" alt="在这里插入图片描述"></p>
+<h2 id="7-BJDCTF2020-鸡你太美"><a href="#7-BJDCTF2020-鸡你太美" class="headerlink" title="7. [BJDCTF2020]鸡你太美"></a>7. [BJDCTF2020]鸡你太美</h2><p>as you can see ， 第二张图是打不开的<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_31.png" alt="BUUCTF-Misc·图31"></p>
+<p>101打开查看，很明显是文件头的问题，而我们知道gif的文件头：<code>47 49 46 38</code>，那就插入一下<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_32.png" alt="BUUCTF-Misc·图32"></p>
+<p>点击之后，发现报错，查资料之后发现是插入的值太大了，所以可以先插入<code>00 00 00 00</code><br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_33.png" alt="BUUCTF-Misc·图33"></p>
 <p>随后手动逐个修改，但是发现修改字节最后只能插入三个字节（见鬼了）</p>
-<p>然后我就逐个逐个字节覆盖，这样才可以<br><img src="/images/BUUCTF-Misc/image_34.png" alt="在这里插入图片描述"></p>
-<p>然后就修复了<br><img src="/images/BUUCTF-Misc/image_35.png" alt="在这里插入图片描述"></p>
+<p>然后我就逐个逐个字节覆盖，这样才可以<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_34.png" alt="BUUCTF-Misc·图34"></p>
+<p>然后就修复了<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_35.png" alt="BUUCTF-Misc·图35"></p>
 <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">flag&#123;zhi_yin_you_are_beautiful&#125;</span><br></pre></td></tr></table></figure>
 
 <hr>
 <h2 id="8-金三胖"><a href="#8-金三胖" class="headerlink" title="8. 金三胖"></a>8. 金三胖</h2><p>一张将军的gif，由于政治敏感性就不放上来了</p>
-<p>直接上工具拆帧：<br><img src="/images/BUUCTF-Misc/image_36.png" alt="在这里插入图片描述"><br>找到三张gif<br><img src="/images/BUUCTF-Misc/image_37.png" alt="在这里插入图片描述"><br>拼接一下：</p>
+<p>直接上工具拆帧：<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_36.png" alt="BUUCTF-Misc·图36"><br>找到三张gif<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_37.png" alt="BUUCTF-Misc·图37"><br>拼接一下：</p>
 <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">flag&#123;he11ohongke&#125;</span><br></pre></td></tr></table></figure>
 
 <hr>
 <h2 id="9-gif空间轴隐写"><a href="#9-gif空间轴隐写" class="headerlink" title="9. gif空间轴隐写"></a>9. gif空间轴隐写</h2><p>现有一完整二维码的局部显示的动图。对于每一帧的间隔时间很段的gif，可以通过修改gif中的结构，使得每一帧的时间间隔变长</p>
-<p>修改：<br><img src="/images/BUUCTF-Misc/image_38.png" alt="在这里插入图片描述"><br>其速度就会变慢（就不再贴图了），但是还是无法扫二维码的（因为每一帧均是二维码的局部图），直接使用分帧工具吧</p>
+<p>修改：<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_38.png" alt="BUUCTF-Misc·图38"><br>其速度就会变慢（就不再贴图了），但是还是无法扫二维码的（因为每一帧均是二维码的局部图），直接使用分帧工具吧</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">convert cake.gif -coalesce out.png</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/BUUCTF-Misc/image_39.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_39.png" alt="BUUCTF-Misc·图39"></p>
 <p>这四张图是一个完整的二维码的4个部分，所以接下来需要拼接</p>
 <p>可以使用ps工具什么的，拼起来就可以</p>
 <p>如果使用ps，最好使用这条指令</p>
@@ -1713,7 +1584,7 @@ MathJax = {
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">imgs = [np.array(Image.<span class="built_in">open</span>(<span class="string">f&#x27;out-<span class="subst">&#123;i&#125;</span>.png&#x27;</span>).convert(<span class="string">&#x27;L&#x27;</span>)) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>)]</span><br><span class="line">out = np.ones_like(imgs[<span class="number">0</span>])*<span class="number">255</span></span><br><span class="line"><span class="keyword">for</span> a <span class="keyword">in</span> imgs:</span><br><span class="line">    out[a &lt; <span class="number">128</span>] = <span class="number">0</span></span><br><span class="line">Image.fromarray(out).save(<span class="string">&#x27;qr.png&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>这个脚本执行之后就可以拼出一张完整的二维码</p>
-<p>识别一下：<br><img src="/images/BUUCTF-Misc/image_40.png" alt="在这里插入图片描述"></p>
+<p>识别一下：<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_40.png" alt="BUUCTF-Misc·图40"></p>
 <p>这串十六进制数据实际上是 Python 2.7 的 marshal 序列化字节码（编译后的 .pyc 文件内容）</p>
 <p>将16进制转为二进制文件</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">xxd -r -p code.hex &gt; bbb.pyc</span><br></pre></td></tr></table></figure>
@@ -1725,16 +1596,16 @@ MathJax = {
 
 <p>加一个打印输出，就可以输出flag了</p>
 <hr>
-<h2 id="10-gif时间轴隐写"><a href="#10-gif时间轴隐写" class="headerlink" title="10. gif时间轴隐写"></a>10. gif时间轴隐写</h2><p>gif格式，静止<br><img src="/images/BUUCTF-Misc/image_41.png" alt="在这里插入图片描述"></p>
+<h2 id="10-gif时间轴隐写"><a href="#10-gif时间轴隐写" class="headerlink" title="10. gif时间轴隐写"></a>10. gif时间轴隐写</h2><p>gif格式，静止<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_41.png" alt="BUUCTF-Misc·图41"></p>
 <p>先脱帧看看这么个事</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">convert 100.gif -coalesce out.png</span><br></pre></td></tr></table></figure>
-<p><img src="/images/BUUCTF-Misc/image_42.png" alt="在这里插入图片描述"><br>这么多张，粗略的查看也没有发现什么东西。101查看一下</p>
-<p><img src="/images/BUUCTF-Misc/image_43.png" alt="在这里插入图片描述"><br>每一帧的大小不一样，且延迟时间不一样（后面的帧的延迟时间存在规律），用工具看一下：</p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_42.png" alt="BUUCTF-Misc·图42"><br>这么多张，粗略的查看也没有发现什么东西。101查看一下</p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_43.png" alt="BUUCTF-Misc·图43"><br>每一帧的大小不一样，且延迟时间不一样（后面的帧的延迟时间存在规律），用工具看一下：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">identify -format <span class="string">&quot;%s %T\n&quot;</span> test.gif</span><br></pre></td></tr></table></figure>
 
 <p>可以安装 gnuplot，用于描点画图</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">identify -format <span class="string">&quot;%s %T\n&quot;</span> test.gif | gnuplot -e <span class="string">&quot;</span></span><br><span class="line"><span class="string">set terminal png size 800,400;</span></span><br><span class="line"><span class="string">set output &#x27;delay_plot.png&#x27;;</span></span><br><span class="line"><span class="string">set title &#x27;GIF帧延时折线图（单位：1/100秒）&#x27;;</span></span><br><span class="line"><span class="string">set xlabel &#x27;帧序号&#x27;;</span></span><br><span class="line"><span class="string">set ylabel &#x27;Delay&#x27;;</span></span><br><span class="line"><span class="string">set grid;</span></span><br><span class="line"><span class="string">plot &#x27;-&#x27; using 1:2 with linespoints pointtype 7 title &#x27;帧延时&#x27;;</span></span><br><span class="line"><span class="string">&quot;</span></span><br></pre></td></tr></table></figure>
-<p>结果：<br><img src="/images/BUUCTF-Misc/image_44.png" alt="在这里插入图片描述"></p>
+<p>结果：<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_44.png" alt="BUUCTF-Misc·图44"></p>
 <p>实际上延迟时间可以看作一组二进制信号：<code>“20”为“1”、“10”为“0”</code>  或 <code>“10”为“1”、“20”为“0”</code> 。 下面我就只举一个例子</p>
 <p>先导出数据</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">identify -format <span class="string">&quot;%T\n&quot;</span> 100.gif &gt; flag.py</span><br></pre></td></tr></table></figure>
@@ -1744,7 +1615,7 @@ MathJax = {
 
 
 <hr>
-<h2 id="11-来首歌吧"><a href="#11-来首歌吧" class="headerlink" title="11. 来首歌吧"></a>11. 来首歌吧</h2><p>直接将得到音频丢进Audacity，可以发现有两条音轨，上面的音轨是摩斯密码<br><img src="/images/BUUCTF-Misc/image_45.png" alt="在这里插入图片描述"></p>
+<h2 id="11-来首歌吧"><a href="#11-来首歌吧" class="headerlink" title="11. 来首歌吧"></a>11. 来首歌吧</h2><p>直接将得到音频丢进Audacity，可以发现有两条音轨，上面的音轨是摩斯密码<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_45.png" alt="BUUCTF-Misc·图45"></p>
 <p>放大查看，<code>短的为 . </code>，<code>长的为 -</code></p>
 <p>记录有：（<code>注意不要连在一起</code>）</p>
 <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">..... -... -.-. ----. ..--- ..... -.... ....- ----. -.-. -... ----- .---- ---.. ---.. ..-. ..... ..--- . -.... .---- --... -.. --... ----- ----. ..--- ----. .---- ----. .---- -.-.</span><br></pre></td></tr></table></figure>
@@ -1754,12 +1625,12 @@ MathJax = {
 
 
 <hr>
-<h2 id="12-UTCTF2020-spectogram"><a href="#12-UTCTF2020-spectogram" class="headerlink" title="12. [UTCTF2020]spectogram"></a>12. [UTCTF2020]spectogram</h2><p>使用Audacity打开<br><img src="/images/BUUCTF-Misc/image_46.png" alt="在这里插入图片描述"></p>
-<p>切换为频谱图<br><img src="/images/BUUCTF-Misc/image_47.png" alt="在这里插入图片描述"><br>结果<br><img src="/images/BUUCTF-Misc/image_48.png" alt="在这里插入图片描述"></p>
-<p>很难看清，调一下窗口大小<br><img src="/images/BUUCTF-Misc/image_49.png" alt="在这里插入图片描述"></p>
+<h2 id="12-UTCTF2020-spectogram"><a href="#12-UTCTF2020-spectogram" class="headerlink" title="12. [UTCTF2020]spectogram"></a>12. [UTCTF2020]spectogram</h2><p>使用Audacity打开<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_46.png" alt="BUUCTF-Misc·图46"></p>
+<p>切换为频谱图<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_47.png" alt="BUUCTF-Misc·图47"><br>结果<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_48.png" alt="BUUCTF-Misc·图48"></p>
+<p>很难看清，调一下窗口大小<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_49.png" alt="BUUCTF-Misc·图49"></p>
 <p><code>flag{sp3tr0gr4m0ph0n3}</code></p>
 <hr>
-<h2 id="13-SCTF2019-电单车"><a href="#13-SCTF2019-电单车" class="headerlink" title="13. [SCTF2019]电单车"></a>13. [SCTF2019]电单车</h2><p>使用Audacity打开，发现两种波形<br><img src="/images/BUUCTF-Misc/image_50.png" alt="在这里插入图片描述"><br>长波为“1”，短波为“0”，上图中的两段波是一样的，只需分析一部分</p>
+<h2 id="13-SCTF2019-电单车"><a href="#13-SCTF2019-电单车" class="headerlink" title="13. [SCTF2019]电单车"></a>13. [SCTF2019]电单车</h2><p>使用Audacity打开，发现两种波形<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_50.png" alt="BUUCTF-Misc·图50"><br>长波为“1”，短波为“0”，上图中的两段波是一样的，只需分析一部分</p>
 <p>插入：这里的音频其实是PT224X信号，一种固定码遥控信号</p>
 <p>PT224X 是电动车遥控钥匙常用的编码芯片，发射串行脉冲信号：</p>
 <ul>
@@ -1774,7 +1645,7 @@ MathJax = {
 <li>数据位：按键信息（开锁 &#x2F; 关锁）</li>
 <li>停止码：帧结束标记</li>
 </ul>
-<p><img src="/images/BUUCTF-Misc/image_51.png" alt="在这里插入图片描述"><br>取地址码：</p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_51.png" alt="BUUCTF-Misc·图51"><br>取地址码：</p>
 <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">flag&#123;01110100101010100110&#125;</span><br></pre></td></tr></table></figure>
 
 
@@ -1785,28 +1656,28 @@ MathJax = {
 <li>数值只变化了 1，人耳完全听不出声音差别</li>
 </ul>
 <p><code>注意</code>：只能是 WAV！<code>MP3 是有损压缩</code>，会自动丢弃微小比特，LSB 信息直接丢失</p>
-<p>查看文件情况<br><img src="/images/BUUCTF-Misc/image_52.png" alt="在这里插入图片描述"></p>
-<p>先分析一下JM.png，内容一个zip，zip中有一张png图片<br><img src="/images/BUUCTF-Misc/image_53.png" alt="在这里插入图片描述"></p>
-<p>binwalk验证一下<br><img src="/images/BUUCTF-Misc/image_54.png" alt="在这里插入图片描述"></p>
+<p>查看文件情况<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_52.png" alt="BUUCTF-Misc·图52"></p>
+<p>先分析一下JM.png，内容一个zip，zip中有一张png图片<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_53.png" alt="BUUCTF-Misc·图53"></p>
+<p>binwalk验证一下<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_54.png" alt="BUUCTF-Misc·图54"></p>
 <p>分离后得到aes.png</p>
-<p><img src="/images/BUUCTF-Misc/image_55.png" alt="在这里插入图片描述"><br>继续分析这张图片，发现没有什么结果</p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_55.png" alt="BUUCTF-Misc·图55"><br>继续分析这张图片，发现没有什么结果</p>
 <p>那图片没有什么可分析的了，接下来打开音频，拖进010查看文件末尾有一串字符</p>
-<p><img src="/images/BUUCTF-Misc/image_56.png" alt="在这里插入图片描述"></p>
-<p>提取一下<br><img src="/images/BUUCTF-Misc/image_57.png" alt="在这里插入图片描述"><br><code>key=U2FsdGVkX1/nSQN+hoHL8OwV9iJB/mSdKk5dmusulz4=</code></p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_56.png" alt="BUUCTF-Misc·图56"></p>
+<p>提取一下<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_57.png" alt="BUUCTF-Misc·图57"><br><code>key=U2FsdGVkX1/nSQN+hoHL8OwV9iJB/mSdKk5dmusulz4=</code></p>
 <p>密文开头U2FsdGVk base64 解码后是 Salted__，这是 openssl 命令行加密的标记：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl enc -aes-128-cbc -salt -<span class="keyword">in</span> plain.txt -out cipher.bin</span><br></pre></td></tr></table></figure>
 
 <p>机密命令：（注意要指定md5，新版的openssl默认是SHA256）</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> -n <span class="string">&quot;U2FsdGVkX1/nSQN+hoHL8OwV9iJB/mSdKk5dmusulz4=&quot;</span> | openssl enc -d -aes-128-cbc -a -salt -md md5</span><br></pre></td></tr></table></figure>
-<p>但是尝试解密失败了，参考了别人的文章： <a target="_blank" rel="noopener" href="https://www.sojson.com/encrypt_aes.html">https://www.sojson.com/encrypt_aes.html</a><br><img src="/images/BUUCTF-Misc/image_58.png" alt="在这里插入图片描述"></p>
-<p>成功解密，然后用slienteye提取信息即可<br><img src="/images/BUUCTF-Misc/image_59.png" alt="在这里插入图片描述"></p>
+<p>但是尝试解密失败了，参考了别人的文章： <a target="_blank" rel="noopener" href="https://www.sojson.com/encrypt_aes.html">https://www.sojson.com/encrypt_aes.html</a><br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_58.png" alt="BUUCTF-Misc·图58"></p>
+<p>成功解密，然后用slienteye提取信息即可<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_59.png" alt="BUUCTF-Misc·图59"></p>
 <hr>
-<h2 id="15-菜刀流量"><a href="#15-菜刀流量" class="headerlink" title="15. 菜刀流量"></a>15. 菜刀流量</h2><p>菜刀是常见的连接webshell的工具，连接webshell会有明显的GET 或POST请求。所以我们只需要找数据包的HTTP请求就行了<br><img src="/images/BUUCTF-Misc/image_60.png" alt="在这里插入图片描述"><br>红框框起来的就是后门</p>
+<h2 id="15-菜刀流量"><a href="#15-菜刀流量" class="headerlink" title="15. 菜刀流量"></a>15. 菜刀流量</h2><p>菜刀是常见的连接webshell的工具，连接webshell会有明显的GET 或POST请求。所以我们只需要找数据包的HTTP请求就行了<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_60.png" alt="BUUCTF-Misc·图60"><br>红框框起来的就是后门</p>
 <p>对value的base64进行解密</p>
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">@<span class="title function_ invoke__">ini_set</span>(<span class="string">&quot;display_errors&quot;</span>,<span class="string">&quot;0&quot;</span>);@<span class="title function_ invoke__">set_time_limit</span>(<span class="number">0</span>);@<span class="title function_ invoke__">set_magic_quotes_runtime</span>(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">echo</span>(<span class="string">&quot;-&gt;|&quot;</span>);</span><br><span class="line"><span class="variable">$D</span>=<span class="title function_ invoke__">dirname</span>(<span class="variable">$_SERVER</span>[<span class="string">&quot;SCRIPT_FILENAME&quot;</span>]);</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$D</span>==<span class="string">&quot;&quot;</span>)<span class="variable">$D</span>=<span class="title function_ invoke__">dirname</span>(<span class="variable">$_SERVER</span>[<span class="string">&quot;PATH_TRANSLATED&quot;</span>]);</span><br><span class="line"><span class="variable">$R</span>=<span class="string">&quot;<span class="subst">&#123;$D&#125;</span>\t&quot;</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">substr</span>(<span class="variable">$D</span>,<span class="number">0</span>,<span class="number">1</span>)!=<span class="string">&quot;/&quot;</span>)&#123;<span class="keyword">foreach</span>(<span class="title function_ invoke__">range</span>(<span class="string">&quot;A&quot;</span>,<span class="string">&quot;Z&quot;</span>) <span class="keyword">as</span> <span class="variable">$L</span>)<span class="keyword">if</span>(<span class="title function_ invoke__">is_dir</span>(<span class="string">&quot;<span class="subst">&#123;$L&#125;</span>:&quot;</span>))<span class="variable">$R</span>.=<span class="string">&quot;<span class="subst">&#123;$L&#125;</span>:&quot;</span>;&#125;</span><br><span class="line"><span class="variable">$R</span>.=<span class="string">&quot;\t&quot;</span>;</span><br><span class="line"><span class="variable">$u</span>=(<span class="title function_ invoke__">function_exists</span>(<span class="string">&#x27;posix_getegid&#x27;</span>))?@<span class="title function_ invoke__">posix_getpwuid</span>(@<span class="title function_ invoke__">posix_geteuid</span>()):<span class="string">&#x27;&#x27;</span>;</span><br><span class="line"><span class="variable">$usr</span>=(<span class="variable">$u</span>)?<span class="variable">$u</span>[<span class="string">&#x27;name&#x27;</span>]:@<span class="title function_ invoke__">get_current_user</span>();</span><br><span class="line"><span class="variable">$R</span>.=<span class="title function_ invoke__">php_uname</span>();<span class="variable">$R</span>.=<span class="string">&quot;(<span class="subst">&#123;$usr&#125;</span>)&quot;</span>;</span><br><span class="line"><span class="keyword">print</span> <span class="variable">$R</span>;</span><br><span class="line"><span class="keyword">echo</span>(<span class="string">&quot;|&lt;-&quot;</span>);<span class="keyword">die</span>();</span><br></pre></td></tr></table></figure>
 
-<p>从流量可以看到，这很明显是菜刀特征的webshell，先跟踪第一个伤处数据包的http流<br><img src="/images/BUUCTF-Misc/image_61.png" alt="在这里插入图片描述"></p>
-<p>结果：<br><img src="/images/BUUCTF-Misc/image_62.png" alt="在这里插入图片描述"></p>
+<p>从流量可以看到，这很明显是菜刀特征的webshell，先跟踪第一个伤处数据包的http流<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_61.png" alt="BUUCTF-Misc·图61"></p>
+<p>结果：<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_62.png" alt="BUUCTF-Misc·图62"></p>
 <table>
 <thead>
 <tr>
@@ -1841,19 +1712,19 @@ MathJax = {
 </tbody></table>
 <p>可以发现flag.rar password.txt 等文件。那思路很简单，先找到flag.rar</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">http contains <span class="string">&quot;flag&quot;</span></span><br></pre></td></tr></table></figure>
-<p><img src="/images/BUUCTF-Misc/image_63.png" alt="在这里插入图片描述"></p>
-<p>跟踪一下，看看是什么指令的回显<br><img src="/images/BUUCTF-Misc/image_64.png" alt="在这里插入图片描述"><br>所以，这就是我们想要的flag.rar<br><img src="/images/BUUCTF-Misc/image_65.png" alt="在这里插入图片描述"><br>导出为<code>flag.bin</code></p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_63.png" alt="BUUCTF-Misc·图63"></p>
+<p>跟踪一下，看看是什么指令的回显<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_64.png" alt="BUUCTF-Misc·图64"><br>所以，这就是我们想要的flag.rar<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_65.png" alt="BUUCTF-Misc·图65"><br>导出为<code>flag.bin</code></p>
 <p>指令：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">file flag.bin</span><br><span class="line">xxd flag.bin | <span class="built_in">head</span></span><br><span class="line">grep -abo <span class="string">&quot;Rar!&quot;</span> flag.bin</span><br><span class="line">grep -abo <span class="string">&quot;\[S\]&quot;</span> flag.bin</span><br><span class="line"></span><br><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=flag.bin of=flag.rar bs=1 skip=252 count=434</span><br><span class="line">	<span class="keyword">if</span>=flag.bin：输入文件（input file）。</span><br><span class="line">	of=flag.rar：输出文件（output file）。</span><br><span class="line">	bs=1：块大小（block size）为 1 字节，这样 skip 和 count 都以字节为单位，精确控制。</span><br><span class="line">	skip=252：跳过输入文件开头的 252 字节（即跳过 HTTP 头和 -&gt;| 等，直接到达第一个 Rar!）。</span><br><span class="line">	count=434：复制 434 字节。这个数字来自 [S] 的偏移 686 减去起始偏移 252：686 - 252 = 434。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p><img src="/images/BUUCTF-Misc/image_66.png" alt="在这里插入图片描述"><br>解压需要密码，那就找密码</p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_66.png" alt="BUUCTF-Misc·图66"><br>解压需要密码，那就找密码</p>
 <p>过滤指令：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">http contains <span class="string">&quot;password&quot;</span></span><br></pre></td></tr></table></figure>
-<p><img src="/images/BUUCTF-Misc/image_67.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_67.png" alt="BUUCTF-Misc·图67"></p>
 <p>但是这条指令就收索不到了。原有很简单，<code>cat flag.rar</code>其返回结果中是很有flag字样的，而<code>cat password.txt</code>就不一定有password。 那改为 <code>http contains &quot;cat password.txt 的base64编码&quot;</code> 可以吗？依然不可以，因为指令是与后门代码一同编码的，单独编码依然不可取。</p>
 <p>所以还是老老实实：<code>http.request.method == &quot;POST&quot;</code></p>
-<p><img src="/images/BUUCTF-Misc/image_68.png" alt="在这里插入图片描述"></p>
-<p>跟踪一下<br><img src="/images/BUUCTF-Misc/image_69.png" alt="在这里插入图片描述"><br>密码：<code>SuperHer0....Masters.</code>   但是解压错误！这是为什么？？？</p>
-<p>眼见不为实啊<br><img src="/images/BUUCTF-Misc/image_70.png" alt="在这里插入图片描述"><br>0x7F 是 DEL，那实际上的密码如下</p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_68.png" alt="BUUCTF-Misc·图68"></p>
+<p>跟踪一下<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_69.png" alt="BUUCTF-Misc·图69"><br>密码：<code>SuperHer0....Masters.</code>   但是解压错误！这是为什么？？？</p>
+<p>眼见不为实啊<br><img loading="lazy" decoding="async" src="/images/BUUCTF-Misc/image_70.png" alt="BUUCTF-Misc·图70"><br>0x7F 是 DEL，那实际上的密码如下</p>
 <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">原始：S u p e r H e r 0 [0x7f,0x7f,0x7f,0x7f] M a s t e r s [0x7f]</span><br><span class="line">1. 0 删除 → SuperHer</span><br><span class="line">2. r 删除 → SuperHe</span><br><span class="line">3. e 删除 → SuperH</span><br><span class="line">4. H 删除 → Super</span><br><span class="line">现在得到：Super</span><br><span class="line">拼接后面：Super + Masters → SuperMasters</span><br><span class="line">末尾0x7f删掉末尾s → SuperMaster</span><br></pre></td></tr></table></figure>
 
 <p>成功解压，得到：</p>
@@ -2069,6 +1940,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

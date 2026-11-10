@@ -7,7 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>第 14 页 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/page/14/index.html">
   <meta name="author" content="Qexzi">
+  
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -20,6 +23,8 @@
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -30,7 +35,6 @@
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -38,41 +42,15 @@
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -108,8 +86,44 @@ MathJax = {
   <div class="container">
   	<div class="content">
     	 <div class="page-header logo">
-  <h1>Attacking ...<span class="blink-fast">|</span></h1>
+  <h1><span id="typewriter-text">Attacking ...</span><span class="blink-fast" id="typewriter-caret">|</span></h1>
 </div>
+<script>
+(function () {
+  var txt = document.getElementById('typewriter-text');
+  var caret = document.getElementById('typewriter-caret');
+  if (!txt || !caret) return;
+  var FULL = txt.textContent;
+  if (!FULL) return;
+  // 系统开启“减弱动态效果”时不做打字动画，保持完整标题
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  txt.textContent = '';
+  var i = 0, dir = 1;
+  function tick() {
+    if (dir === 1) {
+      // 打字：光标实心
+      i++; txt.textContent = FULL.slice(0, i); caret.classList.remove('idle');
+      if (i >= FULL.length) {
+        // 打完短暂停留后进入空闲，光标硬闪
+        dir = 0;
+        setTimeout(function () {
+          caret.classList.add('idle');
+          setTimeout(function () { dir = -1; tick(); }, 2200);
+        }, 350);
+        return;
+      }
+      setTimeout(tick, 120);
+    } else {
+      // 删除：光标实心，速度加快
+      caret.classList.remove('idle');
+      i--; txt.textContent = FULL.slice(0, i);
+      if (i <= 0) { dir = 1; setTimeout(tick, 700); return; }
+      setTimeout(tick, 38);
+    }
+  }
+  setTimeout(tick, 400);
+})();
+</script>
 
 <div class="row page">
 
@@ -154,11 +168,11 @@ MathJax = {
 		<h2 id="强网杯-2019-随便注"><a href="#强网杯-2019-随便注" class="headerlink" title="[强网杯 2019]随便注"></a>[强网杯 2019]随便注</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">万能钥匙：<span class="number">1</span><span class="string">&#x27; or 1=1 -- +qwe 成功闭合</span></span><br><span class="line"><span class="string">测试列数：1&#x27;</span> <span class="keyword">order</span> <span class="keyword">by</span> <span class="number">2</span> <span class="comment">-- +qwe 实为2列，超过2报错</span></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">探测显示位：<span class="number">1</span><span class="string">&#x27; union select 1,2 -- +qwe</span></span><br></pre></td></tr></table></figure>
-<p><img src="/images/BUUCTF-Web/image_1.png" alt="在这里插入图片描述"></p>
+<p><img src="/images/BUUCTF-Web/image_1.png" alt="BUUCTF-Web·图1"></p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">尝试一下绕过正则过滤：<span class="number">1</span><span class="string">&#x27; union se%0Alect 1,2 -- +qwe</span></span><br></pre></td></tr></table></figure>
-<p><img src="/images/BUUCTF-Web/image_2.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Web/image_2.png" alt="BUUCTF-Web·图2"></p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">继续尝试：<span class="number">1</span><span class="string">&#x27; union se%0Alect 1,2 or &#x27;</span><span class="number">1</span><span class="string">&#x27;=&#x27;</span><span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p><img src="/images/BUUCTF-Web/image_3.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Web/image_3.png" alt="BUUCTF-Web·图3"></p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">引入一些绕过技巧，当然在这题均失败</span><br><span class="line"></span><br><span class="line">编码绕过：</span><br><span class="line">	<span class="number">1</span><span class="string">&#x27; union se%0Alect 1,2 -- +qwe</span></span><br><span class="line"><span class="string">	1&#x27;</span> <span class="keyword">union</span> se<span class="operator">%</span><span class="number">0</span>Dlect <span class="number">1</span>,<span class="number">2</span> <span class="comment">-- +qwe</span></span><br><span class="line">	<span class="number">1</span><span class="string">&#x27; union se%0Blect 1,2 -- +qwe</span></span><br><span class="line"><span class="string">	1&#x27;</span> <span class="keyword">union</span> se<span class="operator">%</span><span class="number">0</span>Clect <span class="number">1</span>,<span class="number">2</span> <span class="comment">-- +qwe</span></span><br><span class="line">	<span class="number">1</span><span class="string">&#x27; union s%09e%09l%09e%09c%09t%091,2%09--%09qwe</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">注释绕过：</span></span><br><span class="line"><span class="string">	1&#x27;</span> <span class="keyword">union</span> se<span class="comment">/**/</span>lect <span class="number">1</span>,<span class="number">2</span> <span class="comment">-- +qwe</span></span><br><span class="line">	<span class="number">1</span><span class="string">&#x27; union se/*a*/lect 1,2 -- +qwe</span></span><br><span class="line"><span class="string">	1&#x27;</span> <span class="keyword">union</span> se<span class="comment">/*abc*/</span>lect <span class="number">1</span>,<span class="number">2</span> <span class="comment">-- +qwe</span></span><br><span class="line"></span><br><span class="line">大小写绕过：(这肯定失败： <span class="operator">/</span>i)</span><br><span class="line">	<span class="number">1</span><span class="string">&#x27; union sElEct 1,2 -- +qwe</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
@@ -200,7 +214,7 @@ MathJax = {
 </ul>
 </li>
 <li><p><strong>运行时数据区</strong>：</p>
-<p><img src="/images/Java%E5%9F%BA%E7%A1%80/image_1.png" alt="在这里插入图片描述"></p>
+<p><img src="/images/Java%E5%9F%BA%E7%A1%80/image_1.png" alt="Java基础·图1"></p>
 </li>
 <li><p><strong>垃圾回收机制</strong>：</p>
 <ul>
@@ -415,45 +429,45 @@ MathJax = {
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
+			<li><a href="/tags/hook/">hook<span>1</span></a></li>
+		
+			<li><a href="/tags/Jenkins/">Jenkins<span>1</span></a></li>
+		
+			<li><a href="/tags/XXE/">XXE<span>1</span></a></li>
+		
+			<li><a href="/tags/网络层/">网络层<span>1</span></a></li>
+		
+			<li><a href="/tags/windows/">windows<span>1</span></a></li>
+		
 			<li><a href="/tags/Java/">Java<span>1</span></a></li>
 		
-			<li><a href="/tags/Redis/">Redis<span>1</span></a></li>
+			<li><a href="/tags/GitHub-Dork/">GitHub Dork<span>1</span></a></li>
 		
-			<li><a href="/tags/应用层/">应用层<span>1</span></a></li>
+			<li><a href="/tags/传输层/">传输层<span>1</span></a></li>
 		
-			<li><a href="/tags/刷机/">刷机<span>1</span></a></li>
+			<li><a href="/tags/信息安全工程师/">信息安全工程师<span>1</span></a></li>
 		
-			<li><a href="/tags/指令/">指令<span>3</span></a></li>
-		
-			<li><a href="/tags/神经网络基础/">神经网络基础<span>1</span></a></li>
-		
-			<li><a href="/tags/堆/">堆<span>1</span></a></li>
-		
-			<li><a href="/tags/DIV/">DIV<span>1</span></a></li>
-		
-			<li><a href="/tags/同源策略/">同源策略<span>1</span></a></li>
-		
-			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
-		
-			<li><a href="/tags/Google-Hacking/">Google Hacking<span>1</span></a></li>
-		
-			<li><a href="/tags/Java安全/">Java安全<span>1</span></a></li>
-		
-			<li><a href="/tags/Next/">Next<span>1</span></a></li>
-		
-			<li><a href="/tags/crawlers/">crawlers<span>1</span></a></li>
-		
-			<li><a href="/tags/计算机体系架构/">计算机体系架构<span>1</span></a></li>
-		
-			<li><a href="/tags/软考/">软考<span>1</span></a></li>
-		
-			<li><a href="/tags/Nginx/">Nginx<span>1</span></a></li>
+			<li><a href="/tags/Mysql/">Mysql<span>1</span></a></li>
 		
 			<li><a href="/tags/CORS/">CORS<span>2</span></a></li>
 		
-			<li><a href="/tags/js/">js<span>4</span></a></li>
+			<li><a href="/tags/神经网络基础/">神经网络基础<span>1</span></a></li>
 		
-			<li><a href="/tags/栈/">栈<span>1</span></a></li>
+			<li><a href="/tags/刷机/">刷机<span>1</span></a></li>
+		
+			<li><a href="/tags/计算机体系架构/">计算机体系架构<span>1</span></a></li>
+		
+			<li><a href="/tags/物理层/">物理层<span>1</span></a></li>
+		
+			<li><a href="/tags/隧道技术/">隧道技术<span>1</span></a></li>
+		
+			<li><a href="/tags/VPN/">VPN<span>1</span></a></li>
+		
+			<li><a href="/tags/WEB/">WEB<span>1</span></a></li>
+		
+			<li><a href="/tags/FOFA/">FOFA<span>1</span></a></li>
+		
+			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
 		
 		
 		   <li><a href="/tags">...<span>68</span></a></li>
@@ -514,6 +528,7 @@ MathJax = {
 	
 	
 </div> <!-- row-fluid -->
+
 	</div>
   </div>
   <div class="container-narrow">
@@ -538,6 +553,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

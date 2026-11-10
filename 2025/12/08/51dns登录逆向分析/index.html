@@ -7,16 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>51dns登录逆向分析 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2025/12/08/51dns登录逆向分析/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="对 email_or_phone 和 password 的加密算法进行逆向分析
-先看个堆栈
-一下子就定位到了
-password 与 email_or_phone 的加密算法是一样的，研究一个就行
-跟进aes()
-这就找到了
-验证一下
-没有问题，k 与 iv 都是硬编码固定死的，比较简单">
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -29,6 +23,8 @@ password 与 email_or_phone 的加密算法是一样的，研究一个就行
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -39,7 +35,6 @@ password 与 email_or_phone 的加密算法是一样的，研究一个就行
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -47,41 +42,18 @@ password 与 email_or_phone 的加密算法是一样的，研究一个就行
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"51dns登录逆向分析","datePublished":"2025-12-08T04:00:00.000Z","dateModified":"2025-12-08T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2025/12/08/51dns登录逆向分析/","description":"对 email_or_phone 和 password 的加密算法进行逆向分析 先看个堆栈 一下子就定位到了 password 与 email_or_phone 的加密算法是一样的，研究一个就行 跟进aes() 这就找到了 验证一下 没有问题，k 与 iv 都是硬编码固定死的，比较简单"}</script>
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -150,13 +122,13 @@ MathJax = {
 		  
 		  
 
-		  <p>对 <code>email_or_phone</code> 和 <code>password</code> 的加密算法进行逆向分析<br><img src="/images/51dns%E7%99%BB%E5%BD%95%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/image_1.png" alt="在这里插入图片描述"></p>
-<p>先看个堆栈<br><img src="/images/51dns%E7%99%BB%E5%BD%95%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/image_2.png" alt="在这里插入图片描述"></p>
-<p>一下子就定位到了<br><img src="/images/51dns%E7%99%BB%E5%BD%95%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/image_3.png" alt="在这里插入图片描述"></p>
-<p>password 与 email_or_phone 的加密算法是一样的，研究一个就行<br><img src="/images/51dns%E7%99%BB%E5%BD%95%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/image_4.png" alt="在这里插入图片描述"></p>
-<p>跟进aes()<br><img src="/images/51dns%E7%99%BB%E5%BD%95%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/image_5.png" alt="在这里插入图片描述"></p>
-<p>这就找到了<br><img src="/images/51dns%E7%99%BB%E5%BD%95%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/image_6.png" alt="在这里插入图片描述"></p>
-<p>验证一下<br><img src="/images/51dns%E7%99%BB%E5%BD%95%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/image_7.png" alt="在这里插入图片描述"></p>
+		  <p>对 <code>email_or_phone</code> 和 <code>password</code> 的加密算法进行逆向分析<br><img src="/images/51dns%E7%99%BB%E5%BD%95%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/image_1.png" alt="51dns登录逆向分析·图1"></p>
+<p>先看个堆栈<br><img loading="lazy" decoding="async" src="/images/51dns%E7%99%BB%E5%BD%95%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/image_2.png" alt="51dns登录逆向分析·图2"></p>
+<p>一下子就定位到了<br><img loading="lazy" decoding="async" src="/images/51dns%E7%99%BB%E5%BD%95%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/image_3.png" alt="51dns登录逆向分析·图3"></p>
+<p>password 与 email_or_phone 的加密算法是一样的，研究一个就行<br><img loading="lazy" decoding="async" src="/images/51dns%E7%99%BB%E5%BD%95%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/image_4.png" alt="51dns登录逆向分析·图4"></p>
+<p>跟进aes()<br><img loading="lazy" decoding="async" src="/images/51dns%E7%99%BB%E5%BD%95%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/image_5.png" alt="51dns登录逆向分析·图5"></p>
+<p>这就找到了<br><img loading="lazy" decoding="async" src="/images/51dns%E7%99%BB%E5%BD%95%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/image_6.png" alt="51dns登录逆向分析·图6"></p>
+<p>验证一下<br><img loading="lazy" decoding="async" src="/images/51dns%E7%99%BB%E5%BD%95%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/image_7.png" alt="51dns登录逆向分析·图7"></p>
 <p>没有问题，k 与 iv 都是硬编码固定死的，比较简单</p>
 
 		  <div class="article-footer-copyright">
@@ -362,6 +334,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

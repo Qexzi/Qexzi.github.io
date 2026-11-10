@@ -7,7 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>第 16 页 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/page/16/index.html">
   <meta name="author" content="Qexzi">
+  
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -20,6 +23,8 @@
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -30,7 +35,6 @@
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -38,41 +42,15 @@
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -108,8 +86,44 @@ MathJax = {
   <div class="container">
   	<div class="content">
     	 <div class="page-header logo">
-  <h1>Attacking ...<span class="blink-fast">|</span></h1>
+  <h1><span id="typewriter-text">Attacking ...</span><span class="blink-fast" id="typewriter-caret">|</span></h1>
 </div>
+<script>
+(function () {
+  var txt = document.getElementById('typewriter-text');
+  var caret = document.getElementById('typewriter-caret');
+  if (!txt || !caret) return;
+  var FULL = txt.textContent;
+  if (!FULL) return;
+  // 系统开启“减弱动态效果”时不做打字动画，保持完整标题
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  txt.textContent = '';
+  var i = 0, dir = 1;
+  function tick() {
+    if (dir === 1) {
+      // 打字：光标实心
+      i++; txt.textContent = FULL.slice(0, i); caret.classList.remove('idle');
+      if (i >= FULL.length) {
+        // 打完短暂停留后进入空闲，光标硬闪
+        dir = 0;
+        setTimeout(function () {
+          caret.classList.add('idle');
+          setTimeout(function () { dir = -1; tick(); }, 2200);
+        }, 350);
+        return;
+      }
+      setTimeout(tick, 120);
+    } else {
+      // 删除：光标实心，速度加快
+      caret.classList.remove('idle');
+      i--; txt.textContent = FULL.slice(0, i);
+      if (i <= 0) { dir = 1; setTimeout(tick, 700); return; }
+      setTimeout(tick, 38);
+    }
+  }
+  setTimeout(tick, 400);
+})();
+</script>
 
 <div class="row page">
 
@@ -207,17 +221,17 @@ MathJax = {
   <div class="row">
 	
 	
-		<h3 id="0x01-堆栈找逻辑"><a href="#0x01-堆栈找逻辑" class="headerlink" title="0x01:堆栈找逻辑"></a>0x01:堆栈找逻辑</h3><p><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_1.png" alt="在这里插入图片描述"></p>
-<p>先大致查看一下请求<br><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_2.png" alt="在这里插入图片描述"></p>
-<p>重点关注参数 <code>sign</code> 并进行跟踪，使用全局搜索取定位sign的产生逻辑<br><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_3.png" alt="在这里插入图片描述"></p>
-<p>全局搜素sign会发现很多结果（sign: 的结果也很多），所以全局搜索<code>pointParam</code>  或  <code>pointParam:</code>  (经判断两者关系密切)<br><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_4.png" alt="在这里插入图片描述"></p>
+		<h3 id="0x01-堆栈找逻辑"><a href="#0x01-堆栈找逻辑" class="headerlink" title="0x01:堆栈找逻辑"></a>0x01:堆栈找逻辑</h3><p><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_1.png" alt="有道翻译js逆向·图1"></p>
+<p>先大致查看一下请求<br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_2.png" alt="有道翻译js逆向·图2"></p>
+<p>重点关注参数 <code>sign</code> 并进行跟踪，使用全局搜索取定位sign的产生逻辑<br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_3.png" alt="有道翻译js逆向·图3"></p>
+<p>全局搜素sign会发现很多结果（sign: 的结果也很多），所以全局搜索<code>pointParam</code>  或  <code>pointParam:</code>  (经判断两者关系密切)<br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_4.png" alt="有道翻译js逆向·图4"></p>
 <p>那就对这个所有搜索结果（粗略判断后）的外层函数或者是关键变量（可以清楚对目标参数的赋值关系）处断点</p>
-<p><strong>断点1：</strong><br><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_5.png" alt="在这里插入图片描述"></p>
+<p><strong>断点1：</strong><br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_5.png" alt="有道翻译js逆向·图5"></p>
 <p><strong>断点2：</strong> </p>
 <blockquote>
 <p>有一个小插曲，*app…. 此时的文件是不可以下断点的，表示文件已被本地修改（通过 DevTools 的 Overrides 功能）<br>后来我有重新抓包，就可以下断点了（原因未知，待议）</p>
 </blockquote>
-<p><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_6.png" alt="在这里插入图片描述"><br>还有 <code>t = cf41bbc6c60a46ff</code> 似乎就sign加密的密钥了，Me()() 是连续调用的格式</p>
+<p><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_6.png" alt="有道翻译js逆向·图6"><br>还有 <code>t = cf41bbc6c60a46ff</code> 似乎就sign加密的密钥了，Me()() 是连续调用的格式</p>
 	
 	</div>
   <a type="button" href="/2025/12/09/有道翻译js逆向/#more" class="btn btn-default more">阅读此文</a>
@@ -322,45 +336,45 @@ MathJax = {
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/PHP/">PHP<span>1</span></a></li>
+			<li><a href="/tags/深度学习/">深度学习<span>2</span></a></li>
 		
-			<li><a href="/tags/CSS/">CSS<span>1</span></a></li>
+			<li><a href="/tags/信息安全工程师/">信息安全工程师<span>1</span></a></li>
 		
-			<li><a href="/tags/root/">root<span>1</span></a></li>
+			<li><a href="/tags/计算机网络/">计算机网络<span>7</span></a></li>
 		
-			<li><a href="/tags/Java/">Java<span>1</span></a></li>
+			<li><a href="/tags/FOFA/">FOFA<span>1</span></a></li>
 		
-			<li><a href="/tags/计算机体系架构/">计算机体系架构<span>1</span></a></li>
+			<li><a href="/tags/SQL注入/">SQL注入<span>1</span></a></li>
 		
-			<li><a href="/tags/数据链路层/">数据链路层<span>1</span></a></li>
+			<li><a href="/tags/软考/">软考<span>1</span></a></li>
 		
-			<li><a href="/tags/邮箱解析/">邮箱解析<span>1</span></a></li>
-		
-			<li><a href="/tags/Mysql/">Mysql<span>1</span></a></li>
-		
-			<li><a href="/tags/Pwn/">Pwn<span>3</span></a></li>
+			<li><a href="/tags/应急响应/">应急响应<span>1</span></a></li>
 		
 			<li><a href="/tags/网络层/">网络层<span>1</span></a></li>
 		
-			<li><a href="/tags/DIV/">DIV<span>1</span></a></li>
+			<li><a href="/tags/CSS/">CSS<span>1</span></a></li>
 		
-			<li><a href="/tags/深度学习/">深度学习<span>2</span></a></li>
+			<li><a href="/tags/渗透测试/">渗透测试<span>1</span></a></li>
 		
-			<li><a href="/tags/windows/">windows<span>1</span></a></li>
+			<li><a href="/tags/SSH/">SSH<span>1</span></a></li>
+		
+			<li><a href="/tags/JWT/">JWT<span>1</span></a></li>
+		
+			<li><a href="/tags/物理层/">物理层<span>1</span></a></li>
 		
 			<li><a href="/tags/Linux/">Linux<span>1</span></a></li>
 		
-			<li><a href="/tags/应用层/">应用层<span>1</span></a></li>
+			<li><a href="/tags/windows/">windows<span>1</span></a></li>
 		
-			<li><a href="/tags/CNN与RNN基础/">CNN与RNN基础<span>1</span></a></li>
+			<li><a href="/tags/堆/">堆<span>1</span></a></li>
 		
-			<li><a href="/tags/神经网络基础/">神经网络基础<span>1</span></a></li>
+			<li><a href="/tags/Java/">Java<span>1</span></a></li>
 		
-			<li><a href="/tags/WEB/">WEB<span>1</span></a></li>
+			<li><a href="/tags/Nginx/">Nginx<span>1</span></a></li>
 		
-			<li><a href="/tags/刷机/">刷机<span>1</span></a></li>
+			<li><a href="/tags/DIV/">DIV<span>1</span></a></li>
 		
-			<li><a href="/tags/内网/">内网<span>2</span></a></li>
+			<li><a href="/tags/SRC/">SRC<span>2</span></a></li>
 		
 		
 		   <li><a href="/tags">...<span>68</span></a></li>
@@ -421,6 +435,7 @@ MathJax = {
 	
 	
 </div> <!-- row-fluid -->
+
 	</div>
   </div>
   <div class="container-narrow">
@@ -445,6 +460,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

@@ -7,119 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>JWT | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2026/04/10/JWT/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="0x.00.JWT基础知识
-🧩 JWT 的核心结构
-
-一个 JWT 由三部分组成，用 . 分隔：
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-
-
-
-
-部分
-名称
-说明
-
-
-
-第一段
-Header（头部）
-包含令牌类型（typ: &amp;quot;JWT&amp;quot;）和签名算法（如 HS256、RS256）。Base64Url 编码。
-
-
-第二段
-Payload（载荷）
-包含声明（claims），如主题声明（sub）、过期时间（exp）、签发时间（iat）等。Base64Url 编码。
-
-
-第三段
-Signature（签名）
-对前两部分进行签名，防止篡改。
-
-
-
-注册声明
-
-官方声明
-iss (issuer)：签发方
-iat (issued at)：签发时间
-sub (subject)：主题（一般放用户唯一标识）
-aud (audience)：受众
-exp (expiration time)：过期时间
-nbf (not before)：在此时间之前不可用
-jti (JWT ID)：唯一编号，防重放
-
-
-公共声明（Public Claims）:由 IANA 统一登记维护，行业通用、无冲突风险，不属于官方注册声明但广泛使用
-auth_time：用户实际完成身份认证的时间
-nonce：随机值，多用于 OIDC 场景，防止重放攻击
-azp：授权参与方，通常存储客户端 ID
-scope：权限范围字段，定义令牌可访问的资源范围
-client_id：调用接口的客户端唯一标识
-sid：会话 ID，关联用户当前登录会话
-at_hash：访问令牌哈希值，OIDC 中用于校验令牌一致性
-
-
-私有声明（Private Claims）:业务方自定义字段，无统一标准，JWT 渗透测试中最核心的篡改目标
-role&amp;#x2F;roles：用户角色，常见值 user&amp;#x2F;admin&amp;#x2F;root
-username：登录用户名
-userId&amp;#x2F;uid&amp;#x2F;id：用户唯一标识 ID
-admin：布尔型标识，true 代表管理员权限
-permissions：权限数组，存储具体操作权限
-email：用户邮箱
-group：用户所属分组
-is_admin：管理员权限标识
-
-
-
-
-✅ JWT 的典型使用流程
-
-登录：客户端发送用户名&amp;#x2F;密码 → 服务器验证成功 → 生成 JWT 并返回。
-存储：客户端通常将 JWT 保存在 localStorage、sessionStorage 或 HttpOnly Cookie 中。
-请求：客户端在后续请求的 Authorization 头或是Cookie中携带 JWT
-验证：服务器收到 JWT 后，验证签名、有效期、issuer 等，从载荷中提取用户身份。
-
-
-📦 JWT vs Session（传统会话）
-
-
-
-
-
-特性
-JWT
-Session
-
-
-
-服务端存储
-无状态（不存储）
-有状态（存储会话数据）
-
-
-扩展性
-易于水平扩展
-需要共享存储（如 Redis）
-
-
-吊销能力
-困难（需黑名单）
-简单（删除会话记录）
-
-
-载荷大小
-较大（包含用户信息）
-很小（仅 session ID）
-
-
-
-流程图
-
-实现身份认证依靠的是检查 令牌的完整性（未被篡改）和真实性（由服务器签发），就会设置JWT的比对机制
-对称签名算法(HS256，即 HMAC+SHA256)：同一个密钥既用于生成签名，也用于验证签名。这个密钥必须绝对保密，不能让客户端或任何第三方知道。若服务器可以使用所存处的密钥成功对应客户端发来的jwt进行解密，则通过认证。"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -132,6 +23,8 @@ Session
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -142,7 +35,6 @@ Session
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -150,41 +42,18 @@ Session
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"JWT","datePublished":"2026-04-10T04:00:00.000Z","dateModified":"2026-04-10T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2026/04/10/JWT/","description":"0x.00.JWT基础知识 🧩 JWT 的核心结构 一个 JWT 由三部分组成，用 . 分隔： eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQs"}</script>
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -362,7 +231,7 @@ MathJax = {
 <ol start="5">
 <li><code>流程图</code></li>
 </ol>
-<p><img src="/images/JWT/image_1.png" alt="在这里插入图片描述"><br>实现身份认证依靠的是检查 令牌的<code>完整性</code>（未被篡改）和<code>真实性</code>（由服务器签发），就会设置JWT的比对机制</p>
+<p><img src="/images/JWT/image_1.png" alt="JWT·图1"><br>实现身份认证依靠的是检查 令牌的<code>完整性</code>（未被篡改）和<code>真实性</code>（由服务器签发），就会设置JWT的比对机制</p>
 <p><strong><code>对称签名算法</code></strong>(HS256，即 HMAC+SHA256)：同一个密钥既用于生成签名，也用于验证签名。这个密钥必须绝对保密，不能让<code>客户端</code>或<code>任何第三方</code>知道。若服务器可以使用所存处的密钥成功对应客户端发来的jwt进行解密，则通过认证。</p>
 <p><strong><code>非对称签名算法</code></strong>(RS256，即 RSA+SHA256)：服务端用私钥（Private Key） 生成签名，客户端或资源服务器用对应的公钥（Public Key） 验证签名。私钥只有服务端持有，公钥可以公开，则核心是<code>私钥</code>。 若服务器可以使用所存处的公钥成功对应客户端发来的jwt进行解密，则通过认证</p>
 <p><strong><code>注意：</code></strong> jwt 的生成过程都是 <code>Header</code> 与 <code>Payload</code> 分别  <code>Base64URL</code> 随后将其拼接在一起，然后进行 <code>hash</code>，再对hash后的结果进行<code>签名</code>得到 <code>signature</code>，然后再对signature进行 <code>Base64URL</code>。最后三部分拼接在一起，即：<code>Base64Header.Base64Payload.Base64Signature</code></p>
@@ -426,32 +295,32 @@ MathJax = {
 </ul>
 <hr>
 <h3 id="0x01-通过未验证签名绕过-JWT-身份验证"><a href="#0x01-通过未验证签名绕过-JWT-身份验证" class="headerlink" title="0x01.通过未验证签名绕过 JWT 身份验证"></a>0x01.通过未验证签名绕过 JWT 身份验证</h3><p>本实验采用基于 JWT的机制来管理会话。由于实现存在缺陷，服务器<code>不会</code>对接收到的任意 JWT 令牌进行签名验证。<br>要完成本实验，你需要修改会话令牌，从而访问位于 &#x2F;admin 的管理员面板，然后删除用户 carlos。<br>你可以使用以下凭据登录自己的账户：wiener:peter</p>
-<p><img src="/images/JWT/image_2.png" alt="在这里插入图片描述"></p>
-<p>修改wiener为administrator，直接发送不用什么加密<br><img src="/images/JWT/image_3.png" alt="在这里插入图片描述"></p>
-<p>跟随重定向<br><img src="/images/JWT/image_4.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/JWT/image_2.png" alt="JWT·图2"></p>
+<p>修改wiener为administrator，直接发送不用什么加密<br><img loading="lazy" decoding="async" src="/images/JWT/image_3.png" alt="JWT·图3"></p>
+<p>跟随重定向<br><img loading="lazy" decoding="async" src="/images/JWT/image_4.png" alt="JWT·图4"></p>
 <p>随后就是访问&#x2F;admin，使用delete的api就可以删除用户了</p>
 <p>这次攻击之所以能成功，是因为服务器在解析 JWT 时错误地使用了<code>仅解码</code>（Decode）而<code>非验证</code>（Verify）的方法</p>
 <hr>
 <h3 id="0x02-利用存在缺陷的签名验证实现-JWT-认证绕过"><a href="#0x02-利用存在缺陷的签名验证实现-JWT-认证绕过" class="headerlink" title="0x02.利用存在缺陷的签名验证实现 JWT 认证绕过"></a>0x02.利用存在缺陷的签名验证实现 JWT 认证绕过</h3><p>本实验采用基于 JWT 的会话管理机制。服务器存在不安全配置，会接受未签名的 JWT。<br>要完成该实验，需修改你的会话令牌，以访问位于 &#x2F;admin 的管理员面板，然后删除用户 carlos。<br>你可以使用以下凭据登录自己的账户：wiener:peter</p>
-<p><img src="/images/JWT/image_5.png" alt="在这里插入图片描述"></p>
-<p>失败，应为alg为none,就需要移除 signature<br><img src="/images/JWT/image_6.png" alt="在这里插入图片描述"></p>
-<p><img src="/images/JWT/image_7.png" alt="在这里插入图片描述"><br>随后就是访问&#x2F;admin，使用delete的api就可以删除用户了</p>
+<p><img loading="lazy" decoding="async" src="/images/JWT/image_5.png" alt="JWT·图5"></p>
+<p>失败，应为alg为none,就需要移除 signature<br><img loading="lazy" decoding="async" src="/images/JWT/image_6.png" alt="JWT·图6"></p>
+<p><img loading="lazy" decoding="async" src="/images/JWT/image_7.png" alt="JWT·图7"><br>随后就是访问&#x2F;admin，使用delete的api就可以删除用户了</p>
 <hr>
 <h3 id="0x03-通过弱签名密钥绕过-JWT-身份认证"><a href="#0x03-通过弱签名密钥绕过-JWT-身份认证" class="headerlink" title="0x03.通过弱签名密钥绕过 JWT 身份认证"></a>0x03.通过弱签名密钥绕过 JWT 身份认证</h3><p>要完成本实验需要：暴力破解网站的 JWT 签名密钥；用该密钥为修改后的会话令牌重新签名；凭借修改后的令牌获取&#x2F;admin管理员面板的访问权限删除用户carlos。你可使用以下凭据登录个人账户：wiener:peter<br>同时推荐使用hashcat工具暴力破解密钥</p>
-<p><img src="/images/JWT/image_8.png" alt="在这里插入图片描述"><br> HS256对称签名算法 ，测试弱口令爆破<br><img src="/images/JWT/image_9.png" alt="在这里插入图片描述"><br>使用了JWT editor 插件内置的字段（适用于靶场而已），密钥：<code>secret1</code></p>
-<p>创建密钥<br><img src="/images/JWT/image_10.png" alt="在这里插入图片描述"></p>
-<p>sign<br><img src="/images/JWT/image_11.png" alt="在这里插入图片描述"></p>
-<p>调用api删除用户即可<br><img src="/images/JWT/image_12.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/JWT/image_8.png" alt="JWT·图8"><br> HS256对称签名算法 ，测试弱口令爆破<br><img loading="lazy" decoding="async" src="/images/JWT/image_9.png" alt="JWT·图9"><br>使用了JWT editor 插件内置的字段（适用于靶场而已），密钥：<code>secret1</code></p>
+<p>创建密钥<br><img loading="lazy" decoding="async" src="/images/JWT/image_10.png" alt="JWT·图10"></p>
+<p>sign<br><img loading="lazy" decoding="async" src="/images/JWT/image_11.png" alt="JWT·图11"></p>
+<p>调用api删除用户即可<br><img loading="lazy" decoding="async" src="/images/JWT/image_12.png" alt="JWT·图12"></p>
 <hr>
 <h3 id="0x04-通过-JWK-头部注入绕过-JWT-身份认证"><a href="#0x04-通过-JWK-头部注入绕过-JWT-身份认证" class="headerlink" title="0x04.通过 JWK 头部注入绕过 JWT 身份认证"></a>0x04.通过 JWK 头部注入绕过 JWT 身份认证</h3><p>本实验采用基于 JWT（JSON Web 令牌） 的会话管理机制。服务器支持在 JWT 头部中使用 jwk（JSON Web Key）参数，该参数原本的设计用途是直接在令牌内嵌入用于验证签名的公钥，简化验签流程。但该服务器存在致命漏洞：完全未校验 JWT 头部中提供的 jwk 公钥是否来自可信源，直接用该公钥验证 JWT 签名。<br>要完成本实验，你需要：自行生成一对 RSA 密钥，篡改普通用户（wiener）的 JWT 令牌（将 sub 字段改为管理员身份）；用自己的私钥对篡改后的 JWT 签名，并将公钥通过 jwk 字段嵌入 JWT 头部;用该伪造的 JWT 访问 &#x2F;admin 管理员面板;在管理员面板中删除用户 carlos<br>你可以使用以下凭据登录普通用户账户，获取初始有效 JWT：wiener:peter</p>
 <p><code>jwk（JSON Web Key）</code>是 JWT 标准预留字段，<code>设计初衷</code>是分布式系统中公钥自动发现，仅允许信任的第三方公钥传入，而非客户端任意传入。</p>
 <p><code>漏洞所在</code>：服务端验签时未遵守「公钥可信原则」，而是无条件优先提取 JWT Header 中jwk字段的公钥，无任何合法性、来源校验，直接用该公钥执行验签操作。</p>
 <p><code>安全前提被突破</code>：RS256 的安全核心是「私钥绝密 + 公钥可信」，开发者的错误实现让客户端完全控制验签公钥，等效于赋予攻击者 “自主签发合法 JWT” 的权限，彻底绕过了服务端的密钥信任体系。</p>
-<p><code>RS256</code>即非对称签名算法  - 公钥，则可以尝试 <code>jwk</code><br><img src="/images/JWT/image_13.png" alt="在这里插入图片描述"></p>
-<p>生成密钥(RSA)，至于是多少位，没有任何关系，默认就行<br><img src="/images/JWT/image_14.png" alt="在这里插入图片描述"></p>
-<p>运用一下<br><img src="/images/JWT/image_15.png" alt="在这里插入图片描述"></p>
-<p>自动修改（补充，安全的生产标准下，不存在<code>jwk</code>参数的）<br><img src="/images/JWT/image_16.png" alt="在这里插入图片描述"></p>
-<p>访问&#x2F;admin<br><img src="/images/JWT/image_17.png" alt="在这里插入图片描述"></p>
+<p><code>RS256</code>即非对称签名算法  - 公钥，则可以尝试 <code>jwk</code><br><img loading="lazy" decoding="async" src="/images/JWT/image_13.png" alt="JWT·图13"></p>
+<p>生成密钥(RSA)，至于是多少位，没有任何关系，默认就行<br><img loading="lazy" decoding="async" src="/images/JWT/image_14.png" alt="JWT·图14"></p>
+<p>运用一下<br><img loading="lazy" decoding="async" src="/images/JWT/image_15.png" alt="JWT·图15"></p>
+<p>自动修改（补充，安全的生产标准下，不存在<code>jwk</code>参数的）<br><img loading="lazy" decoding="async" src="/images/JWT/image_16.png" alt="JWT·图16"></p>
+<p>访问&#x2F;admin<br><img loading="lazy" decoding="async" src="/images/JWT/image_17.png" alt="JWT·图17"></p>
 <p>随后调用一下删除用户的api就行</p>
 <hr>
 <h3 id="0x05-通过-jku-头部注入实现-JWT-身份认证绕过"><a href="#0x05-通过-jku-头部注入实现-JWT-身份认证绕过" class="headerlink" title="0x05.通过 jku 头部注入实现 JWT 身份认证绕过"></a>0x05.通过 jku 头部注入实现 JWT 身份认证绕过</h3><p>本实验采用基于 JWT（JSON Web Token） 的会话管理机制。服务端支持在 JWT 头部使用 jku（JSON Web Key Set URL，JSON Web 密钥集地址）参数，但存在致命安全缺陷：在根据该参数拉取验签用的公钥时，完全未校验提供的 URL 是否属于可信域名。<br>实验目标：伪造一个合法的 JWT，以此绕过身份认证，访问 &#x2F;admin 路径下的管理员后台，最终删除用户 carlos。<br>可用登录凭证：用户名：wiener；密码：peter</p>
@@ -497,20 +366,20 @@ MathJax = {
 </li>
 </ol>
 </blockquote>
-<p><code>RS256</code><br><img src="/images/JWT/image_18.png" alt="在这里插入图片描述"></p>
-<p>创建密钥对，复制公钥<br><img src="/images/JWT/image_19.png" alt="在这里插入图片描述"></p>
-<p>存储到服务器<br><img src="/images/JWT/image_20.png" alt="在这里插入图片描述"></p>
-<p><code>原来</code>的数据包分析<br><img src="/images/JWT/image_21.png" alt="在这里插入图片描述"></p>
-<p>修改<br><img src="/images/JWT/image_22.png" alt="在这里插入图片描述"></p>
-<p>签名<br><img src="/images/JWT/image_23.png" alt="在这里插入图片描述"></p>
-<p>都是发现还是无法通关，在检查了一遍之后发现是 <code>公钥</code> 的问题。jku 字段的标准要求是：服务端拉取的<code>必须是</code> JWKS（JSON Web Key Set）格式，也就是必须用 <code>keys 数组</code>包裹你的公钥，绝对不能直接放单个 JWK<br><img src="/images/JWT/image_24.png" alt="在这里插入图片描述"></p>
-<p>重新上传服务器之后的结果<br><img src="/images/JWT/image_25.png" alt="在这里插入图片描述"></p>
+<p><code>RS256</code><br><img loading="lazy" decoding="async" src="/images/JWT/image_18.png" alt="JWT·图18"></p>
+<p>创建密钥对，复制公钥<br><img loading="lazy" decoding="async" src="/images/JWT/image_19.png" alt="JWT·图19"></p>
+<p>存储到服务器<br><img loading="lazy" decoding="async" src="/images/JWT/image_20.png" alt="JWT·图20"></p>
+<p><code>原来</code>的数据包分析<br><img loading="lazy" decoding="async" src="/images/JWT/image_21.png" alt="JWT·图21"></p>
+<p>修改<br><img loading="lazy" decoding="async" src="/images/JWT/image_22.png" alt="JWT·图22"></p>
+<p>签名<br><img loading="lazy" decoding="async" src="/images/JWT/image_23.png" alt="JWT·图23"></p>
+<p>都是发现还是无法通关，在检查了一遍之后发现是 <code>公钥</code> 的问题。jku 字段的标准要求是：服务端拉取的<code>必须是</code> JWKS（JSON Web Key Set）格式，也就是必须用 <code>keys 数组</code>包裹你的公钥，绝对不能直接放单个 JWK<br><img loading="lazy" decoding="async" src="/images/JWT/image_24.png" alt="JWT·图24"></p>
+<p>重新上传服务器之后的结果<br><img loading="lazy" decoding="async" src="/images/JWT/image_25.png" alt="JWT·图25"></p>
 <p>调用删除api删除账号即可</p>
 <hr>
 <h3 id="0x06-通过-JWT-头部中的-kid-路径遍历实现身份认证绕过"><a href="#0x06-通过-JWT-头部中的-kid-路径遍历实现身份认证绕过" class="headerlink" title="0x06.通过 JWT 头部中的 kid 路径遍历实现身份认证绕过"></a>0x06.通过 JWT 头部中的 kid 路径遍历实现身份认证绕过</h3><p>本实验使用基于 JWT 的机制来管理会话。为了验证签名，服务端会读取 JWT 头部中的 kid 参数，并根据该参数从服务器文件系统中读取对应的密钥。<br>你的实验目标：伪造一个 JWT，获取 &#x2F;admin 管理员面板的访问权限，然后删除用户 carlos。<br>你可以使用以下账号登录自己的账户：用户名：wiener;密码：peter</p>
 <p><code>kid</code>&#x3D; Key ID（密钥 ID），作用是标识用哪一组密钥验签<br><code>安全逻辑</code>：服务端维护 密钥ID ↔ 密钥内容 的映射表，绝不把 kid 直接当文件路径使用<br><code>验签流程</code>：拿到 JWT → 读取 kid → 查映射表取密钥 → 验证签名</p>
 <p><strong><code>攻击核心逻辑</code></strong>：服务端验签依赖 kid 指向文件的内容作为密钥,然后构造 kid 为路径遍历字符串，指向内容已知 &#x2F; 可控的文件（最常用：<code>/dev/null</code> 空文件）</p>
-<p><img src="/images/JWT/image_26.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/JWT/image_26.png" alt="JWT·图26"></p>
 <p>调用删除api删除账号即可</p>
 <hr>
 <h3 id="0x07-JWT-算法混淆绕过"><a href="#0x07-JWT-算法混淆绕过" class="headerlink" title="0x07.JWT 算法混淆绕过"></a>0x07.JWT 算法混淆绕过</h3><p>本实验使用 基于 JWT 的机制 来处理会话。虽然服务器采用了 强安全性的 RSA 非对称密钥对 进行签名和验证，但由于实现逻辑上的缺陷，导致其易受 算法混淆（Algorithm Confusion） 攻击。<br>实验目标：首先获取服务器的 公钥（该公钥通过标准接口对外暴露）;使用 该公钥 来签名一个 你修改过的会话令牌（JWT）；利用这个伪造的令牌访问 &#x2F;admin 管理员面板，删除用户 carlos 完成实验。<br>可用登录凭证：用户名：wiener；密码：peter</p>
@@ -567,9 +436,9 @@ MathJax = {
 <li>标准 JWKS 端点（最常用、99% 系统）：https:&#x2F;&#x2F;业务域名&#x2F;.well-known&#x2F;jwks.json</li>
 </ol>
 <p>也可以利用工具进行敏感文件枚举</p>
-<p>获取公钥：<a target="_blank" rel="noopener" href="https://0a4700060465545180a6eebe000e003c.web-security-academy.net/jwks.json">https://0a4700060465545180a6eebe000e003c.web-security-academy.net/jwks.json</a><br><img src="/images/JWT/image_27.png" alt="在这里插入图片描述"></p>
+<p>获取公钥：<a target="_blank" rel="noopener" href="https://0a4700060465545180a6eebe000e003c.web-security-academy.net/jwks.json">https://0a4700060465545180a6eebe000e003c.web-security-academy.net/jwks.json</a><br><img loading="lazy" decoding="async" src="/images/JWT/image_27.png" alt="JWT·图27"></p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;keys&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;kty&quot;</span><span class="punctuation">:</span> <span class="string">&quot;RSA&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;e&quot;</span><span class="punctuation">:</span> <span class="string">&quot;AQAB&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;use&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sig&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;kid&quot;</span><span class="punctuation">:</span> <span class="string">&quot;4c0749d5-30b5-458a-84cc-6301d3528041&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;alg&quot;</span><span class="punctuation">:</span> <span class="string">&quot;RS256&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;n&quot;</span><span class="punctuation">:</span> <span class="string">&quot;g0JNnK2w5LyqkZT9rWBYf3iFS7emdv2YifQRcJ-ngZSCSLyvin-z5HSS506QmP3XGE0MPWtsxPpqOFGXI3paRCTNo2iWGm36nHlY2KPYWPhkVN7i3sFhmQKBg0MEbBaZrsIeKgVb-4brHyzO_2Ox_MyISdBLmNd1P-YRtrcDSe6ILIeYWSOeEKXWEHXItOwxlvq3cz0XBtgcgm4So0J_m5t--XrZworAecvLEpaal4Aq2UGk1SUQoqcMei9YBaDEXBUE2msQGXTYZ8CZvL6EinOaBxRKU-5UzBsd3UNh474YyGJcShXhEUGBVKK_MwBsYnFxXWfBgQgdnC-QFf1AWQ&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<p>创建签名算法，直接复制”n”密钥输入框中<br><img src="/images/JWT/image_28.png" alt="在这里插入图片描述"><br>结果失败<br><img src="/images/JWT/image_29.png" alt="在这里插入图片描述"></p>
+<p>创建签名算法，直接复制”n”密钥输入框中<br><img loading="lazy" decoding="async" src="/images/JWT/image_28.png" alt="JWT·图28"><br>结果失败<br><img loading="lazy" decoding="async" src="/images/JWT/image_29.png" alt="JWT·图29"></p>
 <ul>
 <li><p>标准的 RSA 公钥，核心就两个东西：</p>
 <ul>
@@ -588,23 +457,23 @@ MathJax = {
 </ul>
 <p><code>DER</code>：二进制格式，机器直接读取，人眼看是乱码<br><code>PEM</code>：文本格式，就是把 DER 二进制数据做了 Base64 编码，然后加上<br><code>JW Editor 的 k 值</code>：对PEM进行Base64编码后的结果</p>
 <p>重新一来遍</p>
-<p>json格式化<br><img src="/images/JWT/image_30.png" alt="在这里插入图片描述"></p>
-<p>创建RSA，目的是复制随后得pem<br><img src="/images/JWT/image_31.png" alt="在这里插入图片描述"></p>
-<p>将复制得pem进行base64编码<br><img src="/images/JWT/image_32.png" alt="在这里插入图片描述"></p>
-<p>对称签名<br><img src="/images/JWT/image_33.png" alt="在这里插入图片描述"></p>
-<p>结果<br><img src="/images/JWT/image_34.png" alt="在这里插入图片描述"></p>
+<p>json格式化<br><img loading="lazy" decoding="async" src="/images/JWT/image_30.png" alt="JWT·图30"></p>
+<p>创建RSA，目的是复制随后得pem<br><img loading="lazy" decoding="async" src="/images/JWT/image_31.png" alt="JWT·图31"></p>
+<p>将复制得pem进行base64编码<br><img loading="lazy" decoding="async" src="/images/JWT/image_32.png" alt="JWT·图32"></p>
+<p>对称签名<br><img loading="lazy" decoding="async" src="/images/JWT/image_33.png" alt="JWT·图33"></p>
+<p>结果<br><img loading="lazy" decoding="async" src="/images/JWT/image_34.png" alt="JWT·图34"></p>
 <p>调用删除api删除账号即可</p>
 <hr>
 <h3 id="0x08-通过算法混淆绕过JWT认证（无暴露密钥）"><a href="#0x08-通过算法混淆绕过JWT认证（无暴露密钥）" class="headerlink" title="0x08.通过算法混淆绕过JWT认证（无暴露密钥）"></a>0x08.通过算法混淆绕过JWT认证（无暴露密钥）</h3><p>本实验室使用基于JWT的机制来处理会话。它使用一个强大的RSA密钥对来签名和验证令牌。然而，由于实现缺陷，该机制容易受到算法混淆攻击。<br>要解决本实验室，首先获取服务器的公钥。使用该密钥签名一个修改后的会话令牌，该令牌能让你访问&#x2F;admin管理面板，然后删除用户carlos。<br>你可以使用以下凭证登录自己的账户：wiener:peter</p>
 <p>这一题的漏洞原理与上一关是一样的，<code>存在的区别</code>：服务器未直接暴露公钥端点，需要从<code>两个有效</code>的 JWT 中暴力推导出 RSA 公钥的<code>模数 n</code>，再用该公钥作为 HMAC 密钥签名一个修改后的会话令牌，访问 &#x2F;admin 并删除用户 carlos</p>
-<p>为什么需要两个有效的JWT？<br><img src="/images/JWT/image_35.png" alt="在这里插入图片描述"></p>
+<p>为什么需要两个有效的JWT？<br><img loading="lazy" decoding="async" src="/images/JWT/image_35.png" alt="JWT·图35"></p>
 <p>先获取两个有效的JWT（登录两次）</p>
 <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">eyJraWQiOiI5YzVhM2VjNi1iMDZjLTQ4OGEtYWExZS0wNmYyODY0OGQ0YzMiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJwb3J0c3dpZ2dlciIsImV4cCI6MTc3NTgwODQzMSwic3ViIjoid2llbmVyIn0.c--vNUqKtkbTaJSaMoe5nq2dpE9RrmGUJF7E1950NqbNtH-N8h9k2a1HrjdbvxW6tkgW0J88Nd8ZT_V9L87V_zAm5m0RkRqnpjOjhBe6Cg3OM6PDzBA4ZVbjQuA3q4kaZ38mHxMWk_CAJYeBqhEnzqD5N4inj8YprDvWrl6MOKDcd0TrtF2EdP3USWutmYZ2mKj0o82Lr3qdyAoAPpA9NVLoAh4nksj6hgPSIHxIFpVEYaZpSds9C-kY9hvTFS0ATuRDsVRJB5nU7mCcWiUYzUikMogFIuFiJMnLIddHos7wZvgEtO5C2Os_RZjPq12EwdPIE1x8P4zjKYyvE1dYqQ</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">eyJraWQiOiI5YzVhM2VjNi1iMDZjLTQ4OGEtYWExZS0wNmYyODY0OGQ0YzMiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJwb3J0c3dpZ2dlciIsImV4cCI6MTc3NTgwODUxMSwic3ViIjoid2llbmVyIn0.dUT_YgXCg28V_0KSn5lbigbv1z4AMqF8RGMcQgoUr10jiV3S93y0JLDmIHSv2zX5NSbm7u3NGTGDlqbU6sbxa7t6uzqDyB_5QG9ziVDbsUNca8wHS051gGL6U8_6AENSnP9NttToxmtDJVW4Y5AbAH52JvBPv24lpvqWvjRR3cd-KTkm5IUP2gEr0vwiUbU59gVy6Ac6tlKJNAByHZ6awjtBgmvqC4THCoU2YtPBGdeRwRAx-0VZoE-qrSzHdfPubTzQGvwfHT-NLfrBuIoRv9z9sWfe_JtgO7cqqpJYzkOISCGEcQZ5XowO4B8745sphdVrUMDa-IZm4i-iXMCEfA</span><br></pre></td></tr></table></figure>
 
 <p>计算：<br><code>docker pull portswigger/sig2n</code><br><code>docker run --rm portswigger/sig2n &quot;&lt;TOKEN1&gt;&quot; &quot;&lt;TOKEN2&gt;&quot; &gt; pub.pem</code></p>
-<p><img src="/images/JWT/image_36.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/JWT/image_36.png" alt="JWT·图36"></p>
 <table>
 <thead>
 <tr>
@@ -638,9 +507,9 @@ MathJax = {
 </tr>
 </tbody></table>
 <p>其中有两种格式的公钥 <code>X.509</code> 和 <code>PKCS#1</code></p>
-<p>先尝试 <code>Base64 encoded x509 key: LS0tLS1...</code> 这个就是纯净的公钥进行base64url编码后的结果了，所以直接创建HS256<br><img src="/images/JWT/image_37.png" alt="在这里插入图片描述"></p>
-<p>结果失败<br><img src="/images/JWT/image_38.png" alt="在这里插入图片描述"></p>
-<p>尝试 <code>PKCS#1 </code><br><img src="/images/JWT/image_39.png" alt="在这里插入图片描述"><br>但是最终结果是不行的,理论上是可行的，蒜鸟蒜鸟</p>
+<p>先尝试 <code>Base64 encoded x509 key: LS0tLS1...</code> 这个就是纯净的公钥进行base64url编码后的结果了，所以直接创建HS256<br><img loading="lazy" decoding="async" src="/images/JWT/image_37.png" alt="JWT·图37"></p>
+<p>结果失败<br><img loading="lazy" decoding="async" src="/images/JWT/image_38.png" alt="JWT·图38"></p>
+<p>尝试 <code>PKCS#1 </code><br><img loading="lazy" decoding="async" src="/images/JWT/image_39.png" alt="JWT·图39"><br>但是最终结果是不行的,理论上是可行的，蒜鸟蒜鸟</p>
 <p>暂定吧，以后有时间再搞</p>
 <hr>
 
@@ -852,6 +721,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

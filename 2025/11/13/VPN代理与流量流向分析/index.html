@@ -7,40 +7,10 @@
   <meta http-equiv="expires" content="0">
   
   <title>VPN代理与流量流向分析 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2025/11/13/VPN代理与流量流向分析/">
   <meta name="author" content="Qexzi">
   
-  <meta name="description" content="一、代理层级架构与优先级原理
-1. 网络层代理（VPN）- 最底层
-工作层级：操作系统内核层
-技术代表：OpenVPN、WireGuard、IPsec
-控制粒度：全局代理 - 所有应用程序流量
-技术比喻：给电脑虚拟搬迁到VPN服务器机房
-特点：透明性高、安全性强，但灵活性差
-
-2. 系统层代理 - 中间层
-工作层级：操作系统应用层协议
-技术代表：Windows&amp;#x2F;MacOS系统代理设置
-控制粒度：系统级 - 影响遵守系统设置的应用程序
-技术比喻：设立总的收发室处理外寄信件
-特点：配置方便，但容易被应用程序绕过
-
-3. 应用层代理 - 最高层
-浏览器插件（SwitchyOmega等）：
-
-控制粒度：进程级 - 仅控制浏览器流量
-技术比喻：书房内的智能路由器
-存在意义：提供最精细的流量控制，实现国内外网站分流
-
-
-应用程序内置代理：
-
-控制粒度：应用级 - 仅影响单个应用程序
-特点：配置独立，针对性强的网络通道
-
-
-
-
-二、四大核心场景流量走向详解"> 
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -53,6 +23,8 @@
   
 
   
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
   
     <link href="/zhuzhuxia.png" rel="icon">
   
@@ -63,7 +35,6 @@
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -71,41 +42,18 @@
 
   <!-- analytics -->
   
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
-</script>
 
 
 
 
+  
 
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"VPN代理与流量流向分析","datePublished":"2025-11-13T04:00:00.000Z","dateModified":"2025-11-13T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2025/11/13/VPN代理与流量流向分析/","description":"一、代理层级架构与优先级原理 1. 网络层代理（VPN）- 最底层 工作层级：操作系统内核层 技术代表：OpenVPN、WireGuard、IPsec 控制粒度：全局代理 - 所有应用程序流量 技术比喻：给电脑虚拟搬迁到VPN服务器机房 特点：透明性高、安全性强，但灵活性差 2. 系统层代理 - 中间层 工作层级：操作系统应用层协议 技术代表：Windows&#x2F;MacOS系统代理设置 控制"}</script>
+  
 
-<meta name="generator" content="Hexo 8.1.1"><script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
-    }
-  }
-};
-</script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
  <body>  
   <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -174,7 +122,7 @@ MathJax = {
 		  
 		  
 
-		  <h2 id="一、代理层级架构与优先级原理"><a href="#一、代理层级架构与优先级原理" class="headerlink" title="一、代理层级架构与优先级原理"></a>一、代理层级架构与优先级原理</h2><p><img src="/images/VPN%E4%BB%A3%E7%90%86%E4%B8%8E%E6%B5%81%E9%87%8F%E6%B5%81%E5%90%91%E5%88%86%E6%9E%90/image_1.png" alt="在这里插入图片描述"></p>
+		  <h2 id="一、代理层级架构与优先级原理"><a href="#一、代理层级架构与优先级原理" class="headerlink" title="一、代理层级架构与优先级原理"></a>一、代理层级架构与优先级原理</h2><p><img src="/images/VPN%E4%BB%A3%E7%90%86%E4%B8%8E%E6%B5%81%E9%87%8F%E6%B5%81%E5%90%91%E5%88%86%E6%9E%90/image_1.png" alt="VPN代理与流量流向分析·图1"></p>
 <h3 id="1-网络层代理（VPN）-最底层"><a href="#1-网络层代理（VPN）-最底层" class="headerlink" title="1. 网络层代理（VPN）- 最底层"></a>1.<code> 网络层代理</code>（VPN）- 最底层</h3><ul>
 <li><strong>工作层级</strong>：操作系统内核层</li>
 <li><strong>技术代表</strong>：OpenVPN、WireGuard、IPsec</li>
@@ -205,13 +153,13 @@ MathJax = {
 </li>
 </ul>
 <hr>
-<h2 id="二、四大核心场景流量走向详解"><a href="#二、四大核心场景流量走向详解" class="headerlink" title="二、四大核心场景流量走向详解"></a>二、四大核心场景流量走向详解</h2><h3 id="场景1：主机标准VPN模式（无冲突）"><a href="#场景1：主机标准VPN模式（无冲突）" class="headerlink" title="场景1：主机标准VPN模式（无冲突）"></a>场景1：主机标准VPN模式（无冲突）</h3><p><img src="/images/VPN%E4%BB%A3%E7%90%86%E4%B8%8E%E6%B5%81%E9%87%8F%E6%B5%81%E5%90%91%E5%88%86%E6%9E%90/image_2.png" alt="在这里插入图片描述"></p>
+<h2 id="二、四大核心场景流量走向详解"><a href="#二、四大核心场景流量走向详解" class="headerlink" title="二、四大核心场景流量走向详解"></a>二、四大核心场景流量走向详解</h2><h3 id="场景1：主机标准VPN模式（无冲突）"><a href="#场景1：主机标准VPN模式（无冲突）" class="headerlink" title="场景1：主机标准VPN模式（无冲突）"></a>场景1：主机标准VPN模式（无冲突）</h3><p><img loading="lazy" decoding="async" src="/images/VPN%E4%BB%A3%E7%90%86%E4%B8%8E%E6%B5%81%E9%87%8F%E6%B5%81%E5%90%91%E5%88%86%E6%9E%90/image_2.png" alt="VPN代理与流量流向分析·图2"></p>
 <p><strong>核心逻辑</strong>：最标准的VPN使用场景。所有应用程序流量都遵循系统级代理设置，通过VPN隧道加密转发，实现全局网络匿名化。</p>
 <p><strong>适用场景</strong>：需要完全匿名、安全加密所有流量的环境。</p>
-<h3 id="场景2：主机浏览器代理分流（主动绕行）"><a href="#场景2：主机浏览器代理分流（主动绕行）" class="headerlink" title="场景2：主机浏览器代理分流（主动绕行）"></a>场景2：主机浏览器代理分流（主动绕行）</h3><p><img src="/images/VPN%E4%BB%A3%E7%90%86%E4%B8%8E%E6%B5%81%E9%87%8F%E6%B5%81%E5%90%91%E5%88%86%E6%9E%90/image_3.png" alt="在这里插入图片描述"></p>
+<h3 id="场景2：主机浏览器代理分流（主动绕行）"><a href="#场景2：主机浏览器代理分流（主动绕行）" class="headerlink" title="场景2：主机浏览器代理分流（主动绕行）"></a>场景2：主机浏览器代理分流（主动绕行）</h3><p><img loading="lazy" decoding="async" src="/images/VPN%E4%BB%A3%E7%90%86%E4%B8%8E%E6%B5%81%E9%87%8F%E6%B5%81%E5%90%91%E5%88%86%E6%9E%90/image_3.png" alt="VPN代理与流量流向分析·图3"></p>
 <p><strong>核心逻辑</strong>：浏览器插件优先级高于系统代理，实现<strong>精细化流量分流</strong>。浏览器按插件规则转发（国内外网站分流），其他应用仍走VPN通道。</p>
 <p><strong>存在意义</strong>：解决VPN”一刀切”的弊端，优化访问速度，避免国内流量绕行。</p>
-<h3 id="场景3：虚拟机理想共享模式（透明代理）"><a href="#场景3：虚拟机理想共享模式（透明代理）" class="headerlink" title="场景3：虚拟机理想共享模式（透明代理）"></a>场景3：虚拟机理想共享模式（透明代理）</h3><p><img src="/images/VPN%E4%BB%A3%E7%90%86%E4%B8%8E%E6%B5%81%E9%87%8F%E6%B5%81%E5%90%91%E5%88%86%E6%9E%90/image_4.png" alt="在这里插入图片描述"></p>
+<h3 id="场景3：虚拟机理想共享模式（透明代理）"><a href="#场景3：虚拟机理想共享模式（透明代理）" class="headerlink" title="场景3：虚拟机理想共享模式（透明代理）"></a>场景3：虚拟机理想共享模式（透明代理）</h3><p><img loading="lazy" decoding="async" src="/images/VPN%E4%BB%A3%E7%90%86%E4%B8%8E%E6%B5%81%E9%87%8F%E6%B5%81%E5%90%91%E5%88%86%E6%9E%90/image_4.png" alt="VPN代理与流量流向分析·图4"></p>
 <p><strong>核心逻辑</strong>：虚拟机通过NAT模式完全依赖主机网络路由，继承主机VPN设置，实现”透明代理”效果。</p>
 <p><strong>前提条件</strong>：</p>
 <ul>
@@ -219,12 +167,12 @@ MathJax = {
 <li>关闭虚拟机内所有代理插件</li>
 <li>主机运行全局VPN</li>
 </ul>
-<h3 id="场景4：虚拟机代理冲突（嵌套绕行）"><a href="#场景4：虚拟机代理冲突（嵌套绕行）" class="headerlink" title="场景4：虚拟机代理冲突（嵌套绕行）"></a>场景4：虚拟机代理冲突（嵌套绕行）</h3><p><img src="/images/VPN%E4%BB%A3%E7%90%86%E4%B8%8E%E6%B5%81%E9%87%8F%E6%B5%81%E5%90%91%E5%88%86%E6%9E%90/image_5.png" alt="在这里插入图片描述"></p>
+<h3 id="场景4：虚拟机代理冲突（嵌套绕行）"><a href="#场景4：虚拟机代理冲突（嵌套绕行）" class="headerlink" title="场景4：虚拟机代理冲突（嵌套绕行）"></a>场景4：虚拟机代理冲突（嵌套绕行）</h3><p><img loading="lazy" decoding="async" src="/images/VPN%E4%BB%A3%E7%90%86%E4%B8%8E%E6%B5%81%E9%87%8F%E6%B5%81%E5%90%91%E5%88%86%E6%9E%90/image_5.png" alt="VPN代理与流量流向分析·图5"></p>
 <p><strong>核心逻辑</strong>：虚拟机内浏览器插件拦截流量，导致浏览器绕开主机VPN，形成<strong>代理嵌套冲突</strong>。</p>
 <p><strong>问题根源</strong>：虚拟机内的高优先级代理规则覆盖了主机的低优先级代理规则。</p>
 <hr>
 <h2 id="三、Kali-虚拟机配置"><a href="#三、Kali-虚拟机配置" class="headerlink" title="三、Kali 虚拟机配置"></a>三、Kali 虚拟机配置</h2><h3 id="完整配置检查清单"><a href="#完整配置检查清单" class="headerlink" title="完整配置检查清单"></a>完整配置检查清单</h3><p>为确保Kali虚拟机正确共享主机VPN，请按以下流程系统配置：</p>
-<p><img src="/images/VPN%E4%BB%A3%E7%90%86%E4%B8%8E%E6%B5%81%E9%87%8F%E6%B5%81%E5%90%91%E5%88%86%E6%9E%90/image_6.png" alt="在这里插入图片描述"></p>
+<p><img loading="lazy" decoding="async" src="/images/VPN%E4%BB%A3%E7%90%86%E4%B8%8E%E6%B5%81%E9%87%8F%E6%B5%81%E5%90%91%E5%88%86%E6%9E%90/image_6.png" alt="VPN代理与流量流向分析·图6"></p>
 <h3 id="关键配置步骤"><a href="#关键配置步骤" class="headerlink" title="关键配置步骤"></a>关键配置步骤</h3><h4 id="1-基础环境配置"><a href="#1-基础环境配置" class="headerlink" title="1. 基础环境配置"></a>1. 基础环境配置</h4><ul>
 <li><strong>主机VPN</strong>：必须使用系统级全局VPN（OpenVPN、WireGuard等）</li>
 <li><strong>网络模式</strong>：虚拟机设置为<strong>NAT模式</strong>（默认）</li>
@@ -323,7 +271,7 @@ MathJax = {
 <p><strong>或者使用在线规则列表：</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt</span><br></pre></td></tr></table></figure>
 
-<p>配置完成后，流量走向如下：<br><img src="/images/VPN%E4%BB%A3%E7%90%86%E4%B8%8E%E6%B5%81%E9%87%8F%E6%B5%81%E5%90%91%E5%88%86%E6%9E%90/image_7.png" alt="在这里插入图片描述"></p>
+<p>配置完成后，流量走向如下：<br><img loading="lazy" decoding="async" src="/images/VPN%E4%BB%A3%E7%90%86%E4%B8%8E%E6%B5%81%E9%87%8F%E6%B5%81%E5%90%91%E5%88%86%E6%9E%90/image_7.png" alt="VPN代理与流量流向分析·图7"></p>
 <h3 id="方法二：纯SwitchyOmega代理方案（替代方案）"><a href="#方法二：纯SwitchyOmega代理方案（替代方案）" class="headerlink" title="方法二：纯SwitchyOmega代理方案（替代方案）"></a>方法二：纯SwitchyOmega代理方案（替代方案）</h3><p>如果系统VPN不稳定，可以在SwitchyOmega中直接配置代理：</p>
 <p>配置代理服务器情景模式：</p>
 <ul>
@@ -410,7 +358,7 @@ MathJax = {
 
     
     
-    <a href="/2025/12/05/网络层/" type="button" class="btn btn-default"><i
+    <a href="/2025/12/05/计算机网络体系结构/" type="button" class="btn btn-default"><i
                 class="fa fa-arrow-circle-o-left"></i> 上一页</a>
     
 
@@ -571,6 +519,7 @@ MathJax = {
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
 <script src="/js/copy-code.js"></script>
 
    <script type="text/javascript">

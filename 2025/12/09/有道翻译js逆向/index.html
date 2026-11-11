@@ -143,7 +143,7 @@
 		  
 		  
 
-		  <h3 id="0x01-堆栈找逻辑"><a href="#0x01-堆栈找逻辑" class="headerlink" title="0x01:堆栈找逻辑"></a>0x01:堆栈找逻辑</h3><p><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_1.png" alt="有道翻译js逆向·图1"></p>
+		  <h1 id="0x01-堆栈找逻辑"><a href="#0x01-堆栈找逻辑" class="headerlink" title="0x01:堆栈找逻辑"></a>0x01:堆栈找逻辑</h1><p><img src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_1.png" alt="有道翻译js逆向·图1"></p>
 <p>先大致查看一下请求<br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_2.png" alt="有道翻译js逆向·图2"></p>
 <p>重点关注参数 <code>sign</code> 并进行跟踪，使用全局搜索取定位sign的产生逻辑<br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_3.png" alt="有道翻译js逆向·图3"></p>
 <p>全局搜素sign会发现很多结果（sign: 的结果也很多），所以全局搜索<code>pointParam</code>  或  <code>pointParam:</code>  (经判断两者关系密切)<br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_4.png" alt="有道翻译js逆向·图4"></p>
@@ -170,7 +170,7 @@
 <p>不断调试，又发现了简单的 POST 请求封装，在之前的网络面版中，这请求是将需要翻译的内容发送给后端<br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_13.png" alt="有道翻译js逆向·图13"></p>
 <p>这些断电只是让我大概清楚其调用逻辑，但是其sign产生逻辑还是没有没断出来。</p>
 <p>实际上sign的产生是很明显的<br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_14.png" alt="有道翻译js逆向·图14"><br>重新触发执行<br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_15.png" alt="有道翻译js逆向·图15"><br>此时打印w(1)<br><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_16.png" alt="有道翻译js逆向·图16"><br>结果是32位，md5算法</p>
-<h3 id="0x02-hook脚本找逻辑"><a href="#0x02-hook脚本找逻辑" class="headerlink" title="0x02:hook脚本找逻辑"></a>0x02:hook脚本找逻辑</h3><p>使用hook脚本</p>
+<h1 id="0x02-hook脚本找逻辑"><a href="#0x02-hook脚本找逻辑" class="headerlink" title="0x02:hook脚本找逻辑"></a>0x02:hook脚本找逻辑</h1><p>使用hook脚本</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> my_parse = <span class="title class_">JSON</span>.<span class="property">parse</span>;</span><br><span class="line"><span class="title class_">JSON</span>.<span class="property">parse</span> = <span class="keyword">function</span> (<span class="params">params</span>) &#123;</span><br><span class="line">    <span class="comment">//这里可以添加其他逻辑比如 </span></span><br><span class="line">    <span class="keyword">debugger</span>;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;json_parse params:&quot;</span>,params);</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">my_parse</span>(params);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p><img loading="lazy" decoding="async" src="/images/%E6%9C%89%E9%81%93%E7%BF%BB%E8%AF%91js%E9%80%86%E5%90%91/image_17.png" alt="有道翻译js逆向·图17"></p>
 <p>触发后去查看堆栈</p>
@@ -346,7 +346,7 @@
 		
 			 <div class="toc">
 				 <span class="toc-title"><i class="fa fa-list"></i> Contents</span>
-				<ol class="toc-article"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x01-%E5%A0%86%E6%A0%88%E6%89%BE%E9%80%BB%E8%BE%91"><span class="toc-article-text">0x01:堆栈找逻辑</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x02-hook%E8%84%9A%E6%9C%AC%E6%89%BE%E9%80%BB%E8%BE%91"><span class="toc-article-text">0x02:hook脚本找逻辑</span></a></li></ol>
+				<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x01-%E5%A0%86%E6%A0%88%E6%89%BE%E9%80%BB%E8%BE%91"><span class="toc-article-text">0x01:堆栈找逻辑</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x02-hook%E8%84%9A%E6%9C%AC%E6%89%BE%E9%80%BB%E8%BE%91"><span class="toc-article-text">0x02:hook脚本找逻辑</span></a></li></ol>
 			</div>
 		
 		</div>

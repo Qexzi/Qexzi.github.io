@@ -122,10 +122,10 @@
 		  
 		  
 
-		  <h3 id="0x00-基础知识"><a href="#0x00-基础知识" class="headerlink" title="0x00.基础知识"></a>0x00.基础知识</h3><h4 id="OAuth诞生前：古老的-密码共享-时代"><a href="#OAuth诞生前：古老的-密码共享-时代" class="headerlink" title="OAuth诞生前：古老的&quot;密码共享&quot;时代"></a><strong><code>OAuth诞生前：古老的&quot;密码共享&quot;时代</code></strong></h4><p>在OAuth诞生之前，互联网上几乎没有标准化的授权方案。当你想让一个第三方应用（比如一款帮你分析好友社交网络的工具）访问你在另一个平台（比如你的社交账号）上的数据时，<code>唯一的办法</code>就是把你的用户名和密码直接告诉它。但是，这样存在巨大的安全风险：用户与密码可能会被保存、滥用，甚至被恶意程序用来做任何事，而你毫无办法</p>
+		  <h1 id="0x00-基础知识"><a href="#0x00-基础知识" class="headerlink" title="0x00.基础知识"></a>0x00.基础知识</h1><h2 id="OAuth诞生前：古老的-密码共享-时代"><a href="#OAuth诞生前：古老的-密码共享-时代" class="headerlink" title="OAuth诞生前：古老的&quot;密码共享&quot;时代"></a><strong><code>OAuth诞生前：古老的&quot;密码共享&quot;时代</code></strong></h2><p>在OAuth诞生之前，互联网上几乎没有标准化的授权方案。当你想让一个第三方应用（比如一款帮你分析好友社交网络的工具）访问你在另一个平台（比如你的社交账号）上的数据时，<code>唯一的办法</code>就是把你的用户名和密码直接告诉它。但是，这样存在巨大的安全风险：用户与密码可能会被保存、滥用，甚至被恶意程序用来做任何事，而你毫无办法</p>
 <p>后来，一些大型科技公司（比如Google、Facebook）意识到了这个巨大的安全风险，开始各自推出私有的授权方案，例如FlickrAuth和GoogleAuthSub。但这些方案彼此不兼容，开发者需要为每个不同的平台单独学习和适配，极其痛苦</p>
 <hr>
-<h4 id="OAuth-1-0：从-共享密码-到-安全授权"><a href="#OAuth-1-0：从-共享密码-到-安全授权" class="headerlink" title="OAuth 1.0：从&quot;共享密码&quot;到&quot;安全授权&quot;"></a><strong><code>OAuth 1.0：从&quot;共享密码&quot;到&quot;安全授权&quot;</code></strong></h4><p>为了解决这个”授权困境”，OAuth（开放授权）应运而生。它的故事始于2006年，当时Twitter的一位开发者Blaine Cook在为Twitter实现OpenID时，发现没有一个好的方案来安全地授权第三方应用访问Twitter的API。于是，他与Chris Messina等人一起发起讨论，最终催生了OAuth协议。</p>
+<h2 id="OAuth-1-0：从-共享密码-到-安全授权"><a href="#OAuth-1-0：从-共享密码-到-安全授权" class="headerlink" title="OAuth 1.0：从&quot;共享密码&quot;到&quot;安全授权&quot;"></a><strong><code>OAuth 1.0：从&quot;共享密码&quot;到&quot;安全授权&quot;</code></strong></h2><p>为了解决这个”授权困境”，OAuth（开放授权）应运而生。它的故事始于2006年，当时Twitter的一位开发者Blaine Cook在为Twitter实现OpenID时，发现没有一个好的方案来安全地授权第三方应用访问Twitter的API。于是，他与Chris Messina等人一起发起讨论，最终催生了OAuth协议。</p>
 <p>OAuth 1.0协议的核心思想是引入一个<code>&quot;令牌&quot;（Token）</code>的概念。它就像一把精心设计的、有时间限制的”临时钥匙”，第三方应用只需用这把<code>&quot;临时钥匙&quot;</code>来访问你的数据，整个过程完全不需要知道你的密码</p>
 <blockquote>
 <p>OAuth授权过程中，有三个关键角色</p>
@@ -198,7 +198,7 @@
 </blockquote>
 <p>需要特别注意的是，<code>OAuth 1.0a的核心价值</code>在于通过规范层面的强制性要求，堵住了回调URL被滥用的路径。但它<code>并没有废除</code>原有复杂的签名机制，因此开发者面临的复杂性依然存在</p>
 <hr>
-<h4 id="OAuth-2-0：从具体协议到更灵活更复杂的授权框架"><a href="#OAuth-2-0：从具体协议到更灵活更复杂的授权框架" class="headerlink" title="OAuth 2.0：从具体协议到更灵活更复杂的授权框架"></a><strong><code>OAuth 2.0：从具体协议到更灵活更复杂的授权框架</code></strong></h4><p>鉴于 OAuth 1.0 的复杂性，OAuth 2.0 于 2012 年作为 RFC 6749 发布。它不再是具体的协议，而是一个 授权框架，旨在为不同场景（Web 应用、移动 App、IoT）提供灵活的授权方式。</p>
+<h2 id="OAuth-2-0：从具体协议到更灵活更复杂的授权框架"><a href="#OAuth-2-0：从具体协议到更灵活更复杂的授权框架" class="headerlink" title="OAuth 2.0：从具体协议到更灵活更复杂的授权框架"></a><strong><code>OAuth 2.0：从具体协议到更灵活更复杂的授权框架</code></strong></h2><p>鉴于 OAuth 1.0 的复杂性，OAuth 2.0 于 2012 年作为 RFC 6749 发布。它不再是具体的协议，而是一个 授权框架，旨在为不同场景（Web 应用、移动 App、IoT）提供灵活的授权方式。</p>
 <p><code>最突出的变化</code>：</p>
 <ul>
 <li><p>强制使用 HTTPS 保证通信安全，<code>完全摒弃</code> OAuth 1.0 中复杂的加密签名。</p>
@@ -257,14 +257,14 @@
 <blockquote>
 <ol>
 <li>窃取令牌<br>由于 access_token 直接出现在回调 URL 的 # 片段中（例如 <a target="_blank" rel="noopener" href="https://app.com/callback#access_token=xyz%EF%BC%89%EF%BC%8C%E6%94%BB%E5%87%BB%E8%80%85%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87%E4%BB%A5%E4%B8%8B%E6%96%B9%E5%BC%8F%E8%8E%B7%E5%8F%96%EF%BC%9A">https://app.com/callback#access_token=xyz），攻击者可以通过以下方式获取：</a><blockquote>
-<p>读取浏览器历史记录<br>通过 HTTP Referer 头泄露（如果页面有跳转）<br>利用 XSS 漏洞：document.location.hash<br>恶意浏览器插件<br>2. 令牌替换 &#x2F; 重放<br>攻击者拿到令牌后，直接用它冒充受害者调用资源服务器的 API。<br>如果客户端应用只验证令牌是否有效，但不检查令牌与当前用户的绑定关系（常见错误），攻击者用自己的令牌就能访问受害者的数据。<br>3. 篡改回调参数<br>有些客户端会从回调 URL 中直接读取 email 等参数，而不验证这些参数是否与令牌真正关联。<br>攻击者可以手动修改回调 URL 中的 email 为 <a href="mailto:&#118;&#105;&#99;&#116;&#105;&#109;&#64;&#x65;&#x78;&#97;&#109;&#x70;&#108;&#x65;&#x2e;&#99;&#111;&#x6d;">victim@example.com</a>，然后让客户端用这个伪造的身份建立会话。</p>
+<p>读取浏览器历史记录<br>通过 HTTP Referer 头泄露（如果页面有跳转）<br>利用 XSS 漏洞：document.location.hash<br>恶意浏览器插件<br>2. 令牌替换 &#x2F; 重放<br>攻击者拿到令牌后，直接用它冒充受害者调用资源服务器的 API。<br>如果客户端应用只验证令牌是否有效，但不检查令牌与当前用户的绑定关系（常见错误），攻击者用自己的令牌就能访问受害者的数据。<br>3. 篡改回调参数<br>有些客户端会从回调 URL 中直接读取 email 等参数，而不验证这些参数是否与令牌真正关联。<br>攻击者可以手动修改回调 URL 中的 email 为 <a href="mailto:&#x76;&#105;&#99;&#x74;&#x69;&#109;&#x40;&#x65;&#x78;&#x61;&#109;&#112;&#108;&#x65;&#46;&#99;&#111;&#109;">victim@example.com</a>，然后让客户端用这个伪造的身份建立会话。</p>
 </blockquote>
 </li>
 </ol>
 </blockquote>
 <p><code>客户端凭证模式（Client Credentials Grant）</code><br><img loading="lazy" decoding="async" src="/images/OAuth_authentication/image_3.png" alt="OAuth_authentication·图3"></p>
 <hr>
-<h4 id="OAuth-2-1：从“可选安全”到“默认安全”的整合升级"><a href="#OAuth-2-1：从“可选安全”到“默认安全”的整合升级" class="headerlink" title="OAuth 2.1：从“可选安全”到“默认安全”的整合升级"></a><strong><code>OAuth 2.1：从“可选安全”到“默认安全”的整合升级</code></strong></h4><p><strong><code>抛弃</code></strong></p>
+<h2 id="OAuth-2-1：从“可选安全”到“默认安全”的整合升级"><a href="#OAuth-2-1：从“可选安全”到“默认安全”的整合升级" class="headerlink" title="OAuth 2.1：从“可选安全”到“默认安全”的整合升级"></a><strong><code>OAuth 2.1：从“可选安全”到“默认安全”的整合升级</code></strong></h2><p><strong><code>抛弃</code></strong></p>
 <ul>
 <li><p>隐式模式（Implicit Grant） —— 不再允许直接在 URL 片段中返回 access_token。</p>
 </li>
@@ -282,7 +282,7 @@
 </ul>
 <p><img loading="lazy" decoding="async" src="/images/OAuth_authentication/image_4.png" alt="OAuth_authentication·图4"></p>
 <hr>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong><code>总结</code></strong></h4><table>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong><code>总结</code></strong></h2><table>
 <thead>
 <tr>
 <th>阶段</th>
@@ -318,7 +318,7 @@
 </tbody></table>
 <p>补充微信小程序标准的登录流程（<code>OAuth 2.0</code>）<br><img loading="lazy" decoding="async" src="/images/OAuth_authentication/image_5.png" alt="OAuth_authentication·图5"></p>
 <hr>
-<h3 id="0x01-通过-OAuth-隐式流程绕过身份验证"><a href="#0x01-通过-OAuth-隐式流程绕过身份验证" class="headerlink" title="0x01.通过 OAuth 隐式流程绕过身份验证"></a>0x01.通过 OAuth 隐式流程绕过身份验证</h3><p>该实验使用 OAuth 服务，允许用户通过社交媒体账户登录。客户端应用程序的验证存在缺陷，使得攻击者无需知道其他用户的密码即可登录其账户。<br>要解决该实验，请登录 Carlos 的账户。他的邮箱地址是 <a href="mailto:&#x63;&#97;&#x72;&#x6c;&#111;&#115;&#64;&#x63;&#x61;&#x72;&#108;&#x6f;&#115;&#45;&#x6d;&#x6f;&#x6e;&#116;&#111;&#121;&#x61;&#46;&#110;&#101;&#116;">carlos@carlos-montoya.net</a>。<br>您可以使用以下凭证登录自己的社交媒体账户：wiener:peter</p>
+<h1 id="0x01-通过-OAuth-隐式流程绕过身份验证"><a href="#0x01-通过-OAuth-隐式流程绕过身份验证" class="headerlink" title="0x01.通过 OAuth 隐式流程绕过身份验证"></a>0x01.通过 OAuth 隐式流程绕过身份验证</h1><p>该实验使用 OAuth 服务，允许用户通过社交媒体账户登录。客户端应用程序的验证存在缺陷，使得攻击者无需知道其他用户的密码即可登录其账户。<br>要解决该实验，请登录 Carlos 的账户。他的邮箱地址是 <a href="mailto:&#99;&#97;&#x72;&#x6c;&#111;&#x73;&#64;&#99;&#97;&#114;&#108;&#111;&#x73;&#45;&#x6d;&#x6f;&#x6e;&#x74;&#x6f;&#x79;&#x61;&#x2e;&#x6e;&#x65;&#x74;">carlos@carlos-montoya.net</a>。<br>您可以使用以下凭证登录自己的社交媒体账户：wiener:peter</p>
 <p>主页面点击 <code>my account</code><br><img loading="lazy" decoding="async" src="/images/OAuth_authentication/image_6.png" alt="OAuth_authentication·图6"></p>
 <p>点击之后，没有放行，然后抓取了响应包，不知道为什么这样？ 是要重定向到 <code> /social-login</code><br><img loading="lazy" decoding="async" src="/images/OAuth_authentication/image_7.png" alt="OAuth_authentication·图7"></p>
 <p>继续放行，得到以下信息<br><img loading="lazy" decoding="async" src="/images/OAuth_authentication/image_8.png" alt="OAuth_authentication·图8"></p>
@@ -341,8 +341,8 @@
 <p>结果<br><img loading="lazy" decoding="async" src="/images/OAuth_authentication/image_24.png" alt="OAuth_authentication·图24"></p>
 <p>后来检查了不能抓取请求包的原因，是proxy规则设置错了，即是可以抓取请求包的。</p>
 <hr>
-<h3 id="0x02-通过-OpenID-动态客户端注册实现-SSRF"><a href="#0x02-通过-OpenID-动态客户端注册实现-SSRF" class="headerlink" title="0x02.通过 OpenID 动态客户端注册实现 SSRF"></a>0x02.通过 OpenID 动态客户端注册实现 SSRF</h3><p>本实验允许客户端应用程序通过专用注册端点向 OAuth 服务动态注册自身。OAuth 服务以不安全的方式使用了某些特定于客户端的数据，从而暴露了潜在的 SSRF 攻击向量。<br>要解决实验，请构造一个 SSRF 攻击，访问 <code>http://169.254.169.254/latest/meta-data/iam/security-credentials/admin/</code>，并窃取 OAuth 提供商云环境的秘密访问密钥。<br>你可以使用以下凭据登录自己的账户：wiener:peter</p>
-<h4 id="OpenID-动态客户端注册协议"><a href="#OpenID-动态客户端注册协议" class="headerlink" title="OpenID 动态客户端注册协议"></a>OpenID 动态客户端注册协议</h4><p>引入： <code>OAuth 2.0</code> 和 <code>OpenID Connect</code> 的基本场景<br>想象你要用“微信登录”某个网站（比如一个论坛）。流程通常是：</p>
+<h1 id="0x02-通过-OpenID-动态客户端注册实现-SSRF"><a href="#0x02-通过-OpenID-动态客户端注册实现-SSRF" class="headerlink" title="0x02.通过 OpenID 动态客户端注册实现 SSRF"></a>0x02.通过 OpenID 动态客户端注册实现 SSRF</h1><p>本实验允许客户端应用程序通过专用注册端点向 OAuth 服务动态注册自身。OAuth 服务以不安全的方式使用了某些特定于客户端的数据，从而暴露了潜在的 SSRF 攻击向量。<br>要解决实验，请构造一个 SSRF 攻击，访问 <code>http://169.254.169.254/latest/meta-data/iam/security-credentials/admin/</code>，并窃取 OAuth 提供商云环境的秘密访问密钥。<br>你可以使用以下凭据登录自己的账户：wiener:peter</p>
+<h2 id="OpenID-动态客户端注册协议"><a href="#OpenID-动态客户端注册协议" class="headerlink" title="OpenID 动态客户端注册协议"></a>OpenID 动态客户端注册协议</h2><p>引入： <code>OAuth 2.0</code> 和 <code>OpenID Connect</code> 的基本场景<br>想象你要用“微信登录”某个网站（比如一个论坛）。流程通常是：</p>
 <blockquote>
 <ol>
 <li>你点击“微信登录”。</li>
@@ -435,7 +435,7 @@
 <p>获取log<br><img loading="lazy" decoding="async" src="/images/OAuth_authentication/image_33.png" alt="OAuth_authentication·图33"></p>
 <p>解码提交即可</p>
 <hr>
-<h3 id="0x03-OAuth-账号强制绑定"><a href="#0x03-OAuth-账号强制绑定" class="headerlink" title="0x03.OAuth 账号强制绑定"></a>0x03.OAuth 账号强制绑定</h3><p>本实验支持将社交媒体账号与你的网站账号绑定，以便你后续可以通过 OAuth 方式登录，而无需使用常规的用户名密码。由于客户端应用对 OAuth 流程存在不安全实现，攻击者可利用该功能获取其他用户账号的访问权限。<br>实验目标：通过 CSRF 攻击，将你自己的社交媒体账号强制绑定到博客网站的管理员账号上；随后进入管理员面板，删除用户 carlos。<br>管理员用户会打开你从漏洞利用服务器发送的任意链接，并且其在博客网站上始终保持有效登录会话。<br>测试账号：<code>博客网站账号（本网站账号）</code>：wiener:peter；<code>社交媒体账号</code>：peter.wiener:hotdog</p>
+<h1 id="0x03-OAuth-账号强制绑定"><a href="#0x03-OAuth-账号强制绑定" class="headerlink" title="0x03.OAuth 账号强制绑定"></a>0x03.OAuth 账号强制绑定</h1><p>本实验支持将社交媒体账号与你的网站账号绑定，以便你后续可以通过 OAuth 方式登录，而无需使用常规的用户名密码。由于客户端应用对 OAuth 流程存在不安全实现，攻击者可利用该功能获取其他用户账号的访问权限。<br>实验目标：通过 CSRF 攻击，将你自己的社交媒体账号强制绑定到博客网站的管理员账号上；随后进入管理员面板，删除用户 carlos。<br>管理员用户会打开你从漏洞利用服务器发送的任意链接，并且其在博客网站上始终保持有效登录会话。<br>测试账号：<code>博客网站账号（本网站账号）</code>：wiener:peter；<code>社交媒体账号</code>：peter.wiener:hotdog</p>
 <p>正常登录后发现可以绑定第三方账号，所以逐步抓包分析<br><img loading="lazy" decoding="async" src="/images/OAuth_authentication/image_34.png" alt="OAuth_authentication·图34"></p>
 <p>抓取绑定流程的数据包<br><img loading="lazy" decoding="async" src="/images/OAuth_authentication/image_35.png" alt="OAuth_authentication·图35"><br>在本地的登录流程中，是没有先第三方oauth认证服务器提交数据进行动态注册，而在绑定第三方账号时，发送的第一个请求就含有注册数据。这说明：这些注册参数是客户端静态注册的，且不针对一某一个特定的用户，而是整个客户端</p>
 <p><img loading="lazy" decoding="async" src="/images/OAuth_authentication/image_36.png" alt="OAuth_authentication·图36"></p>
@@ -494,7 +494,7 @@
 <p>以第三方账号登录之后就是管理员界面<br><img loading="lazy" decoding="async" src="/images/OAuth_authentication/image_43.png" alt="OAuth_authentication·图43"></p>
 <p>删除账号即可</p>
 <hr>
-<h3 id="0x04-通过-redirect-uri-实现-OAuth-账号劫持"><a href="#0x04-通过-redirect-uri-实现-OAuth-账号劫持" class="headerlink" title="0x04.通过 redirect_uri 实现 OAuth 账号劫持"></a>0x04.通过 redirect_uri 实现 OAuth 账号劫持</h3><p>本实验通过 OAuth 服务为用户提供「社交账号登录」功能。OAuth 服务提供商的一处配置错误，使得攻击者可以窃取其他用户账号对应的授权码（authorization code）。<br>要完成本实验，你需要：窃取与管理员（admin）用户绑定的有效授权码；使用该授权码登录管理员的账号删除用户 carlos<br>管理员用户会打开你从  漏洞利用服务器（Exploit Server） 发送的任何内容，且始终保持与 OAuth 服务的有效登录会话（无需重新输入密码授权）。<br>你可以使用以下凭证登录自己的社交账号：用户名：wiener；密码：peter</p>
+<h1 id="0x04-通过-redirect-uri-实现-OAuth-账号劫持"><a href="#0x04-通过-redirect-uri-实现-OAuth-账号劫持" class="headerlink" title="0x04.通过 redirect_uri 实现 OAuth 账号劫持"></a>0x04.通过 redirect_uri 实现 OAuth 账号劫持</h1><p>本实验通过 OAuth 服务为用户提供「社交账号登录」功能。OAuth 服务提供商的一处配置错误，使得攻击者可以窃取其他用户账号对应的授权码（authorization code）。<br>要完成本实验，你需要：窃取与管理员（admin）用户绑定的有效授权码；使用该授权码登录管理员的账号删除用户 carlos<br>管理员用户会打开你从  漏洞利用服务器（Exploit Server） 发送的任何内容，且始终保持与 OAuth 服务的有效登录会话（无需重新输入密码授权）。<br>你可以使用以下凭证登录自己的社交账号：用户名：wiener；密码：peter</p>
 <p><strong><code>实验的漏洞根源是</code></strong>：OAuth 授权服务器对 redirect_uri 的校验存在严重缺陷（比如仅校验域名前缀、完全不校验，或存在绕过逻辑）攻击者可以构造恶意的 redirect_uri，诱导已登录 OAuth 的管理员点击授权链接，让授权服务器把管理员的有效授权码直接跳转到攻击者控制的漏洞利用服务器，从而窃取授权码，最终用该授权码登录管理员账号完成攻击</p>
 <p>简单来说就是<code>redirect_uri没有和客户端绑定造成的code泄露</code></p>
 <p>登录过程差不多，只需要关注两个重要的数据包（一对请求响应包）<br><img loading="lazy" decoding="async" src="/images/OAuth_authentication/image_44.png" alt="OAuth_authentication·图44"></p>
@@ -508,7 +508,7 @@
 <p>修改code（实际上没必要在重发器修改，反而不方便）<br><img loading="lazy" decoding="async" src="/images/OAuth_authentication/image_47.png" alt="OAuth_authentication·图47"></p>
 <p>之后进入面板调用删除接口即可</p>
 <hr>
-<h3 id="0x05-利用开放重定向漏洞窃取-OAuth-访问令牌"><a href="#0x05-利用开放重定向漏洞窃取-OAuth-访问令牌" class="headerlink" title="0x05.利用开放重定向漏洞窃取 OAuth 访问令牌"></a>0x05.利用开放重定向漏洞窃取 OAuth 访问令牌</h3><p>本实验使用 OAuth 服务实现社交账号快捷登录。由于 OAuth 服务端的校验机制存在缺陷，攻击者可以诱导 <strong>访问令牌（access token）</strong> 泄露至客户端应用内的任意页面。<br>实验要求：</p>
+<h1 id="0x05-利用开放重定向漏洞窃取-OAuth-访问令牌"><a href="#0x05-利用开放重定向漏洞窃取-OAuth-访问令牌" class="headerlink" title="0x05.利用开放重定向漏洞窃取 OAuth 访问令牌"></a>0x05.利用开放重定向漏洞窃取 OAuth 访问令牌</h1><p>本实验使用 OAuth 服务实现社交账号快捷登录。由于 OAuth 服务端的校验机制存在缺陷，攻击者可以诱导 <strong>访问令牌（access token）</strong> 泄露至客户端应用内的任意页面。<br>实验要求：</p>
 <ul>
 <li><p>找出博客网站上的 ** 开放重定向（Open Redirect）** 漏洞；</p>
 </li>
@@ -632,7 +632,7 @@
 <p>获取apikey<br><img loading="lazy" decoding="async" src="/images/OAuth_authentication/image_58.png" alt="OAuth_authentication·图58"></p>
 <p>提交即可</p>
 <hr>
-<h3 id="0x06-通过代理页面窃取-OAuth-访问令牌"><a href="#0x06-通过代理页面窃取-OAuth-访问令牌" class="headerlink" title="0x06.通过代理页面窃取 OAuth 访问令牌"></a>0x06.通过代理页面窃取 OAuth 访问令牌</h3><p>本实验借助一项 OAuth 服务，让用户可以通过社交账号登录。OAuth 服务存在校验逻辑缺陷，攻击者可利用该漏洞，将访问令牌泄露给客户端应用程序上的任意页面。<br>要通关本实验：</p>
+<h1 id="0x06-通过代理页面窃取-OAuth-访问令牌"><a href="#0x06-通过代理页面窃取-OAuth-访问令牌" class="headerlink" title="0x06.通过代理页面窃取 OAuth 访问令牌"></a>0x06.通过代理页面窃取 OAuth 访问令牌</h1><p>本实验借助一项 OAuth 服务，让用户可以通过社交账号登录。OAuth 服务存在校验逻辑缺陷，攻击者可利用该漏洞，将访问令牌泄露给客户端应用程序上的任意页面。<br>要通关本实验：</p>
 <ul>
 <li>找出客户端应用程序中的另一个漏洞；</li>
 <li>以此漏洞作为代理中转，窃取管理员账号的 OAuth 访问令牌；</li>
@@ -642,7 +642,7 @@
 <p>管理员会打开你从漏洞利用服务器发送的任意链接，且管理员在 OAuth 服务中始终保持登录会话状态。<br>你可以使用以下账号密码，通过个人社交账号登录测试：账号：wiener密码：peter</p>
 <p>根据之前的分析方法，这三个仍然是重要的数据包<br><img loading="lazy" decoding="async" src="/images/OAuth_authentication/image_59.png" alt="OAuth_authentication·图59"></p>
 <p>意料之中 redirect 不可修改，且目录穿越不发挥作用，由上题可知，我们要跳出登录流程的局限性</p>
-<h4 id="父子页面的相关知识"><a href="#父子页面的相关知识" class="headerlink" title="父子页面的相关知识"></a>父子页面的相关知识</h4><ul>
+<h2 id="父子页面的相关知识"><a href="#父子页面的相关知识" class="headerlink" title="父子页面的相关知识"></a>父子页面的相关知识</h2><ul>
 <li><p>简要概念</p>
 <blockquote>
 <p>对于一个打开的网页，姑且其记为父页面；这个网页中存在其他网页，记为子页面</p>
@@ -868,7 +868,7 @@
 		
 			 <div class="toc">
 				 <span class="toc-title"><i class="fa fa-list"></i> Contents</span>
-				<ol class="toc-article"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x00-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-article-text">0x00.基础知识</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#OAuth%E8%AF%9E%E7%94%9F%E5%89%8D%EF%BC%9A%E5%8F%A4%E8%80%81%E7%9A%84-%E5%AF%86%E7%A0%81%E5%85%B1%E4%BA%AB-%E6%97%B6%E4%BB%A3"><span class="toc-article-text">OAuth诞生前：古老的&quot;密码共享&quot;时代</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#OAuth-1-0%EF%BC%9A%E4%BB%8E-%E5%85%B1%E4%BA%AB%E5%AF%86%E7%A0%81-%E5%88%B0-%E5%AE%89%E5%85%A8%E6%8E%88%E6%9D%83"><span class="toc-article-text">OAuth 1.0：从&quot;共享密码&quot;到&quot;安全授权&quot;</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#OAuth-2-0%EF%BC%9A%E4%BB%8E%E5%85%B7%E4%BD%93%E5%8D%8F%E8%AE%AE%E5%88%B0%E6%9B%B4%E7%81%B5%E6%B4%BB%E6%9B%B4%E5%A4%8D%E6%9D%82%E7%9A%84%E6%8E%88%E6%9D%83%E6%A1%86%E6%9E%B6"><span class="toc-article-text">OAuth 2.0：从具体协议到更灵活更复杂的授权框架</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#OAuth-2-1%EF%BC%9A%E4%BB%8E%E2%80%9C%E5%8F%AF%E9%80%89%E5%AE%89%E5%85%A8%E2%80%9D%E5%88%B0%E2%80%9C%E9%BB%98%E8%AE%A4%E5%AE%89%E5%85%A8%E2%80%9D%E7%9A%84%E6%95%B4%E5%90%88%E5%8D%87%E7%BA%A7"><span class="toc-article-text">OAuth 2.1：从“可选安全”到“默认安全”的整合升级</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-article-text">总结</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x01-%E9%80%9A%E8%BF%87-OAuth-%E9%9A%90%E5%BC%8F%E6%B5%81%E7%A8%8B%E7%BB%95%E8%BF%87%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81"><span class="toc-article-text">0x01.通过 OAuth 隐式流程绕过身份验证</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x02-%E9%80%9A%E8%BF%87-OpenID-%E5%8A%A8%E6%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%B3%A8%E5%86%8C%E5%AE%9E%E7%8E%B0-SSRF"><span class="toc-article-text">0x02.通过 OpenID 动态客户端注册实现 SSRF</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#OpenID-%E5%8A%A8%E6%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%B3%A8%E5%86%8C%E5%8D%8F%E8%AE%AE"><span class="toc-article-text">OpenID 动态客户端注册协议</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x03-OAuth-%E8%B4%A6%E5%8F%B7%E5%BC%BA%E5%88%B6%E7%BB%91%E5%AE%9A"><span class="toc-article-text">0x03.OAuth 账号强制绑定</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x04-%E9%80%9A%E8%BF%87-redirect-uri-%E5%AE%9E%E7%8E%B0-OAuth-%E8%B4%A6%E5%8F%B7%E5%8A%AB%E6%8C%81"><span class="toc-article-text">0x04.通过 redirect_uri 实现 OAuth 账号劫持</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x05-%E5%88%A9%E7%94%A8%E5%BC%80%E6%94%BE%E9%87%8D%E5%AE%9A%E5%90%91%E6%BC%8F%E6%B4%9E%E7%AA%83%E5%8F%96-OAuth-%E8%AE%BF%E9%97%AE%E4%BB%A4%E7%89%8C"><span class="toc-article-text">0x05.利用开放重定向漏洞窃取 OAuth 访问令牌</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x06-%E9%80%9A%E8%BF%87%E4%BB%A3%E7%90%86%E9%A1%B5%E9%9D%A2%E7%AA%83%E5%8F%96-OAuth-%E8%AE%BF%E9%97%AE%E4%BB%A4%E7%89%8C"><span class="toc-article-text">0x06.通过代理页面窃取 OAuth 访问令牌</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E7%88%B6%E5%AD%90%E9%A1%B5%E9%9D%A2%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86"><span class="toc-article-text">父子页面的相关知识</span></a></li></ol></li></ol>
+				<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x00-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-article-text">0x00.基础知识</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#OAuth%E8%AF%9E%E7%94%9F%E5%89%8D%EF%BC%9A%E5%8F%A4%E8%80%81%E7%9A%84-%E5%AF%86%E7%A0%81%E5%85%B1%E4%BA%AB-%E6%97%B6%E4%BB%A3"><span class="toc-article-text">OAuth诞生前：古老的&quot;密码共享&quot;时代</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#OAuth-1-0%EF%BC%9A%E4%BB%8E-%E5%85%B1%E4%BA%AB%E5%AF%86%E7%A0%81-%E5%88%B0-%E5%AE%89%E5%85%A8%E6%8E%88%E6%9D%83"><span class="toc-article-text">OAuth 1.0：从&quot;共享密码&quot;到&quot;安全授权&quot;</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#OAuth-2-0%EF%BC%9A%E4%BB%8E%E5%85%B7%E4%BD%93%E5%8D%8F%E8%AE%AE%E5%88%B0%E6%9B%B4%E7%81%B5%E6%B4%BB%E6%9B%B4%E5%A4%8D%E6%9D%82%E7%9A%84%E6%8E%88%E6%9D%83%E6%A1%86%E6%9E%B6"><span class="toc-article-text">OAuth 2.0：从具体协议到更灵活更复杂的授权框架</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#OAuth-2-1%EF%BC%9A%E4%BB%8E%E2%80%9C%E5%8F%AF%E9%80%89%E5%AE%89%E5%85%A8%E2%80%9D%E5%88%B0%E2%80%9C%E9%BB%98%E8%AE%A4%E5%AE%89%E5%85%A8%E2%80%9D%E7%9A%84%E6%95%B4%E5%90%88%E5%8D%87%E7%BA%A7"><span class="toc-article-text">OAuth 2.1：从“可选安全”到“默认安全”的整合升级</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-article-text">总结</span></a></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x01-%E9%80%9A%E8%BF%87-OAuth-%E9%9A%90%E5%BC%8F%E6%B5%81%E7%A8%8B%E7%BB%95%E8%BF%87%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81"><span class="toc-article-text">0x01.通过 OAuth 隐式流程绕过身份验证</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x02-%E9%80%9A%E8%BF%87-OpenID-%E5%8A%A8%E6%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%B3%A8%E5%86%8C%E5%AE%9E%E7%8E%B0-SSRF"><span class="toc-article-text">0x02.通过 OpenID 动态客户端注册实现 SSRF</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#OpenID-%E5%8A%A8%E6%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%B3%A8%E5%86%8C%E5%8D%8F%E8%AE%AE"><span class="toc-article-text">OpenID 动态客户端注册协议</span></a></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x03-OAuth-%E8%B4%A6%E5%8F%B7%E5%BC%BA%E5%88%B6%E7%BB%91%E5%AE%9A"><span class="toc-article-text">0x03.OAuth 账号强制绑定</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x04-%E9%80%9A%E8%BF%87-redirect-uri-%E5%AE%9E%E7%8E%B0-OAuth-%E8%B4%A6%E5%8F%B7%E5%8A%AB%E6%8C%81"><span class="toc-article-text">0x04.通过 redirect_uri 实现 OAuth 账号劫持</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x05-%E5%88%A9%E7%94%A8%E5%BC%80%E6%94%BE%E9%87%8D%E5%AE%9A%E5%90%91%E6%BC%8F%E6%B4%9E%E7%AA%83%E5%8F%96-OAuth-%E8%AE%BF%E9%97%AE%E4%BB%A4%E7%89%8C"><span class="toc-article-text">0x05.利用开放重定向漏洞窃取 OAuth 访问令牌</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x06-%E9%80%9A%E8%BF%87%E4%BB%A3%E7%90%86%E9%A1%B5%E9%9D%A2%E7%AA%83%E5%8F%96-OAuth-%E8%AE%BF%E9%97%AE%E4%BB%A4%E7%89%8C"><span class="toc-article-text">0x06.通过代理页面窃取 OAuth 访问令牌</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E7%88%B6%E5%AD%90%E9%A1%B5%E9%9D%A2%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86"><span class="toc-article-text">父子页面的相关知识</span></a></li></ol></li></ol>
 			</div>
 		
 		</div>

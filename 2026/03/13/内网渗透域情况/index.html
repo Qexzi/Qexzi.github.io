@@ -122,7 +122,7 @@
 		  
 		  
 
-		  <h3 id="一、环境拓扑概览"><a href="#一、环境拓扑概览" class="headerlink" title="一、环境拓扑概览"></a>一、环境拓扑概览</h3><ul>
+		  <h1 id="一、环境拓扑概览"><a href="#一、环境拓扑概览" class="headerlink" title="一、环境拓扑概览"></a>一、环境拓扑概览</h1><ul>
 <li><strong>域名</strong>：<code>HACKING</code>（NetBIOS 名称），DNS 域名为 <code>hacking.com</code></li>
 <li><strong>域控制器</strong>：<code>DC_2012_R2</code>（Windows Server 2012 R2，IP：192.168.64.10）</li>
 <li><strong>成员服务器</strong>：<code>winserv12R2</code>（已加入域，IP：192.168.64.20）</li>
@@ -131,9 +131,9 @@
 <li><strong>网络模式</strong>：仅主机（Host-Only），所有虚拟机处于同一隔离网络（192.168.64.0&#x2F;24）</li>
 </ul>
 <hr>
-<h3 id="二、Mermaid-域关系图"><a href="#二、Mermaid-域关系图" class="headerlink" title="二、Mermaid 域关系图"></a>二、Mermaid 域关系图</h3><p><img src="/images/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E5%9F%9F%E6%83%85%E5%86%B5/image_1.png" alt="内网渗透域情况·图1"></p>
+<h1 id="二、Mermaid-域关系图"><a href="#二、Mermaid-域关系图" class="headerlink" title="二、Mermaid 域关系图"></a>二、Mermaid 域关系图</h1><p><img src="/images/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E5%9F%9F%E6%83%85%E5%86%B5/image_1.png" alt="内网渗透域情况·图1"></p>
 <hr>
-<h3 id="三、核心表格：账号密码及登录关系"><a href="#三、核心表格：账号密码及登录关系" class="headerlink" title="三、核心表格：账号密码及登录关系"></a>三、核心表格：账号密码及登录关系</h3><table>
+<h1 id="三、核心表格：账号密码及登录关系"><a href="#三、核心表格：账号密码及登录关系" class="headerlink" title="三、核心表格：账号密码及登录关系"></a>三、核心表格：账号密码及登录关系</h1><table>
 <thead>
 <tr>
 <th>账号标识</th>
@@ -209,7 +209,7 @@
 </ul>
 </blockquote>
 <hr>
-<h3 id="四、域登录机制"><a href="#四、域登录机制" class="headerlink" title="四、域登录机制"></a>四、域登录机制</h3><ol>
+<h1 id="四、域登录机制"><a href="#四、域登录机制" class="headerlink" title="四、域登录机制"></a>四、域登录机制</h1><ol>
 <li><strong>非域控制器上登录域用户</strong>：<ul>
 <li>本机向域控制器发送验证请求：验证用户提供的域账号和密码。</li>
 <li>域控制器核对 Active Directory 中的账号信息后返回结果。</li>
@@ -231,7 +231,7 @@
 </li>
 </ol>
 <hr>
-<h3 id="五、常用命令解析"><a href="#五、常用命令解析" class="headerlink" title="五、常用命令解析"></a>五、常用命令解析</h3><table>
+<h1 id="五、常用命令解析"><a href="#五、常用命令解析" class="headerlink" title="五、常用命令解析"></a>五、常用命令解析</h1><table>
 <thead>
 <tr>
 <th>命令</th>
@@ -264,7 +264,7 @@
 </tr>
 </tbody></table>
 <hr>
-<h3 id="六、当前状态验证（预期）"><a href="#六、当前状态验证（预期）" class="headerlink" title="六、当前状态验证（预期）"></a>六、当前状态验证（预期）</h3><ul>
+<h1 id="六、当前状态验证（预期）"><a href="#六、当前状态验证（预期）" class="headerlink" title="六、当前状态验证（预期）"></a>六、当前状态验证（预期）</h1><ul>
 <li><strong>网络连通性</strong>：所有主机在同一 Host-Only 网络，可互相 ping 通（需关闭 Windows 防火墙或放行 ICMP，尤其是 win10）。</li>
 <li><strong>DNS解析</strong>：在成员服务器和 win10 上执行 <code>nslookup hacking.com</code> 应返回 <code>192.168.64.10</code>。</li>
 <li><strong>域控可见性</strong>：<code>net view /domain:HACKING</code> 应列出域内所有计算机（DC、winserv12R2、win10）。若 win10 执行该命令出现”系统错误 1231”，请在 win10 中启用 SMB 1.0（控制面板 → 程序 → 启动或关闭 Windows 功能 → 勾选”SMB 1.0&#x2F;CIFS 文件共享支持”）。</li>
@@ -280,7 +280,7 @@
 </li>
 </ul>
 <hr>
-<h3 id="七、渗透测试攻击路径示意"><a href="#七、渗透测试攻击路径示意" class="headerlink" title="七、渗透测试攻击路径示意"></a>七、渗透测试攻击路径示意</h3><ol>
+<h1 id="七、渗透测试攻击路径示意"><a href="#七、渗透测试攻击路径示意" class="headerlink" title="七、渗透测试攻击路径示意"></a>七、渗透测试攻击路径示意</h1><ol>
 <li><strong>信息收集</strong>：Kali 扫描内网主机（<code>nmap -sV 192.168.64.0/24</code>），识别开放端口和服务。</li>
 <li><strong>初始入侵</strong>：针对成员服务器 <code>winserv12R2</code>（可能运行 Web 服务）或 win10 的漏洞进行利用，获取初始权限。</li>
 <li><strong>权限提升</strong>：在受控主机上进行本地提权，获取 SYSTEM 或本地管理员权限。</li>
@@ -293,7 +293,7 @@
 <li><strong>域控权限获取</strong>：成功控制域控后，获取整个域的管理权限。</li>
 </ol>
 <hr>
-<h3 id="八、Windows认证机制与PTH哈希传递（横向渗透核心）"><a href="#八、Windows认证机制与PTH哈希传递（横向渗透核心）" class="headerlink" title="八、Windows认证机制与PTH哈希传递（横向渗透核心）"></a>八、Windows认证机制与PTH哈希传递（横向渗透核心）</h3><h4 id="8-1-Windows认证体系核心组件"><a href="#8-1-Windows认证体系核心组件" class="headerlink" title="8.1 Windows认证体系核心组件"></a>8.1 Windows认证体系核心组件</h4><table>
+<h1 id="八、Windows认证机制与PTH哈希传递（横向渗透核心）"><a href="#八、Windows认证机制与PTH哈希传递（横向渗透核心）" class="headerlink" title="八、Windows认证机制与PTH哈希传递（横向渗透核心）"></a>八、Windows认证机制与PTH哈希传递（横向渗透核心）</h1><h2 id="8-1-Windows认证体系核心组件"><a href="#8-1-Windows认证体系核心组件" class="headerlink" title="8.1 Windows认证体系核心组件"></a>8.1 Windows认证体系核心组件</h2><table>
 <thead>
 <tr>
 <th>组件</th>
@@ -342,9 +342,9 @@
 <td>Active Directory的物理存储文件，包含所有对象及哈希。</td>
 </tr>
 </tbody></table>
-<h4 id="8-2-域登录认证详解：Kerberos-主流程与-NTLM-回退机制"><a href="#8-2-域登录认证详解：Kerberos-主流程与-NTLM-回退机制" class="headerlink" title="8.2 域登录认证详解：Kerberos 主流程与 NTLM 回退机制"></a>8.2 域登录认证详解：Kerberos 主流程与 NTLM 回退机制</h4><p><img loading="lazy" decoding="async" src="/images/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E5%9F%9F%E6%83%85%E5%86%B5/image_2.png" alt="内网渗透域情况·图2"></p>
+<h2 id="8-2-域登录认证详解：Kerberos-主流程与-NTLM-回退机制"><a href="#8-2-域登录认证详解：Kerberos-主流程与-NTLM-回退机制" class="headerlink" title="8.2 域登录认证详解：Kerberos 主流程与 NTLM 回退机制"></a>8.2 域登录认证详解：Kerberos 主流程与 NTLM 回退机制</h2><p><img loading="lazy" decoding="async" src="/images/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E5%9F%9F%E6%83%85%E5%86%B5/image_2.png" alt="内网渗透域情况·图2"></p>
 <p><img loading="lazy" decoding="async" src="/images/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E5%9F%9F%E6%83%85%E5%86%B5/image_3.png" alt="内网渗透域情况·图3"></p>
-<h4 id="8-4-PTH攻击实操示例（针对当前环境）"><a href="#8-4-PTH攻击实操示例（针对当前环境）" class="headerlink" title="8.4 PTH攻击实操示例（针对当前环境）"></a>8.4 PTH攻击实操示例（针对当前环境）</h4><p>假设已通过Web漏洞获得<code>winserv12R2</code>的SYSTEM权限：</p>
+<h2 id="8-4-PTH攻击实操示例（针对当前环境）"><a href="#8-4-PTH攻击实操示例（针对当前环境）" class="headerlink" title="8.4 PTH攻击实操示例（针对当前环境）"></a>8.4 PTH攻击实操示例（针对当前环境）</h2><p>假设已通过Web漏洞获得<code>winserv12R2</code>的SYSTEM权限：</p>
 <ol>
 <li><p><strong>在winserv12R2上运行mimikatz抓取域用户<code>user1</code>的哈希</strong>：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mimikatz # privilege::debug</span><br><span class="line">mimikatz # sekurlsa::logonpasswords</span><br></pre></td></tr></table></figure>
@@ -360,7 +360,7 @@
 </li>
 </ol>
 <hr>
-<h3 id="九、注意事项"><a href="#九、注意事项" class="headerlink" title="九、注意事项"></a>九、注意事项</h3><ul>
+<h1 id="九、注意事项"><a href="#九、注意事项" class="headerlink" title="九、注意事项"></a>九、注意事项</h1><ul>
 <li><strong>防火墙</strong>：所有主机需关闭 Windows 防火墙或放行必要端口（ICMP、SMB 445&#x2F;139、RDP 3389 等），以便测试连通性和 PTH 攻击。</li>
 <li><strong>实验隔离</strong>：环境仅限 Host-Only 网络，确保与外部网络隔离，防止意外泄露或攻击外部系统。</li>
 <li><strong>密码安全</strong>：默认密码仅为实验方便，实际生产环境应立即修改并启用强密码策略。</li>
@@ -538,7 +538,7 @@
 		
 			 <div class="toc">
 				 <span class="toc-title"><i class="fa fa-list"></i> Contents</span>
-				<ol class="toc-article"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E4%B8%80%E3%80%81%E7%8E%AF%E5%A2%83%E6%8B%93%E6%89%91%E6%A6%82%E8%A7%88"><span class="toc-article-text">一、环境拓扑概览</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E4%BA%8C%E3%80%81Mermaid-%E5%9F%9F%E5%85%B3%E7%B3%BB%E5%9B%BE"><span class="toc-article-text">二、Mermaid 域关系图</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E4%B8%89%E3%80%81%E6%A0%B8%E5%BF%83%E8%A1%A8%E6%A0%BC%EF%BC%9A%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81%E5%8F%8A%E7%99%BB%E5%BD%95%E5%85%B3%E7%B3%BB"><span class="toc-article-text">三、核心表格：账号密码及登录关系</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E5%9B%9B%E3%80%81%E5%9F%9F%E7%99%BB%E5%BD%95%E6%9C%BA%E5%88%B6"><span class="toc-article-text">四、域登录机制</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E4%BA%94%E3%80%81%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90"><span class="toc-article-text">五、常用命令解析</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E5%85%AD%E3%80%81%E5%BD%93%E5%89%8D%E7%8A%B6%E6%80%81%E9%AA%8C%E8%AF%81%EF%BC%88%E9%A2%84%E6%9C%9F%EF%BC%89"><span class="toc-article-text">六、当前状态验证（预期）</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E4%B8%83%E3%80%81%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%94%BB%E5%87%BB%E8%B7%AF%E5%BE%84%E7%A4%BA%E6%84%8F"><span class="toc-article-text">七、渗透测试攻击路径示意</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E5%85%AB%E3%80%81Windows%E8%AE%A4%E8%AF%81%E6%9C%BA%E5%88%B6%E4%B8%8EPTH%E5%93%88%E5%B8%8C%E4%BC%A0%E9%80%92%EF%BC%88%E6%A8%AA%E5%90%91%E6%B8%97%E9%80%8F%E6%A0%B8%E5%BF%83%EF%BC%89"><span class="toc-article-text">八、Windows认证机制与PTH哈希传递（横向渗透核心）</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#8-1-Windows%E8%AE%A4%E8%AF%81%E4%BD%93%E7%B3%BB%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6"><span class="toc-article-text">8.1 Windows认证体系核心组件</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#8-2-%E5%9F%9F%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81%E8%AF%A6%E8%A7%A3%EF%BC%9AKerberos-%E4%B8%BB%E6%B5%81%E7%A8%8B%E4%B8%8E-NTLM-%E5%9B%9E%E9%80%80%E6%9C%BA%E5%88%B6"><span class="toc-article-text">8.2 域登录认证详解：Kerberos 主流程与 NTLM 回退机制</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#8-4-PTH%E6%94%BB%E5%87%BB%E5%AE%9E%E6%93%8D%E7%A4%BA%E4%BE%8B%EF%BC%88%E9%92%88%E5%AF%B9%E5%BD%93%E5%89%8D%E7%8E%AF%E5%A2%83%EF%BC%89"><span class="toc-article-text">8.4 PTH攻击实操示例（针对当前环境）</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E4%B9%9D%E3%80%81%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-article-text">九、注意事项</span></a></li></ol>
+				<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E4%B8%80%E3%80%81%E7%8E%AF%E5%A2%83%E6%8B%93%E6%89%91%E6%A6%82%E8%A7%88"><span class="toc-article-text">一、环境拓扑概览</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E4%BA%8C%E3%80%81Mermaid-%E5%9F%9F%E5%85%B3%E7%B3%BB%E5%9B%BE"><span class="toc-article-text">二、Mermaid 域关系图</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E4%B8%89%E3%80%81%E6%A0%B8%E5%BF%83%E8%A1%A8%E6%A0%BC%EF%BC%9A%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81%E5%8F%8A%E7%99%BB%E5%BD%95%E5%85%B3%E7%B3%BB"><span class="toc-article-text">三、核心表格：账号密码及登录关系</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E5%9B%9B%E3%80%81%E5%9F%9F%E7%99%BB%E5%BD%95%E6%9C%BA%E5%88%B6"><span class="toc-article-text">四、域登录机制</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E4%BA%94%E3%80%81%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90"><span class="toc-article-text">五、常用命令解析</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E5%85%AD%E3%80%81%E5%BD%93%E5%89%8D%E7%8A%B6%E6%80%81%E9%AA%8C%E8%AF%81%EF%BC%88%E9%A2%84%E6%9C%9F%EF%BC%89"><span class="toc-article-text">六、当前状态验证（预期）</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E4%B8%83%E3%80%81%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%94%BB%E5%87%BB%E8%B7%AF%E5%BE%84%E7%A4%BA%E6%84%8F"><span class="toc-article-text">七、渗透测试攻击路径示意</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E5%85%AB%E3%80%81Windows%E8%AE%A4%E8%AF%81%E6%9C%BA%E5%88%B6%E4%B8%8EPTH%E5%93%88%E5%B8%8C%E4%BC%A0%E9%80%92%EF%BC%88%E6%A8%AA%E5%90%91%E6%B8%97%E9%80%8F%E6%A0%B8%E5%BF%83%EF%BC%89"><span class="toc-article-text">八、Windows认证机制与PTH哈希传递（横向渗透核心）</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#8-1-Windows%E8%AE%A4%E8%AF%81%E4%BD%93%E7%B3%BB%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6"><span class="toc-article-text">8.1 Windows认证体系核心组件</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#8-2-%E5%9F%9F%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81%E8%AF%A6%E8%A7%A3%EF%BC%9AKerberos-%E4%B8%BB%E6%B5%81%E7%A8%8B%E4%B8%8E-NTLM-%E5%9B%9E%E9%80%80%E6%9C%BA%E5%88%B6"><span class="toc-article-text">8.2 域登录认证详解：Kerberos 主流程与 NTLM 回退机制</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#8-4-PTH%E6%94%BB%E5%87%BB%E5%AE%9E%E6%93%8D%E7%A4%BA%E4%BE%8B%EF%BC%88%E9%92%88%E5%AF%B9%E5%BD%93%E5%89%8D%E7%8E%AF%E5%A2%83%EF%BC%89"><span class="toc-article-text">8.4 PTH攻击实操示例（针对当前环境）</span></a></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E4%B9%9D%E3%80%81%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-article-text">九、注意事项</span></a></li></ol>
 			</div>
 		
 		</div>

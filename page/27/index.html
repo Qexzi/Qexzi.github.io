@@ -165,10 +165,10 @@
   <div class="row">
 	
 	
-		<h2 id="1-什么是SSH隧道-为什么需要SSH隧道？"><a href="#1-什么是SSH隧道-为什么需要SSH隧道？" class="headerlink" title="1.什么是SSH隧道+为什么需要SSH隧道？"></a><code>1.什么是SSH隧道+为什么需要SSH隧道？</code></h2><blockquote>
+		<h1 id="1-什么是SSH隧道-为什么需要SSH隧道？"><a href="#1-什么是SSH隧道-为什么需要SSH隧道？" class="headerlink" title="1.什么是SSH隧道+为什么需要SSH隧道？"></a><code>1.什么是SSH隧道+为什么需要SSH隧道？</code></h1><blockquote>
 <p>SSH 隧道就像是一条加密的地下通道，让你在不安全的网络上安全地传输数据。<br>比如：你想从家里访问公司内网的数据库，但数据库只能在公司内网访问，这时候 SSH 隧道就能帮你 “穿墙” 访问。</p>
 </blockquote>
-<h2 id="2-SSH的隧道类型"><a href="#2-SSH的隧道类型" class="headerlink" title="2.SSH的隧道类型"></a><code>2.SSH的隧道类型</code></h2><h3 id="SSH反向连接（远程端口转发）"><a href="#SSH反向连接（远程端口转发）" class="headerlink" title="SSH反向连接（远程端口转发）"></a><code>SSH反向连接</code>（远程端口转发）</h3><p><img src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_1.png" alt="SSH隧道技术·图1"></p>
+<h1 id="2-SSH的隧道类型"><a href="#2-SSH的隧道类型" class="headerlink" title="2.SSH的隧道类型"></a><code>2.SSH的隧道类型</code></h1><h2 id="SSH反向连接（远程端口转发）"><a href="#SSH反向连接（远程端口转发）" class="headerlink" title="SSH反向连接（远程端口转发）"></a><code>SSH反向连接</code>（远程端口转发）</h2><p><img src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_1.png" alt="SSH隧道技术·图1"></p>
 <p>  因此可以通过访问内网2来访问内网1的主机（因为内网2是允许外网主机访问的）</p>
 <p><img loading="lazy" decoding="async" src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_2.png" alt="SSH隧道技术·图2"></p>
 <p><img loading="lazy" decoding="async" src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_3.png" alt="SSH隧道技术·图3"></p>
@@ -202,10 +202,10 @@
   <div class="row">
 	
 	
-		<h2 id="一些话"><a href="#一些话" class="headerlink" title="一些话"></a>一些话</h2><figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">本人是一个网安菜鸡，请多多请教。</span><br><span class="line">本文是对作者在SQL注入学习过程中的笔记及经验总结，对于一些非常基础的SQL注入知识不会细细展开</span><br><span class="line">对于一些0基础的网安道友可能不太友好</span><br><span class="line">php版本：php.5.4.45nts （2024-10-12）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">最近复习一下sql，加强渗透测试的能力，随便把之前没做的题目做完（2025-12-13）</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+		<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">本人是一个网安菜鸡，请多多请教。</span><br><span class="line">本文是对作者在SQL注入学习过程中的笔记及经验总结，对于一些非常基础的SQL注入知识不会细细展开</span><br><span class="line">对于一些0基础的网安道友可能不太友好</span><br><span class="line">php版本：php.5.4.45nts （2024-10-12）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">最近复习一下sql，加强渗透测试的能力，随便把之前没做的题目做完（2025-12-13）</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <hr>
-<h2 id="什么是SQL注入"><a href="#什么是SQL注入" class="headerlink" title="什么是SQL注入?"></a>什么是SQL注入?</h2><h2 id="补充知识"><a href="#补充知识" class="headerlink" title="补充知识"></a>补充知识</h2><h3 id="关于information-schema库"><a href="#关于information-schema库" class="headerlink" title="关于information_schema库"></a>关于information_schema库</h3><p>MySQL 从 <strong>5.0.2 版本</strong>开始正式引入了 <code>INFORMATION_SCHEMA</code> 数据库。</p>
+<h1 id="什么是SQL注入"><a href="#什么是SQL注入" class="headerlink" title="什么是SQL注入?"></a>什么是SQL注入?</h1><h2 id="补充知识"><a href="#补充知识" class="headerlink" title="补充知识"></a>补充知识</h2><h3 id="关于information-schema库"><a href="#关于information-schema库" class="headerlink" title="关于information_schema库"></a>关于information_schema库</h3><p>MySQL 从 <strong>5.0.2 版本</strong>开始正式引入了 <code>INFORMATION_SCHEMA</code> 数据库。</p>
 <h4 id="关键细节"><a href="#关键细节" class="headerlink" title="关键细节"></a>关键细节</h4><ol>
 <li><strong>首次出现版本</strong>：<code>5.0.2</code>（2005年发布）</li>
 <li><strong>目的</strong>：<br>提供符合 SQL 标准（ISO&#x2F;IEC 9075）的元数据访问方式，替代部分 <code>SHOW</code> 命令（如 <code>SHOW DATABASES</code>、<code>SHOW TABLES</code>）和直接查询 <code>mysql</code> 系统表的方式。</li>
@@ -316,45 +316,45 @@
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/SRC/">SRC<span>2</span></a></li>
-		
-			<li><a href="/tags/Redis/">Redis<span>1</span></a></li>
-		
-			<li><a href="/tags/刷机/">刷机<span>1</span></a></li>
-		
-			<li><a href="/tags/红队/">红队<span>1</span></a></li>
-		
-			<li><a href="/tags/Linux/">Linux<span>1</span></a></li>
-		
 			<li><a href="/tags/Google-Hacking/">Google Hacking<span>1</span></a></li>
-		
-			<li><a href="/tags/crawlers/">crawlers<span>1</span></a></li>
-		
-			<li><a href="/tags/XXE/">XXE<span>1</span></a></li>
-		
-			<li><a href="/tags/PWN/">PWN<span>1</span></a></li>
-		
-			<li><a href="/tags/应用层/">应用层<span>1</span></a></li>
-		
-			<li><a href="/tags/Mysql/">Mysql<span>1</span></a></li>
-		
-			<li><a href="/tags/虚拟机网络/">虚拟机网络<span>1</span></a></li>
 		
 			<li><a href="/tags/代理/">代理<span>1</span></a></li>
 		
-			<li><a href="/tags/hook/">hook<span>1</span></a></li>
+			<li><a href="/tags/XXE/">XXE<span>1</span></a></li>
 		
-			<li><a href="/tags/指令/">指令<span>3</span></a></li>
+			<li><a href="/tags/Nginx/">Nginx<span>1</span></a></li>
 		
-			<li><a href="/tags/文件上传/">文件上传<span>1</span></a></li>
+			<li><a href="/tags/软考/">软考<span>1</span></a></li>
 		
-			<li><a href="/tags/XSS/">XSS<span>1</span></a></li>
+			<li><a href="/tags/应用层/">应用层<span>1</span></a></li>
+		
+			<li><a href="/tags/同源策略/">同源策略<span>1</span></a></li>
+		
+			<li><a href="/tags/Next/">Next<span>1</span></a></li>
+		
+			<li><a href="/tags/内网/">内网<span>2</span></a></li>
 		
 			<li><a href="/tags/堆/">堆<span>1</span></a></li>
 		
-			<li><a href="/tags/HTML/">HTML<span>1</span></a></li>
+			<li><a href="/tags/红队/">红队<span>1</span></a></li>
+		
+			<li><a href="/tags/认证/">认证<span>2</span></a></li>
+		
+			<li><a href="/tags/Java安全/">Java安全<span>1</span></a></li>
+		
+			<li><a href="/tags/SRC/">SRC<span>2</span></a></li>
+		
+			<li><a href="/tags/js/">js<span>4</span></a></li>
+		
+			<li><a href="/tags/隧道技术/">隧道技术<span>1</span></a></li>
+		
+			<li><a href="/tags/CSS/">CSS<span>1</span></a></li>
+		
+			<li><a href="/tags/数据链路层/">数据链路层<span>1</span></a></li>
 		
 			<li><a href="/tags/Git/">Git<span>1</span></a></li>
+		
+			<li><a href="/tags/python/">python<span>1</span></a></li>
 		
 		
 		   <li><a href="/tags">...<span>68</span></a></li>

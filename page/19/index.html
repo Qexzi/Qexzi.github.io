@@ -165,7 +165,7 @@
   <div class="row">
 	
 	
-		<h2 id="1-简单的HTML页面架构"><a href="#1-简单的HTML页面架构" class="headerlink" title="1. 简单的HTML页面架构"></a>1. 简单的HTML页面架构</h2><p>HTML5标准文档结构是网页的基础框架，包含文档类型声明、根元素、头部和主体部分。</p>
+		<h1 id="1-简单的HTML页面架构"><a href="#1-简单的HTML页面架构" class="headerlink" title="1. 简单的HTML页面架构"></a>1. 简单的HTML页面架构</h1><p>HTML5标准文档结构是网页的基础框架，包含文档类型声明、根元素、头部和主体部分。</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;zh-CN&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>WEB安全学习平台<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 页面内容将放置在这里 --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>关键点解析：</strong></p>
@@ -177,7 +177,7 @@
 <li><code>&lt;body&gt;</code>：包含所有页面可见内容的容器</li>
 </ul>
 <p><strong>安全提示</strong>：UTF-8编码是安全首选，避免使用GBK等编码，防止编码转换导致的XSS漏洞。</p>
-<h2 id="2-HTML常见标签详解"><a href="#2-HTML常见标签详解" class="headerlink" title="2. HTML常见标签详解"></a>2. HTML常见标签详解</h2><h3 id="2-1-meta标签"><a href="#2-1-meta标签" class="headerlink" title="2.1 meta标签"></a>2.1 meta标签</h3><p><code>&lt;meta&gt;</code> 元素用于提供关于HTML文档的元数据，对SEO和安全配置至关重要。</p>
+<h1 id="2-HTML常见标签详解"><a href="#2-HTML常见标签详解" class="headerlink" title="2. HTML常见标签详解"></a>2. HTML常见标签详解</h1><h2 id="2-1-meta标签"><a href="#2-1-meta标签" class="headerlink" title="2.1 meta标签"></a>2.1 meta标签</h2><p><code>&lt;meta&gt;</code> 元素用于提供关于HTML文档的元数据，对SEO和安全配置至关重要。</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;zh-CN&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 字符编码 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 页面描述（SEO优化） --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;description&quot;</span> <span class="attr">content</span>=<span class="string">&quot;WEB安全HTML基础教程 - 安全渗透必备技能&quot;</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 关键词（现代搜索引擎已不依赖，但部分场景仍有用） --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;keywords&quot;</span> <span class="attr">content</span>=<span class="string">&quot;网络安全, WEB渗透, 数据安全, 渗透测试, 安全培训&quot;</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 作者信息 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;author&quot;</span> <span class="attr">content</span>=<span class="string">&quot;moonsec&quot;</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 移动设备适配 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 内容安全策略（CSP）- 重要安全配置 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;Content-Security-Policy&quot;</span> </span></span><br><span class="line"><span class="tag">          <span class="attr">content</span>=<span class="string">&quot;default-src &#x27;self&#x27;; script-src &#x27;self&#x27; https://trusted.cdn.com; style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27;&quot;</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- X-Frame-Options - 防止点击劫持 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-Frame-Options&quot;</span> <span class="attr">content</span>=<span class="string">&quot;DENY&quot;</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 刷新页面（5秒后跳转） --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;refresh&quot;</span> <span class="attr">content</span>=<span class="string">&quot;5;url=https://www.example.com&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 	
 	</div>
@@ -205,7 +205,7 @@
   <div class="row">
 	
 	
-		<h2 id="5-1-传输层提供的服务"><a href="#5-1-传输层提供的服务" class="headerlink" title="5.1   传输层提供的服务"></a>5.1   传输层提供的服务</h2><h3 id="5-1-1-传输层的功能"><a href="#5-1-1-传输层的功能" class="headerlink" title="5.1.1   传输层的功能"></a>5.1.1   传输层的功能</h3><ul>
+		<h1 id="5-1-传输层提供的服务"><a href="#5-1-传输层提供的服务" class="headerlink" title="5.1   传输层提供的服务"></a>5.1   传输层提供的服务</h1><h2 id="5-1-1-传输层的功能"><a href="#5-1-1-传输层的功能" class="headerlink" title="5.1.1   传输层的功能"></a>5.1.1   传输层的功能</h2><ul>
 <li>基本概念<ul>
 <li>位于网络层之上、应用层之下</li>
 <li>为运行在不同主机上的进程之间提供逻辑通信</li>
@@ -251,7 +251,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="5-1-2-传输层的寻址与端口"><a href="#5-1-2-传输层的寻址与端口" class="headerlink" title="5.1.2   传输层的寻址与端口"></a>5.1.2   传输层的寻址与端口</h3><ul>
+<h2 id="5-1-2-传输层的寻址与端口"><a href="#5-1-2-传输层的寻址与端口" class="headerlink" title="5.1.2   传输层的寻址与端口"></a>5.1.2   传输层的寻址与端口</h2><ul>
 <li>①. 端口的作用<ul>
 <li><p>端口能让应用层的各种进程将其数据通过端口向下交付给传输层</p>
 </li>
@@ -342,7 +342,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="5-1-3-无连接服务与面向连接服务"><a href="#5-1-3-无连接服务与面向连接服务" class="headerlink" title="5.1.3   无连接服务与面向连接服务"></a>5.1.3   无连接服务与面向连接服务</h3><ul>
+<h2 id="5-1-3-无连接服务与面向连接服务"><a href="#5-1-3-无连接服务与面向连接服务" class="headerlink" title="5.1.3   无连接服务与面向连接服务"></a>5.1.3   无连接服务与面向连接服务</h2><ul>
 <li>TCP&#x2F;IP传输协议<ul>
 <li>面向连接的传输控制协议 (TCP)<ul>
 <li>特点<ul>
@@ -397,7 +397,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="5-2-UDP-协议"><a href="#5-2-UDP-协议" class="headerlink" title="5.2   UDP 协议"></a>5.2   UDP 协议</h2><h3 id="5-2-1-UDP-数据报"><a href="#5-2-1-UDP-数据报" class="headerlink" title="5.2.1    UDP 数据报"></a>5.2.1    UDP 数据报</h3><ul>
+<h1 id="5-2-UDP-协议"><a href="#5-2-UDP-协议" class="headerlink" title="5.2   UDP 协议"></a>5.2   UDP 协议</h1><h2 id="5-2-1-UDP-数据报"><a href="#5-2-1-UDP-数据报" class="headerlink" title="5.2.1    UDP 数据报"></a>5.2.1    UDP 数据报</h2><ul>
 <li>UDP概述<ul>
 <li>UDP特点<ul>
 <li>仅在IP数据报服务上增加复用、分用和差错检测功能</li>
@@ -571,45 +571,45 @@
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/栈/">栈<span>1</span></a></li>
+			<li><a href="/tags/Redis/">Redis<span>1</span></a></li>
+		
+			<li><a href="/tags/计算机网络/">计算机网络<span>7</span></a></li>
+		
+			<li><a href="/tags/Jenkins/">Jenkins<span>1</span></a></li>
+		
+			<li><a href="/tags/Misc/">Misc<span>1</span></a></li>
+		
+			<li><a href="/tags/邮箱解析/">邮箱解析<span>1</span></a></li>
+		
+			<li><a href="/tags/CNN与RNN基础/">CNN与RNN基础<span>1</span></a></li>
 		
 			<li><a href="/tags/DIV/">DIV<span>1</span></a></li>
 		
-			<li><a href="/tags/Pwn/">Pwn<span>3</span></a></li>
+			<li><a href="/tags/CORS/">CORS<span>2</span></a></li>
 		
-			<li><a href="/tags/GitHub-Dork/">GitHub Dork<span>1</span></a></li>
-		
-			<li><a href="/tags/SRC/">SRC<span>2</span></a></li>
-		
-			<li><a href="/tags/SSH/">SSH<span>1</span></a></li>
-		
-			<li><a href="/tags/VPN/">VPN<span>1</span></a></li>
-		
-			<li><a href="/tags/虚拟机网络/">虚拟机网络<span>1</span></a></li>
-		
-			<li><a href="/tags/Linux/">Linux<span>1</span></a></li>
-		
-			<li><a href="/tags/CSS/">CSS<span>1</span></a></li>
-		
-			<li><a href="/tags/信息安全工程师/">信息安全工程师<span>1</span></a></li>
-		
-			<li><a href="/tags/XSS/">XSS<span>1</span></a></li>
-		
-			<li><a href="/tags/js/">js<span>4</span></a></li>
-		
-			<li><a href="/tags/认证/">认证<span>2</span></a></li>
-		
-			<li><a href="/tags/WEB/">WEB<span>1</span></a></li>
-		
-			<li><a href="/tags/XXE/">XXE<span>1</span></a></li>
-		
-			<li><a href="/tags/指令/">指令<span>3</span></a></li>
+			<li><a href="/tags/业务逻辑漏洞/">业务逻辑漏洞<span>1</span></a></li>
 		
 			<li><a href="/tags/python/">python<span>1</span></a></li>
 		
-			<li><a href="/tags/HTML/">HTML<span>1</span></a></li>
+			<li><a href="/tags/Google-Hacking/">Google Hacking<span>1</span></a></li>
 		
-			<li><a href="/tags/windows/">windows<span>1</span></a></li>
+			<li><a href="/tags/指令/">指令<span>3</span></a></li>
+		
+			<li><a href="/tags/Nginx/">Nginx<span>1</span></a></li>
+		
+			<li><a href="/tags/软考/">软考<span>1</span></a></li>
+		
+			<li><a href="/tags/SRC/">SRC<span>2</span></a></li>
+		
+			<li><a href="/tags/内网/">内网<span>2</span></a></li>
+		
+			<li><a href="/tags/Git/">Git<span>1</span></a></li>
+		
+			<li><a href="/tags/Java/">Java<span>1</span></a></li>
+		
+			<li><a href="/tags/JWT/">JWT<span>1</span></a></li>
+		
+			<li><a href="/tags/HTML/">HTML<span>1</span></a></li>
 		
 		
 		   <li><a href="/tags">...<span>68</span></a></li>

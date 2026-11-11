@@ -207,14 +207,14 @@
   <div class="row">
 	
 	
-		<h2 id="一、爬取基础"><a href="#一、爬取基础" class="headerlink" title="一、爬取基础"></a>一、爬取基础</h2><figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">检查网页源代码的目的是：查看所要爬取的内容是由那个url加载的，之后的代码实现就是围绕这个url</span><br></pre></td></tr></table></figure>
+		<h1 id="一、爬取基础"><a href="#一、爬取基础" class="headerlink" title="一、爬取基础"></a>一、爬取基础</h1><figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">检查网页源代码的目的是：查看所要爬取的内容是由那个url加载的，之后的代码实现就是围绕这个url</span><br></pre></td></tr></table></figure>
 
-<h3 id="1-简单网页抓取"><a href="#1-简单网页抓取" class="headerlink" title="1.简单网页抓取"></a>1.简单网页抓取</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> urllib.request import urlopen <span class="comment"># urllib中的一个叫request模块中的urlopen函数</span></span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;https://www.baidu.com&quot;</span></span><br><span class="line">response = <span class="title function_ invoke__">urlopen</span>(url) <span class="comment"># urlopen函数是访问这个网址，返回一个http.client.HTTPResponse对象</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span>(response.<span class="title function_ invoke__">read</span>().<span class="title function_ invoke__">decode</span>(<span class="string">&quot;utf-8&quot;</span>)) <span class="comment"># read()函数是读取响应体，返回字节类型的内容  # ctrl+f charset: 得知网页是由那个字符集编码的</span></span><br><span class="line"><span class="comment"># 字符解码之后，就可看到正常的html代码了</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将html代码写入到test.html文件中</span></span><br><span class="line"></span><br><span class="line">with <span class="title function_ invoke__">open</span>(<span class="string">&quot;./test.html&quot;</span>, <span class="string">&quot;w&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:  <span class="comment">#  with: 上下文管理器 open()函数: 打开一个文件，&quot;w&quot;表示写入模式，encoding指定编码格式 as f: 表示将文件对象赋值给f</span></span><br><span class="line">    f.<span class="title function_ invoke__">write</span>(response.<span class="title function_ invoke__">read</span>().<span class="title function_ invoke__">decode</span>(<span class="string">&quot;utf-8&quot;</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">上述脚本是无法实现要求的：</span><br><span class="line">HTTP响应体只能被读取一次。当你第一次调用response.<span class="title function_ invoke__">read</span>()后，响应内容已经被消耗了，第二次调用会返回空字节，所以文件写入的是空内容</span><br><span class="line"></span><br><span class="line">也就是说，要使用变量存储一下网页内容</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="1-简单网页抓取"><a href="#1-简单网页抓取" class="headerlink" title="1.简单网页抓取"></a>1.简单网页抓取</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> urllib.request import urlopen <span class="comment"># urllib中的一个叫request模块中的urlopen函数</span></span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;https://www.baidu.com&quot;</span></span><br><span class="line">response = <span class="title function_ invoke__">urlopen</span>(url) <span class="comment"># urlopen函数是访问这个网址，返回一个http.client.HTTPResponse对象</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span>(response.<span class="title function_ invoke__">read</span>().<span class="title function_ invoke__">decode</span>(<span class="string">&quot;utf-8&quot;</span>)) <span class="comment"># read()函数是读取响应体，返回字节类型的内容  # ctrl+f charset: 得知网页是由那个字符集编码的</span></span><br><span class="line"><span class="comment"># 字符解码之后，就可看到正常的html代码了</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将html代码写入到test.html文件中</span></span><br><span class="line"></span><br><span class="line">with <span class="title function_ invoke__">open</span>(<span class="string">&quot;./test.html&quot;</span>, <span class="string">&quot;w&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:  <span class="comment">#  with: 上下文管理器 open()函数: 打开一个文件，&quot;w&quot;表示写入模式，encoding指定编码格式 as f: 表示将文件对象赋值给f</span></span><br><span class="line">    f.<span class="title function_ invoke__">write</span>(response.<span class="title function_ invoke__">read</span>().<span class="title function_ invoke__">decode</span>(<span class="string">&quot;utf-8&quot;</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">上述脚本是无法实现要求的：</span><br><span class="line">HTTP响应体只能被读取一次。当你第一次调用response.<span class="title function_ invoke__">read</span>()后，响应内容已经被消耗了，第二次调用会返回空字节，所以文件写入的是空内容</span><br><span class="line"></span><br><span class="line">也就是说，要使用变量存储一下网页内容</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> urllib.request <span class="keyword">import</span> urlopen <span class="comment"># urllib中的一个叫request模块中的urlopen函数</span></span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;https://www.baidu.com&quot;</span></span><br><span class="line">response = urlopen(url) <span class="comment"># urlopen函数是访问这个网址，返回一个http.client.HTTPResponse对象</span></span><br><span class="line"></span><br><span class="line">html_content = response.read().decode(<span class="string">&quot;utf-8&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(html_content) <span class="comment"># read()函数是读取响应体，返回字节类型的内容  # ctrl+f charset: 得知网页是由那个字符集编码的</span></span><br><span class="line"><span class="comment"># 字符解码之后，就可看到正常的html代码了</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将html代码写入到test.html文件中</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;./test.html&quot;</span>, <span class="string">&quot;w&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:  <span class="comment">#  with: 上下文管理器 open()函数: 打开一个文件，&quot;w&quot;表示写入模式，encoding指定编码格式 as f: 表示将文件对象赋值给f</span></span><br><span class="line">    f.write(html_content)  <span class="comment"># write()函数: 将内容写入文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># w 覆盖 a 追加</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <hr>
-<h3 id="2-requests库-get"><a href="#2-requests库-get" class="headerlink" title="2.requests库-get"></a>2.requests库-get</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">一些基本框架</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="comment"># 爬取百度的页面源代码</span></span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;http://www.baidu.com&quot;</span></span><br><span class="line"></span><br><span class="line">resp = requests.get(url) <span class="comment"># get()函数: 发送一个GET请求，返回一个Response对象</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(resp.status_code) <span class="comment"># 获取状态码</span></span><br><span class="line"></span><br><span class="line">resp.encoding = <span class="string">&quot;utf-8&quot;</span> <span class="comment"># 手动指定编码格式</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(resp.text) <span class="comment"># 拿到页面源代码</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="2-requests库-get"><a href="#2-requests库-get" class="headerlink" title="2.requests库-get"></a>2.requests库-get</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">一些基本框架</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="comment"># 爬取百度的页面源代码</span></span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;http://www.baidu.com&quot;</span></span><br><span class="line"></span><br><span class="line">resp = requests.get(url) <span class="comment"># get()函数: 发送一个GET请求，返回一个Response对象</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(resp.status_code) <span class="comment"># 获取状态码</span></span><br><span class="line"></span><br><span class="line">resp.encoding = <span class="string">&quot;utf-8&quot;</span> <span class="comment"># 手动指定编码格式</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(resp.text) <span class="comment"># 拿到页面源代码</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="comment"># 爬取百度的页面源代码</span></span><br><span class="line"></span><br><span class="line">query = <span class="built_in">input</span>(<span class="string">&quot;请输入要搜索的内容: &quot;</span>)</span><br><span class="line">url = <span class="string">f&quot;https://www.sogou.com/web?query=<span class="subst">&#123;query&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">resp = requests.get(url) <span class="comment"># get()函数: 发送一个GET请求，返回一个Response对象  这种简单的搜索几乎都是get请求</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(resp.text) <span class="comment"># 拿到页面源代码</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -323,45 +323,45 @@
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/Docker/">Docker<span>1</span></a></li>
-		
-			<li><a href="/tags/文件上传/">文件上传<span>1</span></a></li>
-		
-			<li><a href="/tags/数据链路层/">数据链路层<span>1</span></a></li>
-		
-			<li><a href="/tags/CSRF/">CSRF<span>1</span></a></li>
-		
-			<li><a href="/tags/XXE/">XXE<span>1</span></a></li>
-		
-			<li><a href="/tags/SSH/">SSH<span>1</span></a></li>
-		
-			<li><a href="/tags/神经网络基础/">神经网络基础<span>1</span></a></li>
-		
-			<li><a href="/tags/内网/">内网<span>2</span></a></li>
-		
-			<li><a href="/tags/js/">js<span>4</span></a></li>
-		
-			<li><a href="/tags/认证/">认证<span>2</span></a></li>
-		
-			<li><a href="/tags/虚拟机网络/">虚拟机网络<span>1</span></a></li>
-		
-			<li><a href="/tags/SQL注入/">SQL注入<span>1</span></a></li>
-		
-			<li><a href="/tags/CORS/">CORS<span>2</span></a></li>
-		
-			<li><a href="/tags/Redis/">Redis<span>1</span></a></li>
-		
 			<li><a href="/tags/应急响应/">应急响应<span>1</span></a></li>
+		
+			<li><a href="/tags/crawlers/">crawlers<span>1</span></a></li>
 		
 			<li><a href="/tags/红队/">红队<span>1</span></a></li>
 		
+			<li><a href="/tags/Java/">Java<span>1</span></a></li>
+		
+			<li><a href="/tags/域渗透/">域渗透<span>2</span></a></li>
+		
+			<li><a href="/tags/CNN与RNN基础/">CNN与RNN基础<span>1</span></a></li>
+		
+			<li><a href="/tags/FOFA/">FOFA<span>1</span></a></li>
+		
+			<li><a href="/tags/HTML/">HTML<span>1</span></a></li>
+		
+			<li><a href="/tags/指令/">指令<span>3</span></a></li>
+		
+			<li><a href="/tags/Redis/">Redis<span>1</span></a></li>
+		
 			<li><a href="/tags/JWT/">JWT<span>1</span></a></li>
 		
-			<li><a href="/tags/隧道技术/">隧道技术<span>1</span></a></li>
+			<li><a href="/tags/堆/">堆<span>1</span></a></li>
 		
-			<li><a href="/tags/Hexo/">Hexo<span>1</span></a></li>
+			<li><a href="/tags/内网/">内网<span>2</span></a></li>
 		
-			<li><a href="/tags/crawlers/">crawlers<span>1</span></a></li>
+			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
+		
+			<li><a href="/tags/python/">python<span>1</span></a></li>
+		
+			<li><a href="/tags/js/">js<span>4</span></a></li>
+		
+			<li><a href="/tags/CORS/">CORS<span>2</span></a></li>
+		
+			<li><a href="/tags/Linux/">Linux<span>1</span></a></li>
+		
+			<li><a href="/tags/Misc/">Misc<span>1</span></a></li>
+		
+			<li><a href="/tags/信息安全工程师/">信息安全工程师<span>1</span></a></li>
 		
 		
 		   <li><a href="/tags">...<span>68</span></a></li>

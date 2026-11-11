@@ -122,7 +122,7 @@
 		  
 		  
 
-		  <h3 id="0x01-用户名通过不同回复枚举"><a href="#0x01-用户名通过不同回复枚举" class="headerlink" title="0x01.用户名通过不同回复枚举"></a>0x01.用户名通过不同回复枚举</h3><ul>
+		  <h1 id="0x01-用户名通过不同回复枚举"><a href="#0x01-用户名通过不同回复枚举" class="headerlink" title="0x01.用户名通过不同回复枚举"></a>0x01.用户名通过不同回复枚举</h1><ul>
 <li>任务：先列举一个有效的用户名，暴力破解该用户的密码，然后访问他们的账户页面</li>
 <li>提示：该环境易受用户名枚举和密码暴力破解攻击的攻击。</li>
 </ul>
@@ -131,7 +131,7 @@
 <p>爆破密码<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_3.png" alt="认证·图3"></p>
 <p>登录访问即可</p>
 <hr>
-<h3 id="0x02-2FA简单绕过"><a href="#0x02-2FA简单绕过" class="headerlink" title="0x02.2FA简单绕过"></a>0x02.2FA简单绕过</h3><ul>
+<h1 id="0x02-2FA简单绕过"><a href="#0x02-2FA简单绕过" class="headerlink" title="0x02.2FA简单绕过"></a>0x02.2FA简单绕过</h1><ul>
 <li>任务：访问<code>carlos</code>的账户页面</li>
 <li>提示：双重认证可以被绕过。已经获得了有效的用户名和密码，但无法访问用户的双重身份验证码</li>
 <li>信息<ul>
@@ -161,7 +161,7 @@
 <p>这个环境的漏洞是 <code>资源隔离</code> 存在漏洞，即 系统未对仅完成密码验证、未通过 2FA 的半登录态 Session 实施严格的访问控制，导致该 Session 可直接越权访问需完整 2FA 认证的受保护资源（如&#x2F;my-account），从而绕过双因素认证流程</p>
 <p><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_6.png" alt="认证·图6"></p>
 <hr>
-<h3 id="0x03-密码重置错误逻辑"><a href="#0x03-密码重置错误逻辑" class="headerlink" title="0x03.密码重置错误逻辑"></a>0x03.密码重置错误逻辑</h3><ul>
+<h1 id="0x03-密码重置错误逻辑"><a href="#0x03-密码重置错误逻辑" class="headerlink" title="0x03.密码重置错误逻辑"></a>0x03.密码重置错误逻辑</h1><ul>
 <li>任务：先重置<code>carlos</code>的密码，然后登录进入他的“我的账户”页面</li>
 <li>提示：密码重置功能存在漏洞</li>
 <li>信息<ul>
@@ -223,7 +223,7 @@
 </li>
 </ul>
 <hr>
-<h3 id="0x04-通过细微不同的响应进行用户名枚举"><a href="#0x04-通过细微不同的响应进行用户名枚举" class="headerlink" title="0x04.通过细微不同的响应进行用户名枚举"></a>0x04.通过细微不同的响应进行用户名枚举</h3><ul>
+<h1 id="0x04-通过细微不同的响应进行用户名枚举"><a href="#0x04-通过细微不同的响应进行用户名枚举" class="headerlink" title="0x04.通过细微不同的响应进行用户名枚举"></a>0x04.通过细微不同的响应进行用户名枚举</h1><ul>
 <li>任务：先枚举一个有效的用户名，暴力破解该用户的密码，然后访问他们的账户页面</li>
 </ul>
 <p> <img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_13.png" alt="认证·图13"></p>
@@ -233,7 +233,7 @@
 <p>对<code>aq</code>密码爆破</p>
 <p><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_18.png" alt="认证·图18"></p>
 <hr>
-<h3 id="0x05-用户名通过响应时间枚举"><a href="#0x05-用户名通过响应时间枚举" class="headerlink" title="0x05.用户名通过响应时间枚举"></a>0x05.用户名通过响应时间枚举</h3><ul>
+<h1 id="0x05-用户名通过响应时间枚举"><a href="#0x05-用户名通过响应时间枚举" class="headerlink" title="0x05.用户名通过响应时间枚举"></a>0x05.用户名通过响应时间枚举</h1><ul>
 <li>任务：先枚举一个有效的用户名，暴力破解该用户的密码，然后访问他们的账户页面</li>
 <li>提示：还实施了一种IP的暴力破解防护。然而，通过操作 HTTP 请求头，这可以很容易地绕过</li>
 <li>信息<ul>
@@ -260,7 +260,7 @@
 <p><code>Response received</code>：从发送请求到服务器返回第一个响应字节的时间，单位：毫秒（ms）。<br><code>Response completed</code>：从发送请求到服务器返回完整响应的时间，单位：毫秒（ms）。<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_26.png" alt="认证·图26"></p>
 <p>爆破密码<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_27.png" alt="认证·图27"></p>
 <hr>
-<h3 id="0x06-存在缺陷的暴力破解防护（IP-封禁绕过）"><a href="#0x06-存在缺陷的暴力破解防护（IP-封禁绕过）" class="headerlink" title="0x06.存在缺陷的暴力破解防护（IP 封禁绕过）"></a>0x06.存在缺陷的暴力破解防护（IP 封禁绕过）</h3><ul>
+<h1 id="0x06-存在缺陷的暴力破解防护（IP-封禁绕过）"><a href="#0x06-存在缺陷的暴力破解防护（IP-封禁绕过）" class="headerlink" title="0x06.存在缺陷的暴力破解防护（IP 封禁绕过）"></a>0x06.存在缺陷的暴力破解防护（IP 封禁绕过）</h1><ul>
 <li><p>任务：暴力破解受害者密码，然后登录访问他们的账户页面</p>
 </li>
 <li><p>提示：密码暴力破解防护中的逻辑缺陷而存在漏洞；进阶用户可通过「Burp 宏（Macro）」或「Turbo Intruder 插件」完成本实验，但即便不使用这些高级功能，仅用原生工具也可通关。</p>
@@ -283,7 +283,7 @@
 <p>设置每发送两次包就执行一次宏<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_29.png" alt="认证·图29"><br>值得注意的使用，攻击时记得使用单线程</p>
 <p><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_30.png" alt="认证·图30"></p>
 <hr>
-<h3 id="0x07-通过账户锁定进行用户名枚举"><a href="#0x07-通过账户锁定进行用户名枚举" class="headerlink" title="0x07.通过账户锁定进行用户名枚举"></a>0x07.通过账户锁定进行用户名枚举</h3><ul>
+<h1 id="0x07-通过账户锁定进行用户名枚举"><a href="#0x07-通过账户锁定进行用户名枚举" class="headerlink" title="0x07.通过账户锁定进行用户名枚举"></a>0x07.通过账户锁定进行用户名枚举</h1><ul>
 <li>任务：先枚举一个有效的用户名，暴力破解该用户的密码，然后访问他们的账户页面</li>
 <li>提示：存在用户名枚举的风险（使用了账户锁定，但这存在逻辑缺陷）</li>
 </ul>
@@ -340,7 +340,7 @@
 </code></pre>
 <p>开发者的代码逻辑可能是：</p>
 <hr>
-<h3 id="0x08-2FA逻辑漏洞"><a href="#0x08-2FA逻辑漏洞" class="headerlink" title="0x08.2FA逻辑漏洞"></a>0x08.2FA逻辑漏洞</h3><ul>
+<h1 id="0x08-2FA逻辑漏洞"><a href="#0x08-2FA逻辑漏洞" class="headerlink" title="0x08.2FA逻辑漏洞"></a>0x08.2FA逻辑漏洞</h1><ul>
 <li>任务：访问<code>carlos</code>的账户页面</li>
 <li>提示：carlos不会自己尝试登录网站</li>
 <li>信息<ul>
@@ -360,7 +360,7 @@
 <p>如果成立的话，那我们就不需要进行最现实中<code>艰难的一步</code> - 爆破carlos的密码</p>
 <p>正常登录wiener后<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_45.png" alt="认证·图45"><br>成功登录</p>
 <hr>
-<h3 id="0x09-暴力破解“保持登录”Cookie"><a href="#0x09-暴力破解“保持登录”Cookie" class="headerlink" title="0x09.暴力破解“保持登录”Cookie"></a>0x09.暴力破解“保持登录”Cookie</h3><ul>
+<h1 id="0x09-暴力破解“保持登录”Cookie"><a href="#0x09-暴力破解“保持登录”Cookie" class="headerlink" title="0x09.暴力破解“保持登录”Cookie"></a>0x09.暴力破解“保持登录”Cookie</h1><ul>
 <li>任务：以通过暴力破解carlos的cookie，访问他的“我的账户”页面</li>
 <li>提示：允许用户即使关闭浏览器会话，也能保持登录状态</li>
 <li>信息<ul>
@@ -376,7 +376,7 @@
 <p>结果<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_49.png" alt="认证·图49"></p>
 <p>不知道为什么会有两个，补充一下<code>53</code>号回去查字典就可以知道carlos的密码的，虽然在这题没有什么作用 </p>
 <hr>
-<h3 id="0x0a-离线密码破解"><a href="#0x0a-离线密码破解" class="headerlink" title="0x0a.离线密码破解"></a>0x0a.离线密码破解</h3><ul>
+<h1 id="0x0a-离线密码破解"><a href="#0x0a-离线密码破解" class="headerlink" title="0x0a.离线密码破解"></a>0x0a.离线密码破解</h1><ul>
 <li>任务：需获取carlos的 Cookie，并用它破解其密码。随后以他的身份登录，在「我的账户」页面删除他的账号</li>
 <li>提示：用户的密码哈希值存储在一个cookie中。实验室的注释功能中还包含一个XSS漏洞</li>
 <li>信息<ul>
@@ -390,7 +390,7 @@
 <p>为了方便模拟，该环境直接返回carlos的cookie<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_52.png" alt="认证·图52"></p>
 <p>解密之后为：carlos:onceuponatime  登录删除即可</p>
 <hr>
-<h3 id="0x0b-通过中间件实现的密码重置投毒"><a href="#0x0b-通过中间件实现的密码重置投毒" class="headerlink" title="0x0b.通过中间件实现的密码重置投毒"></a>0x0b.通过中间件实现的密码重置投毒</h3><ul>
+<h1 id="0x0b-通过中间件实现的密码重置投毒"><a href="#0x0b-通过中间件实现的密码重置投毒" class="headerlink" title="0x0b.通过中间件实现的密码重置投毒"></a>0x0b.通过中间件实现的密码重置投毒</h1><ul>
 <li>任务：登录carlos</li>
 <li>提示：存在密码重置投毒漏洞。用户carlos会毫无防备地点击收到的所有邮件里的链接</li>
 <li>信息<ul>
@@ -445,7 +445,7 @@
 <p><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_62.png" alt="认证·图62"></p>
 <p>修改密码登录即可<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_63.png" alt="认证·图63"></p>
 <hr>
-<h3 id="0x0c-通过修改密码功能进行密码暴力破解"><a href="#0x0c-通过修改密码功能进行密码暴力破解" class="headerlink" title="0x0c.通过修改密码功能进行密码暴力破解"></a>0x0c.通过修改密码功能进行密码暴力破解</h3><ul>
+<h1 id="0x0c-通过修改密码功能进行密码暴力破解"><a href="#0x0c-通过修改密码功能进行密码暴力破解" class="headerlink" title="0x0c.通过修改密码功能进行密码暴力破解"></a>0x0c.通过修改密码功能进行密码暴力破解</h1><ul>
 <li>任务：利用候选密码列表暴力破解carlos的账户，进入他的“我的账户”页面</li>
 <li>提示：密码更改功能使其容易遭受暴力破解攻击</li>
 <li>信息<ul>
@@ -465,7 +465,7 @@
 <p>登录即可</p>
 <p><code>补充</code>：这套密码重置的逻辑是没有问题的，只是忽略了修改密码的用户的身份认证。</p>
 <hr>
-<h3 id="0x0d-暴力破解保护失效（每个请求可提交多个密码）"><a href="#0x0d-暴力破解保护失效（每个请求可提交多个密码）" class="headerlink" title="0x0d.暴力破解保护失效（每个请求可提交多个密码）"></a>0x0d.暴力破解保护失效（每个请求可提交多个密码）</h3><ul>
+<h1 id="0x0d-暴力破解保护失效（每个请求可提交多个密码）"><a href="#0x0d-暴力破解保护失效（每个请求可提交多个密码）" class="headerlink" title="0x0d.暴力破解保护失效（每个请求可提交多个密码）"></a>0x0d.暴力破解保护失效（每个请求可提交多个密码）</h1><ul>
 <li>任务：先暴力破解carlos的密码，然后访问他的账户页面</li>
 <li>提示：因其暴力破解防护中的逻辑缺陷而存在漏洞</li>
 <li>信息<ul>
@@ -488,7 +488,7 @@
 <p>结果<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_74.png" alt="认证·图74"><br><code>注意</code>：Burp Repeater 只跟随 Location 头，但不会自动应用响应中返回的 Set-Cookie。所以点击 <code>Follow redirection</code> 没有作用</p>
 <p><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_75.png" alt="认证·图75"><br>然后<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_76.png" alt="认证·图76"></p>
 <hr>
-<h3 id="0x0e-利用暴力破解攻击绕过2FA"><a href="#0x0e-利用暴力破解攻击绕过2FA" class="headerlink" title="0x0e.利用暴力破解攻击绕过2FA"></a>0x0e.利用暴力破解攻击绕过2FA</h3><ul>
+<h1 id="0x0e-利用暴力破解攻击绕过2FA"><a href="#0x0e-利用暴力破解攻击绕过2FA" class="headerlink" title="0x0e.利用暴力破解攻击绕过2FA"></a>0x0e.利用暴力破解攻击绕过2FA</h1><ul>
 <li>任务：访问Carlos的账户页面</li>
 <li>提示：双因素认证容易被暴力破解。你已经获得了有效的用户名和密码，但无法访问用户的双重身份验证码</li>
 <li>信息<ul>
@@ -508,7 +508,7 @@
 <p>攻击，主要单线程以及code格式（0000-9999）<br><img loading="lazy" decoding="async" src="/images/%E8%AE%A4%E8%AF%81/image_85.png" alt="认证·图85"></p>
 <p>从攻击结果来看，<code>宏的攻击链</code>是没有问题的。很折磨的是：单线程+10000次攻击，也就是50000次数据包发送，就当0.5s一次完整的请求响应，也要<code>7.8小时</code>，实在是没有这么多时间</p>
 <hr>
-<h2 id="补充知识"><a href="#补充知识" class="headerlink" title="补充知识"></a>补充知识</h2><h3 id="0x01-burpsuite-session-handling-rule"><a href="#0x01-burpsuite-session-handling-rule" class="headerlink" title="0x01.burpsuite- session handling rule"></a>0x01.burpsuite- session handling rule</h3><ul>
+<h1 id="补充知识"><a href="#补充知识" class="headerlink" title="补充知识"></a>补充知识</h1><h2 id="0x01-burpsuite-session-handling-rule"><a href="#0x01-burpsuite-session-handling-rule" class="headerlink" title="0x01.burpsuite- session handling rule"></a>0x01.burpsuite- session handling rule</h2><ul>
 <li><p><code>Use cookies from the session handling cookie jar</code><br>  这个动作会从 Burp 的“会话处理 Cookie 存储区”中取出所有可用的 Cookie，并自动添加到当前即将发出的请求里。通常配合宏使用：宏执行登录后，服务器返回的新 Cookie 会被存到 Cookie Jar 里，然后这个动作会把它们粘贴到后续的每一个请求中，实现会话保持。</p>
 </li>
 <li><p><code>Set a specific cookie or parameter value</code><br>  允许你手动指定一个固定的 Cookie 或请求参数（比如 token&#x3D;abc123），并强制将当前请求中的对应值替换成你设定的值。如果你知道某个参数必须是一个固定值（而不是动态获取），就可以用这个动作硬编码进去。</p>
@@ -529,7 +529,7 @@
 </li>
 </ul>
 <hr>
-<h3 id="0x02-🔑-2FA的认证形式"><a href="#0x02-🔑-2FA的认证形式" class="headerlink" title="0x02. 🔑 2FA的认证形式"></a>0x02. 🔑 2FA的认证形式</h3><p>双因素认证的核心是使用两种不同类型的验证因子来确认身份。这主要基于以下三大类因子：</p>
+<h2 id="0x02-🔑-2FA的认证形式"><a href="#0x02-🔑-2FA的认证形式" class="headerlink" title="0x02. 🔑 2FA的认证形式"></a>0x02. 🔑 2FA的认证形式</h2><p>双因素认证的核心是使用两种不同类型的验证因子来确认身份。这主要基于以下三大类因子：</p>
 <ul>
 <li><strong>你知道的（Knowledge Factor）</strong>：用户已知的信息，如密码、PIN码或安全问题的答案。</li>
 <li><strong>你拥有的（Possession Factor）</strong>：用户实际拥有的物品，如手机（接收验证码）、USB安全密钥、银行卡等。</li>
@@ -722,7 +722,7 @@
 		
 			 <div class="toc">
 				 <span class="toc-title"><i class="fa fa-list"></i> Contents</span>
-				<ol class="toc-article"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x01-%E7%94%A8%E6%88%B7%E5%90%8D%E9%80%9A%E8%BF%87%E4%B8%8D%E5%90%8C%E5%9B%9E%E5%A4%8D%E6%9E%9A%E4%B8%BE"><span class="toc-article-text">0x01.用户名通过不同回复枚举</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x02-2FA%E7%AE%80%E5%8D%95%E7%BB%95%E8%BF%87"><span class="toc-article-text">0x02.2FA简单绕过</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x03-%E5%AF%86%E7%A0%81%E9%87%8D%E7%BD%AE%E9%94%99%E8%AF%AF%E9%80%BB%E8%BE%91"><span class="toc-article-text">0x03.密码重置错误逻辑</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x04-%E9%80%9A%E8%BF%87%E7%BB%86%E5%BE%AE%E4%B8%8D%E5%90%8C%E7%9A%84%E5%93%8D%E5%BA%94%E8%BF%9B%E8%A1%8C%E7%94%A8%E6%88%B7%E5%90%8D%E6%9E%9A%E4%B8%BE"><span class="toc-article-text">0x04.通过细微不同的响应进行用户名枚举</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x05-%E7%94%A8%E6%88%B7%E5%90%8D%E9%80%9A%E8%BF%87%E5%93%8D%E5%BA%94%E6%97%B6%E9%97%B4%E6%9E%9A%E4%B8%BE"><span class="toc-article-text">0x05.用户名通过响应时间枚举</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x06-%E5%AD%98%E5%9C%A8%E7%BC%BA%E9%99%B7%E7%9A%84%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3%E9%98%B2%E6%8A%A4%EF%BC%88IP-%E5%B0%81%E7%A6%81%E7%BB%95%E8%BF%87%EF%BC%89"><span class="toc-article-text">0x06.存在缺陷的暴力破解防护（IP 封禁绕过）</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x07-%E9%80%9A%E8%BF%87%E8%B4%A6%E6%88%B7%E9%94%81%E5%AE%9A%E8%BF%9B%E8%A1%8C%E7%94%A8%E6%88%B7%E5%90%8D%E6%9E%9A%E4%B8%BE"><span class="toc-article-text">0x07.通过账户锁定进行用户名枚举</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x08-2FA%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E"><span class="toc-article-text">0x08.2FA逻辑漏洞</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x09-%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3%E2%80%9C%E4%BF%9D%E6%8C%81%E7%99%BB%E5%BD%95%E2%80%9DCookie"><span class="toc-article-text">0x09.暴力破解“保持登录”Cookie</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x0a-%E7%A6%BB%E7%BA%BF%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3"><span class="toc-article-text">0x0a.离线密码破解</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x0b-%E9%80%9A%E8%BF%87%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%AF%86%E7%A0%81%E9%87%8D%E7%BD%AE%E6%8A%95%E6%AF%92"><span class="toc-article-text">0x0b.通过中间件实现的密码重置投毒</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x0c-%E9%80%9A%E8%BF%87%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81%E5%8A%9F%E8%83%BD%E8%BF%9B%E8%A1%8C%E5%AF%86%E7%A0%81%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3"><span class="toc-article-text">0x0c.通过修改密码功能进行密码暴力破解</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x0d-%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3%E4%BF%9D%E6%8A%A4%E5%A4%B1%E6%95%88%EF%BC%88%E6%AF%8F%E4%B8%AA%E8%AF%B7%E6%B1%82%E5%8F%AF%E6%8F%90%E4%BA%A4%E5%A4%9A%E4%B8%AA%E5%AF%86%E7%A0%81%EF%BC%89"><span class="toc-article-text">0x0d.暴力破解保护失效（每个请求可提交多个密码）</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x0e-%E5%88%A9%E7%94%A8%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3%E6%94%BB%E5%87%BB%E7%BB%95%E8%BF%872FA"><span class="toc-article-text">0x0e.利用暴力破解攻击绕过2FA</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E8%A1%A5%E5%85%85%E7%9F%A5%E8%AF%86"><span class="toc-article-text">补充知识</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x01-burpsuite-session-handling-rule"><span class="toc-article-text">0x01.burpsuite- session handling rule</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x02-%F0%9F%94%91-2FA%E7%9A%84%E8%AE%A4%E8%AF%81%E5%BD%A2%E5%BC%8F"><span class="toc-article-text">0x02. 🔑 2FA的认证形式</span></a></li></ol></li></ol>
+				<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x01-%E7%94%A8%E6%88%B7%E5%90%8D%E9%80%9A%E8%BF%87%E4%B8%8D%E5%90%8C%E5%9B%9E%E5%A4%8D%E6%9E%9A%E4%B8%BE"><span class="toc-article-text">0x01.用户名通过不同回复枚举</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x02-2FA%E7%AE%80%E5%8D%95%E7%BB%95%E8%BF%87"><span class="toc-article-text">0x02.2FA简单绕过</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x03-%E5%AF%86%E7%A0%81%E9%87%8D%E7%BD%AE%E9%94%99%E8%AF%AF%E9%80%BB%E8%BE%91"><span class="toc-article-text">0x03.密码重置错误逻辑</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x04-%E9%80%9A%E8%BF%87%E7%BB%86%E5%BE%AE%E4%B8%8D%E5%90%8C%E7%9A%84%E5%93%8D%E5%BA%94%E8%BF%9B%E8%A1%8C%E7%94%A8%E6%88%B7%E5%90%8D%E6%9E%9A%E4%B8%BE"><span class="toc-article-text">0x04.通过细微不同的响应进行用户名枚举</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x05-%E7%94%A8%E6%88%B7%E5%90%8D%E9%80%9A%E8%BF%87%E5%93%8D%E5%BA%94%E6%97%B6%E9%97%B4%E6%9E%9A%E4%B8%BE"><span class="toc-article-text">0x05.用户名通过响应时间枚举</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x06-%E5%AD%98%E5%9C%A8%E7%BC%BA%E9%99%B7%E7%9A%84%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3%E9%98%B2%E6%8A%A4%EF%BC%88IP-%E5%B0%81%E7%A6%81%E7%BB%95%E8%BF%87%EF%BC%89"><span class="toc-article-text">0x06.存在缺陷的暴力破解防护（IP 封禁绕过）</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x07-%E9%80%9A%E8%BF%87%E8%B4%A6%E6%88%B7%E9%94%81%E5%AE%9A%E8%BF%9B%E8%A1%8C%E7%94%A8%E6%88%B7%E5%90%8D%E6%9E%9A%E4%B8%BE"><span class="toc-article-text">0x07.通过账户锁定进行用户名枚举</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x08-2FA%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E"><span class="toc-article-text">0x08.2FA逻辑漏洞</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x09-%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3%E2%80%9C%E4%BF%9D%E6%8C%81%E7%99%BB%E5%BD%95%E2%80%9DCookie"><span class="toc-article-text">0x09.暴力破解“保持登录”Cookie</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x0a-%E7%A6%BB%E7%BA%BF%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3"><span class="toc-article-text">0x0a.离线密码破解</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x0b-%E9%80%9A%E8%BF%87%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%AF%86%E7%A0%81%E9%87%8D%E7%BD%AE%E6%8A%95%E6%AF%92"><span class="toc-article-text">0x0b.通过中间件实现的密码重置投毒</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x0c-%E9%80%9A%E8%BF%87%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81%E5%8A%9F%E8%83%BD%E8%BF%9B%E8%A1%8C%E5%AF%86%E7%A0%81%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3"><span class="toc-article-text">0x0c.通过修改密码功能进行密码暴力破解</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x0d-%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3%E4%BF%9D%E6%8A%A4%E5%A4%B1%E6%95%88%EF%BC%88%E6%AF%8F%E4%B8%AA%E8%AF%B7%E6%B1%82%E5%8F%AF%E6%8F%90%E4%BA%A4%E5%A4%9A%E4%B8%AA%E5%AF%86%E7%A0%81%EF%BC%89"><span class="toc-article-text">0x0d.暴力破解保护失效（每个请求可提交多个密码）</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x0e-%E5%88%A9%E7%94%A8%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3%E6%94%BB%E5%87%BB%E7%BB%95%E8%BF%872FA"><span class="toc-article-text">0x0e.利用暴力破解攻击绕过2FA</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E8%A1%A5%E5%85%85%E7%9F%A5%E8%AF%86"><span class="toc-article-text">补充知识</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#0x01-burpsuite-session-handling-rule"><span class="toc-article-text">0x01.burpsuite- session handling rule</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#0x02-%F0%9F%94%91-2FA%E7%9A%84%E8%AE%A4%E8%AF%81%E5%BD%A2%E5%BC%8F"><span class="toc-article-text">0x02. 🔑 2FA的认证形式</span></a></li></ol></li></ol>
 			</div>
 		
 		</div>

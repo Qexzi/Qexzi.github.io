@@ -119,31 +119,31 @@
 		  
 		  
 
-		  <h2 id="一、编码基础概述"><a href="#一、编码基础概述" class="headerlink" title="一、编码基础概述"></a>一、编码基础概述</h2><h3 id="1-1-为什么需要编码"><a href="#1-1-为什么需要编码" class="headerlink" title="1.1 为什么需要编码"></a>1.1 为什么需要编码</h3><p>在计算机系统中，不同系统、协议和应用程序对数据的表示和处理方式存在差异。编码技术解决了以下问题：</p>
+		  <h1 id="一、编码基础概述"><a href="#一、编码基础概述" class="headerlink" title="一、编码基础概述"></a>一、编码基础概述</h1><h2 id="1-1-为什么需要编码"><a href="#1-1-为什么需要编码" class="headerlink" title="1.1 为什么需要编码"></a>1.1 为什么需要编码</h2><p>在计算机系统中，不同系统、协议和应用程序对数据的表示和处理方式存在差异。编码技术解决了以下问题：</p>
 <ul>
 <li><strong>字符表示</strong>：将人类可读的字符转换为计算机可处理的二进制数据</li>
 <li><strong>数据传输</strong>：确保特殊字符在传输过程中不被误解或破坏</li>
 <li><strong>安全过滤</strong>：绕过基于特定字符集的过滤机制</li>
 <li><strong>数据压缩</strong>：在某些情况下提高传输效率</li>
 </ul>
-<h3 id="1-2-编码与加密的区别"><a href="#1-2-编码与加密的区别" class="headerlink" title="1.2 编码与加密的区别"></a>1.2 编码与加密的区别</h3><ul>
+<h2 id="1-2-编码与加密的区别"><a href="#1-2-编码与加密的区别" class="headerlink" title="1.2 编码与加密的区别"></a>1.2 编码与加密的区别</h2><ul>
 <li><strong>编码</strong>：数据格式的转换，是可逆的、公开的转换过程，不提供保密性</li>
 <li><strong>加密</strong>：通过密钥将数据转换为密文，提供保密性和完整性保护</li>
 </ul>
-<h3 id="1-3-编码在网络安全中的重要性"><a href="#1-3-编码在网络安全中的重要性" class="headerlink" title="1.3 编码在网络安全中的重要性"></a>1.3 编码在网络安全中的重要性</h3><p>渗透测试中，攻击者常利用编码技术：</p>
+<h2 id="1-3-编码在网络安全中的重要性"><a href="#1-3-编码在网络安全中的重要性" class="headerlink" title="1.3 编码在网络安全中的重要性"></a>1.3 编码在网络安全中的重要性</h2><p>渗透测试中，攻击者常利用编码技术：</p>
 <ul>
 <li>绕过WAF（Web应用防火墙）和输入过滤</li>
 <li>隐藏恶意负载</li>
 <li>规避安全检测机制</li>
 <li>利用解析差异实施攻击</li>
 </ul>
-<h2 id="二、基础字符编码"><a href="#二、基础字符编码" class="headerlink" title="二、基础字符编码"></a>二、基础字符编码</h2><h3 id="2-1-ASCII编码"><a href="#2-1-ASCII编码" class="headerlink" title="2.1 ASCII编码"></a>2.1 ASCII编码</h3><h4 id="ASCII编码背景"><a href="#ASCII编码背景" class="headerlink" title="ASCII编码背景"></a>ASCII编码背景</h4><ul>
+<h1 id="二、基础字符编码"><a href="#二、基础字符编码" class="headerlink" title="二、基础字符编码"></a>二、基础字符编码</h1><h2 id="2-1-ASCII编码"><a href="#2-1-ASCII编码" class="headerlink" title="2.1 ASCII编码"></a>2.1 ASCII编码</h2><h3 id="ASCII编码背景"><a href="#ASCII编码背景" class="headerlink" title="ASCII编码背景"></a>ASCII编码背景</h3><ul>
 <li><strong>历史</strong>：1963年由美国国家标准协会(ANSI)制定，最初用于电报通信</li>
 <li><strong>标准范围</strong>：0-127（7位），共128个字符</li>
 <li><strong>扩展ASCII</strong>：8位编码，范围0-255，包含特殊符号和非英语字符</li>
 <li><strong>渗透测试意义</strong>：作为大多数现代编码的基础，理解ASCII对于分析编码绕过至关重要</li>
 </ul>
-<h4 id="完整ASCII表"><a href="#完整ASCII表" class="headerlink" title="完整ASCII表"></a>完整ASCII表</h4><table>
+<h3 id="完整ASCII表"><a href="#完整ASCII表" class="headerlink" title="完整ASCII表"></a>完整ASCII表</h3><table>
 <thead>
 <tr>
 <th>十进制</th>
@@ -357,7 +357,7 @@
 <td>}~</td>
 </tr>
 </tbody></table>
-<h4 id="渗透测试中的ASCII特殊字符应用"><a href="#渗透测试中的ASCII特殊字符应用" class="headerlink" title="渗透测试中的ASCII特殊字符应用"></a>渗透测试中的ASCII特殊字符应用</h4><ul>
+<h3 id="渗透测试中的ASCII特殊字符应用"><a href="#渗透测试中的ASCII特殊字符应用" class="headerlink" title="渗透测试中的ASCII特殊字符应用"></a>渗透测试中的ASCII特殊字符应用</h3><ul>
 <li><strong>空格(0x20)</strong>：SQL注入中替代空格的常用字符（如<code>%09</code>、<code>%0A</code>）</li>
 <li><strong>单引号(0x27)</strong>：SQL注入关键字符，常需编码绕过</li>
 <li><strong>双引号(0x22)</strong>：XSS攻击中常用于闭合属性</li>
@@ -365,7 +365,7 @@
 <li><strong>斜杠(0x2F)</strong>：路径分隔符，目录遍历攻击关键</li>
 <li><strong>反斜杠(0x5C)</strong>：在某些语言中作为转义字符</li>
 </ul>
-<h3 id="2-2-Unicode编码体系"><a href="#2-2-Unicode编码体系" class="headerlink" title="2.2 Unicode编码体系"></a>2.2 Unicode编码体系</h3><ul>
+<h2 id="2-2-Unicode编码体系"><a href="#2-2-Unicode编码体系" class="headerlink" title="2.2 Unicode编码体系"></a>2.2 Unicode编码体系</h2><ul>
 <li><p><strong>UTF-8</strong>：</p>
 <ul>
 <li>可变长度编码（1-4字节）</li>
@@ -396,13 +396,13 @@
 </ul>
 </li>
 </ul>
-<h3 id="2-3-ISO-8859系列编码"><a href="#2-3-ISO-8859系列编码" class="headerlink" title="2.3 ISO-8859系列编码"></a>2.3 ISO-8859系列编码</h3><ul>
+<h2 id="2-3-ISO-8859系列编码"><a href="#2-3-ISO-8859系列编码" class="headerlink" title="2.3 ISO-8859系列编码"></a>2.3 ISO-8859系列编码</h2><ul>
 <li><strong>ISO-8859-1 (Latin-1)</strong>：西欧语言</li>
 <li><strong>ISO-8859-2</strong>：中欧语言</li>
 <li><strong>ISO-8859-5</strong>：西里尔字母</li>
 <li><strong>渗透测试应用</strong>：在未指定编码的Web应用中引发乱码问题，可能导致安全漏洞</li>
 </ul>
-<h2 id="三、Web相关编码技术"><a href="#三、Web相关编码技术" class="headerlink" title="三、Web相关编码技术"></a>三、Web相关编码技术</h2><h3 id="3-1-页面编码"><a href="#3-1-页面编码" class="headerlink" title="3.1 页面编码"></a>3.1 页面编码</h3><ul>
+<h1 id="三、Web相关编码技术"><a href="#三、Web相关编码技术" class="headerlink" title="三、Web相关编码技术"></a>三、Web相关编码技术</h1><h2 id="3-1-页面编码"><a href="#3-1-页面编码" class="headerlink" title="3.1 页面编码"></a>3.1 页面编码</h2><ul>
 <li><p><strong>设置方式</strong>：</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 <p>或HTTP响应头：</p>
@@ -423,7 +423,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="3-2-HTML编码"><a href="#3-2-HTML编码" class="headerlink" title="3.2 HTML编码"></a>3.2 HTML编码</h3><ul>
+<h2 id="3-2-HTML编码"><a href="#3-2-HTML编码" class="headerlink" title="3.2 HTML编码"></a>3.2 HTML编码</h2><ul>
 <li><p><strong>命名实体</strong>：<code>&amp;nbsp;</code>、<code>&amp;lt;</code>、<code>&amp;gt;</code>等</p>
 </li>
 <li><p><strong>十进制实体</strong>：<code>&amp;#160;</code>、<code>&amp;#60;</code>、<code>&amp;#62;</code></p>
@@ -447,7 +447,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="3-3-URL编码"><a href="#3-3-URL编码" class="headerlink" title="3.3 URL编码"></a>3.3 URL编码</h3><ul>
+<h2 id="3-3-URL编码"><a href="#3-3-URL编码" class="headerlink" title="3.3 URL编码"></a>3.3 URL编码</h2><ul>
 <li><p><strong>标准</strong>：RFC 3986</p>
 </li>
 <li><p><strong>编码规则</strong>：</p>
@@ -466,7 +466,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="3-4-JavaScript编码"><a href="#3-4-JavaScript编码" class="headerlink" title="3.4 JavaScript编码"></a>3.4 JavaScript编码</h3><ul>
+<h2 id="3-4-JavaScript编码"><a href="#3-4-JavaScript编码" class="headerlink" title="3.4 JavaScript编码"></a>3.4 JavaScript编码</h2><ul>
 <li><p><strong>十六进制编码</strong>：</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">\x3C\x73\x63\x72\x69\x70\x74\<span class="title function_">x3Ealert</span>(<span class="number">1</span>)\x3C\x2F\x73\x63\x72\x69\x70\x74\x3E</span><br></pre></td></tr></table></figure>
 </li>
@@ -484,7 +484,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="3-5-CSS编码"><a href="#3-5-CSS编码" class="headerlink" title="3.5 CSS编码"></a>3.5 CSS编码</h3><ul>
+<h2 id="3-5-CSS编码"><a href="#3-5-CSS编码" class="headerlink" title="3.5 CSS编码"></a>3.5 CSS编码</h2><ul>
 <li><strong>Unicode编码</strong>：<code>\0000</code>格式</li>
 <li><strong>十六进制编码</strong>：<code>\0000</code>或<code>\x0000</code></li>
 <li><strong>渗透测试应用</strong>：<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123; <span class="attribute">background</span>: <span class="built_in">url</span>(<span class="string">&#x27;\x68\x74\x74\x70\x3a\x2f\x2f\x65\x78\x61\x6d\x70\x6c\x65\x2e\x63\x6f\x6d&#x27;</span>); &#125;</span><br></pre></td></tr></table></figure>
@@ -494,7 +494,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="四、数据传输编码"><a href="#四、数据传输编码" class="headerlink" title="四、数据传输编码"></a>四、数据传输编码</h2><h3 id="4-1-Base64编码"><a href="#4-1-Base64编码" class="headerlink" title="4.1 Base64编码"></a>4.1 Base64编码</h3><ul>
+<h1 id="四、数据传输编码"><a href="#四、数据传输编码" class="headerlink" title="四、数据传输编码"></a>四、数据传输编码</h1><h2 id="4-1-Base64编码"><a href="#4-1-Base64编码" class="headerlink" title="4.1 Base64编码"></a>4.1 Base64编码</h2><ul>
 <li><p><strong>原理</strong>：将二进制数据转换为64个可打印ASCII字符</p>
 </li>
 <li><p><strong>标准</strong>：RFC 4648</p>
@@ -515,7 +515,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="4-2-Hex编码"><a href="#4-2-Hex编码" class="headerlink" title="4.2 Hex编码"></a>4.2 Hex编码</h3><ul>
+<h2 id="4-2-Hex编码"><a href="#4-2-Hex编码" class="headerlink" title="4.2 Hex编码"></a>4.2 Hex编码</h2><ul>
 <li><p><strong>原理</strong>：将每个字节转换为两位十六进制数</p>
 </li>
 <li><p><strong>数据库应用</strong>：MySQL中使用<code>0x</code>前缀</p>
@@ -529,12 +529,12 @@
 </ul>
 </li>
 </ul>
-<h3 id="4-3-UUEncode"><a href="#4-3-UUEncode" class="headerlink" title="4.3 UUEncode"></a>4.3 UUEncode</h3><ul>
+<h2 id="4-3-UUEncode"><a href="#4-3-UUEncode" class="headerlink" title="4.3 UUEncode"></a>4.3 UUEncode</h2><ul>
 <li><strong>历史</strong>：早期用于Unix系统间邮件传输</li>
 <li><strong>特点</strong>：将3字节转换为4个可打印字符</li>
 <li><strong>渗透测试应用</strong>：在遗留系统中可能发现的编码方式</li>
 </ul>
-<h3 id="4-4-Quoted-Printable"><a href="#4-4-Quoted-Printable" class="headerlink" title="4.4 Quoted-Printable"></a>4.4 Quoted-Printable</h3><ul>
+<h2 id="4-4-Quoted-Printable"><a href="#4-4-Quoted-Printable" class="headerlink" title="4.4 Quoted-Printable"></a>4.4 Quoted-Printable</h2><ul>
 <li><p><strong>标准</strong>：RFC 2045，用于MIME编码</p>
 </li>
 <li><p><strong>特点</strong>：</p>
@@ -551,7 +551,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="五、数据结构编码"><a href="#五、数据结构编码" class="headerlink" title="五、数据结构编码"></a>五、数据结构编码</h2><h3 id="5-1-JSON编码"><a href="#5-1-JSON编码" class="headerlink" title="5.1 JSON编码"></a>5.1 JSON编码</h3><ul>
+<h1 id="五、数据结构编码"><a href="#五、数据结构编码" class="headerlink" title="五、数据结构编码"></a>五、数据结构编码</h1><h2 id="5-1-JSON编码"><a href="#5-1-JSON编码" class="headerlink" title="5.1 JSON编码"></a>5.1 JSON编码</h2><ul>
 <li><p><strong>标准</strong>：RFC 8259</p>
 </li>
 <li><p><strong>特点</strong>：</p>
@@ -570,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="5-2-XML编码"><a href="#5-2-XML编码" class="headerlink" title="5.2 XML编码"></a>5.2 XML编码</h3><ul>
+<h2 id="5-2-XML编码"><a href="#5-2-XML编码" class="headerlink" title="5.2 XML编码"></a>5.2 XML编码</h2><ul>
 <li><strong>实体编码</strong>：<code>&amp;lt;</code>, <code>&amp;gt;</code>, <code>&amp;amp;</code>等</li>
 <li><strong>CDATA</strong>：<code>&lt;![CDATA[...]]&gt;</code>区域</li>
 <li><strong>渗透测试应用</strong>：<ul>
@@ -580,7 +580,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="5-3-序列化"><a href="#5-3-序列化" class="headerlink" title="5.3 序列化"></a>5.3 序列化</h3><ul>
+<h2 id="5-3-序列化"><a href="#5-3-序列化" class="headerlink" title="5.3 序列化"></a>5.3 序列化</h2><ul>
 <li><p><strong>PHP序列化</strong>：</p>
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">a:<span class="number">3</span>:&#123;i:<span class="number">0</span>;s:<span class="number">3</span>:<span class="string">&quot;Moe&quot;</span>;i:<span class="number">1</span>;s:<span class="number">5</span>:<span class="string">&quot;Larry&quot;</span>;i:<span class="number">2</span>;s:<span class="number">5</span>:<span class="string">&quot;Curly&quot;</span>;&#125;</span><br></pre></td></tr></table></figure>
 <ul>
@@ -599,7 +599,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="六、特殊编码技术"><a href="#六、特殊编码技术" class="headerlink" title="六、特殊编码技术"></a>六、特殊编码技术</h2><h3 id="6-1-UTF-7编码"><a href="#6-1-UTF-7编码" class="headerlink" title="6.1 UTF-7编码"></a>6.1 UTF-7编码</h3><ul>
+<h1 id="六、特殊编码技术"><a href="#六、特殊编码技术" class="headerlink" title="六、特殊编码技术"></a>六、特殊编码技术</h1><h2 id="6-1-UTF-7编码"><a href="#6-1-UTF-7编码" class="headerlink" title="6.1 UTF-7编码"></a>6.1 UTF-7编码</h2><ul>
 <li><strong>历史</strong>：设计用于在7位传输通道中传输Unicode</li>
 <li><strong>特点</strong>：使用<code>+</code>开头的编码序列</li>
 <li><strong>渗透测试应用</strong>：<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;moonsec +AG0AbwBv-n+AHM-e+AGM-&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
@@ -610,7 +610,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="6-2-Punycode"><a href="#6-2-Punycode" class="headerlink" title="6.2 Punycode"></a>6.2 Punycode</h3><ul>
+<h2 id="6-2-Punycode"><a href="#6-2-Punycode" class="headerlink" title="6.2 Punycode"></a>6.2 Punycode</h2><ul>
 <li><strong>标准</strong>：RFC 3492</li>
 <li><strong>用途</strong>：将国际化域名转换为ASCII兼容格式</li>
 <li><strong>渗透测试应用</strong>：<ul>
@@ -620,7 +620,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="6-3-Double-Encoding（双重编码）"><a href="#6-3-Double-Encoding（双重编码）" class="headerlink" title="6.3 Double Encoding（双重编码）"></a>6.3 Double Encoding（双重编码）</h3><ul>
+<h2 id="6-3-Double-Encoding（双重编码）"><a href="#6-3-Double-Encoding（双重编码）" class="headerlink" title="6.3 Double Encoding（双重编码）"></a>6.3 Double Encoding（双重编码）</h2><ul>
 <li><strong>原理</strong>：对同一数据进行两次相同或不同的编码</li>
 <li><strong>渗透测试应用</strong>：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%253Cscript%253Ealert(1)%253C/script%253E</span><br></pre></td></tr></table></figure>
 <ul>
@@ -630,7 +630,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="6-4-Mixed-Encoding（混合编码）"><a href="#6-4-Mixed-Encoding（混合编码）" class="headerlink" title="6.4 Mixed Encoding（混合编码）"></a>6.4 Mixed Encoding（混合编码）</h3><ul>
+<h2 id="6-4-Mixed-Encoding（混合编码）"><a href="#6-4-Mixed-Encoding（混合编码）" class="headerlink" title="6.4 Mixed Encoding（混合编码）"></a>6.4 Mixed Encoding（混合编码）</h2><ul>
 <li><strong>原理</strong>：结合多种编码方式</li>
 <li><strong>渗透测试应用</strong>：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%25%3C%73%63%72%69%70%74%3E%61%6C%65%72%74%28%31%29%3C%2F%73%63%72%69%70%74%3E</span><br></pre></td></tr></table></figure>
 <ul>
@@ -639,73 +639,73 @@
 </ul>
 </li>
 </ul>
-<h2 id="七、编码在渗透测试中的实际应用"><a href="#七、编码在渗透测试中的实际应用" class="headerlink" title="七、编码在渗透测试中的实际应用"></a>七、编码在渗透测试中的实际应用</h2><h3 id="7-1-绕过WAF"><a href="#7-1-绕过WAF" class="headerlink" title="7.1 绕过WAF"></a>7.1 绕过WAF</h3><ul>
+<h1 id="七、编码在渗透测试中的实际应用"><a href="#七、编码在渗透测试中的实际应用" class="headerlink" title="七、编码在渗透测试中的实际应用"></a>七、编码在渗透测试中的实际应用</h1><h2 id="7-1-绕过WAF"><a href="#7-1-绕过WAF" class="headerlink" title="7.1 绕过WAF"></a>7.1 绕过WAF</h2><ul>
 <li><strong>多层编码</strong>：对同一内容进行多次编码</li>
 <li><strong>混合编码</strong>：结合URL、HTML、JS等多种编码</li>
 <li><strong>大小写混淆</strong>：利用WAF大小写敏感性</li>
 <li><strong>空格替换</strong>：用<code>%09</code>(TAB)、<code>%0A</code>(换行)等代替空格</li>
 </ul>
-<h3 id="7-2-XSS攻击"><a href="#7-2-XSS攻击" class="headerlink" title="7.2 XSS攻击"></a>7.2 XSS攻击</h3><ul>
+<h2 id="7-2-XSS攻击"><a href="#7-2-XSS攻击" class="headerlink" title="7.2 XSS攻击"></a>7.2 XSS攻击</h2><ul>
 <li><strong>HTML编码绕过</strong>：<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">x</span> <span class="attr">onerror</span>=<span class="string">&quot;<span class="symbol">&amp;#x61;</span><span class="symbol">&amp;#x6c;</span><span class="symbol">&amp;#x65;</span><span class="symbol">&amp;#x72;</span><span class="symbol">&amp;#x74;</span><span class="symbol">&amp;#x28;</span><span class="symbol">&amp;#x31;</span><span class="symbol">&amp;#x29;</span>&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
 <li><strong>JS编码绕过</strong>：<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">\u0061\u006c\u0065\u0072\<span class="title function_">u0074</span>(<span class="number">1</span>)</span><br></pre></td></tr></table></figure></li>
 <li><strong>混合编码</strong>：<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">x</span> <span class="attr">onerror</span>=<span class="string">&quot;eval(&#x27;\x61\x6c\x65\x72\x74\x28\x31\x29&#x27;)&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
 </ul>
-<h3 id="7-3-SQL注入"><a href="#7-3-SQL注入" class="headerlink" title="7.3 SQL注入"></a>7.3 SQL注入</h3><ul>
+<h2 id="7-3-SQL注入"><a href="#7-3-SQL注入" class="headerlink" title="7.3 SQL注入"></a>7.3 SQL注入</h2><ul>
 <li><strong>Hex编码绕过</strong>：<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> username <span class="operator">=</span> <span class="number">0x61646D696E</span></span><br></pre></td></tr></table></figure></li>
 <li><strong>URL编码绕过</strong>：<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">UNION</span><span class="operator">%</span><span class="number">20</span><span class="keyword">SELECT</span><span class="operator">%</span><span class="number">201</span>,<span class="number">2</span>,<span class="number">3</span></span><br></pre></td></tr></table></figure></li>
 <li><strong>双重编码绕过</strong>：<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="operator">%</span><span class="number">2527</span><span class="operator">%</span><span class="number">20</span><span class="keyword">OR</span><span class="operator">%</span><span class="number">201</span><span class="operator">%</span><span class="number">3</span>D1<span class="comment">--</span></span><br></pre></td></tr></table></figure></li>
 </ul>
-<h3 id="7-4-文件包含漏洞"><a href="#7-4-文件包含漏洞" class="headerlink" title="7.4 文件包含漏洞"></a>7.4 文件包含漏洞</h3><ul>
+<h2 id="7-4-文件包含漏洞"><a href="#7-4-文件包含漏洞" class="headerlink" title="7.4 文件包含漏洞"></a>7.4 文件包含漏洞</h2><ul>
 <li><strong>编码路径遍历</strong>：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?file=..%2f..%2fetc%2fpasswd</span><br></pre></td></tr></table></figure></li>
 <li><strong>混合编码绕过</strong>：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?file=%252e%252e%252fetc%252fpasswd</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h2 id="八、编码工具推荐"><a href="#八、编码工具推荐" class="headerlink" title="八、编码工具推荐"></a>八、编码工具推荐</h2><h3 id="8-1-在线工具"><a href="#8-1-在线工具" class="headerlink" title="8.1 在线工具"></a>8.1 在线工具</h3><ul>
+<h1 id="八、编码工具推荐"><a href="#八、编码工具推荐" class="headerlink" title="八、编码工具推荐"></a>八、编码工具推荐</h1><h2 id="8-1-在线工具"><a href="#8-1-在线工具" class="headerlink" title="8.1 在线工具"></a>8.1 在线工具</h2><ul>
 <li><strong>CyberChef</strong>：多功能编码&#x2F;解码工具，支持超过200种操作</li>
 <li><strong>URLDecoder</strong>：专门用于URL编码解码</li>
 <li><strong>Base64decode</strong>：Base64编码解码</li>
 <li><strong>Unicode Escape</strong>：Unicode编码转换</li>
 <li><strong>XSS Encoder</strong>：专门用于XSS测试的编码工具</li>
 </ul>
-<h3 id="8-2-浏览器插件"><a href="#8-2-浏览器插件" class="headerlink" title="8.2 浏览器插件"></a>8.2 浏览器插件</h3><ul>
+<h2 id="8-2-浏览器插件"><a href="#8-2-浏览器插件" class="headerlink" title="8.2 浏览器插件"></a>8.2 浏览器插件</h2><ul>
 <li><strong>HackBar</strong>：多功能安全测试工具，包含编码功能</li>
 <li><strong>Burp Suite Encoder</strong>：集成在Burp Suite中的编码工具</li>
 <li><strong>XSStrike</strong>：XSS检测工具，包含编码绕过功能</li>
 </ul>
-<h3 id="8-3-命令行工具"><a href="#8-3-命令行工具" class="headerlink" title="8.3 命令行工具"></a>8.3 命令行工具</h3><ul>
+<h2 id="8-3-命令行工具"><a href="#8-3-命令行工具" class="headerlink" title="8.3 命令行工具"></a>8.3 命令行工具</h2><ul>
 <li><strong>Python</strong>：<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib.parse</span><br><span class="line">urllib.parse.quote(<span class="string">&quot;test string&quot;</span>)</span><br></pre></td></tr></table></figure></li>
 <li><strong>JavaScript (Node.js)</strong>：<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">encodeURIComponent</span>(<span class="string">&quot;test string&quot;</span>)</span><br></pre></td></tr></table></figure></li>
 <li><strong>Linux命令</strong>：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Hello&quot;</span> | <span class="built_in">base64</span></span><br></pre></td></tr></table></figure></li>
 </ul>
-<h2 id="九、防御建议"><a href="#九、防御建议" class="headerlink" title="九、防御建议"></a>九、防御建议</h2><h3 id="9-1-安全编码实践"><a href="#9-1-安全编码实践" class="headerlink" title="9.1 安全编码实践"></a>9.1 安全编码实践</h3><ul>
+<h1 id="九、防御建议"><a href="#九、防御建议" class="headerlink" title="九、防御建议"></a>九、防御建议</h1><h2 id="9-1-安全编码实践"><a href="#9-1-安全编码实践" class="headerlink" title="9.1 安全编码实践"></a>9.1 安全编码实践</h2><ul>
 <li><strong>输入规范化</strong>：在处理前将输入转换为标准格式</li>
 <li><strong>多层解码检查</strong>：避免仅进行单次解码</li>
 <li><strong>白名单过滤</strong>：允许已知安全的字符，拒绝其他所有</li>
 <li><strong>内容安全策略(CSP)</strong>：限制脚本执行来源</li>
 </ul>
-<h3 id="9-2-WAF配置建议"><a href="#9-2-WAF配置建议" class="headerlink" title="9.2 WAF配置建议"></a>9.2 WAF配置建议</h3><ul>
+<h2 id="9-2-WAF配置建议"><a href="#9-2-WAF配置建议" class="headerlink" title="9.2 WAF配置建议"></a>9.2 WAF配置建议</h2><ul>
 <li><strong>多层解码</strong>：确保WAF能够处理多层编码</li>
 <li><strong>正则表达式优化</strong>：使用更智能的模式匹配</li>
 <li><strong>上下文感知</strong>：根据不同输入位置应用不同规则</li>
 <li><strong>定期更新规则</strong>：跟上新的编码绕过技术</li>
 </ul>
-<h3 id="9-3-安全开发建议"><a href="#9-3-安全开发建议" class="headerlink" title="9.3 安全开发建议"></a>9.3 安全开发建议</h3><ul>
+<h2 id="9-3-安全开发建议"><a href="#9-3-安全开发建议" class="headerlink" title="9.3 安全开发建议"></a>9.3 安全开发建议</h2><ul>
 <li><strong>使用安全API</strong>：避免手动处理编码&#x2F;解码</li>
 <li><strong>输出编码</strong>：在输出到不同上下文时使用适当编码</li>
 <li><strong>安全库使用</strong>：使用经过验证的安全库处理用户输入</li>
 <li><strong>安全测试</strong>：包括对编码绕过技术的测试</li>
 </ul>
-<h2 id="十、编码绕过案例研究"><a href="#十、编码绕过案例研究" class="headerlink" title="十、编码绕过案例研究"></a>十、编码绕过案例研究</h2><h3 id="10-1-经典XSS双重编码绕过"><a href="#10-1-经典XSS双重编码绕过" class="headerlink" title="10.1 经典XSS双重编码绕过"></a>10.1 经典XSS双重编码绕过</h3><ul>
+<h1 id="十、编码绕过案例研究"><a href="#十、编码绕过案例研究" class="headerlink" title="十、编码绕过案例研究"></a>十、编码绕过案例研究</h1><h2 id="10-1-经典XSS双重编码绕过"><a href="#10-1-经典XSS双重编码绕过" class="headerlink" title="10.1 经典XSS双重编码绕过"></a>10.1 经典XSS双重编码绕过</h2><ul>
 <li><strong>原始payload</strong>：<code>&lt;script&gt;alert(1)&lt;/script&gt;</code></li>
 <li><strong>双重URL编码</strong>：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%253Cscript%253Ealert(1)%253C%252Fscript%253E</span><br></pre></td></tr></table></figure></li>
 <li><strong>WAF行为</strong>：仅进行一次URL解码，得到<code>&lt;script&gt;alert(1)&lt;/script&gt;</code>，仍然被过滤</li>
 <li><strong>浏览器行为</strong>：进行两次URL解码，最终执行脚本</li>
 </ul>
-<h3 id="10-2-SQL注入Hex编码绕过"><a href="#10-2-SQL注入Hex编码绕过" class="headerlink" title="10.2 SQL注入Hex编码绕过"></a>10.2 SQL注入Hex编码绕过</h3><ul>
+<h2 id="10-2-SQL注入Hex编码绕过"><a href="#10-2-SQL注入Hex编码绕过" class="headerlink" title="10.2 SQL注入Hex编码绕过"></a>10.2 SQL注入Hex编码绕过</h2><ul>
 <li><strong>原始payload</strong>：<code>&#39; OR 1=1 --</code></li>
 <li><strong>Hex编码</strong>：<code>0x27204F5220313D31202D2D</code></li>
 <li><strong>绕过原理</strong>：某些WAF无法识别Hex编码的SQL注入</li>
 </ul>
-<h3 id="10-3-UTF-7-XSS攻击"><a href="#10-3-UTF-7-XSS攻击" class="headerlink" title="10.3 UTF-7 XSS攻击"></a>10.3 UTF-7 XSS攻击</h3><ul>
+<h2 id="10-3-UTF-7-XSS攻击"><a href="#10-3-UTF-7-XSS攻击" class="headerlink" title="10.3 UTF-7 XSS攻击"></a>10.3 UTF-7 XSS攻击</h2><ul>
 <li><strong>payload</strong>：<code>+ADw-script+AD4-alert(1)+ADw-/script+AD4-</code></li>
 <li><strong>绕过原理</strong>：旧版IE将UTF-7内容视为脚本执行</li>
 <li><strong>现代影响</strong>：虽然现代浏览器已弃用UTF-7，但某些中间件可能仍存在风险</li>
@@ -868,7 +868,7 @@
 		
 			 <div class="toc">
 				 <span class="toc-title"><i class="fa fa-list"></i> Contents</span>
-				<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E4%B8%80%E3%80%81%E7%BC%96%E7%A0%81%E5%9F%BA%E7%A1%80%E6%A6%82%E8%BF%B0"><span class="toc-article-text">一、编码基础概述</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E7%BC%96%E7%A0%81"><span class="toc-article-text">1.1 为什么需要编码</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-2-%E7%BC%96%E7%A0%81%E4%B8%8E%E5%8A%A0%E5%AF%86%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-article-text">1.2 编码与加密的区别</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-3-%E7%BC%96%E7%A0%81%E5%9C%A8%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E4%B8%AD%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="toc-article-text">1.3 编码在网络安全中的重要性</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E4%BA%8C%E3%80%81%E5%9F%BA%E7%A1%80%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81"><span class="toc-article-text">二、基础字符编码</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-1-ASCII%E7%BC%96%E7%A0%81"><span class="toc-article-text">2.1 ASCII编码</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#ASCII%E7%BC%96%E7%A0%81%E8%83%8C%E6%99%AF"><span class="toc-article-text">ASCII编码背景</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E5%AE%8C%E6%95%B4ASCII%E8%A1%A8"><span class="toc-article-text">完整ASCII表</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B8%AD%E7%9A%84ASCII%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E5%BA%94%E7%94%A8"><span class="toc-article-text">渗透测试中的ASCII特殊字符应用</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-2-Unicode%E7%BC%96%E7%A0%81%E4%BD%93%E7%B3%BB"><span class="toc-article-text">2.2 Unicode编码体系</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-3-ISO-8859%E7%B3%BB%E5%88%97%E7%BC%96%E7%A0%81"><span class="toc-article-text">2.3 ISO-8859系列编码</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E4%B8%89%E3%80%81Web%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E6%8A%80%E6%9C%AF"><span class="toc-article-text">三、Web相关编码技术</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-1-%E9%A1%B5%E9%9D%A2%E7%BC%96%E7%A0%81"><span class="toc-article-text">3.1 页面编码</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-2-HTML%E7%BC%96%E7%A0%81"><span class="toc-article-text">3.2 HTML编码</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-3-URL%E7%BC%96%E7%A0%81"><span class="toc-article-text">3.3 URL编码</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-4-JavaScript%E7%BC%96%E7%A0%81"><span class="toc-article-text">3.4 JavaScript编码</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-5-CSS%E7%BC%96%E7%A0%81"><span class="toc-article-text">3.5 CSS编码</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%9B%9B%E3%80%81%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E7%BC%96%E7%A0%81"><span class="toc-article-text">四、数据传输编码</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#4-1-Base64%E7%BC%96%E7%A0%81"><span class="toc-article-text">4.1 Base64编码</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#4-2-Hex%E7%BC%96%E7%A0%81"><span class="toc-article-text">4.2 Hex编码</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#4-3-UUEncode"><span class="toc-article-text">4.3 UUEncode</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#4-4-Quoted-Printable"><span class="toc-article-text">4.4 Quoted-Printable</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E4%BA%94%E3%80%81%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%BC%96%E7%A0%81"><span class="toc-article-text">五、数据结构编码</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#5-1-JSON%E7%BC%96%E7%A0%81"><span class="toc-article-text">5.1 JSON编码</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#5-2-XML%E7%BC%96%E7%A0%81"><span class="toc-article-text">5.2 XML编码</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#5-3-%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-article-text">5.3 序列化</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%85%AD%E3%80%81%E7%89%B9%E6%AE%8A%E7%BC%96%E7%A0%81%E6%8A%80%E6%9C%AF"><span class="toc-article-text">六、特殊编码技术</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#6-1-UTF-7%E7%BC%96%E7%A0%81"><span class="toc-article-text">6.1 UTF-7编码</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#6-2-Punycode"><span class="toc-article-text">6.2 Punycode</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#6-3-Double-Encoding%EF%BC%88%E5%8F%8C%E9%87%8D%E7%BC%96%E7%A0%81%EF%BC%89"><span class="toc-article-text">6.3 Double Encoding（双重编码）</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#6-4-Mixed-Encoding%EF%BC%88%E6%B7%B7%E5%90%88%E7%BC%96%E7%A0%81%EF%BC%89"><span class="toc-article-text">6.4 Mixed Encoding（混合编码）</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E4%B8%83%E3%80%81%E7%BC%96%E7%A0%81%E5%9C%A8%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B8%AD%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8"><span class="toc-article-text">七、编码在渗透测试中的实际应用</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#7-1-%E7%BB%95%E8%BF%87WAF"><span class="toc-article-text">7.1 绕过WAF</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#7-2-XSS%E6%94%BB%E5%87%BB"><span class="toc-article-text">7.2 XSS攻击</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#7-3-SQL%E6%B3%A8%E5%85%A5"><span class="toc-article-text">7.3 SQL注入</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#7-4-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E"><span class="toc-article-text">7.4 文件包含漏洞</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%85%AB%E3%80%81%E7%BC%96%E7%A0%81%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90"><span class="toc-article-text">八、编码工具推荐</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#8-1-%E5%9C%A8%E7%BA%BF%E5%B7%A5%E5%85%B7"><span class="toc-article-text">8.1 在线工具</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#8-2-%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6"><span class="toc-article-text">8.2 浏览器插件</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#8-3-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7"><span class="toc-article-text">8.3 命令行工具</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E4%B9%9D%E3%80%81%E9%98%B2%E5%BE%A1%E5%BB%BA%E8%AE%AE"><span class="toc-article-text">九、防御建议</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#9-1-%E5%AE%89%E5%85%A8%E7%BC%96%E7%A0%81%E5%AE%9E%E8%B7%B5"><span class="toc-article-text">9.1 安全编码实践</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#9-2-WAF%E9%85%8D%E7%BD%AE%E5%BB%BA%E8%AE%AE"><span class="toc-article-text">9.2 WAF配置建议</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#9-3-%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91%E5%BB%BA%E8%AE%AE"><span class="toc-article-text">9.3 安全开发建议</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%8D%81%E3%80%81%E7%BC%96%E7%A0%81%E7%BB%95%E8%BF%87%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6"><span class="toc-article-text">十、编码绕过案例研究</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#10-1-%E7%BB%8F%E5%85%B8XSS%E5%8F%8C%E9%87%8D%E7%BC%96%E7%A0%81%E7%BB%95%E8%BF%87"><span class="toc-article-text">10.1 经典XSS双重编码绕过</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#10-2-SQL%E6%B3%A8%E5%85%A5Hex%E7%BC%96%E7%A0%81%E7%BB%95%E8%BF%87"><span class="toc-article-text">10.2 SQL注入Hex编码绕过</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#10-3-UTF-7-XSS%E6%94%BB%E5%87%BB"><span class="toc-article-text">10.3 UTF-7 XSS攻击</span></a></li></ol></li></ol>
+				<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E4%B8%80%E3%80%81%E7%BC%96%E7%A0%81%E5%9F%BA%E7%A1%80%E6%A6%82%E8%BF%B0"><span class="toc-article-text">一、编码基础概述</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#1-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E7%BC%96%E7%A0%81"><span class="toc-article-text">1.1 为什么需要编码</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#1-2-%E7%BC%96%E7%A0%81%E4%B8%8E%E5%8A%A0%E5%AF%86%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-article-text">1.2 编码与加密的区别</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#1-3-%E7%BC%96%E7%A0%81%E5%9C%A8%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E4%B8%AD%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="toc-article-text">1.3 编码在网络安全中的重要性</span></a></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E4%BA%8C%E3%80%81%E5%9F%BA%E7%A1%80%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81"><span class="toc-article-text">二、基础字符编码</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-1-ASCII%E7%BC%96%E7%A0%81"><span class="toc-article-text">2.1 ASCII编码</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#ASCII%E7%BC%96%E7%A0%81%E8%83%8C%E6%99%AF"><span class="toc-article-text">ASCII编码背景</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E5%AE%8C%E6%95%B4ASCII%E8%A1%A8"><span class="toc-article-text">完整ASCII表</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B8%AD%E7%9A%84ASCII%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E5%BA%94%E7%94%A8"><span class="toc-article-text">渗透测试中的ASCII特殊字符应用</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-2-Unicode%E7%BC%96%E7%A0%81%E4%BD%93%E7%B3%BB"><span class="toc-article-text">2.2 Unicode编码体系</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-3-ISO-8859%E7%B3%BB%E5%88%97%E7%BC%96%E7%A0%81"><span class="toc-article-text">2.3 ISO-8859系列编码</span></a></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E4%B8%89%E3%80%81Web%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E6%8A%80%E6%9C%AF"><span class="toc-article-text">三、Web相关编码技术</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#3-1-%E9%A1%B5%E9%9D%A2%E7%BC%96%E7%A0%81"><span class="toc-article-text">3.1 页面编码</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#3-2-HTML%E7%BC%96%E7%A0%81"><span class="toc-article-text">3.2 HTML编码</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#3-3-URL%E7%BC%96%E7%A0%81"><span class="toc-article-text">3.3 URL编码</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#3-4-JavaScript%E7%BC%96%E7%A0%81"><span class="toc-article-text">3.4 JavaScript编码</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#3-5-CSS%E7%BC%96%E7%A0%81"><span class="toc-article-text">3.5 CSS编码</span></a></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E5%9B%9B%E3%80%81%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E7%BC%96%E7%A0%81"><span class="toc-article-text">四、数据传输编码</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#4-1-Base64%E7%BC%96%E7%A0%81"><span class="toc-article-text">4.1 Base64编码</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#4-2-Hex%E7%BC%96%E7%A0%81"><span class="toc-article-text">4.2 Hex编码</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#4-3-UUEncode"><span class="toc-article-text">4.3 UUEncode</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#4-4-Quoted-Printable"><span class="toc-article-text">4.4 Quoted-Printable</span></a></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E4%BA%94%E3%80%81%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%BC%96%E7%A0%81"><span class="toc-article-text">五、数据结构编码</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#5-1-JSON%E7%BC%96%E7%A0%81"><span class="toc-article-text">5.1 JSON编码</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#5-2-XML%E7%BC%96%E7%A0%81"><span class="toc-article-text">5.2 XML编码</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#5-3-%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-article-text">5.3 序列化</span></a></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E5%85%AD%E3%80%81%E7%89%B9%E6%AE%8A%E7%BC%96%E7%A0%81%E6%8A%80%E6%9C%AF"><span class="toc-article-text">六、特殊编码技术</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#6-1-UTF-7%E7%BC%96%E7%A0%81"><span class="toc-article-text">6.1 UTF-7编码</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#6-2-Punycode"><span class="toc-article-text">6.2 Punycode</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#6-3-Double-Encoding%EF%BC%88%E5%8F%8C%E9%87%8D%E7%BC%96%E7%A0%81%EF%BC%89"><span class="toc-article-text">6.3 Double Encoding（双重编码）</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#6-4-Mixed-Encoding%EF%BC%88%E6%B7%B7%E5%90%88%E7%BC%96%E7%A0%81%EF%BC%89"><span class="toc-article-text">6.4 Mixed Encoding（混合编码）</span></a></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E4%B8%83%E3%80%81%E7%BC%96%E7%A0%81%E5%9C%A8%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B8%AD%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8"><span class="toc-article-text">七、编码在渗透测试中的实际应用</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#7-1-%E7%BB%95%E8%BF%87WAF"><span class="toc-article-text">7.1 绕过WAF</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#7-2-XSS%E6%94%BB%E5%87%BB"><span class="toc-article-text">7.2 XSS攻击</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#7-3-SQL%E6%B3%A8%E5%85%A5"><span class="toc-article-text">7.3 SQL注入</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#7-4-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E"><span class="toc-article-text">7.4 文件包含漏洞</span></a></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E5%85%AB%E3%80%81%E7%BC%96%E7%A0%81%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90"><span class="toc-article-text">八、编码工具推荐</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#8-1-%E5%9C%A8%E7%BA%BF%E5%B7%A5%E5%85%B7"><span class="toc-article-text">8.1 在线工具</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#8-2-%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6"><span class="toc-article-text">8.2 浏览器插件</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#8-3-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7"><span class="toc-article-text">8.3 命令行工具</span></a></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E4%B9%9D%E3%80%81%E9%98%B2%E5%BE%A1%E5%BB%BA%E8%AE%AE"><span class="toc-article-text">九、防御建议</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#9-1-%E5%AE%89%E5%85%A8%E7%BC%96%E7%A0%81%E5%AE%9E%E8%B7%B5"><span class="toc-article-text">9.1 安全编码实践</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#9-2-WAF%E9%85%8D%E7%BD%AE%E5%BB%BA%E8%AE%AE"><span class="toc-article-text">9.2 WAF配置建议</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#9-3-%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91%E5%BB%BA%E8%AE%AE"><span class="toc-article-text">9.3 安全开发建议</span></a></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E5%8D%81%E3%80%81%E7%BC%96%E7%A0%81%E7%BB%95%E8%BF%87%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6"><span class="toc-article-text">十、编码绕过案例研究</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#10-1-%E7%BB%8F%E5%85%B8XSS%E5%8F%8C%E9%87%8D%E7%BC%96%E7%A0%81%E7%BB%95%E8%BF%87"><span class="toc-article-text">10.1 经典XSS双重编码绕过</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#10-2-SQL%E6%B3%A8%E5%85%A5Hex%E7%BC%96%E7%A0%81%E7%BB%95%E8%BF%87"><span class="toc-article-text">10.2 SQL注入Hex编码绕过</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#10-3-UTF-7-XSS%E6%94%BB%E5%87%BB"><span class="toc-article-text">10.3 UTF-7 XSS攻击</span></a></li></ol></li></ol>
 			</div>
 		
 		</div>

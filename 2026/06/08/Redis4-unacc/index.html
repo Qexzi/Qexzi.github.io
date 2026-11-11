@@ -122,7 +122,7 @@
 		  
 		  
 
-		  <h2 id="1-复现"><a href="#1-复现" class="headerlink" title="1. 复现"></a>1. 复现</h2><p>基础指令</p>
+		  <h1 id="1-复现"><a href="#1-复现" class="headerlink" title="1. 复现"></a>1. 复现</h1><p>基础指令</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">redis-cli -h 10.62.60.167 -p 8589   (自建靶场的ip与端口，默认是6397)</span><br><span class="line"></span><br><span class="line">ping -&gt; pong 说明存在未授权</span><br><span class="line"></span><br><span class="line">keys *  打印所有的key</span><br><span class="line">get mykey 测试读取</span><br><span class="line"><span class="built_in">set</span> test1_key <span class="string">&quot;This is test1_key&quot;</span> 测试写入</span><br><span class="line"></span><br><span class="line">info server 服务信息</span><br><span class="line">CONFIG GET <span class="built_in">dir</span> 查询工作目录，RDB 文件、AOF 日志文件都会保存在这个目录下</span><br><span class="line">CONFIG GET dbfilename 查询RDB快照文件名称（内存快照）</span><br><span class="line">CONFIG GET rdbcompression 查询RDB快照文件是否开启压缩</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/Redis4-unacc/image_1.png" alt="Redis4-unacc·图1"><br>当前redis版本是4.0.14，是老版本了。 </p>
@@ -149,16 +149,16 @@
 </ol>
 <p><strong>攻击逻辑：</strong><br><img loading="lazy" decoding="async" src="/images/Redis4-unacc/image_4.png" alt="Redis4-unacc·图4"></p>
 <hr>
-<h2 id="2-Redis-主从模式"><a href="#2-Redis-主从模式" class="headerlink" title="2. Redis 主从模式"></a>2. Redis 主从模式</h2><p>Redis 主从模式，也叫主从复制或 master-replica 复制，是指一个 Redis 实例作为主节点（master）负责处理写请求和部分读请求，一个或多个从节点（replica，早期称 slave）通过配置 <code>replicaof</code> 或启动命令连接主节点，持续接收并执行主节点传播过来的写命令，从而保持数据副本与主节点大致一致；从节点默认是只读的（<code>replica-read-only yes</code>），这样可以把读流量分散到多个从节点，实现读写分离、读扩展、数据备份和一定程度的故障恢复能力。</p>
+<h1 id="2-Redis-主从模式"><a href="#2-Redis-主从模式" class="headerlink" title="2. Redis 主从模式"></a>2. Redis 主从模式</h1><p>Redis 主从模式，也叫主从复制或 master-replica 复制，是指一个 Redis 实例作为主节点（master）负责处理写请求和部分读请求，一个或多个从节点（replica，早期称 slave）通过配置 <code>replicaof</code> 或启动命令连接主节点，持续接收并执行主节点传播过来的写命令，从而保持数据副本与主节点大致一致；从节点默认是只读的（<code>replica-read-only yes</code>），这样可以把读流量分散到多个从节点，实现读写分离、读扩展、数据备份和一定程度的故障恢复能力。</p>
 <p>复制建立时，从节点会向主节点发送 <code>PSYNC</code> 命令并带上自己记录的复制 ID（replid）和复制偏移量（offset），主节点若判断可以进行部分重同步，就从复制积压缓冲区（repl-backlog）中把从节点缺失的那部分命令补发过去；如果无法部分重同步，则触发全量同步：主节点 fork 一个子进程生成当前数据的 RDB 快照，同时把生成期间新收到的写命令缓存起来，然后把 RDB 发送给从节点，从节点先清空自身数据并载入 RDB，再执行缓存中的增量命令，之后进入持续的命令传播阶段，主节点每执行一条写命令就异步发给所有从节点。</p>
 <p>主从之间还会通过心跳和偏移量确认来监测连接与复制进度，网络短暂断开后如果条件满足可基于 backlog 做部分重同步，否则再次全量同步。需要注意的是，Redis 主从复制默认是异步的，因此从节点数据可能落后于主节点，主节点故障时也可能丢失最后一部分未同步的写入；主从模式本身只解决复制和读扩展，不负责自动选主和故障转移，通常要配合 Redis Sentinel 哨兵或 Redis Cluster 集群来实现高可用，由哨兵监控主从、在主观下线与客观下线判定后提升某个从节点为新主并让其他从节点复制新主；此外还可以使用级联复制让从节点再带从节点，以减轻主节点的复制压力。</p>
 <p>总体来说，主从模式是 Redis 高可用和分布式架构的基础，适合读多写少、需要冗余备份和读负载均衡的场景，但使用时必须接受异步复制带来的延迟与一致性权衡，并合理配置持久化、复制积压缓冲区、超时和只读策略。</p>
 <hr>
-<h2 id="3-Redis-哨兵模式"><a href="#3-Redis-哨兵模式" class="headerlink" title="3. Redis 哨兵模式"></a>3. Redis 哨兵模式</h2><p>Redis 哨兵模式（Redis Sentinel）是在主从复制基础上实现高可用的方案，它本身不存储业务数据，而是由一组独立的 Sentinel 进程组成，通常部署奇数个（如 3 个或 5 个）并分布在不同机器或故障域，持续监控主节点和从节点。</p>
+<h1 id="3-Redis-哨兵模式"><a href="#3-Redis-哨兵模式" class="headerlink" title="3. Redis 哨兵模式"></a>3. Redis 哨兵模式</h1><p>Redis 哨兵模式（Redis Sentinel）是在主从复制基础上实现高可用的方案，它本身不存储业务数据，而是由一组独立的 Sentinel 进程组成，通常部署奇数个（如 3 个或 5 个）并分布在不同机器或故障域，持续监控主节点和从节点。</p>
 <p>每个 Sentinel 会定期向节点发送 PING，如果在 <code>down-after-milliseconds</code> 内没有收到有效响应，就先把该节点标记为主观下线（SDOWN）；当达到配置的 <code>quorum</code> 个 Sentinel 都认为主节点不可达时，主节点被判定为客观下线（ODOWN），随后 Sentinel 之间进行选举，选出一个领头 Sentinel 负责故障转移。</p>
 <p>领头 Sentinel 会从从节点中按优先级、复制偏移量、运行 ID 等规则挑选一个提升为新主，让其他从节点改为复制新主，并通过发布订阅机制通知客户端新的主节点地址；旧主恢复后会被降级为从节点。哨兵模式解决了主从模式不能自动选主和切换的问题，但数据复制仍是异步的，故障切换期间可能丢失少量写入，客户端也需要支持 Sentinel 或通过代理接入；它适合高可用和读写分离场景，但不等同于 Redis Cluster 的分片扩展。</p>
 <hr>
-<h2 id="4-后渗透"><a href="#4-后渗透" class="headerlink" title="4. 后渗透"></a>4. 后渗透</h2><p>拿到 Redis 未授权+主从复制 Module RCE 的反弹 shell 后，后渗透的核心思路是把 Redis 的“写文件”能力继续武器化，并结合系统层面做提权、持久化和隐藏。</p>
+<h1 id="4-后渗透"><a href="#4-后渗透" class="headerlink" title="4. 后渗透"></a>4. 后渗透</h1><p>拿到 Redis 未授权+主从复制 Module RCE 的反弹 shell 后，后渗透的核心思路是把 Redis 的“写文件”能力继续武器化，并结合系统层面做提权、持久化和隐藏。</p>
 <p>首先确认权限和环境：<code>id</code>、<code>whoami</code>、是否在容器、Redis 以什么用户运行、有无 Docker socket、sudo 权限、SUID 文件、可写目录等。</p>
 <p>如果 Redis 以 root 运行或容器内是 root，基本直接提权成功；否则找 SUID、sudo 配置、内核漏洞或可写服务配置提权。持久化方面，最直接的是利用 Redis 的 <code>CONFIG SET dir</code> + <code>dbfilename</code> 配合 <code>BGSAVE</code> 或主从复制下发任意文件，往 <code>/root/.ssh/authorized_keys</code> 写 SSH 公钥、往 <code>/var/spool/cron/root</code> 或 <code>/etc/cron.d/</code> 写定时任务、往 Web 目录写 webshell、往 <code>systemd</code> 目录写服务，或者直接 <code>useradd</code> 加用户并加入 sudo 组。隐藏方面，可以替换 <code>ps</code>、<code>top</code>、<code>netstat</code>、<code>ss</code> 等命令过滤关键字，清理 Redis 日志、<code>.bash_history</code>、<code>auth.log</code>、<code>wtmp/utmp</code>，把后门文件放到 <code>/dev/shm</code> 或 <code>/tmp</code> 并改名，用 bind mount 或 rootkit 隐藏文件与进程，甚至用 LD_PRELOAD 劫持系统调用。</p>
 <p>总之，Redis 未授权后渗透就是围绕“写文件”和“命令执行”两个能力，根据目标环境选择写公钥、写 cron、写 webshell、加用户或提权，最后清理痕迹并隐藏后门。</p>
@@ -332,7 +332,7 @@
 		
 			 <div class="toc">
 				 <span class="toc-title"><i class="fa fa-list"></i> Contents</span>
-				<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#1-%E5%A4%8D%E7%8E%B0"><span class="toc-article-text">1. 复现</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-Redis-%E4%B8%BB%E4%BB%8E%E6%A8%A1%E5%BC%8F"><span class="toc-article-text">2. Redis 主从模式</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#3-Redis-%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F"><span class="toc-article-text">3. Redis 哨兵模式</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#4-%E5%90%8E%E6%B8%97%E9%80%8F"><span class="toc-article-text">4. 后渗透</span></a></li></ol>
+				<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#1-%E5%A4%8D%E7%8E%B0"><span class="toc-article-text">1. 复现</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#2-Redis-%E4%B8%BB%E4%BB%8E%E6%A8%A1%E5%BC%8F"><span class="toc-article-text">2. Redis 主从模式</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#3-Redis-%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F"><span class="toc-article-text">3. Redis 哨兵模式</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#4-%E5%90%8E%E6%B8%97%E9%80%8F"><span class="toc-article-text">4. 后渗透</span></a></li></ol>
 			</div>
 		
 		</div>

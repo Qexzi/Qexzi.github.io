@@ -143,7 +143,7 @@
 		  
 		  
 
-		  <h2 id="网络配置与信息"><a href="#网络配置与信息" class="headerlink" title="网络配置与信息"></a>网络配置与信息</h2><h3 id="基本网络信息"><a href="#基本网络信息" class="headerlink" title="基本网络信息"></a>基本网络信息</h3><ul>
+		  <h1 id="网络配置与信息"><a href="#网络配置与信息" class="headerlink" title="网络配置与信息"></a>网络配置与信息</h1><h2 id="基本网络信息"><a href="#基本网络信息" class="headerlink" title="基本网络信息"></a>基本网络信息</h2><ul>
 <li><code>ifconfig /all</code> - 获取域名、IP地址、DHCP服务器、网关、MAC地址、主机名</li>
 <li><code>net config workstation</code> - 查看域名、机器名等</li>
 <li><code>route print</code> - 显示IP路由，主要显示网络地址、子网掩码、网关地址和接口地址</li>
@@ -151,7 +151,7 @@
 <li><code>arp -a</code> - 查看ARP缓存信息</li>
 <li><code>nslookup</code> - IP地址侦测器</li>
 </ul>
-<h3 id="网络连接状态"><a href="#网络连接状态" class="headerlink" title="网络连接状态"></a>网络连接状态</h3><ul>
+<h2 id="网络连接状态"><a href="#网络连接状态" class="headerlink" title="网络连接状态"></a>网络连接状态</h2><ul>
 <li><code>netstat -a</code> - 查看开启了哪些端口（常用<code>netstat -an</code>）</li>
 <li><code>netstat -n</code> - 查看端口的网络连接情况（常用<code>netstat -an</code>）</li>
 <li><code>netstat -o</code> - 查看所有网络连接的进程ID（PID）</li>
@@ -160,13 +160,13 @@
 <li><code>netstat -p 协议名</code> - 查看某协议使用情况，如：<code>netstat -p tcp</code></li>
 <li><code>netstat -s</code> - 查看所有协议使用情况</li>
 </ul>
-<h3 id="域网络信息"><a href="#域网络信息" class="headerlink" title="域网络信息"></a>域网络信息</h3><ul>
+<h2 id="域网络信息"><a href="#域网络信息" class="headerlink" title="域网络信息"></a>域网络信息</h2><ul>
 <li><code>net time /domain</code> - 查看域名、时间</li>
 <li><code>net view /domain</code> - 查看域内所有共享</li>
 <li><code>net view ip</code> - 查看对方局域网内开启了哪些共享</li>
 <li><code>nbtstat -A ip</code> - 查看对方最近登录的用户名（需136-139端口开放，参数-A要大写）</li>
 </ul>
-<h2 id="用户与组管理"><a href="#用户与组管理" class="headerlink" title="用户与组管理"></a>用户与组管理</h2><h3 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h3><ul>
+<h1 id="用户与组管理"><a href="#用户与组管理" class="headerlink" title="用户与组管理"></a>用户与组管理</h1><h2 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h2><ul>
 <li><code>net user 用户名 密码 /add</code> - 创建新用户</li>
 <li><code>net user 用户名 /del</code> - 删除用户</li>
 <li><code>net user guest /active:yes</code> - 激活guest账户</li>
@@ -178,36 +178,36 @@
 <li><code>whoami</code> - 查看当前用户及权限</li>
 <li><code>whoami /all</code> - 查看当前用户的详细权限信息</li>
 </ul>
-<h3 id="组管理"><a href="#组管理" class="headerlink" title="组管理"></a>组管理</h3><ul>
+<h2 id="组管理"><a href="#组管理" class="headerlink" title="组管理"></a>组管理</h2><ul>
 <li><code>net group /domain</code> - 查看域中的组</li>
 <li><code>net group &quot;domain admins&quot; /domain</code> - 查看当前域的管理员</li>
 <li><code>net localgroup</code> - 查看所有本地组</li>
 <li><code>net localgroup administrators</code> - 查看administrators组中的用户</li>
 <li><code>net localgroup administrators 用户名 /add</code> - 将用户添加到管理员组</li>
 </ul>
-<h2 id="服务与进程管理"><a href="#服务与进程管理" class="headerlink" title="服务与进程管理"></a>服务与进程管理</h2><h3 id="服务管理"><a href="#服务管理" class="headerlink" title="服务管理"></a>服务管理</h3><ul>
+<h1 id="服务与进程管理"><a href="#服务与进程管理" class="headerlink" title="服务与进程管理"></a>服务与进程管理</h1><h2 id="服务管理"><a href="#服务管理" class="headerlink" title="服务管理"></a>服务管理</h2><ul>
 <li><code>net start</code> - 查看已开启的服务</li>
 <li><code>net start 服务名</code> - 启动指定服务</li>
 <li><code>net stop 服务名</code> - 停止指定服务</li>
 </ul>
-<h3 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h3><ul>
+<h2 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h2><ul>
 <li><code>tasklist</code> - 查看当前进程</li>
 <li><code>tasklist /svc</code> - 查看当前计算机进程及对应服务</li>
 <li><code>taskkill /pid PID数</code> - 终止指定PID的进程</li>
 <li><code>netstat -ano</code> - 查看当前计算机进程情况</li>
 </ul>
-<h3 id="系统信息"><a href="#系统信息" class="headerlink" title="系统信息"></a>系统信息</h3><ul>
+<h2 id="系统信息"><a href="#系统信息" class="headerlink" title="系统信息"></a>系统信息</h2><ul>
 <li><code>systeminfo</code> - 查看计算机信息（版本、位数、补丁情况）</li>
 <li><code>ver</code> - 查看操作系统版本</li>
 </ul>
-<h2 id="文件共享与远程访问"><a href="#文件共享与远程访问" class="headerlink" title="文件共享与远程访问"></a>文件共享与远程访问</h2><h3 id="共享管理"><a href="#共享管理" class="headerlink" title="共享管理"></a>共享管理</h3><ul>
+<h1 id="文件共享与远程访问"><a href="#文件共享与远程访问" class="headerlink" title="文件共享与远程访问"></a>文件共享与远程访问</h1><h2 id="共享管理"><a href="#共享管理" class="headerlink" title="共享管理"></a>共享管理</h2><ul>
 <li><code>net share</code> - 查看本地开启的共享</li>
 <li><code>net share ipc$</code> - 开启ipc$共享</li>
 <li><code>net share ipc$ /del</code> - 删除ipc$共享</li>
 <li><code>net share c$ /del</code> - 删除C:共享</li>
 <li><code>\\IP\c</code> - 访问默认共享c盘，如：<code>\\192.168.0.108\c</code></li>
 </ul>
-<h3 id="远程连接"><a href="#远程连接" class="headerlink" title="远程连接"></a>远程连接</h3><ul>
+<h2 id="远程连接"><a href="#远程连接" class="headerlink" title="远程连接"></a>远程连接</h2><ul>
 <li><code>net use \\目标IP\ipc$ 密码 /u:用户名</code> - 连接目标机器<ul>
 <li>ipc$：Windows 系统自带的、无实体文件的虚拟共享，不是具体的文件夹 &#x2F; 文件（不像 C$ 是真实的 C 盘共享），也没有实际存储内容，唯一作用是作为本地机和远程机之间的「通信管道」，让各类远程操作（比如 PsExec 执行命令、at 定时任务）能通过这个管道传输数据、完成身份认证。</li>
 </ul>
@@ -217,17 +217,17 @@
 <li><code>psexec.exe \\目标IP -u username -p password -s cmd</code> - 在目标机器上执行cmd</li>
 <li><code>finger username @host</code> - 查看最近登录的用户</li>
 </ul>
-<h2 id="域控制器相关"><a href="#域控制器相关" class="headerlink" title="域控制器相关"></a>域控制器相关</h2><ul>
+<h1 id="域控制器相关"><a href="#域控制器相关" class="headerlink" title="域控制器相关"></a>域控制器相关</h1><ul>
 <li><code>dsquery server</code> - 查看所有域控制器</li>
 <li><code>dsquery subnet</code> - 查看域内子网</li>
 <li><code>dsquery group</code> - 查看域内工作组</li>
 <li><code>dsquery site</code> - 查看域内站点</li>
 </ul>
-<h2 id="注册表与系统备份"><a href="#注册表与系统备份" class="headerlink" title="注册表与系统备份"></a>注册表与系统备份</h2><ul>
+<h1 id="注册表与系统备份"><a href="#注册表与系统备份" class="headerlink" title="注册表与系统备份"></a>注册表与系统备份</h1><ul>
 <li><code>reg save hklm\sam sam.hive</code> - 导出用户组信息、权限配置</li>
 <li><code>reg save hklm\system system.hive</code> - 导出SYSKEY</li>
 </ul>
-<h2 id="其他实用命令"><a href="#其他实用命令" class="headerlink" title="其他实用命令"></a>其他实用命令</h2><ul>
+<h1 id="其他实用命令"><a href="#其他实用命令" class="headerlink" title="其他实用命令"></a>其他实用命令</h1><ul>
 <li><code>wmic product &gt; ins.txt</code> - 查看安装软件及版本路径等信息，输出到ins.txt文件（位于用户目录下）</li>
 </ul>
 <hr>
@@ -402,7 +402,7 @@
 		
 			 <div class="toc">
 				 <span class="toc-title"><i class="fa fa-list"></i> Contents</span>
-				<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE%E4%B8%8E%E4%BF%A1%E6%81%AF"><span class="toc-article-text">网络配置与信息</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E5%9F%BA%E6%9C%AC%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF"><span class="toc-article-text">基本网络信息</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E7%8A%B6%E6%80%81"><span class="toc-article-text">网络连接状态</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E5%9F%9F%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF"><span class="toc-article-text">域网络信息</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E7%94%A8%E6%88%B7%E4%B8%8E%E7%BB%84%E7%AE%A1%E7%90%86"><span class="toc-article-text">用户与组管理</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86"><span class="toc-article-text">用户管理</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E7%BB%84%E7%AE%A1%E7%90%86"><span class="toc-article-text">组管理</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E6%9C%8D%E5%8A%A1%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86"><span class="toc-article-text">服务与进程管理</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86"><span class="toc-article-text">服务管理</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86"><span class="toc-article-text">进程管理</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF"><span class="toc-article-text">系统信息</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E4%B8%8E%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE"><span class="toc-article-text">文件共享与远程访问</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E5%85%B1%E4%BA%AB%E7%AE%A1%E7%90%86"><span class="toc-article-text">共享管理</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5"><span class="toc-article-text">远程连接</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%9F%9F%E6%8E%A7%E5%88%B6%E5%99%A8%E7%9B%B8%E5%85%B3"><span class="toc-article-text">域控制器相关</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E6%B3%A8%E5%86%8C%E8%A1%A8%E4%B8%8E%E7%B3%BB%E7%BB%9F%E5%A4%87%E4%BB%BD"><span class="toc-article-text">注册表与系统备份</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%85%B6%E4%BB%96%E5%AE%9E%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-article-text">其他实用命令</span></a></li></ol>
+				<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE%E4%B8%8E%E4%BF%A1%E6%81%AF"><span class="toc-article-text">网络配置与信息</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%9F%BA%E6%9C%AC%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF"><span class="toc-article-text">基本网络信息</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E7%8A%B6%E6%80%81"><span class="toc-article-text">网络连接状态</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%9F%9F%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF"><span class="toc-article-text">域网络信息</span></a></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E7%94%A8%E6%88%B7%E4%B8%8E%E7%BB%84%E7%AE%A1%E7%90%86"><span class="toc-article-text">用户与组管理</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86"><span class="toc-article-text">用户管理</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E7%BB%84%E7%AE%A1%E7%90%86"><span class="toc-article-text">组管理</span></a></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E6%9C%8D%E5%8A%A1%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86"><span class="toc-article-text">服务与进程管理</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86"><span class="toc-article-text">服务管理</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86"><span class="toc-article-text">进程管理</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF"><span class="toc-article-text">系统信息</span></a></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E4%B8%8E%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE"><span class="toc-article-text">文件共享与远程访问</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%85%B1%E4%BA%AB%E7%AE%A1%E7%90%86"><span class="toc-article-text">共享管理</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5"><span class="toc-article-text">远程连接</span></a></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E5%9F%9F%E6%8E%A7%E5%88%B6%E5%99%A8%E7%9B%B8%E5%85%B3"><span class="toc-article-text">域控制器相关</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E6%B3%A8%E5%86%8C%E8%A1%A8%E4%B8%8E%E7%B3%BB%E7%BB%9F%E5%A4%87%E4%BB%BD"><span class="toc-article-text">注册表与系统备份</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E5%85%B6%E4%BB%96%E5%AE%9E%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-article-text">其他实用命令</span></a></li></ol>
 			</div>
 		
 		</div>

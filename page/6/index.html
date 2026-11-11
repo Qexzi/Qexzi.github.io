@@ -165,10 +165,10 @@
   <div class="row">
 	
 	
-		<h2 id="0x00-基础知识"><a href="#0x00-基础知识" class="headerlink" title="0x00.基础知识"></a>0x00.基础知识</h2><p><strong>1. XIMIL是一种标记语言</strong><br>XML指可扩展标记语言(EXtensible Markup Language)把<strong>数据结构化</strong>后<strong>传输</strong>给对方让对方在结构化的数据中进行读取。</p>
-<p>假设你要告诉同事“张三的座机是010-8888，手机是1380000，邮箱是<a href="mailto:&#x7a;&#104;&#x61;&#110;&#x67;&#x40;&#x78;&#120;&#46;&#x63;&#111;&#109;">zhang@xx.com</a>”。</p>
+		<h1 id="0x00-基础知识"><a href="#0x00-基础知识" class="headerlink" title="0x00.基础知识"></a>0x00.基础知识</h1><p><strong>1. XIMIL是一种标记语言</strong><br>XML指可扩展标记语言(EXtensible Markup Language)把<strong>数据结构化</strong>后<strong>传输</strong>给对方让对方在结构化的数据中进行读取。</p>
+<p>假设你要告诉同事“张三的座机是010-8888，手机是1380000，邮箱是<a href="mailto:&#x7a;&#x68;&#x61;&#x6e;&#x67;&#64;&#120;&#120;&#x2e;&#99;&#111;&#x6d;">zhang@xx.com</a>”。</p>
 <ul>
-<li><p><strong>非结构化（纯文本）</strong>：你发微信：“张三电话010-8888，手机1380000，邮箱<a href="mailto:&#122;&#104;&#x61;&#x6e;&#x67;&#64;&#x78;&#x78;&#46;&#99;&#111;&#x6d;">zhang@xx.com</a>”。<br>如果同事的电脑要提取“手机号”，得写复杂的模糊匹配（万一张三写了“Tel”或者“Mobile”呢？）。</p>
+<li><p><strong>非结构化（纯文本）</strong>：你发微信：“张三电话010-8888，手机1380000，邮箱<a href="mailto:&#122;&#104;&#x61;&#x6e;&#103;&#64;&#x78;&#x78;&#46;&#99;&#x6f;&#x6d;">zhang@xx.com</a>”。<br>如果同事的电脑要提取“手机号”，得写复杂的模糊匹配（万一张三写了“Tel”或者“Mobile”呢？）。</p>
 </li>
 <li><p><strong>结构化（XML）</strong>：</p>
   <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">员工</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">姓名</span>&gt;</span>张三<span class="tag">&lt;/<span class="name">姓名</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">座机</span>&gt;</span>010-8888<span class="tag">&lt;/<span class="name">座机</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">手机</span>&gt;</span>1380000<span class="tag">&lt;/<span class="name">手机</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">邮箱</span>&gt;</span>zhang@xx.com<span class="tag">&lt;/<span class="name">邮箱</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">员工</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
@@ -208,7 +208,7 @@
   <div class="row">
 	
 	
-		<h2 id="1-复现"><a href="#1-复现" class="headerlink" title="1. 复现"></a>1. 复现</h2><p>基础指令</p>
+		<h1 id="1-复现"><a href="#1-复现" class="headerlink" title="1. 复现"></a>1. 复现</h1><p>基础指令</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">redis-cli -h 10.62.60.167 -p 8589   (自建靶场的ip与端口，默认是6397)</span><br><span class="line"></span><br><span class="line">ping -&gt; pong 说明存在未授权</span><br><span class="line"></span><br><span class="line">keys *  打印所有的key</span><br><span class="line">get mykey 测试读取</span><br><span class="line"><span class="built_in">set</span> test1_key <span class="string">&quot;This is test1_key&quot;</span> 测试写入</span><br><span class="line"></span><br><span class="line">info server 服务信息</span><br><span class="line">CONFIG GET <span class="built_in">dir</span> 查询工作目录，RDB 文件、AOF 日志文件都会保存在这个目录下</span><br><span class="line">CONFIG GET dbfilename 查询RDB快照文件名称（内存快照）</span><br><span class="line">CONFIG GET rdbcompression 查询RDB快照文件是否开启压缩</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/Redis4-unacc/image_1.png" alt="Redis4-unacc·图1"><br>当前redis版本是4.0.14，是老版本了。 </p>
@@ -324,45 +324,45 @@
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/Misc/">Misc<span>1</span></a></li>
-		
-			<li><a href="/tags/Java安全/">Java安全<span>1</span></a></li>
-		
-			<li><a href="/tags/Nginx/">Nginx<span>1</span></a></li>
-		
-			<li><a href="/tags/域渗透/">域渗透<span>2</span></a></li>
-		
-			<li><a href="/tags/信息安全工程师/">信息安全工程师<span>1</span></a></li>
-		
-			<li><a href="/tags/CSS/">CSS<span>1</span></a></li>
-		
-			<li><a href="/tags/网络层/">网络层<span>1</span></a></li>
-		
-			<li><a href="/tags/同源策略/">同源策略<span>1</span></a></li>
-		
-			<li><a href="/tags/虚拟机网络/">虚拟机网络<span>1</span></a></li>
-		
-			<li><a href="/tags/软考/">软考<span>1</span></a></li>
-		
-			<li><a href="/tags/SQL注入/">SQL注入<span>1</span></a></li>
-		
-			<li><a href="/tags/Redis/">Redis<span>1</span></a></li>
+			<li><a href="/tags/文件上传/">文件上传<span>1</span></a></li>
 		
 			<li><a href="/tags/PHP/">PHP<span>1</span></a></li>
 		
-			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
+			<li><a href="/tags/Mysql/">Mysql<span>1</span></a></li>
 		
-			<li><a href="/tags/Docker/">Docker<span>1</span></a></li>
+			<li><a href="/tags/深度学习/">深度学习<span>2</span></a></li>
 		
-			<li><a href="/tags/计算机体系架构/">计算机体系架构<span>1</span></a></li>
+			<li><a href="/tags/XSS/">XSS<span>1</span></a></li>
+		
+			<li><a href="/tags/隧道技术/">隧道技术<span>1</span></a></li>
+		
+			<li><a href="/tags/渗透测试/">渗透测试<span>1</span></a></li>
+		
+			<li><a href="/tags/认证/">认证<span>2</span></a></li>
 		
 			<li><a href="/tags/邮箱解析/">邮箱解析<span>1</span></a></li>
+		
+			<li><a href="/tags/虚拟机网络/">虚拟机网络<span>1</span></a></li>
+		
+			<li><a href="/tags/DIV/">DIV<span>1</span></a></li>
+		
+			<li><a href="/tags/root/">root<span>1</span></a></li>
+		
+			<li><a href="/tags/物理层/">物理层<span>1</span></a></li>
+		
+			<li><a href="/tags/Java/">Java<span>1</span></a></li>
+		
+			<li><a href="/tags/Next/">Next<span>1</span></a></li>
 		
 			<li><a href="/tags/数据链路层/">数据链路层<span>1</span></a></li>
 		
 			<li><a href="/tags/CSRF/">CSRF<span>1</span></a></li>
 		
-			<li><a href="/tags/HTML/">HTML<span>1</span></a></li>
+			<li><a href="/tags/VPN/">VPN<span>1</span></a></li>
+		
+			<li><a href="/tags/刷机/">刷机<span>1</span></a></li>
+		
+			<li><a href="/tags/应急响应/">应急响应<span>1</span></a></li>
 		
 		
 		   <li><a href="/tags">...<span>68</span></a></li>

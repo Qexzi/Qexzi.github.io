@@ -143,10 +143,10 @@
 		  
 		  
 
-		  <h2 id="1-什么是SSH隧道-为什么需要SSH隧道？"><a href="#1-什么是SSH隧道-为什么需要SSH隧道？" class="headerlink" title="1.什么是SSH隧道+为什么需要SSH隧道？"></a><code>1.什么是SSH隧道+为什么需要SSH隧道？</code></h2><blockquote>
+		  <h1 id="1-什么是SSH隧道-为什么需要SSH隧道？"><a href="#1-什么是SSH隧道-为什么需要SSH隧道？" class="headerlink" title="1.什么是SSH隧道+为什么需要SSH隧道？"></a><code>1.什么是SSH隧道+为什么需要SSH隧道？</code></h1><blockquote>
 <p>SSH 隧道就像是一条加密的地下通道，让你在不安全的网络上安全地传输数据。<br>比如：你想从家里访问公司内网的数据库，但数据库只能在公司内网访问，这时候 SSH 隧道就能帮你 “穿墙” 访问。</p>
 </blockquote>
-<h2 id="2-SSH的隧道类型"><a href="#2-SSH的隧道类型" class="headerlink" title="2.SSH的隧道类型"></a><code>2.SSH的隧道类型</code></h2><h3 id="SSH反向连接（远程端口转发）"><a href="#SSH反向连接（远程端口转发）" class="headerlink" title="SSH反向连接（远程端口转发）"></a><code>SSH反向连接</code>（远程端口转发）</h3><p><img src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_1.png" alt="SSH隧道技术·图1"></p>
+<h1 id="2-SSH的隧道类型"><a href="#2-SSH的隧道类型" class="headerlink" title="2.SSH的隧道类型"></a><code>2.SSH的隧道类型</code></h1><h2 id="SSH反向连接（远程端口转发）"><a href="#SSH反向连接（远程端口转发）" class="headerlink" title="SSH反向连接（远程端口转发）"></a><code>SSH反向连接</code>（远程端口转发）</h2><p><img src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_1.png" alt="SSH隧道技术·图1"></p>
 <p>  因此可以通过访问内网2来访问内网1的主机（因为内网2是允许外网主机访问的）</p>
 <p><img loading="lazy" decoding="async" src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_2.png" alt="SSH隧道技术·图2"></p>
 <p><img loading="lazy" decoding="async" src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_3.png" alt="SSH隧道技术·图3"></p>
@@ -156,39 +156,39 @@
 </blockquote>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment">#ssh反向连接命令格式</span></span><br><span class="line">ssh <span class="literal">-R</span> 远程主机监听端口:本地主机地址:本地服务端口 用户名<span class="selector-tag">@</span>远程服务器地址</span><br></pre></td></tr></table></figure>
 
-<h3 id="SSH正向连接（本地端口转发）"><a href="#SSH正向连接（本地端口转发）" class="headerlink" title="SSH正向连接（本地端口转发）"></a><code>SSH正向连接</code>（本地端口转发）</h3><p><img loading="lazy" decoding="async" src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_5.png" alt="SSH隧道技术·图5"><br><img loading="lazy" decoding="async" src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_6.png" alt="SSH隧道技术·图6"><br><img loading="lazy" decoding="async" src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_7.png" alt="SSH隧道技术·图7"></p>
+<h2 id="SSH正向连接（本地端口转发）"><a href="#SSH正向连接（本地端口转发）" class="headerlink" title="SSH正向连接（本地端口转发）"></a><code>SSH正向连接</code>（本地端口转发）</h2><p><img loading="lazy" decoding="async" src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_5.png" alt="SSH隧道技术·图5"><br><img loading="lazy" decoding="async" src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_6.png" alt="SSH隧道技术·图6"><br><img loading="lazy" decoding="async" src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_7.png" alt="SSH隧道技术·图7"></p>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment">#指令格式</span></span><br><span class="line">ssh <span class="literal">-L</span> 本地端口:内网目标IP:内网目标端口 SSH服务器用户名@SSH服务器IP</span><br></pre></td></tr></table></figure>
 
 <hr>
-<h3 id="ssh动态连接（动态端口转发）"><a href="#ssh动态连接（动态端口转发）" class="headerlink" title="ssh动态连接（动态端口转发）"></a><code>ssh动态连接</code>（动态端口转发）</h3><p><img loading="lazy" decoding="async" src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_8.png" alt="SSH隧道技术·图8"></p>
+<h2 id="ssh动态连接（动态端口转发）"><a href="#ssh动态连接（动态端口转发）" class="headerlink" title="ssh动态连接（动态端口转发）"></a><code>ssh动态连接</code>（动态端口转发）</h2><p><img loading="lazy" decoding="async" src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_8.png" alt="SSH隧道技术·图8"></p>
 <hr>
-<h2 id="3-SSH的密钥"><a href="#3-SSH的密钥" class="headerlink" title="3.SSH的密钥"></a><code>3.SSH的密钥</code></h2><p><img loading="lazy" decoding="async" src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_9.png" alt="SSH隧道技术·图9"></p>
+<h1 id="3-SSH的密钥"><a href="#3-SSH的密钥" class="headerlink" title="3.SSH的密钥"></a><code>3.SSH的密钥</code></h1><p><img loading="lazy" decoding="async" src="/images/SSH%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/image_9.png" alt="SSH隧道技术·图9"></p>
 <blockquote>
 <p>ssh最重要是第一次连接，这是漏洞的所在点</p>
 </blockquote>
 <hr>
-<h2 id="4-SSH的维持连接"><a href="#4-SSH的维持连接" class="headerlink" title="4.SSH的维持连接"></a><code>4.SSH的维持连接</code></h2><h3 id="断开原因："><a href="#断开原因：" class="headerlink" title="断开原因："></a>断开原因：</h3><h4 id="网络层面的中断因素"><a href="#网络层面的中断因素" class="headerlink" title="网络层面的中断因素"></a><code>网络层面的中断因素</code></h4><ul>
+<h1 id="4-SSH的维持连接"><a href="#4-SSH的维持连接" class="headerlink" title="4.SSH的维持连接"></a><code>4.SSH的维持连接</code></h1><h2 id="断开原因："><a href="#断开原因：" class="headerlink" title="断开原因："></a>断开原因：</h2><h3 id="网络层面的中断因素"><a href="#网络层面的中断因素" class="headerlink" title="网络层面的中断因素"></a><code>网络层面的中断因素</code></h3><ul>
 <li><strong>底层网络波动</strong>：Wi-Fi信号弱、移动网络切换、路由器故障或带宽不足，导致TCP连接超时。  </li>
 <li><strong>防火墙&#x2F;NAT超时机制</strong>：企业网络防火墙或家用路由器设置连接超时时间（如无数据传输时），主动断开“非活跃连接”。  </li>
 <li><strong>NAT穿透失效</strong>：内网通过NAT访问公网时，映射表项超时（如30分钟），导致公网无法识别连接。</li>
 </ul>
-<h4 id="设备与资源限制"><a href="#设备与资源限制" class="headerlink" title="设备与资源限制"></a><code>设备与资源限制</code></h4><ul>
+<h3 id="设备与资源限制"><a href="#设备与资源限制" class="headerlink" title="设备与资源限制"></a><code>设备与资源限制</code></h3><ul>
 <li><strong>服务器负载过高</strong>：CPU、内存不足或进程异常，导致SSH服务进程被系统终止。  </li>
 <li><strong>客户端异常</strong>：设备休眠、电源中断、SSH客户端程序崩溃或网络接口断开（如拔网线）。</li>
 </ul>
-<h4 id="连接状态与配置问题"><a href="#连接状态与配置问题" class="headerlink" title="连接状态与配置问题"></a><code>连接状态与配置问题</code></h4><ul>
+<h3 id="连接状态与配置问题"><a href="#连接状态与配置问题" class="headerlink" title="连接状态与配置问题"></a><code>连接状态与配置问题</code></h3><ul>
 <li><strong>心跳包机制未启用</strong>：未配置<code>ServerAliveInterval</code>等参数，无法通过心跳包维持连接活跃状态，被中间设备断开。  </li>
 <li><strong>配置参数不合理</strong>：如<code>ClientAliveCountMax</code>设置过小，导致轻微网络延迟即触发断连。</li>
 </ul>
-<h4 id="安全策略与异常行为"><a href="#安全策略与异常行为" class="headerlink" title="安全策略与异常行为"></a><code>安全策略与异常行为</code></h4><ul>
+<h3 id="安全策略与异常行为"><a href="#安全策略与异常行为" class="headerlink" title="安全策略与异常行为"></a><code>安全策略与异常行为</code></h3><ul>
 <li><strong>账号锁定或认证失败</strong>：多次密码输入错误触发安全策略，账户被锁定或IP被封禁。  </li>
 <li><strong>会话残留或异常终止</strong>：连接断开时未正常释放资源，残留进程可能导致后续连接冲突。</li>
 </ul>
-<h4 id="其他偶发因素"><a href="#其他偶发因素" class="headerlink" title="其他偶发因素"></a><code>其他偶发因素</code></h4><ul>
+<h3 id="其他偶发因素"><a href="#其他偶发因素" class="headerlink" title="其他偶发因素"></a><code>其他偶发因素</code></h3><ul>
 <li><strong>跨时区或时钟同步问题</strong>：服务器与客户端时钟偏差过大，导致TCP校验失败。  </li>
 <li><strong>网络攻击或干扰</strong>：DDoS攻击、中间人攻击等破坏TCP连接的完整性。</li>
 </ul>
-<h3 id="维持连接："><a href="#维持连接：" class="headerlink" title="维持连接："></a>维持连接：</h3><h4 id="1-网络环境优化"><a href="#1-网络环境优化" class="headerlink" title="1.网络环境优化"></a><code>1.网络环境优化</code></h4><ol>
+<h2 id="维持连接："><a href="#维持连接：" class="headerlink" title="维持连接："></a>维持连接：</h2><h3 id="1-网络环境优化"><a href="#1-网络环境优化" class="headerlink" title="1.网络环境优化"></a><code>1.网络环境优化</code></h3><ol>
 <li><p><strong>物理网络稳定性</strong>  </p>
 <ul>
 <li>使用有线网络替代Wi-Fi，或选择信号强的5GHz频段，减少波动。  </li>
@@ -202,7 +202,7 @@
 </ul>
 </li>
 </ol>
-<h4 id="2-SSH连接参数调整"><a href="#2-SSH连接参数调整" class="headerlink" title="2.SSH连接参数调整"></a><code>2.SSH连接参数调整</code></h4><ol>
+<h3 id="2-SSH连接参数调整"><a href="#2-SSH连接参数调整" class="headerlink" title="2.SSH连接参数调整"></a><code>2.SSH连接参数调整</code></h3><ol>
 <li><p><strong>客户端配置（<code>~/.ssh/config</code>）-Linux系统</strong>  </p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Host *</span><br><span class="line">    ServerAliveInterval 30    <span class="comment"># 每30秒发送心跳包</span></span><br><span class="line">    ServerAliveCountMax 10    <span class="comment"># 连续10次无响应才断开</span></span><br><span class="line">    TCPKeepAlive <span class="built_in">yes</span>          <span class="comment"># 启用TCP级心跳</span></span><br><span class="line">    ControlMaster auto        <span class="comment"># 启用连接复用</span></span><br><span class="line">    ControlPath ~/.ssh/socket-%r@%h:%p</span><br><span class="line">    ControlPersist 1h         <span class="comment"># 主连接保持1小时</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -230,7 +230,7 @@
 <p>输出中会显示：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">debug1: Reading configuration data /c/Users/21143/.ssh/config</span><br><span class="line">debug1: Applying options for *</span><br></pre></td></tr></table></figure></li>
 </ol>
-<h5 id="（1）为什么您需要手动创建文件？"><a href="#（1）为什么您需要手动创建文件？" class="headerlink" title="（1）为什么您需要手动创建文件？"></a>（1）为什么您需要手动创建文件？</h5><ol>
+<h4 id="（1）为什么您需要手动创建文件？"><a href="#（1）为什么您需要手动创建文件？" class="headerlink" title="（1）为什么您需要手动创建文件？"></a>（1）为什么您需要手动创建文件？</h4><ol>
 <li><p><strong>默认文件不存在</strong>：</p>
 <ul>
 <li>SSH 不会自动创建用户级配置文件</li>
@@ -246,19 +246,19 @@
 </ul>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">icacls <span class="variable">$env:USERPROFILE</span>\.ssh /inheritance:<span class="built_in">r</span></span><br><span class="line">icacls <span class="variable">$env:USERPROFILE</span>\.ssh /grant:<span class="built_in">r</span> <span class="string">&quot;<span class="variable">$env:USERNAME:</span>(F)&quot;</span></span><br></pre></td></tr></table></figure></li>
 </ol>
-<h5 id="（2）配置文件如何影响连接？"><a href="#（2）配置文件如何影响连接？" class="headerlink" title="（2）配置文件如何影响连接？"></a>（2）配置文件如何影响连接？</h5><p>当您执行 <code>ssh user@host</code> 时：</p>
+<h4 id="（2）配置文件如何影响连接？"><a href="#（2）配置文件如何影响连接？" class="headerlink" title="（2）配置文件如何影响连接？"></a>（2）配置文件如何影响连接？</h4><p>当您执行 <code>ssh user@host</code> 时：</p>
 <ol>
 <li>客户端加载 <code>~/.ssh/config</code></li>
 <li>匹配 <code>Host</code> 配置块（支持通配符）</li>
 <li>应用配置参数到当前连接</li>
 <li>命令行参数会覆盖配置文件设置</li>
 </ol>
-<h5 id="（3）配置示例解析"><a href="#（3）配置示例解析" class="headerlink" title="（3）配置示例解析"></a>（3）配置示例解析</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Host myserver            <span class="comment"># 定义主机别名</span></span><br><span class="line">  HostName 192.168.1.10  <span class="comment"># 真实IP/域名</span></span><br><span class="line">  User admin             <span class="comment"># 自动使用此用户名</span></span><br><span class="line">  Port 2222              <span class="comment"># 非标准端口</span></span><br><span class="line">  IdentityFile ~/.ssh/id_ecdsa  <span class="comment"># 指定私钥</span></span><br><span class="line"></span><br><span class="line">Host *                   <span class="comment"># 全局默认配置</span></span><br><span class="line">  ServerAliveInterval 30</span><br><span class="line">  TCPKeepAlive <span class="built_in">yes</span></span><br></pre></td></tr></table></figure>
+<h4 id="（3）配置示例解析"><a href="#（3）配置示例解析" class="headerlink" title="（3）配置示例解析"></a>（3）配置示例解析</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Host myserver            <span class="comment"># 定义主机别名</span></span><br><span class="line">  HostName 192.168.1.10  <span class="comment"># 真实IP/域名</span></span><br><span class="line">  User admin             <span class="comment"># 自动使用此用户名</span></span><br><span class="line">  Port 2222              <span class="comment"># 非标准端口</span></span><br><span class="line">  IdentityFile ~/.ssh/id_ecdsa  <span class="comment"># 指定私钥</span></span><br><span class="line"></span><br><span class="line">Host *                   <span class="comment"># 全局默认配置</span></span><br><span class="line">  ServerAliveInterval 30</span><br><span class="line">  TCPKeepAlive <span class="built_in">yes</span></span><br></pre></td></tr></table></figure>
 
 <p>使用时：</p>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 触发 myserver 配置块</span></span><br><span class="line">ssh myserver</span><br><span class="line"></span><br><span class="line"><span class="comment"># 触发全局配置 (*)</span></span><br><span class="line">ssh any<span class="literal">-other-server</span></span><br></pre></td></tr></table></figure>
 
-<h5 id="（4）关键验证步骤"><a href="#（4）关键验证步骤" class="headerlink" title="（4）关键验证步骤"></a>（4）关键验证步骤</h5><ol>
+<h4 id="（4）关键验证步骤"><a href="#（4）关键验证步骤" class="headerlink" title="（4）关键验证步骤"></a>（4）关键验证步骤</h4><ol>
 <li><p>创建文件后执行：</p>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 检查配置是否被加载</span></span><br><span class="line">ssh <span class="literal">-G</span> myserver | findstr <span class="string">&quot;ServerAliveInterval&quot;</span></span><br></pre></td></tr></table></figure>
 <p>应输出：<code>serveraliveinterval 30</code></p>
@@ -269,7 +269,7 @@
 <blockquote>
 <p>只要文件路径正确、权限合规且语法无误，SSH 客户端 <strong>100% 会自动加载</strong> 此配置文件，无需额外操作。这是 OpenSSH 的标准行为，在 Windows&#x2F;Linux&#x2F;macOS 上完全一致。</p>
 </blockquote>
-<h4 id="3-断线重连工具"><a href="#3-断线重连工具" class="headerlink" title="3.断线重连工具"></a><code>3.断线重连工具</code></h4><ol>
+<h3 id="3-断线重连工具"><a href="#3-断线重连工具" class="headerlink" title="3.断线重连工具"></a><code>3.断线重连工具</code></h3><ol>
 <li><p><strong>使用<code>autossh</code>自动重连</strong>  </p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">autossh -M 0 -N -D 1080 user@server  <span class="comment"># -M 0禁用端口监控，专注重连</span></span><br></pre></td></tr></table></figure>
 <p>安装：  </p>
@@ -281,7 +281,7 @@
 <li><p><strong>替代方案：<code>mosh</code>（移动SSH）</strong>  </p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 服务器端安装</span></span><br><span class="line"><span class="built_in">sudo</span> apt install mosh  </span><br><span class="line"><span class="comment"># 客户端连接（支持断线自动恢复）</span></span><br><span class="line">mosh user@server</span><br></pre></td></tr></table></figure></li>
 </ol>
-<h4 id="4-会话持久化工具"><a href="#4-会话持久化工具" class="headerlink" title="4.会话持久化工具"></a><code>4.会话持久化工具</code></h4><ol>
+<h3 id="4-会话持久化工具"><a href="#4-会话持久化工具" class="headerlink" title="4.会话持久化工具"></a><code>4.会话持久化工具</code></h3><ol>
 <li><p><strong>使用<code>screen</code>或<code>tmux</code></strong>  </p>
 <ul>
 <li>在SSH会话中先启动<code>screen</code>或<code>tmux</code>，再执行长时间任务：  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">screen -S mysession    <span class="comment"># 创建会话</span></span><br><span class="line"><span class="comment"># 执行任务（如编译、传输大文件）</span></span><br></pre></td></tr></table></figure></li>
@@ -291,7 +291,7 @@
 <li><p><strong>后台运行命令</strong>  </p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">nohup</span> <span class="built_in">command</span> &amp;         <span class="comment"># 使命令不随SSH断开而终止</span></span><br></pre></td></tr></table></figure></li>
 </ol>
-<h4 id="5-安全策略优化"><a href="#5-安全策略优化" class="headerlink" title="5.安全策略优化"></a><code>5.安全策略优化</code></h4><ol>
+<h3 id="5-安全策略优化"><a href="#5-安全策略优化" class="headerlink" title="5.安全策略优化"></a><code>5.安全策略优化</code></h3><ol>
 <li><p><strong>密钥认证替代密码</strong>  </p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen              <span class="comment"># 生成密钥对</span></span><br><span class="line">ssh-copy-id user@server <span class="comment"># 上传公钥到服务器</span></span><br></pre></td></tr></table></figure>
 <p>禁用密码认证（<code>/etc/ssh/sshd_config</code>）：  </p>
@@ -300,7 +300,7 @@
 <li><p><strong>调整登录限制</strong>  </p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 增加最大连接尝试次数</span></span><br><span class="line">MaxAuthTries 6</span><br><span class="line"><span class="comment"># 设置登录超时</span></span><br><span class="line">LoginGraceTime 30s</span><br></pre></td></tr></table></figure></li>
 </ol>
-<h4 id="6-监控与告警"><a href="#6-监控与告警" class="headerlink" title="6.监控与告警"></a><code>6.监控与告警</code></h4><ol>
+<h3 id="6-监控与告警"><a href="#6-监控与告警" class="headerlink" title="6.监控与告警"></a><code>6.监控与告警</code></h3><ol>
 <li><p><strong>实时监控连接状态</strong>  </p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">watch -n 1 <span class="string">&#x27;ss -tunap | grep ssh&#x27;</span>  <span class="comment"># 实时查看SSH连接</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -313,7 +313,7 @@
 </ul>
 </li>
 </ol>
-<h4 id="7-特殊场景解决方案"><a href="#7-特殊场景解决方案" class="headerlink" title="7.特殊场景解决方案"></a><code>7.特殊场景解决方案</code></h4><ol>
+<h3 id="7-特殊场景解决方案"><a href="#7-特殊场景解决方案" class="headerlink" title="7.特殊场景解决方案"></a><code>7.特殊场景解决方案</code></h3><ol>
 <li><p><strong>高延迟网络</strong>  </p>
 <ul>
 <li>降低TCP窗口缩放：  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 客户端临时设置</span></span><br><span class="line"><span class="built_in">sudo</span> sysctl -w net.ipv4.tcp_window_scaling=0</span><br></pre></td></tr></table></figure></li>
@@ -322,7 +322,7 @@
 <li><p><strong>跨时区时钟同步</strong>  </p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install ntp    <span class="comment"># 安装NTP服务</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl restart ntp</span><br></pre></td></tr></table></figure></li>
 </ol>
-<h4 id="8-测试与验证"><a href="#8-测试与验证" class="headerlink" title="8.测试与验证"></a><code>8.测试与验证</code></h4><ol>
+<h3 id="8-测试与验证"><a href="#8-测试与验证" class="headerlink" title="8.测试与验证"></a><code>8.测试与验证</code></h3><ol>
 <li><p><strong>网络连通性测试</strong>  </p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ping server             <span class="comment"># 测试网络可达性</span></span><br><span class="line">traceroute server       <span class="comment"># 追踪路由路径</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -499,7 +499,7 @@
 		
 			 <div class="toc">
 				 <span class="toc-title"><i class="fa fa-list"></i> Contents</span>
-				<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AFSSH%E9%9A%A7%E9%81%93-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81SSH%E9%9A%A7%E9%81%93%EF%BC%9F"><span class="toc-article-text">1.什么是SSH隧道+为什么需要SSH隧道？</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-SSH%E7%9A%84%E9%9A%A7%E9%81%93%E7%B1%BB%E5%9E%8B"><span class="toc-article-text">2.SSH的隧道类型</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#SSH%E5%8F%8D%E5%90%91%E8%BF%9E%E6%8E%A5%EF%BC%88%E8%BF%9C%E7%A8%8B%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%EF%BC%89"><span class="toc-article-text">SSH反向连接（远程端口转发）</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#SSH%E6%AD%A3%E5%90%91%E8%BF%9E%E6%8E%A5%EF%BC%88%E6%9C%AC%E5%9C%B0%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%EF%BC%89"><span class="toc-article-text">SSH正向连接（本地端口转发）</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#ssh%E5%8A%A8%E6%80%81%E8%BF%9E%E6%8E%A5%EF%BC%88%E5%8A%A8%E6%80%81%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%EF%BC%89"><span class="toc-article-text">ssh动态连接（动态端口转发）</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#3-SSH%E7%9A%84%E5%AF%86%E9%92%A5"><span class="toc-article-text">3.SSH的密钥</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#4-SSH%E7%9A%84%E7%BB%B4%E6%8C%81%E8%BF%9E%E6%8E%A5"><span class="toc-article-text">4.SSH的维持连接</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E6%96%AD%E5%BC%80%E5%8E%9F%E5%9B%A0%EF%BC%9A"><span class="toc-article-text">断开原因：</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82%E9%9D%A2%E7%9A%84%E4%B8%AD%E6%96%AD%E5%9B%A0%E7%B4%A0"><span class="toc-article-text">网络层面的中断因素</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E8%AE%BE%E5%A4%87%E4%B8%8E%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6"><span class="toc-article-text">设备与资源限制</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E8%BF%9E%E6%8E%A5%E7%8A%B6%E6%80%81%E4%B8%8E%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%98"><span class="toc-article-text">连接状态与配置问题</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5%E4%B8%8E%E5%BC%82%E5%B8%B8%E8%A1%8C%E4%B8%BA"><span class="toc-article-text">安全策略与异常行为</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E5%85%B6%E4%BB%96%E5%81%B6%E5%8F%91%E5%9B%A0%E7%B4%A0"><span class="toc-article-text">其他偶发因素</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E7%BB%B4%E6%8C%81%E8%BF%9E%E6%8E%A5%EF%BC%9A"><span class="toc-article-text">维持连接：</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#1-%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83%E4%BC%98%E5%8C%96"><span class="toc-article-text">1.网络环境优化</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#2-SSH%E8%BF%9E%E6%8E%A5%E5%8F%82%E6%95%B0%E8%B0%83%E6%95%B4"><span class="toc-article-text">2.SSH连接参数调整</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#%EF%BC%881%EF%BC%89%E4%B8%BA%E4%BB%80%E4%B9%88%E6%82%A8%E9%9C%80%E8%A6%81%E6%89%8B%E5%8A%A8%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6%EF%BC%9F"><span class="toc-article-text">（1）为什么您需要手动创建文件？</span></a></li><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#%EF%BC%882%EF%BC%89%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%A6%82%E4%BD%95%E5%BD%B1%E5%93%8D%E8%BF%9E%E6%8E%A5%EF%BC%9F"><span class="toc-article-text">（2）配置文件如何影响连接？</span></a></li><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#%EF%BC%883%EF%BC%89%E9%85%8D%E7%BD%AE%E7%A4%BA%E4%BE%8B%E8%A7%A3%E6%9E%90"><span class="toc-article-text">（3）配置示例解析</span></a></li><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#%EF%BC%884%EF%BC%89%E5%85%B3%E9%94%AE%E9%AA%8C%E8%AF%81%E6%AD%A5%E9%AA%A4"><span class="toc-article-text">（4）关键验证步骤</span></a></li></ol></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#3-%E6%96%AD%E7%BA%BF%E9%87%8D%E8%BF%9E%E5%B7%A5%E5%85%B7"><span class="toc-article-text">3.断线重连工具</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#4-%E4%BC%9A%E8%AF%9D%E6%8C%81%E4%B9%85%E5%8C%96%E5%B7%A5%E5%85%B7"><span class="toc-article-text">4.会话持久化工具</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#5-%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5%E4%BC%98%E5%8C%96"><span class="toc-article-text">5.安全策略优化</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#6-%E7%9B%91%E6%8E%A7%E4%B8%8E%E5%91%8A%E8%AD%A6"><span class="toc-article-text">6.监控与告警</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#7-%E7%89%B9%E6%AE%8A%E5%9C%BA%E6%99%AF%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-article-text">7.特殊场景解决方案</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#8-%E6%B5%8B%E8%AF%95%E4%B8%8E%E9%AA%8C%E8%AF%81"><span class="toc-article-text">8.测试与验证</span></a></li></ol></li></ol></li></ol>
+				<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AFSSH%E9%9A%A7%E9%81%93-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81SSH%E9%9A%A7%E9%81%93%EF%BC%9F"><span class="toc-article-text">1.什么是SSH隧道+为什么需要SSH隧道？</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#2-SSH%E7%9A%84%E9%9A%A7%E9%81%93%E7%B1%BB%E5%9E%8B"><span class="toc-article-text">2.SSH的隧道类型</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#SSH%E5%8F%8D%E5%90%91%E8%BF%9E%E6%8E%A5%EF%BC%88%E8%BF%9C%E7%A8%8B%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%EF%BC%89"><span class="toc-article-text">SSH反向连接（远程端口转发）</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#SSH%E6%AD%A3%E5%90%91%E8%BF%9E%E6%8E%A5%EF%BC%88%E6%9C%AC%E5%9C%B0%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%EF%BC%89"><span class="toc-article-text">SSH正向连接（本地端口转发）</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#ssh%E5%8A%A8%E6%80%81%E8%BF%9E%E6%8E%A5%EF%BC%88%E5%8A%A8%E6%80%81%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%EF%BC%89"><span class="toc-article-text">ssh动态连接（动态端口转发）</span></a></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#3-SSH%E7%9A%84%E5%AF%86%E9%92%A5"><span class="toc-article-text">3.SSH的密钥</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#4-SSH%E7%9A%84%E7%BB%B4%E6%8C%81%E8%BF%9E%E6%8E%A5"><span class="toc-article-text">4.SSH的维持连接</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E6%96%AD%E5%BC%80%E5%8E%9F%E5%9B%A0%EF%BC%9A"><span class="toc-article-text">断开原因：</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82%E9%9D%A2%E7%9A%84%E4%B8%AD%E6%96%AD%E5%9B%A0%E7%B4%A0"><span class="toc-article-text">网络层面的中断因素</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E8%AE%BE%E5%A4%87%E4%B8%8E%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6"><span class="toc-article-text">设备与资源限制</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E8%BF%9E%E6%8E%A5%E7%8A%B6%E6%80%81%E4%B8%8E%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%98"><span class="toc-article-text">连接状态与配置问题</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5%E4%B8%8E%E5%BC%82%E5%B8%B8%E8%A1%8C%E4%B8%BA"><span class="toc-article-text">安全策略与异常行为</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E5%85%B6%E4%BB%96%E5%81%B6%E5%8F%91%E5%9B%A0%E7%B4%A0"><span class="toc-article-text">其他偶发因素</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E7%BB%B4%E6%8C%81%E8%BF%9E%E6%8E%A5%EF%BC%9A"><span class="toc-article-text">维持连接：</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83%E4%BC%98%E5%8C%96"><span class="toc-article-text">1.网络环境优化</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-SSH%E8%BF%9E%E6%8E%A5%E5%8F%82%E6%95%B0%E8%B0%83%E6%95%B4"><span class="toc-article-text">2.SSH连接参数调整</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%EF%BC%881%EF%BC%89%E4%B8%BA%E4%BB%80%E4%B9%88%E6%82%A8%E9%9C%80%E8%A6%81%E6%89%8B%E5%8A%A8%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6%EF%BC%9F"><span class="toc-article-text">（1）为什么您需要手动创建文件？</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%EF%BC%882%EF%BC%89%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%A6%82%E4%BD%95%E5%BD%B1%E5%93%8D%E8%BF%9E%E6%8E%A5%EF%BC%9F"><span class="toc-article-text">（2）配置文件如何影响连接？</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%EF%BC%883%EF%BC%89%E9%85%8D%E7%BD%AE%E7%A4%BA%E4%BE%8B%E8%A7%A3%E6%9E%90"><span class="toc-article-text">（3）配置示例解析</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%EF%BC%884%EF%BC%89%E5%85%B3%E9%94%AE%E9%AA%8C%E8%AF%81%E6%AD%A5%E9%AA%A4"><span class="toc-article-text">（4）关键验证步骤</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-%E6%96%AD%E7%BA%BF%E9%87%8D%E8%BF%9E%E5%B7%A5%E5%85%B7"><span class="toc-article-text">3.断线重连工具</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#4-%E4%BC%9A%E8%AF%9D%E6%8C%81%E4%B9%85%E5%8C%96%E5%B7%A5%E5%85%B7"><span class="toc-article-text">4.会话持久化工具</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#5-%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5%E4%BC%98%E5%8C%96"><span class="toc-article-text">5.安全策略优化</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#6-%E7%9B%91%E6%8E%A7%E4%B8%8E%E5%91%8A%E8%AD%A6"><span class="toc-article-text">6.监控与告警</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#7-%E7%89%B9%E6%AE%8A%E5%9C%BA%E6%99%AF%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-article-text">7.特殊场景解决方案</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#8-%E6%B5%8B%E8%AF%95%E4%B8%8E%E9%AA%8C%E8%AF%81"><span class="toc-article-text">8.测试与验证</span></a></li></ol></li></ol></li></ol>
 			</div>
 		
 		</div>

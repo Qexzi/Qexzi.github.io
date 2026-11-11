@@ -122,7 +122,7 @@
 		  <blockquote>
 <p>适用于 Python 类 CLI 工具（dirsearch、subfinder、nuclei 等），实现全系统快捷调用、环境隔离、无冲突。</p>
 </blockquote>
-<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">D:\SRC\tools\</span><br><span class="line">├── &lt;工具名&gt;\                    # 外层总目录</span><br><span class="line">│   ├── .venv\                   # 专属虚拟环境</span><br><span class="line">│   ├── &lt;工具名&gt;\                # 内层源码（git clone）</span><br><span class="line">│   └── &lt;工具名&gt;.bat             # 启动脚本</span><br></pre></td></tr></table></figure>
+<h1 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">D:\SRC\tools\</span><br><span class="line">├── &lt;工具名&gt;\                    # 外层总目录</span><br><span class="line">│   ├── .venv\                   # 专属虚拟环境</span><br><span class="line">│   ├── &lt;工具名&gt;\                # 内层源码（git clone）</span><br><span class="line">│   └── &lt;工具名&gt;.bat             # 启动脚本</span><br></pre></td></tr></table></figure>
 
 <p><strong>核心原则</strong>：</p>
 <ul>
@@ -131,11 +131,11 @@
 <li>bat 脚本强制调用 <code>.venv</code> 中的 Python，彻底隔离全局环境</li>
 </ul>
 <hr>
-<h2 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h2><h3 id="1-创建目录结构"><a href="#1-创建目录结构" class="headerlink" title="1. 创建目录结构"></a>1. 创建目录结构</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> D:\SRC\tools</span><br><span class="line">mkdir &lt;工具名&gt;</span><br><span class="line"><span class="built_in">cd</span> &lt;工具名&gt;</span><br><span class="line">git clone https://github.com/&lt;作者&gt;/&lt;工具名&gt;.git</span><br><span class="line">python <span class="literal">-m</span> venv .venv</span><br></pre></td></tr></table></figure>
+<h1 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h1><h2 id="1-创建目录结构"><a href="#1-创建目录结构" class="headerlink" title="1. 创建目录结构"></a>1. 创建目录结构</h2><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> D:\SRC\tools</span><br><span class="line">mkdir &lt;工具名&gt;</span><br><span class="line"><span class="built_in">cd</span> &lt;工具名&gt;</span><br><span class="line">git clone https://github.com/&lt;作者&gt;/&lt;工具名&gt;.git</span><br><span class="line">python <span class="literal">-m</span> venv .venv</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-安装依赖"><a href="#2-安装依赖" class="headerlink" title="2. 安装依赖"></a>2. 安装依赖</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">.venv\Scripts\pip.exe install <span class="literal">-r</span> &lt;工具名&gt;\requirements.txt</span><br></pre></td></tr></table></figure>
+<h2 id="2-安装依赖"><a href="#2-安装依赖" class="headerlink" title="2. 安装依赖"></a>2. 安装依赖</h2><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">.venv\Scripts\pip.exe install <span class="literal">-r</span> &lt;工具名&gt;\requirements.txt</span><br></pre></td></tr></table></figure>
 
-<h3 id="3-编写启动脚本"><a href="#3-编写启动脚本" class="headerlink" title="3. 编写启动脚本"></a>3. 编写启动脚本</h3><p>在外层目录创建 <code>&lt;工具名&gt;.bat</code>：</p>
+<h2 id="3-编写启动脚本"><a href="#3-编写启动脚本" class="headerlink" title="3. 编写启动脚本"></a>3. 编写启动脚本</h2><p>在外层目录创建 <code>&lt;工具名&gt;.bat</code>：</p>
 <figure class="highlight bat"><table><tr><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line">&quot;%~dp0.venv\Scripts\python.exe&quot; &quot;%~dp0&lt;工具名&gt;\&lt;主程序&gt;.py&quot; %*</span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -145,7 +145,7 @@
 <p><strong>示例</strong>（dirsearch）：</p>
 <figure class="highlight bat"><table><tr><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line">&quot;%~dp0.venv\Scripts\python.exe&quot; &quot;%~dp0dirsearch\dirsearch.py&quot; %*</span><br></pre></td></tr></table></figure>
 
-<h3 id="4-配置系统-PATH"><a href="#4-配置系统-PATH" class="headerlink" title="4. 配置系统 PATH"></a>4. 配置系统 PATH</h3><ol>
+<h2 id="4-配置系统-PATH"><a href="#4-配置系统-PATH" class="headerlink" title="4. 配置系统 PATH"></a>4. 配置系统 PATH</h2><ol>
 <li><code>Win + S</code> 搜索 <strong>“环境变量”</strong></li>
 <li>点击 <strong>“编辑系统环境变量”</strong> → <strong>“环境变量…”</strong></li>
 <li>系统变量中找到 <code>Path</code>，双击编辑</li>
@@ -156,20 +156,20 @@
 <p><strong>优先级排序</strong>：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">D:\SRC\tools\dirsearch          ← 自定义工具（最高优先级）</span><br><span class="line">D:\SRC\tools\subfinder</span><br><span class="line">C:\Windows\system32</span><br><span class="line">...其他路径...</span><br><span class="line">C:\Users\&lt;用户名&gt;\...\Python\Python3x\Scripts  ← 全局Python（靠后）</span><br></pre></td></tr></table></figure>
 
-<h3 id="5-验证"><a href="#5-验证" class="headerlink" title="5. 验证"></a>5. 验证</h3><p>重新打开 CMD &#x2F; PowerShell：</p>
+<h2 id="5-验证"><a href="#5-验证" class="headerlink" title="5. 验证"></a>5. 验证</h2><p>重新打开 CMD &#x2F; PowerShell：</p>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">&lt;工具名&gt; <span class="literal">--version</span></span><br><span class="line"><span class="built_in">where</span> &lt;工具名&gt;</span><br></pre></td></tr></table></figure>
 
 <hr>
-<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="找不到命令"><a href="#找不到命令" class="headerlink" title="找不到命令"></a>找不到命令</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">dir</span> D:\SRC\tools\&lt;工具名&gt;\&lt;工具名&gt;.bat</span><br><span class="line"><span class="built_in">echo</span> %PATH% | findstr /i <span class="string">&quot;D:\SRC\tools\&lt;工具名&gt;&quot;</span></span><br></pre></td></tr></table></figure>
+<h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><h2 id="找不到命令"><a href="#找不到命令" class="headerlink" title="找不到命令"></a>找不到命令</h2><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">dir</span> D:\SRC\tools\&lt;工具名&gt;\&lt;工具名&gt;.bat</span><br><span class="line"><span class="built_in">echo</span> %PATH% | findstr /i <span class="string">&quot;D:\SRC\tools\&lt;工具名&gt;&quot;</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="ModuleNotFoundError"><a href="#ModuleNotFoundError" class="headerlink" title="ModuleNotFoundError"></a>ModuleNotFoundError</h3><p>调用了全局 Python 而非虚拟环境，检查 PATH 优先级：</p>
+<h2 id="ModuleNotFoundError"><a href="#ModuleNotFoundError" class="headerlink" title="ModuleNotFoundError"></a>ModuleNotFoundError</h2><p>调用了全局 Python 而非虚拟环境，检查 PATH 优先级：</p>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">where</span> python</span><br></pre></td></tr></table></figure>
 
-<h3 id="bat-报错-“系统找不到指定的路径”"><a href="#bat-报错-“系统找不到指定的路径”" class="headerlink" title="bat 报错 “系统找不到指定的路径”"></a>bat 报错 “系统找不到指定的路径”</h3><p>检查 bat 中路径是否与实际目录名一致（如 <code>venv</code> vs <code>.venv</code>）。</p>
-<h3 id="更新源码后依赖报错"><a href="#更新源码后依赖报错" class="headerlink" title="更新源码后依赖报错"></a>更新源码后依赖报错</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> D:\SRC\tools\&lt;工具名&gt;</span><br><span class="line">git pull</span><br><span class="line">.venv\Scripts\pip.exe install <span class="literal">-r</span> &lt;工具名&gt;\requirements.txt</span><br></pre></td></tr></table></figure>
+<h2 id="bat-报错-“系统找不到指定的路径”"><a href="#bat-报错-“系统找不到指定的路径”" class="headerlink" title="bat 报错 “系统找不到指定的路径”"></a>bat 报错 “系统找不到指定的路径”</h2><p>检查 bat 中路径是否与实际目录名一致（如 <code>venv</code> vs <code>.venv</code>）。</p>
+<h2 id="更新源码后依赖报错"><a href="#更新源码后依赖报错" class="headerlink" title="更新源码后依赖报错"></a>更新源码后依赖报错</h2><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> D:\SRC\tools\&lt;工具名&gt;</span><br><span class="line">git pull</span><br><span class="line">.venv\Scripts\pip.exe install <span class="literal">-r</span> &lt;工具名&gt;\requirements.txt</span><br></pre></td></tr></table></figure>
 
 <hr>
-<h2 id="快速参考"><a href="#快速参考" class="headerlink" title="快速参考"></a>快速参考</h2><table>
+<h1 id="快速参考"><a href="#快速参考" class="headerlink" title="快速参考"></a>快速参考</h1><table>
 <thead>
 <tr>
 <th>操作</th>
@@ -198,7 +198,7 @@
 </tr>
 </tbody></table>
 <hr>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h1><ol>
 <li><strong>不要用全局 pip</strong>：始终用 <code>.venv\Scripts\pip.exe</code></li>
 <li><strong>bat 用 <code>%~dp0</code></strong>：不要硬编码路径</li>
 <li><strong>PATH 优先级</strong>：自定义目录必须在全局 Python 之前</li>
@@ -363,7 +363,7 @@
 		
 			 <div class="toc">
 				 <span class="toc-title"><i class="fa fa-list"></i> Contents</span>
-				<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-article-text">目录结构</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E6%90%AD%E5%BB%BA%E6%AD%A5%E9%AA%A4"><span class="toc-article-text">搭建步骤</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-article-text">1. 创建目录结构</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="toc-article-text">2. 安装依赖</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC"><span class="toc-article-text">3. 编写启动脚本</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#4-%E9%85%8D%E7%BD%AE%E7%B3%BB%E7%BB%9F-PATH"><span class="toc-article-text">4. 配置系统 PATH</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#5-%E9%AA%8C%E8%AF%81"><span class="toc-article-text">5. 验证</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-article-text">常见问题</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E6%89%BE%E4%B8%8D%E5%88%B0%E5%91%BD%E4%BB%A4"><span class="toc-article-text">找不到命令</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#ModuleNotFoundError"><span class="toc-article-text">ModuleNotFoundError</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#bat-%E6%8A%A5%E9%94%99-%E2%80%9C%E7%B3%BB%E7%BB%9F%E6%89%BE%E4%B8%8D%E5%88%B0%E6%8C%87%E5%AE%9A%E7%9A%84%E8%B7%AF%E5%BE%84%E2%80%9D"><span class="toc-article-text">bat 报错 “系统找不到指定的路径”</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E6%9B%B4%E6%96%B0%E6%BA%90%E7%A0%81%E5%90%8E%E4%BE%9D%E8%B5%96%E6%8A%A5%E9%94%99"><span class="toc-article-text">更新源码后依赖报错</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%BF%AB%E9%80%9F%E5%8F%82%E8%80%83"><span class="toc-article-text">快速参考</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-article-text">注意事项</span></a></li></ol>
+				<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-article-text">目录结构</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E6%90%AD%E5%BB%BA%E6%AD%A5%E9%AA%A4"><span class="toc-article-text">搭建步骤</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#1-%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-article-text">1. 创建目录结构</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="toc-article-text">2. 安装依赖</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#3-%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC"><span class="toc-article-text">3. 编写启动脚本</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#4-%E9%85%8D%E7%BD%AE%E7%B3%BB%E7%BB%9F-PATH"><span class="toc-article-text">4. 配置系统 PATH</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#5-%E9%AA%8C%E8%AF%81"><span class="toc-article-text">5. 验证</span></a></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-article-text">常见问题</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E6%89%BE%E4%B8%8D%E5%88%B0%E5%91%BD%E4%BB%A4"><span class="toc-article-text">找不到命令</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#ModuleNotFoundError"><span class="toc-article-text">ModuleNotFoundError</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#bat-%E6%8A%A5%E9%94%99-%E2%80%9C%E7%B3%BB%E7%BB%9F%E6%89%BE%E4%B8%8D%E5%88%B0%E6%8C%87%E5%AE%9A%E7%9A%84%E8%B7%AF%E5%BE%84%E2%80%9D"><span class="toc-article-text">bat 报错 “系统找不到指定的路径”</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E6%9B%B4%E6%96%B0%E6%BA%90%E7%A0%81%E5%90%8E%E4%BE%9D%E8%B5%96%E6%8A%A5%E9%94%99"><span class="toc-article-text">更新源码后依赖报错</span></a></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E5%BF%AB%E9%80%9F%E5%8F%82%E8%80%83"><span class="toc-article-text">快速参考</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-article-text">注意事项</span></a></li></ol>
 			</div>
 		
 		</div>

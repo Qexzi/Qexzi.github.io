@@ -119,7 +119,7 @@
 		  
 		  
 
-		  <h2 id="0x01-部署前环境准备"><a href="#0x01-部署前环境准备" class="headerlink" title="0x01.部署前环境准备"></a>0x01.部署前环境准备</h2><ol>
+		  <h1 id="0x01-部署前环境准备"><a href="#0x01-部署前环境准备" class="headerlink" title="0x01.部署前环境准备"></a>0x01.部署前环境准备</h1><ol>
 <li><p><strong>核心依赖：Docker + Docker Compose（插件版）</strong><br>Kali 2025 默认预装 Docker，但需确认 <strong>Docker Compose 插件版</strong> 可用（避免独立包冲突）：</p>
  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 验证 Docker 是否运行</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl status docker</span><br><span class="line"><span class="comment"># 验证 Docker Compose 插件版（无横杠，官方推荐）</span></span><br><span class="line">docker compose version</span><br></pre></td></tr></table></figure>
 </li>
@@ -131,7 +131,7 @@
 </li>
 </ol>
 <hr>
-<h2 id="0x02-配置-Docker-国内加速器"><a href="#0x02-配置-Docker-国内加速器" class="headerlink" title="0x02.配置 Docker 国内加速器"></a>0x02.配置 Docker 国内加速器</h2><p>Docker 默认拉取国外镜像源，必须配置国内加速器（你遇到过格式错误、源不稳定问题）。</p>
+<h1 id="0x02-配置-Docker-国内加速器"><a href="#0x02-配置-Docker-国内加速器" class="headerlink" title="0x02.配置 Docker 国内加速器"></a>0x02.配置 Docker 国内加速器</h1><p>Docker 默认拉取国外镜像源，必须配置国内加速器（你遇到过格式错误、源不稳定问题）。</p>
 <ol>
 <li><p><strong>编辑 Docker 配置文件</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 打开配置文件（若不存在则自动创建）</span></span><br><span class="line"><span class="built_in">sudo</span> vim /etc/docker/daemon.json</span><br></pre></td></tr></table></figure>
@@ -148,10 +148,10 @@
 </li>
 </ol>
 <hr>
-<h2 id="0x03-拉取-ARL-代码"><a href="#0x03-拉取-ARL-代码" class="headerlink" title="0x03.拉取 ARL 代码"></a>0x03.拉取 ARL 代码</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/ki9mu/ARL-plus-docker.git ./ARL</span><br><span class="line"><span class="built_in">cd</span> ARL</span><br></pre></td></tr></table></figure>
+<h1 id="0x03-拉取-ARL-代码"><a href="#0x03-拉取-ARL-代码" class="headerlink" title="0x03.拉取 ARL 代码"></a>0x03.拉取 ARL 代码</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/ki9mu/ARL-plus-docker.git ./ARL</span><br><span class="line"><span class="built_in">cd</span> ARL</span><br></pre></td></tr></table></figure>
 
 <hr>
-<h2 id="0x04-拉取-ARL-依赖镜像"><a href="#0x04-拉取-ARL-依赖镜像" class="headerlink" title="0x04.拉取 ARL 依赖镜像"></a>0x04.拉取 ARL 依赖镜像</h2><p>ARL 依赖 3 个核心镜像：<code>mongo:4.0.27</code>、<code>ki9mu/shadow-rabbitmq:latest</code>、<code>ki9mu/arl-ki9mu:v3.0.1</code>。</p>
+<h1 id="0x04-拉取-ARL-依赖镜像"><a href="#0x04-拉取-ARL-依赖镜像" class="headerlink" title="0x04.拉取 ARL 依赖镜像"></a>0x04.拉取 ARL 依赖镜像</h1><p>ARL 依赖 3 个核心镜像：<code>mongo:4.0.27</code>、<code>ki9mu/shadow-rabbitmq:latest</code>、<code>ki9mu/arl-ki9mu:v3.0.1</code>。</p>
 <ol>
 <li><strong>优先创建数据卷（持久化数据库数据）</strong></li>
 </ol>
@@ -187,7 +187,7 @@
 </li>
 </ol>
 <hr>
-<h2 id="0x05-ARL-启动-关闭-重启"><a href="#0x05-ARL-启动-关闭-重启" class="headerlink" title="0x05.ARL 启动&#x2F;关闭&#x2F;重启"></a>0x05.ARL 启动&#x2F;关闭&#x2F;重启</h2><p>所有命令需在 <strong>ARL 目录（~&#x2F;Web&#x2F;web-tools&#x2F;ARL）</strong> 执行，确保能读取 <code>docker-compose.yml</code> 文件。</p>
+<h1 id="0x05-ARL-启动-关闭-重启"><a href="#0x05-ARL-启动-关闭-重启" class="headerlink" title="0x05.ARL 启动&#x2F;关闭&#x2F;重启"></a>0x05.ARL 启动&#x2F;关闭&#x2F;重启</h1><p>所有命令需在 <strong>ARL 目录（~&#x2F;Web&#x2F;web-tools&#x2F;ARL）</strong> 执行，确保能读取 <code>docker-compose.yml</code> 文件。</p>
 <ol>
 <li><strong>启动 ARL</strong></li>
 </ol>
@@ -231,7 +231,7 @@
 <ul>
 <li>场景：容器启动失败（<code>STATE</code> 为 <code>Exited</code>）时，通过日志定位报错原因。</li>
 </ul>
-<h2 id="0x06-访问-ARL-系统"><a href="#0x06-访问-ARL-系统" class="headerlink" title="0x06.访问 ARL 系统"></a>0x06.访问 ARL 系统</h2><ol>
+<h1 id="0x06-访问-ARL-系统"><a href="#0x06-访问-ARL-系统" class="headerlink" title="0x06.访问 ARL 系统"></a>0x06.访问 ARL 系统</h1><ol>
 <li><p><strong>正确访问地址</strong><br> 从容器端口映射可知：<code>arl_web</code> 将主机 <code>5003</code> 端口映射到容器 <code>443</code> 端口（HTTPS），因此必须用 <strong><code>https</code> 开头</strong>的地址：</p>
  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://127.0.0.1:5003</span><br></pre></td></tr></table></figure>
 </li>
@@ -270,11 +270,11 @@
 </li>
 </ol>
 <hr>
-<h2 id="0x07-修改限制edu、gov、org等域名扫描"><a href="#0x07-修改限制edu、gov、org等域名扫描" class="headerlink" title="0x07.修改限制edu、gov、org等域名扫描"></a>0x07.修改限制edu、gov、org等域名扫描</h2><p>修改<code> config-docker.yaml</code> 文件</p>
+<h1 id="0x07-修改限制edu、gov、org等域名扫描"><a href="#0x07-修改限制edu、gov、org等域名扫描" class="headerlink" title="0x07.修改限制edu、gov、org等域名扫描"></a>0x07.修改限制edu、gov、org等域名扫描</h1><p>修改<code> config-docker.yaml</code> 文件</p>
 <p><img src="/images/ARL%E9%A3%9F%E7%94%A8%E6%8C%87%E5%8D%97/image_1.png" alt="ARL食用指南·图1"></p>
 <p>随后重启ARL即可</p>
 <hr>
-<h2 id="0x08-ARL-日常使用教程"><a href="#0x08-ARL-日常使用教程" class="headerlink" title="0x08.ARL 日常使用教程"></a>0x08.ARL 日常使用教程</h2><p>ARL 是资产侦察系统，核心用途是 <strong>发现目标资产、识别指纹、扫描漏洞</strong>，以下是新手必备的基础操作：</p>
+<h1 id="0x08-ARL-日常使用教程"><a href="#0x08-ARL-日常使用教程" class="headerlink" title="0x08.ARL 日常使用教程"></a>0x08.ARL 日常使用教程</h1><p>ARL 是资产侦察系统，核心用途是 <strong>发现目标资产、识别指纹、扫描漏洞</strong>，以下是新手必备的基础操作：</p>
 <ol>
 <li><p><strong>核心功能界面介绍</strong><br>登录后首页分为 5 个核心模块：</p>
 <ul>
@@ -362,7 +362,7 @@
 </li>
 </ol>
 <hr>
-<h2 id="0x09-常见问题汇总"><a href="#0x09-常见问题汇总" class="headerlink" title="0x09.常见问题汇总"></a>0x09.常见问题汇总</h2><table>
+<h1 id="0x09-常见问题汇总"><a href="#0x09-常见问题汇总" class="headerlink" title="0x09.常见问题汇总"></a>0x09.常见问题汇总</h1><table>
 <thead>
 <tr>
 <th>问题现象</th>
@@ -406,7 +406,7 @@
 <p>💡 <strong>补充说明</strong>：<br>此问题本质是浏览器对HTTPS证书的Cookie绑定机制导致。当您使用 <code>docker compose down</code> 停止服务后，ARL容器会销毁所有会话数据并重新生成自签名证书。浏览器保留的旧Cookie与新证书不匹配，导致认证失败。上述三种解决方案中，<strong>设置浏览器退出时自动清除Cookie是最彻底的解决方式</strong>，无需每次手动操作。</p>
 </blockquote>
 <hr>
-<h2 id="0x0a-补充"><a href="#0x0a-补充" class="headerlink" title="0x0a.补充"></a>0x0a.补充</h2><ol>
+<h1 id="0x0a-补充"><a href="#0x0a-补充" class="headerlink" title="0x0a.补充"></a>0x0a.补充</h1><ol>
 <li><strong>修改默认密码</strong>：登录后进入「个人中心」→「密码修改」，输入旧密码 <code>arlpass</code> 和新密码；</li>
 <li><strong>备份 ARL 数据</strong>：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 备份数据卷 arl_db 到本地目录（如 ~/arl_backup）</span></span><br><span class="line">docker run --<span class="built_in">rm</span> -v arl_db:/source -v ~/arl_backup:/dest alpine <span class="built_in">cp</span> -r /source/* /dest/</span><br></pre></td></tr></table></figure></li>
 <li><strong>更新 ARL 镜像</strong>：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 拉取最新镜像</span></span><br><span class="line">docker compose pull</span><br><span class="line"><span class="comment"># 重启容器</span></span><br><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure></li>
@@ -570,7 +570,7 @@
 		
 			 <div class="toc">
 				 <span class="toc-title"><i class="fa fa-list"></i> Contents</span>
-				<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#0x01-%E9%83%A8%E7%BD%B2%E5%89%8D%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-article-text">0x01.部署前环境准备</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#0x02-%E9%85%8D%E7%BD%AE-Docker-%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F%E5%99%A8"><span class="toc-article-text">0x02.配置 Docker 国内加速器</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#0x03-%E6%8B%89%E5%8F%96-ARL-%E4%BB%A3%E7%A0%81"><span class="toc-article-text">0x03.拉取 ARL 代码</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#0x04-%E6%8B%89%E5%8F%96-ARL-%E4%BE%9D%E8%B5%96%E9%95%9C%E5%83%8F"><span class="toc-article-text">0x04.拉取 ARL 依赖镜像</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#0x05-ARL-%E5%90%AF%E5%8A%A8-%E5%85%B3%E9%97%AD-%E9%87%8D%E5%90%AF"><span class="toc-article-text">0x05.ARL 启动&#x2F;关闭&#x2F;重启</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#0x06-%E8%AE%BF%E9%97%AE-ARL-%E7%B3%BB%E7%BB%9F"><span class="toc-article-text">0x06.访问 ARL 系统</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#0x07-%E4%BF%AE%E6%94%B9%E9%99%90%E5%88%B6edu%E3%80%81gov%E3%80%81org%E7%AD%89%E5%9F%9F%E5%90%8D%E6%89%AB%E6%8F%8F"><span class="toc-article-text">0x07.修改限制edu、gov、org等域名扫描</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#0x08-ARL-%E6%97%A5%E5%B8%B8%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B"><span class="toc-article-text">0x08.ARL 日常使用教程</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#0x09-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB"><span class="toc-article-text">0x09.常见问题汇总</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#0x0a-%E8%A1%A5%E5%85%85"><span class="toc-article-text">0x0a.补充</span></a></li></ol>
+				<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x01-%E9%83%A8%E7%BD%B2%E5%89%8D%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-article-text">0x01.部署前环境准备</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x02-%E9%85%8D%E7%BD%AE-Docker-%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F%E5%99%A8"><span class="toc-article-text">0x02.配置 Docker 国内加速器</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x03-%E6%8B%89%E5%8F%96-ARL-%E4%BB%A3%E7%A0%81"><span class="toc-article-text">0x03.拉取 ARL 代码</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x04-%E6%8B%89%E5%8F%96-ARL-%E4%BE%9D%E8%B5%96%E9%95%9C%E5%83%8F"><span class="toc-article-text">0x04.拉取 ARL 依赖镜像</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x05-ARL-%E5%90%AF%E5%8A%A8-%E5%85%B3%E9%97%AD-%E9%87%8D%E5%90%AF"><span class="toc-article-text">0x05.ARL 启动&#x2F;关闭&#x2F;重启</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x06-%E8%AE%BF%E9%97%AE-ARL-%E7%B3%BB%E7%BB%9F"><span class="toc-article-text">0x06.访问 ARL 系统</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x07-%E4%BF%AE%E6%94%B9%E9%99%90%E5%88%B6edu%E3%80%81gov%E3%80%81org%E7%AD%89%E5%9F%9F%E5%90%8D%E6%89%AB%E6%8F%8F"><span class="toc-article-text">0x07.修改限制edu、gov、org等域名扫描</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x08-ARL-%E6%97%A5%E5%B8%B8%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B"><span class="toc-article-text">0x08.ARL 日常使用教程</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x09-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB"><span class="toc-article-text">0x09.常见问题汇总</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x0a-%E8%A1%A5%E5%85%85"><span class="toc-article-text">0x0a.补充</span></a></li></ol>
 			</div>
 		
 		</div>

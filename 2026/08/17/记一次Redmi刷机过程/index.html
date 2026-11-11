@@ -122,23 +122,23 @@
 		  
 		  
 
-		  <h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><ol>
+		  <h1 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h1><ol>
 <li><p>在root之前，需要解除BL锁，本文只是记录了root过程</p>
 </li>
 <li><p>主要过程是通过 <code>Magisk</code> 获取 root 权限</p>
 </li>
 </ol>
 <hr>
-<h2 id="1-过程原理"><a href="#1-过程原理" class="headerlink" title="1.过程原理"></a>1.过程原理</h2><p>在<code>fastboot</code>模式下读取手机分区信息，目的是确认当前激活槽位是a且引导分区明确存在，这决定了后续只能针对这个分区操作；</p>
+<h1 id="1-过程原理"><a href="#1-过程原理" class="headerlink" title="1.过程原理"></a>1.过程原理</h1><p>在<code>fastboot</code>模式下读取手机分区信息，目的是确认当前激活槽位是a且引导分区明确存在，这决定了后续只能针对这个分区操作；</p>
 <p>接着通过下载与系统版本完全一致的官方<code>卡刷包</code>，从中解压出<code>payload.bin</code>文件，并借助<code>payload-dumper-go</code>工具单独提取出原厂boot.img，这一步不能直接在手机上读取是因为运行中的系统会锁定该分区，只能从官方固件包里取料；</p>
 <p>将提取的boot.img传入手机后，由<code>Magisk App</code>对其进行修补，它实际上是在内核的ramdisk中注入自身的初始化代码，这种修补必须在目标手机上即时完成，以确保生成的镜像与当前系统环境完全匹配；</p>
 <p>将修补好的镜像拉回电脑，再让手机重启到<code>fastboot</code>模式，执行fastboot flash boot_a命令，其目的就是利用底层硬件接口直接将该镜像写入当前正在使用的a槽位，而明确指定a槽位是为了绕过fastboot工具可能存在的自动映射错误，避免误写入闲置的b槽位导致root无效或下次切换分区时无法开机；</p>
 <p>刷入完成后重启设备，只要magisk应用能识别出版本号，就代表内核已被成功接管，root权限就此获得。</p>
-<h2 id="1-手机型号信息"><a href="#1-手机型号信息" class="headerlink" title="1.手机型号信息"></a>1.手机型号信息</h2><blockquote>
+<h1 id="1-手机型号信息"><a href="#1-手机型号信息" class="headerlink" title="1.手机型号信息"></a>1.手机型号信息</h1><blockquote>
 <p><strong>适用机型</strong>：Redmi Note 10 Pro（开发代号 chopin）<br><strong>系统版本</strong>：MIUI 13.0.13.0 (SKPCNXM)<br><strong>Android 版本</strong>：12<br><strong>处理器</strong>：联发科（MTK）<br><strong>分区方案</strong>：A&#x2F;B 分区（无缝更新），当前激活槽位为 A</p>
 </blockquote>
 <hr>
-<h2 id="2-准备工作"><a href="#2-准备工作" class="headerlink" title="2.准备工作"></a>2.准备工作</h2><h3 id="2-1-所需的硬件工具"><a href="#2-1-所需的硬件工具" class="headerlink" title="2.1 所需的硬件工具"></a>2.1 所需的硬件工具</h3><table>
+<h1 id="2-准备工作"><a href="#2-准备工作" class="headerlink" title="2.准备工作"></a>2.准备工作</h1><h2 id="2-1-所需的硬件工具"><a href="#2-1-所需的硬件工具" class="headerlink" title="2.1 所需的硬件工具"></a>2.1 所需的硬件工具</h2><table>
 <thead>
 <tr>
 <th>项目</th>
@@ -158,7 +158,7 @@
 <td>Bootloader 已解锁（<code>unlocked: yes</code>）</td>
 </tr>
 </tbody></table>
-<h3 id="2-2-所需的软件工具"><a href="#2-2-所需的软件工具" class="headerlink" title="2.2 所需的软件工具"></a>2.2 所需的软件工具</h3><table>
+<h2 id="2-2-所需的软件工具"><a href="#2-2-所需的软件工具" class="headerlink" title="2.2 所需的软件工具"></a>2.2 所需的软件工具</h2><table>
 <thead>
 <tr>
 <th>文件</th>
@@ -184,7 +184,7 @@
 </tbody></table>
 <p>下载好工具后可以设置好环境变量，方便使用工具</p>
 <hr>
-<h2 id="3-设备信息确认"><a href="#3-设备信息确认" class="headerlink" title="3. 设备信息确认"></a>3. 设备信息确认</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">fastboot devices</span><br><span class="line">fastboot getvar all</span><br></pre></td></tr></table></figure>
+<h1 id="3-设备信息确认"><a href="#3-设备信息确认" class="headerlink" title="3. 设备信息确认"></a>3. 设备信息确认</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">fastboot devices</span><br><span class="line">fastboot getvar all</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/%E8%AE%B0%E4%B8%80%E6%AC%A1Redmi%E5%88%B7%E6%9C%BA%E8%BF%87%E7%A8%8B/image_1.png" alt="记一次Redmi刷机过程·图1"></p>
 <p><strong>需要记录的关键信息</strong>：</p>
@@ -223,19 +223,19 @@
 </tr>
 </tbody></table>
 <hr>
-<h2 id="4-安装-Magisk-App"><a href="#4-安装-Magisk-App" class="headerlink" title="4. 安装 Magisk App"></a>4. 安装 Magisk App</h2><p>将从github下载的 <code>Magisk-vXX.X.apk</code> 使用数据线输出到到手机 <code>Download</code> 文件夹。然后在手机安装</p>
+<h1 id="4-安装-Magisk-App"><a href="#4-安装-Magisk-App" class="headerlink" title="4. 安装 Magisk App"></a>4. 安装 Magisk App</h1><p>将从github下载的 <code>Magisk-vXX.X.apk</code> 使用数据线输出到到手机 <code>Download</code> 文件夹。然后在手机安装</p>
 <ol>
 <li>打开手机「文件管理」App → 进入 <code>Download</code> 文件夹</li>
 <li>点击 APK 文件，然后就可以安装了</li>
 </ol>
 <hr>
-<h2 id="5-第三阶段：提取-boot-img"><a href="#5-第三阶段：提取-boot-img" class="headerlink" title="5. 第三阶段：提取 boot.img"></a>5. 第三阶段：提取 boot.img</h2><p>解压卡刷包找到其中的 <strong><code>payload.bin</code></strong> 文件（约 3~4 GB）。</p>
+<h1 id="5-第三阶段：提取-boot-img"><a href="#5-第三阶段：提取-boot-img" class="headerlink" title="5. 第三阶段：提取 boot.img"></a>5. 第三阶段：提取 boot.img</h1><p>解压卡刷包找到其中的 <strong><code>payload.bin</code></strong> 文件（约 3~4 GB）。</p>
 <p>解压 <code>payload-dumper-go_xxx_windows_amd64.tar.gz</code>，得到 <code>payload-dumper-go.exe</code></p>
 <p>执行命令提取boot.img</p>
 <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">payload-dumper-go.exe -partitions boot payload.bin</span><br></pre></td></tr></table></figure>
 <p><img loading="lazy" decoding="async" src="/images/%E8%AE%B0%E4%B8%80%E6%AC%A1Redmi%E5%88%B7%E6%9C%BA%E8%BF%87%E7%A8%8B/image_2.png" alt="记一次Redmi刷机过程·图2"></p>
 <hr>
-<h2 id="6-第四阶段：修补-boot-img"><a href="#6-第四阶段：修补-boot-img" class="headerlink" title="6. 第四阶段：修补 boot.img"></a>6. 第四阶段：修补 boot.img</h2><p>将提取出的 <code>boot.img</code>（约 134 MB）复制到手机 <code>Download</code> 文件夹。然后在 Magisk 中修补</p>
+<h1 id="6-第四阶段：修补-boot-img"><a href="#6-第四阶段：修补-boot-img" class="headerlink" title="6. 第四阶段：修补 boot.img"></a>6. 第四阶段：修补 boot.img</h1><p>将提取出的 <code>boot.img</code>（约 134 MB）复制到手机 <code>Download</code> 文件夹。然后在 Magisk 中修补</p>
 <p><img loading="lazy" decoding="async" src="/images/%E8%AE%B0%E4%B8%80%E6%AC%A1Redmi%E5%88%B7%E6%9C%BA%E8%BF%87%E7%A8%8B/image_3.png" alt="记一次Redmi刷机过程·图3"></p>
 <ol>
 <li>打开手机 <strong>Magisk App</strong></li>
@@ -250,7 +250,7 @@
 
 
 <hr>
-<h2 id="7-刷入修补镜像"><a href="#7-刷入修补镜像" class="headerlink" title="7. 刷入修补镜像"></a>7. 刷入修补镜像</h2><p>将 <code>magisk_patched-XXXXX.img</code> 从手机复制到电脑（与 <code>boot.img</code> 同目录即可）。</p>
+<h1 id="7-刷入修补镜像"><a href="#7-刷入修补镜像" class="headerlink" title="7. 刷入修补镜像"></a>7. 刷入修补镜像</h1><p>将 <code>magisk_patched-XXXXX.img</code> 从手机复制到电脑（与 <code>boot.img</code> 同目录即可）。</p>
 <p>然后进入fastboot模式，执行刷入命令</p>
 <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">fastboot flash boot_a magisk_patched-<span class="number">30700</span>_wZfnM.img</span><br></pre></td></tr></table></figure>
 
@@ -261,7 +261,7 @@
 
 
 <hr>
-<h2 id="8-验证"><a href="#8-验证" class="headerlink" title="8. 验证"></a>8. 验证</h2><p><img loading="lazy" decoding="async" src="/images/%E8%AE%B0%E4%B8%80%E6%AC%A1Redmi%E5%88%B7%E6%9C%BA%E8%BF%87%E7%A8%8B/image_5.png" alt="记一次Redmi刷机过程·图5"></p>
+<h1 id="8-验证"><a href="#8-验证" class="headerlink" title="8. 验证"></a>8. 验证</h1><p><img loading="lazy" decoding="async" src="/images/%E8%AE%B0%E4%B8%80%E6%AC%A1Redmi%E5%88%B7%E6%9C%BA%E8%BF%87%E7%A8%8B/image_5.png" alt="记一次Redmi刷机过程·图5"></p>
 <p>magisk成功安装到boot区，且超级用户功能可以是使用，即已经完成root操作</p>
 
 		  <div class="article-footer-copyright">
@@ -433,7 +433,7 @@
 		
 			 <div class="toc">
 				 <span class="toc-title"><i class="fa fa-list"></i> Contents</span>
-				<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%BC%95%E5%85%A5"><span class="toc-article-text">引入</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#1-%E8%BF%87%E7%A8%8B%E5%8E%9F%E7%90%86"><span class="toc-article-text">1.过程原理</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#1-%E6%89%8B%E6%9C%BA%E5%9E%8B%E5%8F%B7%E4%BF%A1%E6%81%AF"><span class="toc-article-text">1.手机型号信息</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-article-text">2.准备工作</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-1-%E6%89%80%E9%9C%80%E7%9A%84%E7%A1%AC%E4%BB%B6%E5%B7%A5%E5%85%B7"><span class="toc-article-text">2.1 所需的硬件工具</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-2-%E6%89%80%E9%9C%80%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7"><span class="toc-article-text">2.2 所需的软件工具</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#3-%E8%AE%BE%E5%A4%87%E4%BF%A1%E6%81%AF%E7%A1%AE%E8%AE%A4"><span class="toc-article-text">3. 设备信息确认</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#4-%E5%AE%89%E8%A3%85-Magisk-App"><span class="toc-article-text">4. 安装 Magisk App</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#5-%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%EF%BC%9A%E6%8F%90%E5%8F%96-boot-img"><span class="toc-article-text">5. 第三阶段：提取 boot.img</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#6-%E7%AC%AC%E5%9B%9B%E9%98%B6%E6%AE%B5%EF%BC%9A%E4%BF%AE%E8%A1%A5-boot-img"><span class="toc-article-text">6. 第四阶段：修补 boot.img</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#7-%E5%88%B7%E5%85%A5%E4%BF%AE%E8%A1%A5%E9%95%9C%E5%83%8F"><span class="toc-article-text">7. 刷入修补镜像</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#8-%E9%AA%8C%E8%AF%81"><span class="toc-article-text">8. 验证</span></a></li></ol>
+				<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E5%BC%95%E5%85%A5"><span class="toc-article-text">引入</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#1-%E8%BF%87%E7%A8%8B%E5%8E%9F%E7%90%86"><span class="toc-article-text">1.过程原理</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#1-%E6%89%8B%E6%9C%BA%E5%9E%8B%E5%8F%B7%E4%BF%A1%E6%81%AF"><span class="toc-article-text">1.手机型号信息</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#2-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-article-text">2.准备工作</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-1-%E6%89%80%E9%9C%80%E7%9A%84%E7%A1%AC%E4%BB%B6%E5%B7%A5%E5%85%B7"><span class="toc-article-text">2.1 所需的硬件工具</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-2-%E6%89%80%E9%9C%80%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7"><span class="toc-article-text">2.2 所需的软件工具</span></a></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#3-%E8%AE%BE%E5%A4%87%E4%BF%A1%E6%81%AF%E7%A1%AE%E8%AE%A4"><span class="toc-article-text">3. 设备信息确认</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#4-%E5%AE%89%E8%A3%85-Magisk-App"><span class="toc-article-text">4. 安装 Magisk App</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#5-%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%EF%BC%9A%E6%8F%90%E5%8F%96-boot-img"><span class="toc-article-text">5. 第三阶段：提取 boot.img</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#6-%E7%AC%AC%E5%9B%9B%E9%98%B6%E6%AE%B5%EF%BC%9A%E4%BF%AE%E8%A1%A5-boot-img"><span class="toc-article-text">6. 第四阶段：修补 boot.img</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#7-%E5%88%B7%E5%85%A5%E4%BF%AE%E8%A1%A5%E9%95%9C%E5%83%8F"><span class="toc-article-text">7. 刷入修补镜像</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#8-%E9%AA%8C%E8%AF%81"><span class="toc-article-text">8. 验证</span></a></li></ol>
 			</div>
 		
 		</div>

@@ -143,10 +143,10 @@
 		  
 		  
 
-		  <h2 id="0x00-基础知识"><a href="#0x00-基础知识" class="headerlink" title="0x00.基础知识"></a>0x00.基础知识</h2><p><strong>1. XIMIL是一种标记语言</strong><br>XML指可扩展标记语言(EXtensible Markup Language)把<strong>数据结构化</strong>后<strong>传输</strong>给对方让对方在结构化的数据中进行读取。</p>
-<p>假设你要告诉同事“张三的座机是010-8888，手机是1380000，邮箱是<a href="mailto:&#x7a;&#104;&#x61;&#110;&#x67;&#x40;&#x78;&#120;&#46;&#x63;&#111;&#109;">zhang@xx.com</a>”。</p>
+		  <h1 id="0x00-基础知识"><a href="#0x00-基础知识" class="headerlink" title="0x00.基础知识"></a>0x00.基础知识</h1><p><strong>1. XIMIL是一种标记语言</strong><br>XML指可扩展标记语言(EXtensible Markup Language)把<strong>数据结构化</strong>后<strong>传输</strong>给对方让对方在结构化的数据中进行读取。</p>
+<p>假设你要告诉同事“张三的座机是010-8888，手机是1380000，邮箱是<a href="mailto:&#x7a;&#x68;&#x61;&#x6e;&#x67;&#64;&#120;&#120;&#x2e;&#99;&#111;&#x6d;">zhang@xx.com</a>”。</p>
 <ul>
-<li><p><strong>非结构化（纯文本）</strong>：你发微信：“张三电话010-8888，手机1380000，邮箱<a href="mailto:&#122;&#104;&#x61;&#x6e;&#x67;&#64;&#x78;&#x78;&#46;&#99;&#111;&#x6d;">zhang@xx.com</a>”。<br>如果同事的电脑要提取“手机号”，得写复杂的模糊匹配（万一张三写了“Tel”或者“Mobile”呢？）。</p>
+<li><p><strong>非结构化（纯文本）</strong>：你发微信：“张三电话010-8888，手机1380000，邮箱<a href="mailto:&#122;&#104;&#x61;&#x6e;&#103;&#64;&#x78;&#x78;&#46;&#99;&#x6f;&#x6d;">zhang@xx.com</a>”。<br>如果同事的电脑要提取“手机号”，得写复杂的模糊匹配（万一张三写了“Tel”或者“Mobile”呢？）。</p>
 </li>
 <li><p><strong>结构化（XML）</strong>：</p>
   <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">员工</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">姓名</span>&gt;</span>张三<span class="tag">&lt;/<span class="name">姓名</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">座机</span>&gt;</span>010-8888<span class="tag">&lt;/<span class="name">座机</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">手机</span>&gt;</span>1380000<span class="tag">&lt;/<span class="name">手机</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">邮箱</span>&gt;</span>zhang@xx.com<span class="tag">&lt;/<span class="name">邮箱</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">员工</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
@@ -178,7 +178,7 @@
 </blockquote>
 <p>感谢重庆橙科技的XXE靶场：<a target="_blank" rel="noopener" href="https://github.com/mcc0624/XXE.git">https://github.com/mcc0624/XXE.git</a><br><img src="/images/XXE%E5%9F%BA%E7%A1%80/image_1.png" alt="XXE基础·图1"></p>
 <hr>
-<h2 id="0x01-XXE漏洞演示"><a href="#0x01-XXE漏洞演示" class="headerlink" title="0x01 XXE漏洞演示"></a>0x01 XXE漏洞演示</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);                  <span class="comment">// 关闭所有错误输出，屏蔽报错信息</span></span><br><span class="line">	<span class="title function_ invoke__">libxml_disable_entity_loader</span>(<span class="literal">false</span>); <span class="comment">// 开启XML外部实体加载，支持解析外部实体</span></span><br><span class="line">	<span class="variable">$xml</span> = <span class="title function_ invoke__">file_get_contents</span>(<span class="string">&#x27;php://input&#x27;</span>); <span class="comment">// 获取POST原始请求体XML数据</span></span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$xml</span>))&#123;                     <span class="comment">// 判断是否成功读取到XML内容</span></span><br><span class="line">	    <span class="variable">$dom</span> = <span class="keyword">new</span> <span class="title class_">DOMDocument</span>();         <span class="comment">// 实例DOMDocument用于解析XML</span></span><br><span class="line">	    <span class="variable">$dom</span>-&gt;<span class="title function_ invoke__">loadXML</span>(<span class="variable">$xml</span>, LIBXML_NOENT | LIBXML_DTDLOAD); <span class="comment">// 加载XML，开启实体解析、加载DTD</span></span><br><span class="line">	    <span class="variable">$creds</span> = <span class="title function_ invoke__">simplexml_import_dom</span>(<span class="variable">$dom</span>); <span class="comment">// dom对象转simpleXml，简化节点读取</span></span><br><span class="line">	    <span class="variable">$benben</span> = <span class="variable">$creds</span>-&gt;admin;           <span class="comment">// 读取xml下admin节点内容</span></span><br><span class="line">	    <span class="keyword">echo</span> <span class="variable">$benben</span>;                      <span class="comment">// 输出admin节点文本</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);            <span class="comment">// 高亮打印当前脚本源代码</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="0x01-XXE漏洞演示"><a href="#0x01-XXE漏洞演示" class="headerlink" title="0x01 XXE漏洞演示"></a>0x01 XXE漏洞演示</h1><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);                  <span class="comment">// 关闭所有错误输出，屏蔽报错信息</span></span><br><span class="line">	<span class="title function_ invoke__">libxml_disable_entity_loader</span>(<span class="literal">false</span>); <span class="comment">// 开启XML外部实体加载，支持解析外部实体</span></span><br><span class="line">	<span class="variable">$xml</span> = <span class="title function_ invoke__">file_get_contents</span>(<span class="string">&#x27;php://input&#x27;</span>); <span class="comment">// 获取POST原始请求体XML数据</span></span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$xml</span>))&#123;                     <span class="comment">// 判断是否成功读取到XML内容</span></span><br><span class="line">	    <span class="variable">$dom</span> = <span class="keyword">new</span> <span class="title class_">DOMDocument</span>();         <span class="comment">// 实例DOMDocument用于解析XML</span></span><br><span class="line">	    <span class="variable">$dom</span>-&gt;<span class="title function_ invoke__">loadXML</span>(<span class="variable">$xml</span>, LIBXML_NOENT | LIBXML_DTDLOAD); <span class="comment">// 加载XML，开启实体解析、加载DTD</span></span><br><span class="line">	    <span class="variable">$creds</span> = <span class="title function_ invoke__">simplexml_import_dom</span>(<span class="variable">$dom</span>); <span class="comment">// dom对象转simpleXml，简化节点读取</span></span><br><span class="line">	    <span class="variable">$benben</span> = <span class="variable">$creds</span>-&gt;admin;           <span class="comment">// 读取xml下admin节点内容</span></span><br><span class="line">	    <span class="keyword">echo</span> <span class="variable">$benben</span>;                      <span class="comment">// 输出admin节点文本</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);            <span class="comment">// 高亮打印当前脚本源代码</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>对于payload：<code>&lt;root&gt;&lt;admin&gt;hacker&lt;/admin&gt;&lt;/root&gt;</code><br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_2.png" alt="XXE基础·图2"></p>
 <p>对于payload：<code>&lt;admin&gt;hacker&lt;/admin&gt;</code><br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_3.png" alt="XXE基础·图3"></p>
@@ -351,7 +351,7 @@
 <li>❌：不支持（该语言环境下无法直接使用此协议）</li>
 </ul>
 <hr>
-<h2 id="0x02-XXE使用外部实体检索文件"><a href="#0x02-XXE使用外部实体检索文件" class="headerlink" title="0x02.XXE使用外部实体检索文件"></a>0x02.XXE使用外部实体检索文件</h2><p>对于一个登录框，怎么判断其存在xxe呢？<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_5.png" alt="XXE基础·图5"></p>
+<h1 id="0x02-XXE使用外部实体检索文件"><a href="#0x02-XXE使用外部实体检索文件" class="headerlink" title="0x02.XXE使用外部实体检索文件"></a>0x02.XXE使用外部实体检索文件</h1><p>对于一个登录框，怎么判断其存在xxe呢？<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_5.png" alt="XXE基础·图5"></p>
 <p>admin登录<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_6.png" alt="XXE基础·图6"></p>
 <p>hacker登录<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_7.png" alt="XXE基础·图7"></p>
 <p>通过两次登录可知，<code>username</code>会回显到登录页面，那是不是存在一个可能，外带的数据也在这个位置显示出来（与sql注入回显数据有点像），<strong>即我们可以确定存在回显位置</strong></p>
@@ -362,7 +362,7 @@
 
 <p><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_10.png" alt="XXE基础·图10"></p>
 <hr>
-<h2 id="0x03-利用XXE参数实体读取文件"><a href="#0x03-利用XXE参数实体读取文件" class="headerlink" title="0x03.利用XXE参数实体读取文件"></a>0x03.利用XXE参数实体读取文件</h2><p>与上同理，但是存在输入检查<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_11.png" alt="XXE基础·图11"></p>
+<h1 id="0x03-利用XXE参数实体读取文件"><a href="#0x03-利用XXE参数实体读取文件" class="headerlink" title="0x03.利用XXE参数实体读取文件"></a>0x03.利用XXE参数实体读取文件</h1><p>与上同理，但是存在输入检查<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_11.png" alt="XXE基础·图11"></p>
 <p><strong>使用攻击服务器绕过</strong>：</p>
 <p><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_12.png" alt="XXE基础·图12"></p>
 <p>创建<strong>hacker.dtd</strong>文件<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_13.png" alt="XXE基础·图13"></p>
@@ -374,14 +374,14 @@
 <p><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_15.png" alt="XXE基础·图15"></p>
 <p>成功读取，搞定收工</p>
 <hr>
-<h2 id="0x04-利用XXE进行SSRF漏洞利用"><a href="#0x04-利用XXE进行SSRF漏洞利用" class="headerlink" title="0x04.利用XXE进行SSRF漏洞利用"></a>0x04.利用XXE进行SSRF漏洞利用</h2><p>靶场问题，忽略<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_16.png" alt="XXE基础·图16"></p>
+<h1 id="0x04-利用XXE进行SSRF漏洞利用"><a href="#0x04-利用XXE进行SSRF漏洞利用" class="headerlink" title="0x04.利用XXE进行SSRF漏洞利用"></a>0x04.利用XXE进行SSRF漏洞利用</h1><p>靶场问题，忽略<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_16.png" alt="XXE基础·图16"></p>
 <p>payload：</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">xxe</span> [<span class="meta">&lt;!ENTITY <span class="keyword">xxe</span> <span class="keyword">SYSTEM</span> <span class="string">&quot;http://10.1.2.3/?cmd=cat%20./flag&quot;</span>&gt;</span>]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">user</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">username</span>&gt;</span><span class="symbol">&amp;xxe;</span><span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">password</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">user</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>直接回显flag，没什么深奥的<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_17.png" alt="XXE基础·图17"></p>
 <p>搞掂，收工</p>
 <hr>
-<h2 id="0x05-使用XXE利用php伪协议读取文件"><a href="#0x05-使用XXE利用php伪协议读取文件" class="headerlink" title="0x05.使用XXE利用php伪协议读取文件"></a>0x05.使用XXE利用php伪协议读取文件</h2><p>相比较file伪协议，PHP伪协议可以对读取出的文件进行数据编码。在XXE漏洞的基础上，使用PHP伪协议对文件进行读取并编码。</p>
+<h1 id="0x05-使用XXE利用php伪协议读取文件"><a href="#0x05-使用XXE利用php伪协议读取文件" class="headerlink" title="0x05.使用XXE利用php伪协议读取文件"></a>0x05.使用XXE利用php伪协议读取文件</h1><p>相比较file伪协议，PHP伪协议可以对读取出的文件进行数据编码。在XXE漏洞的基础上，使用PHP伪协议对文件进行读取并编码。</p>
 <p>由上题可以存在ssrf漏洞，现在我们的目标是使用php伪协议读取内网（10.1.2.3）的网站源代码</p>
 <p>疑问解答：不是由cmd命令执行吗？为什么不可以直接cat网站原码？（如下图）</p>
 <p>存在index.php<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_18.png" alt="XXE基础·图18"></p>
@@ -392,7 +392,7 @@
 <p><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_20.png" alt="XXE基础·图20"></p>
 <p>搞掂，收工</p>
 <hr>
-<h2 id="0x06-XXE命令执行"><a href="#0x06-XXE命令执行" class="headerlink" title="0x06.XXE命令执行"></a>0x06.XXE命令执行</h2><ul>
+<h1 id="0x06-XXE命令执行"><a href="#0x06-XXE命令执行" class="headerlink" title="0x06.XXE命令执行"></a>0x06.XXE命令执行</h1><ul>
 <li><strong>expect:&#x2F;&#x2F;</strong><br>由expect:&#x2F;&#x2F;封装协议打开的数据流PTY通过提供了对进程stdio、stdout和stderr的访问。<br>expert:&#x2F;&#x2F;封装协议默认未开启，为了使用，必须靶机中安装有效的Expect扩展。</li>
 </ul>
 <p><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_21.png" alt="XXE基础·图21"></p>
@@ -403,7 +403,7 @@
 <p>删除 <code>&lt;?xml version=&quot;1.0&quot;?&gt;</code> 就可以了，可能是靶场环境问题，忽略<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_23.png" alt="XXE基础·图23"></p>
 <p>靶场没有被指expect:&#x2F;&#x2F;环境，所以无法演示其他命令，只是做了“假执行”，收工</p>
 <hr>
-<h2 id="0x07-无回显XXE带外数据"><a href="#0x07-无回显XXE带外数据" class="headerlink" title="0x07.无回显XXE带外数据"></a>0x07.无回显XXE带外数据</h2><ol>
+<h1 id="0x07-无回显XXE带外数据"><a href="#0x07-无回显XXE带外数据" class="headerlink" title="0x07.无回显XXE带外数据"></a>0x07.无回显XXE带外数据</h1><ol>
 <li>dnslog 验证xxe漏洞是否存在</li>
 <li>外带数据</li>
 </ol>
@@ -429,7 +429,7 @@
 <p>burp发送payload后<br><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_28.png" alt="XXE基础·图28"></p>
 <p>成功外带数据，收工</p>
 <hr>
-<h2 id="0x08-Xinclude"><a href="#0x08-Xinclude" class="headerlink" title="0x08.Xinclude"></a>0x08.Xinclude</h2><p>XML 的 XInclude 机制与 PHP 的 include、Python&#x2F;Java 的 import 类似，本质上都是一种 文件包含 机制。其核心作用在于：将通用组件（如函数定义、配置片段）抽取为独立文件，在需要时动态引入。</p>
+<h1 id="0x08-Xinclude"><a href="#0x08-Xinclude" class="headerlink" title="0x08.Xinclude"></a>0x08.Xinclude</h1><p>XML 的 XInclude 机制与 PHP 的 include、Python&#x2F;Java 的 import 类似，本质上都是一种 文件包含 机制。其核心作用在于：将通用组件（如函数定义、配置片段）抽取为独立文件，在需要时动态引入。</p>
 <ul>
 <li>避免冗余：无需在每个文件中重复编写相同代码；</li>
 <li>提升可维护性：修改公共逻辑时只需更新一处；</li>
@@ -455,7 +455,7 @@
 <p><img loading="lazy" decoding="async" src="/images/XXE%E5%9F%BA%E7%A1%80/image_29.png"></p>
 <p>搞定收工</p>
 <hr>
-<h2 id="0x09-使用SVG进行XXE漏洞利用"><a href="#0x09-使用SVG进行XXE漏洞利用" class="headerlink" title="0x09.使用SVG进行XXE漏洞利用"></a>0x09.使用SVG进行XXE漏洞利用</h2><p>SVG文件：可缩放矢量图形(Scalable Vector Graphics,SVG)基于XML 标记语言，用于描述二维的矢量图形。</p>
+<h1 id="0x09-使用SVG进行XXE漏洞利用"><a href="#0x09-使用SVG进行XXE漏洞利用" class="headerlink" title="0x09.使用SVG进行XXE漏洞利用"></a>0x09.使用SVG进行XXE漏洞利用</h1><p>SVG文件：可缩放矢量图形(Scalable Vector Graphics,SVG)基于XML 标记语言，用于描述二维的矢量图形。</p>
 <p>作为一个基于文本的开放网络标准，SVG能够优雅而简洁地渲染不同大小的图形，并和CSS、DOM、JavaScript和 SMIL等其他网络标准无缝衔接。本质上，SVG相对于图像，就好比HTML相对于文本。</p>
 <p>SVG图像及其相关行为被定义于XML文本文件之中，这意味着可以对它们进行搜索、索引、编写脚本以及压缩。此外，这也意味着可以使用任何文本编辑器和绘图软件来创建和编辑它们。</p>
 <p>将一个svg格式的图片以文本形式打开，实际上就是一堆xml代码，利用其特定注入payload</p>
@@ -633,7 +633,7 @@
 		
 			 <div class="toc">
 				 <span class="toc-title"><i class="fa fa-list"></i> Contents</span>
-				<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#0x00-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-article-text">0x00.基础知识</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#0x01-XXE%E6%BC%8F%E6%B4%9E%E6%BC%94%E7%A4%BA"><span class="toc-article-text">0x01 XXE漏洞演示</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#0x02-XXE%E4%BD%BF%E7%94%A8%E5%A4%96%E9%83%A8%E5%AE%9E%E4%BD%93%E6%A3%80%E7%B4%A2%E6%96%87%E4%BB%B6"><span class="toc-article-text">0x02.XXE使用外部实体检索文件</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#0x03-%E5%88%A9%E7%94%A8XXE%E5%8F%82%E6%95%B0%E5%AE%9E%E4%BD%93%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="toc-article-text">0x03.利用XXE参数实体读取文件</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#0x04-%E5%88%A9%E7%94%A8XXE%E8%BF%9B%E8%A1%8CSSRF%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-article-text">0x04.利用XXE进行SSRF漏洞利用</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#0x05-%E4%BD%BF%E7%94%A8XXE%E5%88%A9%E7%94%A8php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="toc-article-text">0x05.使用XXE利用php伪协议读取文件</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#0x06-XXE%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-article-text">0x06.XXE命令执行</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#0x07-%E6%97%A0%E5%9B%9E%E6%98%BEXXE%E5%B8%A6%E5%A4%96%E6%95%B0%E6%8D%AE"><span class="toc-article-text">0x07.无回显XXE带外数据</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#0x08-Xinclude"><span class="toc-article-text">0x08.Xinclude</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#0x09-%E4%BD%BF%E7%94%A8SVG%E8%BF%9B%E8%A1%8CXXE%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-article-text">0x09.使用SVG进行XXE漏洞利用</span></a></li></ol>
+				<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x00-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-article-text">0x00.基础知识</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x01-XXE%E6%BC%8F%E6%B4%9E%E6%BC%94%E7%A4%BA"><span class="toc-article-text">0x01 XXE漏洞演示</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x02-XXE%E4%BD%BF%E7%94%A8%E5%A4%96%E9%83%A8%E5%AE%9E%E4%BD%93%E6%A3%80%E7%B4%A2%E6%96%87%E4%BB%B6"><span class="toc-article-text">0x02.XXE使用外部实体检索文件</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x03-%E5%88%A9%E7%94%A8XXE%E5%8F%82%E6%95%B0%E5%AE%9E%E4%BD%93%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="toc-article-text">0x03.利用XXE参数实体读取文件</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x04-%E5%88%A9%E7%94%A8XXE%E8%BF%9B%E8%A1%8CSSRF%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-article-text">0x04.利用XXE进行SSRF漏洞利用</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x05-%E4%BD%BF%E7%94%A8XXE%E5%88%A9%E7%94%A8php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="toc-article-text">0x05.使用XXE利用php伪协议读取文件</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x06-XXE%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-article-text">0x06.XXE命令执行</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x07-%E6%97%A0%E5%9B%9E%E6%98%BEXXE%E5%B8%A6%E5%A4%96%E6%95%B0%E6%8D%AE"><span class="toc-article-text">0x07.无回显XXE带外数据</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x08-Xinclude"><span class="toc-article-text">0x08.Xinclude</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x09-%E4%BD%BF%E7%94%A8SVG%E8%BF%9B%E8%A1%8CXXE%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-article-text">0x09.使用SVG进行XXE漏洞利用</span></a></li></ol>
 			</div>
 		
 		</div>

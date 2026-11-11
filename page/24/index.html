@@ -165,7 +165,7 @@
   <div class="row">
 	
 	
-		<h2 id="网络配置与信息"><a href="#网络配置与信息" class="headerlink" title="网络配置与信息"></a>网络配置与信息</h2><h3 id="基本网络信息"><a href="#基本网络信息" class="headerlink" title="基本网络信息"></a>基本网络信息</h3><ul>
+		<h1 id="网络配置与信息"><a href="#网络配置与信息" class="headerlink" title="网络配置与信息"></a>网络配置与信息</h1><h2 id="基本网络信息"><a href="#基本网络信息" class="headerlink" title="基本网络信息"></a>基本网络信息</h2><ul>
 <li><code>ifconfig /all</code> - 获取域名、IP地址、DHCP服务器、网关、MAC地址、主机名</li>
 <li><code>net config workstation</code> - 查看域名、机器名等</li>
 <li><code>route print</code> - 显示IP路由，主要显示网络地址、子网掩码、网关地址和接口地址</li>
@@ -173,7 +173,7 @@
 <li><code>arp -a</code> - 查看ARP缓存信息</li>
 <li><code>nslookup</code> - IP地址侦测器</li>
 </ul>
-<h3 id="网络连接状态"><a href="#网络连接状态" class="headerlink" title="网络连接状态"></a>网络连接状态</h3><ul>
+<h2 id="网络连接状态"><a href="#网络连接状态" class="headerlink" title="网络连接状态"></a>网络连接状态</h2><ul>
 <li><code>netstat -a</code> - 查看开启了哪些端口（常用<code>netstat -an</code>）</li>
 <li><code>netstat -n</code> - 查看端口的网络连接情况（常用<code>netstat -an</code>）</li>
 <li><code>netstat -o</code> - 查看所有网络连接的进程ID（PID）</li>
@@ -182,13 +182,13 @@
 <li><code>netstat -p 协议名</code> - 查看某协议使用情况，如：<code>netstat -p tcp</code></li>
 <li><code>netstat -s</code> - 查看所有协议使用情况</li>
 </ul>
-<h3 id="域网络信息"><a href="#域网络信息" class="headerlink" title="域网络信息"></a>域网络信息</h3><ul>
+<h2 id="域网络信息"><a href="#域网络信息" class="headerlink" title="域网络信息"></a>域网络信息</h2><ul>
 <li><code>net time /domain</code> - 查看域名、时间</li>
 <li><code>net view /domain</code> - 查看域内所有共享</li>
 <li><code>net view ip</code> - 查看对方局域网内开启了哪些共享</li>
 <li><code>nbtstat -A ip</code> - 查看对方最近登录的用户名（需136-139端口开放，参数-A要大写）</li>
 </ul>
-<h2 id="用户与组管理"><a href="#用户与组管理" class="headerlink" title="用户与组管理"></a>用户与组管理</h2><h3 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h3><ul>
+<h1 id="用户与组管理"><a href="#用户与组管理" class="headerlink" title="用户与组管理"></a>用户与组管理</h1><h2 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h2><ul>
 <li><code>net user 用户名 密码 /add</code> - 创建新用户</li>
 <li><code>net user 用户名 /del</code> - 删除用户</li>
 <li><code>net user guest /active:yes</code> - 激活guest账户</li>
@@ -226,13 +226,13 @@
   <div class="row">
 	
 	
-		<h2 id="一、环境前置准备"><a href="#一、环境前置准备" class="headerlink" title="一、环境前置准备"></a>一、环境前置准备</h2><h3 id="1-验证现有Ubuntu镜像"><a href="#1-验证现有Ubuntu镜像" class="headerlink" title="1. 验证现有Ubuntu镜像"></a>1. 验证现有Ubuntu镜像</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+		<h1 id="一、环境前置准备"><a href="#一、环境前置准备" class="headerlink" title="一、环境前置准备"></a>一、环境前置准备</h1><h2 id="1-验证现有Ubuntu镜像"><a href="#1-验证现有Ubuntu镜像" class="headerlink" title="1. 验证现有Ubuntu镜像"></a>1. 验证现有Ubuntu镜像</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
 <ul>
 <li>预期结果：需包含 <code>ubuntu:16.04</code>、<code>ubuntu:18.04</code>、<code>ubuntu:20.04</code> 三个镜像</li>
 </ul>
-<h3 id="2-拉取缺失镜像（若验证不通过）"><a href="#2-拉取缺失镜像（若验证不通过）" class="headerlink" title="2. 拉取缺失镜像（若验证不通过）"></a>2. 拉取缺失镜像（若验证不通过）</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Ubuntu 16.04（对应libc-2.23，端口9997）</span></span><br><span class="line">docker pull ubuntu:16.04</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ubuntu 18.04（对应libc-2.27，端口9998）</span></span><br><span class="line">docker pull ubuntu:18.04</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ubuntu 20.04（对应libc-2.31，端口9999）</span></span><br><span class="line">docker pull ubuntu:20.04</span><br></pre></td></tr></table></figure>
+<h2 id="2-拉取缺失镜像（若验证不通过）"><a href="#2-拉取缺失镜像（若验证不通过）" class="headerlink" title="2. 拉取缺失镜像（若验证不通过）"></a>2. 拉取缺失镜像（若验证不通过）</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Ubuntu 16.04（对应libc-2.23，端口9997）</span></span><br><span class="line">docker pull ubuntu:16.04</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ubuntu 18.04（对应libc-2.27，端口9998）</span></span><br><span class="line">docker pull ubuntu:18.04</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ubuntu 20.04（对应libc-2.31，端口9999）</span></span><br><span class="line">docker pull ubuntu:20.04</span><br></pre></td></tr></table></figure>
 
-<h2 id="二、核心容器创建（3个Pwn专用环境）"><a href="#二、核心容器创建（3个Pwn专用环境）" class="headerlink" title="二、核心容器创建（3个Pwn专用环境）"></a>二、核心容器创建（3个Pwn专用环境）</h2><h3 id="容器1：Ubuntu-16-04-libc-2-23"><a href="#容器1：Ubuntu-16-04-libc-2-23" class="headerlink" title="容器1：Ubuntu 16.04 + libc-2.23"></a>容器1：Ubuntu 16.04 + libc-2.23</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -it --privileged \</span><br><span class="line">  -v ~/Pwn/myPwn:/root/myPwn \  <span class="comment"># 本地仓库挂载到容器</span></span><br><span class="line">  -p 9997:9997 \                                  <span class="comment"># 端口映射（主机:容器）</span></span><br><span class="line">  --name pwn-2.23 \                               <span class="comment"># 容器名称</span></span><br><span class="line">  ubuntu:16.04 /bin/bash</span><br></pre></td></tr></table></figure>
+<h1 id="二、核心容器创建（3个Pwn专用环境）"><a href="#二、核心容器创建（3个Pwn专用环境）" class="headerlink" title="二、核心容器创建（3个Pwn专用环境）"></a>二、核心容器创建（3个Pwn专用环境）</h1><h2 id="容器1：Ubuntu-16-04-libc-2-23"><a href="#容器1：Ubuntu-16-04-libc-2-23" class="headerlink" title="容器1：Ubuntu 16.04 + libc-2.23"></a>容器1：Ubuntu 16.04 + libc-2.23</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -it --privileged \</span><br><span class="line">  -v ~/Pwn/myPwn:/root/myPwn \  <span class="comment"># 本地仓库挂载到容器</span></span><br><span class="line">  -p 9997:9997 \                                  <span class="comment"># 端口映射（主机:容器）</span></span><br><span class="line">  --name pwn-2.23 \                               <span class="comment"># 容器名称</span></span><br><span class="line">  ubuntu:16.04 /bin/bash</span><br></pre></td></tr></table></figure>
 <p>容器内首次启动需执行（安装调试工具）：</p>
 	
 	</div>
@@ -338,45 +338,45 @@
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/软考/">软考<span>1</span></a></li>
+			<li><a href="/tags/Redis/">Redis<span>1</span></a></li>
 		
-			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
-		
-			<li><a href="/tags/指令/">指令<span>3</span></a></li>
-		
-			<li><a href="/tags/WEB/">WEB<span>1</span></a></li>
-		
-			<li><a href="/tags/计算机网络/">计算机网络<span>7</span></a></li>
-		
-			<li><a href="/tags/深度学习/">深度学习<span>2</span></a></li>
-		
-			<li><a href="/tags/CORS/">CORS<span>2</span></a></li>
-		
-			<li><a href="/tags/栈/">栈<span>1</span></a></li>
-		
-			<li><a href="/tags/Pwn/">Pwn<span>3</span></a></li>
-		
-			<li><a href="/tags/Java/">Java<span>1</span></a></li>
+			<li><a href="/tags/js/">js<span>4</span></a></li>
 		
 			<li><a href="/tags/Misc/">Misc<span>1</span></a></li>
 		
-			<li><a href="/tags/CSS/">CSS<span>1</span></a></li>
+			<li><a href="/tags/SQL注入/">SQL注入<span>1</span></a></li>
 		
-			<li><a href="/tags/GitHub-Dork/">GitHub Dork<span>1</span></a></li>
+			<li><a href="/tags/同源策略/">同源策略<span>1</span></a></li>
 		
-			<li><a href="/tags/认证/">认证<span>2</span></a></li>
+			<li><a href="/tags/计算机网络/">计算机网络<span>7</span></a></li>
 		
-			<li><a href="/tags/文件上传/">文件上传<span>1</span></a></li>
+			<li><a href="/tags/虚拟机网络/">虚拟机网络<span>1</span></a></li>
+		
+			<li><a href="/tags/业务逻辑漏洞/">业务逻辑漏洞<span>1</span></a></li>
+		
+			<li><a href="/tags/应急响应/">应急响应<span>1</span></a></li>
 		
 			<li><a href="/tags/Nginx/">Nginx<span>1</span></a></li>
 		
-			<li><a href="/tags/CSRF/">CSRF<span>1</span></a></li>
+			<li><a href="/tags/PWN/">PWN<span>1</span></a></li>
+		
+			<li><a href="/tags/SSH/">SSH<span>1</span></a></li>
+		
+			<li><a href="/tags/Next/">Next<span>1</span></a></li>
+		
+			<li><a href="/tags/数据链路层/">数据链路层<span>1</span></a></li>
+		
+			<li><a href="/tags/Linux/">Linux<span>1</span></a></li>
+		
+			<li><a href="/tags/CSS/">CSS<span>1</span></a></li>
 		
 			<li><a href="/tags/Mysql/">Mysql<span>1</span></a></li>
 		
-			<li><a href="/tags/XXE/">XXE<span>1</span></a></li>
+			<li><a href="/tags/HTML/">HTML<span>1</span></a></li>
 		
-			<li><a href="/tags/网络层/">网络层<span>1</span></a></li>
+			<li><a href="/tags/物理层/">物理层<span>1</span></a></li>
+		
+			<li><a href="/tags/神经网络基础/">神经网络基础<span>1</span></a></li>
 		
 		
 		   <li><a href="/tags">...<span>68</span></a></li>

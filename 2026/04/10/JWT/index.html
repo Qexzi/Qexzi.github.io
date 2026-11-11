@@ -122,7 +122,7 @@
 		  
 		  
 
-		  <h3 id="0x-00-JWT基础知识"><a href="#0x-00-JWT基础知识" class="headerlink" title="0x.00.JWT基础知识"></a>0x.00.JWT基础知识</h3><ol>
+		  <h1 id="0x-00-JWT基础知识"><a href="#0x-00-JWT基础知识" class="headerlink" title="0x.00.JWT基础知识"></a>0x.00.JWT基础知识</h1><ol>
 <li><code>🧩 JWT 的核心结构</code></li>
 </ol>
 <p>一个 JWT 由三部分组成，用 <code>.</code> 分隔：</p>
@@ -294,25 +294,25 @@
 <li><code>一些涨知识的文章</code><br><a target="_blank" rel="noopener" href="https://javaguide.cn/system-design/security/jwt-intro.html">JWT 基础概念详解</a><br><a target="_blank" rel="noopener" href="https://cn-sec.com/archives/4942609.html">Burp Suite 插件实战：利用 JWT Editor 一站式通杀四种 JWT 认证缺陷</a><br><a target="_blank" rel="noopener" href="https://jishuzhan.net/article/1971976721224757249">burpsuite网络安全学院: JWT attacks靶场通关</a></li>
 </ul>
 <hr>
-<h3 id="0x01-通过未验证签名绕过-JWT-身份验证"><a href="#0x01-通过未验证签名绕过-JWT-身份验证" class="headerlink" title="0x01.通过未验证签名绕过 JWT 身份验证"></a>0x01.通过未验证签名绕过 JWT 身份验证</h3><p>本实验采用基于 JWT的机制来管理会话。由于实现存在缺陷，服务器<code>不会</code>对接收到的任意 JWT 令牌进行签名验证。<br>要完成本实验，你需要修改会话令牌，从而访问位于 &#x2F;admin 的管理员面板，然后删除用户 carlos。<br>你可以使用以下凭据登录自己的账户：wiener:peter</p>
+<h1 id="0x01-通过未验证签名绕过-JWT-身份验证"><a href="#0x01-通过未验证签名绕过-JWT-身份验证" class="headerlink" title="0x01.通过未验证签名绕过 JWT 身份验证"></a>0x01.通过未验证签名绕过 JWT 身份验证</h1><p>本实验采用基于 JWT的机制来管理会话。由于实现存在缺陷，服务器<code>不会</code>对接收到的任意 JWT 令牌进行签名验证。<br>要完成本实验，你需要修改会话令牌，从而访问位于 &#x2F;admin 的管理员面板，然后删除用户 carlos。<br>你可以使用以下凭据登录自己的账户：wiener:peter</p>
 <p><img loading="lazy" decoding="async" src="/images/JWT/image_2.png" alt="JWT·图2"></p>
 <p>修改wiener为administrator，直接发送不用什么加密<br><img loading="lazy" decoding="async" src="/images/JWT/image_3.png" alt="JWT·图3"></p>
 <p>跟随重定向<br><img loading="lazy" decoding="async" src="/images/JWT/image_4.png" alt="JWT·图4"></p>
 <p>随后就是访问&#x2F;admin，使用delete的api就可以删除用户了</p>
 <p>这次攻击之所以能成功，是因为服务器在解析 JWT 时错误地使用了<code>仅解码</code>（Decode）而<code>非验证</code>（Verify）的方法</p>
 <hr>
-<h3 id="0x02-利用存在缺陷的签名验证实现-JWT-认证绕过"><a href="#0x02-利用存在缺陷的签名验证实现-JWT-认证绕过" class="headerlink" title="0x02.利用存在缺陷的签名验证实现 JWT 认证绕过"></a>0x02.利用存在缺陷的签名验证实现 JWT 认证绕过</h3><p>本实验采用基于 JWT 的会话管理机制。服务器存在不安全配置，会接受未签名的 JWT。<br>要完成该实验，需修改你的会话令牌，以访问位于 &#x2F;admin 的管理员面板，然后删除用户 carlos。<br>你可以使用以下凭据登录自己的账户：wiener:peter</p>
+<h1 id="0x02-利用存在缺陷的签名验证实现-JWT-认证绕过"><a href="#0x02-利用存在缺陷的签名验证实现-JWT-认证绕过" class="headerlink" title="0x02.利用存在缺陷的签名验证实现 JWT 认证绕过"></a>0x02.利用存在缺陷的签名验证实现 JWT 认证绕过</h1><p>本实验采用基于 JWT 的会话管理机制。服务器存在不安全配置，会接受未签名的 JWT。<br>要完成该实验，需修改你的会话令牌，以访问位于 &#x2F;admin 的管理员面板，然后删除用户 carlos。<br>你可以使用以下凭据登录自己的账户：wiener:peter</p>
 <p><img loading="lazy" decoding="async" src="/images/JWT/image_5.png" alt="JWT·图5"></p>
 <p>失败，应为alg为none,就需要移除 signature<br><img loading="lazy" decoding="async" src="/images/JWT/image_6.png" alt="JWT·图6"></p>
 <p><img loading="lazy" decoding="async" src="/images/JWT/image_7.png" alt="JWT·图7"><br>随后就是访问&#x2F;admin，使用delete的api就可以删除用户了</p>
 <hr>
-<h3 id="0x03-通过弱签名密钥绕过-JWT-身份认证"><a href="#0x03-通过弱签名密钥绕过-JWT-身份认证" class="headerlink" title="0x03.通过弱签名密钥绕过 JWT 身份认证"></a>0x03.通过弱签名密钥绕过 JWT 身份认证</h3><p>要完成本实验需要：暴力破解网站的 JWT 签名密钥；用该密钥为修改后的会话令牌重新签名；凭借修改后的令牌获取&#x2F;admin管理员面板的访问权限删除用户carlos。你可使用以下凭据登录个人账户：wiener:peter<br>同时推荐使用hashcat工具暴力破解密钥</p>
+<h1 id="0x03-通过弱签名密钥绕过-JWT-身份认证"><a href="#0x03-通过弱签名密钥绕过-JWT-身份认证" class="headerlink" title="0x03.通过弱签名密钥绕过 JWT 身份认证"></a>0x03.通过弱签名密钥绕过 JWT 身份认证</h1><p>要完成本实验需要：暴力破解网站的 JWT 签名密钥；用该密钥为修改后的会话令牌重新签名；凭借修改后的令牌获取&#x2F;admin管理员面板的访问权限删除用户carlos。你可使用以下凭据登录个人账户：wiener:peter<br>同时推荐使用hashcat工具暴力破解密钥</p>
 <p><img loading="lazy" decoding="async" src="/images/JWT/image_8.png" alt="JWT·图8"><br> HS256对称签名算法 ，测试弱口令爆破<br><img loading="lazy" decoding="async" src="/images/JWT/image_9.png" alt="JWT·图9"><br>使用了JWT editor 插件内置的字段（适用于靶场而已），密钥：<code>secret1</code></p>
 <p>创建密钥<br><img loading="lazy" decoding="async" src="/images/JWT/image_10.png" alt="JWT·图10"></p>
 <p>sign<br><img loading="lazy" decoding="async" src="/images/JWT/image_11.png" alt="JWT·图11"></p>
 <p>调用api删除用户即可<br><img loading="lazy" decoding="async" src="/images/JWT/image_12.png" alt="JWT·图12"></p>
 <hr>
-<h3 id="0x04-通过-JWK-头部注入绕过-JWT-身份认证"><a href="#0x04-通过-JWK-头部注入绕过-JWT-身份认证" class="headerlink" title="0x04.通过 JWK 头部注入绕过 JWT 身份认证"></a>0x04.通过 JWK 头部注入绕过 JWT 身份认证</h3><p>本实验采用基于 JWT（JSON Web 令牌） 的会话管理机制。服务器支持在 JWT 头部中使用 jwk（JSON Web Key）参数，该参数原本的设计用途是直接在令牌内嵌入用于验证签名的公钥，简化验签流程。但该服务器存在致命漏洞：完全未校验 JWT 头部中提供的 jwk 公钥是否来自可信源，直接用该公钥验证 JWT 签名。<br>要完成本实验，你需要：自行生成一对 RSA 密钥，篡改普通用户（wiener）的 JWT 令牌（将 sub 字段改为管理员身份）；用自己的私钥对篡改后的 JWT 签名，并将公钥通过 jwk 字段嵌入 JWT 头部;用该伪造的 JWT 访问 &#x2F;admin 管理员面板;在管理员面板中删除用户 carlos<br>你可以使用以下凭据登录普通用户账户，获取初始有效 JWT：wiener:peter</p>
+<h1 id="0x04-通过-JWK-头部注入绕过-JWT-身份认证"><a href="#0x04-通过-JWK-头部注入绕过-JWT-身份认证" class="headerlink" title="0x04.通过 JWK 头部注入绕过 JWT 身份认证"></a>0x04.通过 JWK 头部注入绕过 JWT 身份认证</h1><p>本实验采用基于 JWT（JSON Web 令牌） 的会话管理机制。服务器支持在 JWT 头部中使用 jwk（JSON Web Key）参数，该参数原本的设计用途是直接在令牌内嵌入用于验证签名的公钥，简化验签流程。但该服务器存在致命漏洞：完全未校验 JWT 头部中提供的 jwk 公钥是否来自可信源，直接用该公钥验证 JWT 签名。<br>要完成本实验，你需要：自行生成一对 RSA 密钥，篡改普通用户（wiener）的 JWT 令牌（将 sub 字段改为管理员身份）；用自己的私钥对篡改后的 JWT 签名，并将公钥通过 jwk 字段嵌入 JWT 头部;用该伪造的 JWT 访问 &#x2F;admin 管理员面板;在管理员面板中删除用户 carlos<br>你可以使用以下凭据登录普通用户账户，获取初始有效 JWT：wiener:peter</p>
 <p><code>jwk（JSON Web Key）</code>是 JWT 标准预留字段，<code>设计初衷</code>是分布式系统中公钥自动发现，仅允许信任的第三方公钥传入，而非客户端任意传入。</p>
 <p><code>漏洞所在</code>：服务端验签时未遵守「公钥可信原则」，而是无条件优先提取 JWT Header 中jwk字段的公钥，无任何合法性、来源校验，直接用该公钥执行验签操作。</p>
 <p><code>安全前提被突破</code>：RS256 的安全核心是「私钥绝密 + 公钥可信」，开发者的错误实现让客户端完全控制验签公钥，等效于赋予攻击者 “自主签发合法 JWT” 的权限，彻底绕过了服务端的密钥信任体系。</p>
@@ -323,7 +323,7 @@
 <p>访问&#x2F;admin<br><img loading="lazy" decoding="async" src="/images/JWT/image_17.png" alt="JWT·图17"></p>
 <p>随后调用一下删除用户的api就行</p>
 <hr>
-<h3 id="0x05-通过-jku-头部注入实现-JWT-身份认证绕过"><a href="#0x05-通过-jku-头部注入实现-JWT-身份认证绕过" class="headerlink" title="0x05.通过 jku 头部注入实现 JWT 身份认证绕过"></a>0x05.通过 jku 头部注入实现 JWT 身份认证绕过</h3><p>本实验采用基于 JWT（JSON Web Token） 的会话管理机制。服务端支持在 JWT 头部使用 jku（JSON Web Key Set URL，JSON Web 密钥集地址）参数，但存在致命安全缺陷：在根据该参数拉取验签用的公钥时，完全未校验提供的 URL 是否属于可信域名。<br>实验目标：伪造一个合法的 JWT，以此绕过身份认证，访问 &#x2F;admin 路径下的管理员后台，最终删除用户 carlos。<br>可用登录凭证：用户名：wiener；密码：peter</p>
+<h1 id="0x05-通过-jku-头部注入实现-JWT-身份认证绕过"><a href="#0x05-通过-jku-头部注入实现-JWT-身份认证绕过" class="headerlink" title="0x05.通过 jku 头部注入实现 JWT 身份认证绕过"></a>0x05.通过 jku 头部注入实现 JWT 身份认证绕过</h1><p>本实验采用基于 JWT（JSON Web Token） 的会话管理机制。服务端支持在 JWT 头部使用 jku（JSON Web Key Set URL，JSON Web 密钥集地址）参数，但存在致命安全缺陷：在根据该参数拉取验签用的公钥时，完全未校验提供的 URL 是否属于可信域名。<br>实验目标：伪造一个合法的 JWT，以此绕过身份认证，访问 &#x2F;admin 路径下的管理员后台，最终删除用户 carlos。<br>可用登录凭证：用户名：wiener；密码：peter</p>
 <p><code>jku（JSON Web Key Set URL）</code>是 JWT 标准（RFC 7515）中的可选扩展头部字段，<code>设计初衷</code>是为分布式 &#x2F; 微服务架构下的 JWT 验签提供<code>「公钥动态发现」</code>能力</p>
 <ul>
 <li><p><code>正常安全</code>的实现逻辑：</p>
@@ -376,13 +376,13 @@
 <p>重新上传服务器之后的结果<br><img loading="lazy" decoding="async" src="/images/JWT/image_25.png" alt="JWT·图25"></p>
 <p>调用删除api删除账号即可</p>
 <hr>
-<h3 id="0x06-通过-JWT-头部中的-kid-路径遍历实现身份认证绕过"><a href="#0x06-通过-JWT-头部中的-kid-路径遍历实现身份认证绕过" class="headerlink" title="0x06.通过 JWT 头部中的 kid 路径遍历实现身份认证绕过"></a>0x06.通过 JWT 头部中的 kid 路径遍历实现身份认证绕过</h3><p>本实验使用基于 JWT 的机制来管理会话。为了验证签名，服务端会读取 JWT 头部中的 kid 参数，并根据该参数从服务器文件系统中读取对应的密钥。<br>你的实验目标：伪造一个 JWT，获取 &#x2F;admin 管理员面板的访问权限，然后删除用户 carlos。<br>你可以使用以下账号登录自己的账户：用户名：wiener;密码：peter</p>
+<h1 id="0x06-通过-JWT-头部中的-kid-路径遍历实现身份认证绕过"><a href="#0x06-通过-JWT-头部中的-kid-路径遍历实现身份认证绕过" class="headerlink" title="0x06.通过 JWT 头部中的 kid 路径遍历实现身份认证绕过"></a>0x06.通过 JWT 头部中的 kid 路径遍历实现身份认证绕过</h1><p>本实验使用基于 JWT 的机制来管理会话。为了验证签名，服务端会读取 JWT 头部中的 kid 参数，并根据该参数从服务器文件系统中读取对应的密钥。<br>你的实验目标：伪造一个 JWT，获取 &#x2F;admin 管理员面板的访问权限，然后删除用户 carlos。<br>你可以使用以下账号登录自己的账户：用户名：wiener;密码：peter</p>
 <p><code>kid</code>&#x3D; Key ID（密钥 ID），作用是标识用哪一组密钥验签<br><code>安全逻辑</code>：服务端维护 密钥ID ↔ 密钥内容 的映射表，绝不把 kid 直接当文件路径使用<br><code>验签流程</code>：拿到 JWT → 读取 kid → 查映射表取密钥 → 验证签名</p>
 <p><strong><code>攻击核心逻辑</code></strong>：服务端验签依赖 kid 指向文件的内容作为密钥,然后构造 kid 为路径遍历字符串，指向内容已知 &#x2F; 可控的文件（最常用：<code>/dev/null</code> 空文件）</p>
 <p><img loading="lazy" decoding="async" src="/images/JWT/image_26.png" alt="JWT·图26"></p>
 <p>调用删除api删除账号即可</p>
 <hr>
-<h3 id="0x07-JWT-算法混淆绕过"><a href="#0x07-JWT-算法混淆绕过" class="headerlink" title="0x07.JWT 算法混淆绕过"></a>0x07.JWT 算法混淆绕过</h3><p>本实验使用 基于 JWT 的机制 来处理会话。虽然服务器采用了 强安全性的 RSA 非对称密钥对 进行签名和验证，但由于实现逻辑上的缺陷，导致其易受 算法混淆（Algorithm Confusion） 攻击。<br>实验目标：首先获取服务器的 公钥（该公钥通过标准接口对外暴露）;使用 该公钥 来签名一个 你修改过的会话令牌（JWT）；利用这个伪造的令牌访问 &#x2F;admin 管理员面板，删除用户 carlos 完成实验。<br>可用登录凭证：用户名：wiener；密码：peter</p>
+<h1 id="0x07-JWT-算法混淆绕过"><a href="#0x07-JWT-算法混淆绕过" class="headerlink" title="0x07.JWT 算法混淆绕过"></a>0x07.JWT 算法混淆绕过</h1><p>本实验使用 基于 JWT 的机制 来处理会话。虽然服务器采用了 强安全性的 RSA 非对称密钥对 进行签名和验证，但由于实现逻辑上的缺陷，导致其易受 算法混淆（Algorithm Confusion） 攻击。<br>实验目标：首先获取服务器的 公钥（该公钥通过标准接口对外暴露）;使用 该公钥 来签名一个 你修改过的会话令牌（JWT）；利用这个伪造的令牌访问 &#x2F;admin 管理员面板，删除用户 carlos 完成实验。<br>可用登录凭证：用户名：wiener；密码：peter</p>
 <ul>
 <li><p><code>正常逻辑（RSA）</code></p>
 <ul>
@@ -464,7 +464,7 @@
 <p>结果<br><img loading="lazy" decoding="async" src="/images/JWT/image_34.png" alt="JWT·图34"></p>
 <p>调用删除api删除账号即可</p>
 <hr>
-<h3 id="0x08-通过算法混淆绕过JWT认证（无暴露密钥）"><a href="#0x08-通过算法混淆绕过JWT认证（无暴露密钥）" class="headerlink" title="0x08.通过算法混淆绕过JWT认证（无暴露密钥）"></a>0x08.通过算法混淆绕过JWT认证（无暴露密钥）</h3><p>本实验室使用基于JWT的机制来处理会话。它使用一个强大的RSA密钥对来签名和验证令牌。然而，由于实现缺陷，该机制容易受到算法混淆攻击。<br>要解决本实验室，首先获取服务器的公钥。使用该密钥签名一个修改后的会话令牌，该令牌能让你访问&#x2F;admin管理面板，然后删除用户carlos。<br>你可以使用以下凭证登录自己的账户：wiener:peter</p>
+<h1 id="0x08-通过算法混淆绕过JWT认证（无暴露密钥）"><a href="#0x08-通过算法混淆绕过JWT认证（无暴露密钥）" class="headerlink" title="0x08.通过算法混淆绕过JWT认证（无暴露密钥）"></a>0x08.通过算法混淆绕过JWT认证（无暴露密钥）</h1><p>本实验室使用基于JWT的机制来处理会话。它使用一个强大的RSA密钥对来签名和验证令牌。然而，由于实现缺陷，该机制容易受到算法混淆攻击。<br>要解决本实验室，首先获取服务器的公钥。使用该密钥签名一个修改后的会话令牌，该令牌能让你访问&#x2F;admin管理面板，然后删除用户carlos。<br>你可以使用以下凭证登录自己的账户：wiener:peter</p>
 <p>这一题的漏洞原理与上一关是一样的，<code>存在的区别</code>：服务器未直接暴露公钥端点，需要从<code>两个有效</code>的 JWT 中暴力推导出 RSA 公钥的<code>模数 n</code>，再用该公钥作为 HMAC 密钥签名一个修改后的会话令牌，访问 &#x2F;admin 并删除用户 carlos</p>
 <p>为什么需要两个有效的JWT？<br><img loading="lazy" decoding="async" src="/images/JWT/image_35.png" alt="JWT·图35"></p>
 <p>先获取两个有效的JWT（登录两次）</p>
@@ -682,7 +682,7 @@
 		
 			 <div class="toc">
 				 <span class="toc-title"><i class="fa fa-list"></i> Contents</span>
-				<ol class="toc-article"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x-00-JWT%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-article-text">0x.00.JWT基础知识</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x01-%E9%80%9A%E8%BF%87%E6%9C%AA%E9%AA%8C%E8%AF%81%E7%AD%BE%E5%90%8D%E7%BB%95%E8%BF%87-JWT-%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81"><span class="toc-article-text">0x01.通过未验证签名绕过 JWT 身份验证</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x02-%E5%88%A9%E7%94%A8%E5%AD%98%E5%9C%A8%E7%BC%BA%E9%99%B7%E7%9A%84%E7%AD%BE%E5%90%8D%E9%AA%8C%E8%AF%81%E5%AE%9E%E7%8E%B0-JWT-%E8%AE%A4%E8%AF%81%E7%BB%95%E8%BF%87"><span class="toc-article-text">0x02.利用存在缺陷的签名验证实现 JWT 认证绕过</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x03-%E9%80%9A%E8%BF%87%E5%BC%B1%E7%AD%BE%E5%90%8D%E5%AF%86%E9%92%A5%E7%BB%95%E8%BF%87-JWT-%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81"><span class="toc-article-text">0x03.通过弱签名密钥绕过 JWT 身份认证</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x04-%E9%80%9A%E8%BF%87-JWK-%E5%A4%B4%E9%83%A8%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87-JWT-%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81"><span class="toc-article-text">0x04.通过 JWK 头部注入绕过 JWT 身份认证</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x05-%E9%80%9A%E8%BF%87-jku-%E5%A4%B4%E9%83%A8%E6%B3%A8%E5%85%A5%E5%AE%9E%E7%8E%B0-JWT-%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E7%BB%95%E8%BF%87"><span class="toc-article-text">0x05.通过 jku 头部注入实现 JWT 身份认证绕过</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x06-%E9%80%9A%E8%BF%87-JWT-%E5%A4%B4%E9%83%A8%E4%B8%AD%E7%9A%84-kid-%E8%B7%AF%E5%BE%84%E9%81%8D%E5%8E%86%E5%AE%9E%E7%8E%B0%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E7%BB%95%E8%BF%87"><span class="toc-article-text">0x06.通过 JWT 头部中的 kid 路径遍历实现身份认证绕过</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x07-JWT-%E7%AE%97%E6%B3%95%E6%B7%B7%E6%B7%86%E7%BB%95%E8%BF%87"><span class="toc-article-text">0x07.JWT 算法混淆绕过</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#0x08-%E9%80%9A%E8%BF%87%E7%AE%97%E6%B3%95%E6%B7%B7%E6%B7%86%E7%BB%95%E8%BF%87JWT%E8%AE%A4%E8%AF%81%EF%BC%88%E6%97%A0%E6%9A%B4%E9%9C%B2%E5%AF%86%E9%92%A5%EF%BC%89"><span class="toc-article-text">0x08.通过算法混淆绕过JWT认证（无暴露密钥）</span></a></li></ol>
+				<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x-00-JWT%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-article-text">0x.00.JWT基础知识</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x01-%E9%80%9A%E8%BF%87%E6%9C%AA%E9%AA%8C%E8%AF%81%E7%AD%BE%E5%90%8D%E7%BB%95%E8%BF%87-JWT-%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81"><span class="toc-article-text">0x01.通过未验证签名绕过 JWT 身份验证</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x02-%E5%88%A9%E7%94%A8%E5%AD%98%E5%9C%A8%E7%BC%BA%E9%99%B7%E7%9A%84%E7%AD%BE%E5%90%8D%E9%AA%8C%E8%AF%81%E5%AE%9E%E7%8E%B0-JWT-%E8%AE%A4%E8%AF%81%E7%BB%95%E8%BF%87"><span class="toc-article-text">0x02.利用存在缺陷的签名验证实现 JWT 认证绕过</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x03-%E9%80%9A%E8%BF%87%E5%BC%B1%E7%AD%BE%E5%90%8D%E5%AF%86%E9%92%A5%E7%BB%95%E8%BF%87-JWT-%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81"><span class="toc-article-text">0x03.通过弱签名密钥绕过 JWT 身份认证</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x04-%E9%80%9A%E8%BF%87-JWK-%E5%A4%B4%E9%83%A8%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87-JWT-%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81"><span class="toc-article-text">0x04.通过 JWK 头部注入绕过 JWT 身份认证</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x05-%E9%80%9A%E8%BF%87-jku-%E5%A4%B4%E9%83%A8%E6%B3%A8%E5%85%A5%E5%AE%9E%E7%8E%B0-JWT-%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E7%BB%95%E8%BF%87"><span class="toc-article-text">0x05.通过 jku 头部注入实现 JWT 身份认证绕过</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x06-%E9%80%9A%E8%BF%87-JWT-%E5%A4%B4%E9%83%A8%E4%B8%AD%E7%9A%84-kid-%E8%B7%AF%E5%BE%84%E9%81%8D%E5%8E%86%E5%AE%9E%E7%8E%B0%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E7%BB%95%E8%BF%87"><span class="toc-article-text">0x06.通过 JWT 头部中的 kid 路径遍历实现身份认证绕过</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x07-JWT-%E7%AE%97%E6%B3%95%E6%B7%B7%E6%B7%86%E7%BB%95%E8%BF%87"><span class="toc-article-text">0x07.JWT 算法混淆绕过</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#0x08-%E9%80%9A%E8%BF%87%E7%AE%97%E6%B3%95%E6%B7%B7%E6%B7%86%E7%BB%95%E8%BF%87JWT%E8%AE%A4%E8%AF%81%EF%BC%88%E6%97%A0%E6%9A%B4%E9%9C%B2%E5%AF%86%E9%92%A5%EF%BC%89"><span class="toc-article-text">0x08.通过算法混淆绕过JWT认证（无暴露密钥）</span></a></li></ol>
 			</div>
 		
 		</div>

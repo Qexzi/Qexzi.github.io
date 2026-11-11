@@ -165,7 +165,7 @@
   <div class="row">
 	
 	
-		<h2 id="强网杯-2019-随便注"><a href="#强网杯-2019-随便注" class="headerlink" title="[强网杯 2019]随便注"></a>[强网杯 2019]随便注</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">万能钥匙：<span class="number">1</span><span class="string">&#x27; or 1=1 -- +qwe 成功闭合</span></span><br><span class="line"><span class="string">测试列数：1&#x27;</span> <span class="keyword">order</span> <span class="keyword">by</span> <span class="number">2</span> <span class="comment">-- +qwe 实为2列，超过2报错</span></span><br></pre></td></tr></table></figure>
+		<h1 id="强网杯-2019-随便注"><a href="#强网杯-2019-随便注" class="headerlink" title="[强网杯 2019]随便注"></a>[强网杯 2019]随便注</h1><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">万能钥匙：<span class="number">1</span><span class="string">&#x27; or 1=1 -- +qwe 成功闭合</span></span><br><span class="line"><span class="string">测试列数：1&#x27;</span> <span class="keyword">order</span> <span class="keyword">by</span> <span class="number">2</span> <span class="comment">-- +qwe 实为2列，超过2报错</span></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">探测显示位：<span class="number">1</span><span class="string">&#x27; union select 1,2 -- +qwe</span></span><br></pre></td></tr></table></figure>
 <p><img src="/images/BUUCTF-Web/image_1.png" alt="BUUCTF-Web·图1"></p>
@@ -204,7 +204,7 @@
   <div class="row">
 	
 	
-		<h2 id="一、Java虚拟机与平台特性"><a href="#一、Java虚拟机与平台特性" class="headerlink" title="一、Java虚拟机与平台特性"></a>一、Java虚拟机与平台特性</h2><h3 id="1-JVM架构详解"><a href="#1-JVM架构详解" class="headerlink" title="1. JVM架构详解"></a>1. JVM架构详解</h3><ul>
+		<h1 id="一、Java虚拟机与平台特性"><a href="#一、Java虚拟机与平台特性" class="headerlink" title="一、Java虚拟机与平台特性"></a>一、Java虚拟机与平台特性</h1><h2 id="1-JVM架构详解"><a href="#1-JVM架构详解" class="headerlink" title="1. JVM架构详解"></a>1. JVM架构详解</h2><ul>
 <li><p><strong>类加载器子系统</strong>：</p>
 <ul>
 <li>启动类加载器（Bootstrap）：加载<code>rt.jar</code>等核心库</li>
@@ -235,7 +235,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="2-跨平台原理"><a href="#2-跨平台原理" class="headerlink" title="2. 跨平台原理"></a>2. 跨平台原理</h3><ul>
+<h2 id="2-跨平台原理"><a href="#2-跨平台原理" class="headerlink" title="2. 跨平台原理"></a>2. 跨平台原理</h2><ul>
 <li><strong>字节码文件</strong>（<code>.class</code>）：<ul>
 <li>由Java编译器生成，与操作系统无关</li>
 <li>包含：常量池、字段表、方法表、属性表</li>
@@ -244,7 +244,7 @@
 <li><strong>JVM执行过程</strong>：<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 <li>编译后字节码（<code>javap -c Test.class</code>）：  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public static void main(java.lang.String[]);</span><br><span class="line">  Code:</span><br><span class="line">     0: getstatic     #2  // Field java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line">     3: ldc           #3  // String Hello</span><br><span class="line">     5: invokevirtual #4  // Method java/io/PrintStream.println:(Ljava/lang/String;)V</span><br><span class="line">     8: return</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h2 id="二、基础语法与数据类型"><a href="#二、基础语法与数据类型" class="headerlink" title="二、基础语法与数据类型"></a>二、基础语法与数据类型</h2><h3 id="1-基本数据类型解析"><a href="#1-基本数据类型解析" class="headerlink" title="1. 基本数据类型解析"></a>1. 基本数据类型解析</h3><table>
+<h1 id="二、基础语法与数据类型"><a href="#二、基础语法与数据类型" class="headerlink" title="二、基础语法与数据类型"></a>二、基础语法与数据类型</h1><h2 id="1-基本数据类型解析"><a href="#1-基本数据类型解析" class="headerlink" title="1. 基本数据类型解析"></a>1. 基本数据类型解析</h2><table>
 <thead>
 <tr>
 <th>基本类型</th>
@@ -429,45 +429,45 @@
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/hook/">hook<span>1</span></a></li>
+			<li><a href="/tags/crawlers/">crawlers<span>1</span></a></li>
+		
+			<li><a href="/tags/应急响应/">应急响应<span>1</span></a></li>
 		
 			<li><a href="/tags/Jenkins/">Jenkins<span>1</span></a></li>
 		
-			<li><a href="/tags/XXE/">XXE<span>1</span></a></li>
-		
-			<li><a href="/tags/网络层/">网络层<span>1</span></a></li>
-		
-			<li><a href="/tags/windows/">windows<span>1</span></a></li>
-		
-			<li><a href="/tags/Java/">Java<span>1</span></a></li>
-		
-			<li><a href="/tags/GitHub-Dork/">GitHub Dork<span>1</span></a></li>
+			<li><a href="/tags/XSS/">XSS<span>1</span></a></li>
 		
 			<li><a href="/tags/传输层/">传输层<span>1</span></a></li>
 		
+			<li><a href="/tags/物理层/">物理层<span>1</span></a></li>
+		
+			<li><a href="/tags/业务逻辑漏洞/">业务逻辑漏洞<span>1</span></a></li>
+		
 			<li><a href="/tags/信息安全工程师/">信息安全工程师<span>1</span></a></li>
 		
-			<li><a href="/tags/Mysql/">Mysql<span>1</span></a></li>
+			<li><a href="/tags/堆/">堆<span>1</span></a></li>
 		
-			<li><a href="/tags/CORS/">CORS<span>2</span></a></li>
+			<li><a href="/tags/应用层/">应用层<span>1</span></a></li>
 		
-			<li><a href="/tags/神经网络基础/">神经网络基础<span>1</span></a></li>
-		
-			<li><a href="/tags/刷机/">刷机<span>1</span></a></li>
+			<li><a href="/tags/hook/">hook<span>1</span></a></li>
 		
 			<li><a href="/tags/计算机体系架构/">计算机体系架构<span>1</span></a></li>
 		
-			<li><a href="/tags/物理层/">物理层<span>1</span></a></li>
+			<li><a href="/tags/Misc/">Misc<span>1</span></a></li>
 		
-			<li><a href="/tags/隧道技术/">隧道技术<span>1</span></a></li>
+			<li><a href="/tags/root/">root<span>1</span></a></li>
 		
-			<li><a href="/tags/VPN/">VPN<span>1</span></a></li>
+			<li><a href="/tags/Git/">Git<span>1</span></a></li>
 		
-			<li><a href="/tags/WEB/">WEB<span>1</span></a></li>
+			<li><a href="/tags/Mysql/">Mysql<span>1</span></a></li>
 		
-			<li><a href="/tags/FOFA/">FOFA<span>1</span></a></li>
+			<li><a href="/tags/刷机/">刷机<span>1</span></a></li>
 		
-			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
+			<li><a href="/tags/内网/">内网<span>2</span></a></li>
+		
+			<li><a href="/tags/DIV/">DIV<span>1</span></a></li>
+		
+			<li><a href="/tags/虚拟机网络/">虚拟机网络<span>1</span></a></li>
 		
 		
 		   <li><a href="/tags">...<span>68</span></a></li>

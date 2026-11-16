@@ -1,0 +1,906 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>VPN抗封锁 | Qexzi&#39;s Blog</title>
+  <link rel="canonical" href="https://Qexzi.github.io/2026/11/16/VPN抗封锁/">
+  <meta name="author" content="Qexzi">
+  
+  <meta name="description" content="网络安全学习笔记：Web 渗透、内网攻防、CTF、PWN 与计算机基础知识">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="VPN抗封锁"/>
+  <meta property="og:site_name" content="Qexzi&#39;s Blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Qexzi&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link href="/zhuzhuxia.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/mobile-optimized.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+
+  
+  <!-- MathJax（仅含公式的页面加载，由 scripts/mathjax-injector.js 检测标记） -->
+  <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    startup: {
+      pageReady: () => {
+        return MathJax.startup.defaultPageReady();
+      }
+    }
+  };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+
+  
+  <!-- 结构化数据：帮助搜索引擎理解文章元信息 -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"VPN抗封锁","datePublished":"2026-11-16T04:00:00.000Z","dateModified":"2026-11-16T04:00:00.000Z","author":{"@type":"Person","name":"Qexzi"},"mainEntityOfPage":"https://Qexzi.github.io/2026/11/16/VPN抗封锁/","description":"一、VPN封锁技术VPN 隧道本质上也是在 TCP&#x2F;IP 上跑，但它会把原始数据包再套一层私有信封，所以哪怕内容全加密，外部仍能看到它的握手形状、包长、时序和连接习惯；把 OpenVPN、WireGuard 简单改到 443 端口，只是换了门牌号，不等于变成 HTTPS，因为真正 HTTPS 有 TLS 握手、证书链、ALPN 协商、HTTP 语义和浏览器式交互，端口和内容不一致反而可能"}</script>
+  
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Qexzi&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class=""></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class=""></i>Tags
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">
+			<h1> VPN抗封锁</h1>
+		</div>
+	
+
+
+
+
+<!-- Reading progress bar -->
+<div class="reading-progress-bar" id="reading-progress-bar"></div>
+
+
+<div class="row post">
+		<!-- cols -->
+		
+		<div id="top_meta"></div>
+		<div class="col-md-9">
+		
+
+		<!-- content -->
+		<div class="mypage">
+		  
+		  <!-- 文章统计 -->
+		  <div class="article-stats">
+		    <i class="fa fa-file-text"></i> 字数: <span id="word-count">计算中...</span>
+		    <span style="margin-left: 12px;"><i class="fa fa-clock-o"></i> 阅读时长: <span id="reading-time">计算中...</span></span>
+		  </div>
+		  
+		  
+
+		  <h1 id="一、VPN封锁技术"><a href="#一、VPN封锁技术" class="headerlink" title="一、VPN封锁技术"></a>一、VPN封锁技术</h1><p>VPN 隧道本质上也是在 TCP&#x2F;IP 上跑，但它会把原始数据包再套一层私有信封，所以哪怕内容全加密，外部仍能看到它的握手形状、包长、时序和连接习惯；把 OpenVPN、WireGuard 简单改到 443 端口，只是换了门牌号，不等于变成 HTTPS，因为真正 HTTPS 有 TLS 握手、证书链、ALPN 协商、HTTP 语义和浏览器式交互，端口和内容不一致反而可能成为分类信号。</p>
+<p>因此，针对 VPN 的封锁并不是一步到位，而是从低成本手段开始层层升级的。</p>
+<p>先封 IP 和端口，成本低但换地址只能延长发现周期；再用 DPI 不解密只看稳定指纹，比如固定魔数、首包长度、TLS ClientHello 的扩展顺序和密码套件、UDP&#x2F;TCP 用法、上下行包长和突发节奏，以及“普通协议该有却没有”的行为；然后主动探测可疑服务器，模仿客户端握手或发畸形包，看它怎么响应，所以抗探测原则是未认证请求不暴露身份——首包带合法客户端才有的认证信息，认证失败就静默丢弃，或转交给真实网页，让探测器看到合理 HTTPS 行为，WireGuard 对未认证包静默有利于抗扫描，但它的 UDP 消息尺寸和时序仍不像网页，所以“不能主动握手确认”不等于“不能被流量分类”。</p>
+<p>于是有 TLS 伪装：不是“用了 TLS 就完成”，而是让外部看到语法和行为都合理的 TLS 会话，同时做到密码学一致（握手和证书不能是自造怪变体）、指纹一致（ClientHello、扩展顺序、ALPN 要接近真实浏览器）、行为一致（失败、HTTP 回退、包长时序不能长期机器化）；只在外面再套一层 TLS 可能形成 TLS-in-TLS 特征，内外都 TCP 还会双重拥塞控制和重传干扰。</p>
+<p>Reality 类设计主要解决证书管理和主动探测：不要求运营者持有伪装域名传统证书，而是借用真实目标站点的 TLS 特征，并用额外认证信息区分合法客户端，未认证连接表现得像访问真实站点，减少探测器拿到独特响应的机会，但它不保证流量统计上完全等同浏览器，目标站选择、客户端指纹、入口 IP 历史、用户规模和流量模式仍会影响可识别性。QUIC&#x2F;HTTP&#x2F;3 则是 UDP 上集成 TLS 1.3，支持多路复用和连接迁移，工程上不受 TCP 队头阻塞连带影响、用户态好调拥塞控制、切网可用 Connection ID 维持逻辑连接，并与 HTTP&#x2F;3 共享部分外观，但 QUIC 版本、传输参数、包长、请求行为和连接目标仍是指纹，UDP 被限制时必须有 TCP&#x2F;TLS 回退；Hysteria2 这类更强调高丢包高延迟链路上的吞吐，通过自定义拥塞控制、认证和可选 HTTP&#x2F;3 外观改善体验，解决的是“受损链路可用性+一定程度伪装”，不是消除所有可观察特征。</p>
+<p>再往后，单包指纹被加密随机化后，流量分析会从单包转向序列：视频是持续大下行，网页是短突发，固定频率保活可能暴露长期隧道；抵抗统计分类可以填充包长、扰动时序、多路复用、生成掩护流量，但填充和掩护耗带宽、扰动增延迟、过度随机反而不自然，所以不是噪声越多越好，而是在观测能力、性能预算和用户行为之间折中。前置与中继则是隐藏最终入口，让审查方只看到大型云&#x2F;CDN&#x2F;普通服务入口，再由中间层转到真实代理服务器；域前置曾利用 TLS SNI 与 HTTP Host 路由差异，但主流云已多限制，现代替代有受支持的 CDN Worker、中继网络、可插拔传输和短生命周期入口，它们把封锁成本从“封一个小服务器”提高到“影响共享基础设施”，但增加对第三方平台的信任、额外一跳延迟和费用、平台规则变化风险、流量和账户被关联的可能，所以不是免费隐身，而是用架构和运营复杂度换封锁成本。</p>
+<p>最后为什么没有“永不封锁协议”：抗封锁至少有地址（IP、ASN、域名、证书历史）、协议（握手格式、响应、传输参数）、行为（包长、时序、连接周期）、运营（配置传播、用户规模、支付与域名）四个暴露面，只补一项，其他维度仍能识别；协议代码只是系统一部分，服务器部署模板高度一致、所有节点同端口、客户端版本长期不更新，都会抵消协议设计优势。</p>
+<p>因此选择技术时不该问“哪个协议最隐蔽”，而该问：未认证探测会得到什么响应？客户端握手像哪种常见流量、像到哪层？UDP 不可用有没有独立回退？节点暴露后控制面多快能替换并安全下发？协议有没有公开规范、独立实现或安全审查？伪装增加多少延迟、带宽和运维复杂度？这些才区分真正的系统能力和营销标签；未来也不会靠单一专用协议，而会更多借用标准 Web 传输、可编程中继和多路径连接，并用自动化控制面快速换入口，但标准协议提升兼容性不自动保证不可识别，后量子密码也只保护密钥建立，不解决流量指纹。</p>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://chinavpnguide.com/posts/vpn-censorship-resistance-evolution">https://chinavpnguide.com/posts/vpn-censorship-resistance-evolution</a></p>
+<h1 id="二、一次实战排查"><a href="#二、一次实战排查" class="headerlink" title="二、一次实战排查"></a>二、一次实战排查</h1><h2 id="2-1-小教训"><a href="#2-1-小教训" class="headerlink" title="2.1 小教训"></a>2.1 小教训</h2><p>我碰到「订阅是好的、节点却大面积红」，“最贵的错误” – 判断太快</p>
+<p>看到一个转圈超时，就立刻在心里给它归了类——觉得是端口被封，就去换端口；觉得是协议被识别，就去换协议。方向一错，后面每一条命令都只是在替一个错的假设找证据，越走越远</p>
+<p>如下图：<br><img src="/images/VPN%E6%8A%97%E5%B0%81%E9%94%81/image_1.png" alt="VPN抗封锁·图1"></p>
+<p>这次的教训更具体：同样都是「红」，三个协议“红”的其实是三个不同的地方。有的“红”在加密之后，有的“红”在加密之前，还有的根本没“红”。</p>
+<p>整件事的核心判断只有一句：我们不要问「哪个节点能用」，要问「这个红，红在哪一层」。因为「UA 不对」和「TLS 被丢」在客户端看来一模一样，都是转圈然后超时；方向一旦搞反，我们会拿改 UA 的手段去修 TLS 黑洞，修一天也不会有变化。</p>
+<p>判断层级的手段也只有一个：换一个变量，看结果变不变。 换 UA 结果就变，说明闸门在明文头部；换 TLS 指纹结果不变，说明闸门在更下面；换端口结果不变，说明问题根本不在端口。控制变量法在这里不是仪式，是唯一能把层分开的办法。</p>
+<h2 id="2-2-环境初步确定"><a href="#2-2-环境初步确定" class="headerlink" title="2.2 环境初步确定"></a>2.2 环境初步确定</h2><p>在排查之前，需要确认当前计算机的流量流向与出口ip（环境自检）</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">// 查默认网关和出口网卡</span><br><span class="line"><span class="built_in">Get-NetRoute</span> <span class="literal">-DestinationPrefix</span> <span class="string">&quot;0.0.0.0/0&quot;</span> | <span class="built_in">Select-Object</span> NextHop, InterfaceAlias  </span><br><span class="line">// 出口ip</span><br><span class="line">curl.exe <span class="literal">-s</span> <span class="literal">--noproxy</span> <span class="string">&#x27;*&#x27;</span> https://ipinfo.io/ip</span><br></pre></td></tr></table></figure>
+<p><img loading="lazy" decoding="async" src="/images/VPN%E6%8A%97%E5%B0%81%E9%94%81/image_2.png" alt="VPN抗封锁·图2"></p>
+<p>由执行结果可知，计算机没有开启tun、系统代理</p>
+<p>clash 服务自检</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">// 查clash进程</span><br><span class="line"><span class="built_in">Get-Process</span> | <span class="built_in">Where-Object</span> &#123;<span class="variable">$_</span>.ProcessName <span class="operator">-match</span> <span class="string">&#x27;clash|mihomo|verge&#x27;</span>&#125; | <span class="built_in">Select-Object</span> ProcessName,Id</span><br><span class="line">// Core监听端口</span><br><span class="line"><span class="built_in">Get-NetTCPConnection</span> <span class="literal">-State</span> Listen | <span class="built_in">Where-Object</span> &#123; <span class="variable">$_</span>.OwningProcess <span class="operator">-eq</span> (<span class="built_in">Get-Process</span> verge<span class="literal">-mihomo</span>).Id &#125; | <span class="built_in">Select-Object</span> LocalAddress,LocalPort</span><br></pre></td></tr></table></figure>
+<p><img loading="lazy" decoding="async" src="/images/VPN%E6%8A%97%E5%B0%81%E9%94%81/image_3.png" alt="VPN抗封锁·图3"></p>
+<p>补充：</p>
+<ul>
+<li>内部DNS的作用是当开启了 TUN 模式或者系统代理时，Clash 会接管你的域名解析，防止 DNS 污染</li>
+<li>其端口是随机的，每次重启clash都会变化</li>
+</ul>
+<p>实际上，直接在clash GUI 设置中找到配置文件存储路径更加方便（节点信息在<code>$env:APPDATA\io.github.clash-verge-rev.clash-verge-rev\profiles</code>）</p>
+<p>对某个节点配置的分析：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;日本-优化&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vmess&quot;</span><span class="punctuation">,</span>  <span class="comment">// 协议类型</span></span><br><span class="line">    <span class="attr">&quot;server&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xxx.xxx.xxx.com&quot;</span><span class="punctuation">,</span> <span class="comment">// 节点域名</span></span><br><span class="line">    <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">12345</span><span class="punctuation">,</span>  <span class="comment">// 连接端口</span></span><br><span class="line">    <span class="attr">&quot;uuid&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xxxxx-xxx-xxxx-xxxx-xxxxxxxxxx&quot;</span><span class="punctuation">,</span> <span class="comment">// 身份密钥</span></span><br><span class="line">    <span class="attr">&quot;alterId&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span>  <span class="comment">// 不启动备用id</span></span><br><span class="line">    <span class="attr">&quot;cipher&quot;</span><span class="punctuation">:</span> <span class="string">&quot;auto&quot;</span><span class="punctuation">,</span> <span class="comment">// 自动选择加密算法</span></span><br><span class="line">    <span class="attr">&quot;udp&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span> <span class="comment">// 允许转发udp流量</span></span><br><span class="line">    <span class="attr">&quot;network&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ws&quot;</span><span class="punctuation">,</span> <span class="comment">// VMess 流量封装在ws</span></span><br><span class="line">    <span class="attr">&quot;ws-opts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span>  </span><br><span class="line">        <span class="attr">&quot;path&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/&quot;</span><span class="punctuation">,</span>  <span class="comment">// WebSocket 握手请求的 HTTP 路径</span></span><br><span class="line">        <span class="attr">&quot;headers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;Host&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xxxx.xxx.xxx.xxx.com&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;ws-path&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/&quot;</span><span class="punctuation">,</span>   <span class="comment">// 新版兼容写法</span></span><br><span class="line">    <span class="attr">&quot;ws-headers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;Host&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xxxx.xxx.xxx.xxx.com&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>从配置可知，vmess没有套tls，完全跑在ws（非wss）</p>
+<p>类似的，把所有节点的配置都抽出来分析</p>
+<h2 id="2-3-统计与探活ip"><a href="#2-3-统计与探活ip" class="headerlink" title="2.3 统计与探活ip"></a>2.3 统计与探活ip</h2><p>订阅把节点列成 43 条，看上去是 43 个独立的希望。</p>
+<p>按 server:port 聚合成 41 个入口，再把入口按解析出来的 IP 归堆，只剩 9 个 IP。下表 IP、域名均为虚构示例，非真实地址：</p>
+<table>
+<thead>
+<tr>
+<th>IP</th>
+<th>入口数</th>
+<th>节点数</th>
+<th>协议</th>
+<th>端口分布</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>198.51.100.10</code></td>
+<td>10</td>
+<td>10</td>
+<td>vmess + ws</td>
+<td>16616~16648 段</td>
+</tr>
+<tr>
+<td><code>198.51.100.11</code></td>
+<td>9</td>
+<td>9</td>
+<td>vmess + ws</td>
+<td>同上</td>
+</tr>
+<tr>
+<td><code>203.0.113.20</code></td>
+<td>9</td>
+<td>9</td>
+<td>anytls</td>
+<td>1661~1691 段</td>
+</tr>
+<tr>
+<td><code>198.51.100.12</code></td>
+<td>8</td>
+<td>8</td>
+<td>vmess + ws</td>
+<td>同上</td>
+</tr>
+<tr>
+<td><code>192.0.2.30</code></td>
+<td>1</td>
+<td>3</td>
+<td>hysteria2</td>
+<td>1443</td>
+</tr>
+<tr>
+<td><code>192.0.2.31</code></td>
+<td>1</td>
+<td>1</td>
+<td>hysteria2</td>
+<td>1443</td>
+</tr>
+<tr>
+<td><code>192.0.2.32</code></td>
+<td>1</td>
+<td>1</td>
+<td>hysteria2</td>
+<td>1443</td>
+</tr>
+<tr>
+<td><code>192.0.2.33</code></td>
+<td>1</td>
+<td>1</td>
+<td>hysteria2</td>
+<td>1443</td>
+</tr>
+<tr>
+<td><code>203.0.113.21</code></td>
+<td>1</td>
+<td>1</td>
+<td>anytls</td>
+<td>1699</td>
+</tr>
+</tbody></table>
+<p>前 4 个 IP 就吃掉了 36 个节点。  使用icmp与tcp握手探活，发现所有节点服务端都是活的。</p>
+<p>这个换算改变了问题的形状。真正会被封的是 IP，不是节点名——43 条节点是假象，9 个 IP 才是真实的攻击面。更具体地说，<code>203.0.113.20</code> 一台机器上挂了 9 个端口，如果这个 IP 出事，现象就是 9 条节点同时红。从客户端看，「9 个节点各自被封」和「1 个 IP 被拉黑」长得一模一样，都是九个转圈。</p>
+<p>所以不能急着往下分层。得先把这一层单独拎出来验。</p>
+<h2 id="2-4-ip黑名单"><a href="#2-4-ip黑名单" class="headerlink" title="2.4 ip黑名单?"></a>2.4 ip黑名单?</h2><p>大面积红」最省事的解释就是「某个 IP 被拉黑了」，而且这次的订阅结构让这个假设看起来特别合理——九个端口挤一个 IP，一红红一片</p>
+<p>判据依据：同一个 IP 上，只要有一个通道能通，这个 IP 就没被整体拉黑。</p>
+<p>这个判据不需要新工具，只要在同一个 IP 内部换一个变量做对照。结果是这样：</p>
+<table>
+<thead>
+<tr>
+<th>IP</th>
+<th>节点</th>
+<th>同 IP 内的对照</th>
+<th>IP 黑名单</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>198.51.100.10</code></td>
+<td>10 vmess</td>
+<td>Go UA 黑洞 &#x2F; Chrome UA <strong>101</strong></td>
+<td><strong>证伪</strong></td>
+</tr>
+<tr>
+<td><code>198.51.100.11</code></td>
+<td>9 vmess</td>
+<td>同上</td>
+<td><strong>证伪</strong></td>
+</tr>
+<tr>
+<td><code>198.51.100.12</code></td>
+<td>8 vmess</td>
+<td>同上</td>
+<td><strong>证伪</strong></td>
+</tr>
+<tr>
+<td>4 个 hy2 IP</td>
+<td>6 hy2</td>
+<td>TCP 全 refused，但 UDP 通道可用（2614ms）</td>
+<td><strong>证伪</strong></td>
+</tr>
+<tr>
+<td><code>203.0.113.20</code></td>
+<td>9 anytls</td>
+<td>找不到任何能通的通道</td>
+<td><strong>无法排除</strong></td>
+</tr>
+<tr>
+<td><code>203.0.113.21</code></td>
+<td>1 anytls</td>
+<td>TCP 通但 TLS 静默</td>
+<td><strong>无法排除</strong></td>
+</tr>
+</tbody></table>
+<p><strong>vmess 的3个IP是干净的。</strong> 同一个 IP 上换个 UA 就能拿到 101，说明网关没有把这个 IP 整体丢掉，它只是挑着内容丢。</p>
+<p><strong>hy2的那4个IP也是干净的。</strong> TCP 探测全是 refused，看着像「IP 死了」，可 hy2 节点本身跑得出 2614ms 的延迟。所以 refused 只说明它不开 TCP，不说明 IP 被拉黑。这里有个容易搞反的地方：<strong>TCP refused 和 IP 被拉黑是两个完全不同的状态</strong>，前者是服务端没监听，后者是中间设备不转发。这次的 hy2 是前者。</p>
+<p><strong>anytls的2个IP排除不掉。</strong> <code>203.0.113.20</code> 的九个端口裸 TCP 全通（105~330ms），但 TLS 一个字节都不回。我在这个 IP 上找不到任何一个「能通的通道」——443 和 8443 是 refused，应该是服务端没监听，不能算「被封」的证据；1661 等端口 TCP 通但 TLS 黑洞。所以难以判断</p>
+<p>于是 43 个节点被这一步切成两组：</p>
+<table>
+<thead>
+<tr>
+<th>组</th>
+<th>节点数</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>IP 层已排除</td>
+<td>33（27 vmess + 6 hy2）</td>
+<td>问题在 IP 之上，可以往下分层</td>
+</tr>
+<tr>
+<td>IP 层仍有嫌疑</td>
+<td>10（全部 anytls）</td>
+<td>不能排除整个 IP 被丢，分层结论对它不成立</td>
+</tr>
+</tbody></table>
+<p>全量 43 个节点的判定汇总，是这样分布的。</p>
+<table>
+<thead>
+<tr>
+<th>判定</th>
+<th>入口数</th>
+<th>节点数</th>
+<th>协议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>被 GoUA 指纹拦</strong></td>
+<td>27</td>
+<td>27</td>
+<td>vmess + ws（明文，无 TLS）</td>
+</tr>
+<tr>
+<td><strong>TLS 被黑洞</strong></td>
+<td>10</td>
+<td>10</td>
+<td>anytls（TCP + TLS）</td>
+</tr>
+<tr>
+<td><strong>UDP 协议</strong></td>
+<td>4</td>
+<td>6</td>
+<td>hysteria2（QUIC）</td>
+</tr>
+</tbody></table>
+<p>值得注意：这张表的 10 个 anytls 里有 9 个挂在同一个 IP 上，所以它列的不是「10 个独立的故障」，而是「1 个 IP 上的 9 个端口 + 另 1 个 IP」。</p>
+<h2 id="2-5-分层判断"><a href="#2-5-分层判断" class="headerlink" title="2.5 分层判断"></a>2.5 分层判断</h2><p>下面三组证据，分别对应这三层。</p>
+<p><strong>第一组：同一个节点、同一份字节序，只把 <code>User-Agent</code> 换掉。</strong></p>
+<p>入口是 <code>planb.relay-a.example:16617</code>，裸 TCP 通 168ms。我用原始 socket 手拼 WebSocket 升级报文，头部顺序完全照 mihomo 的来，只改 UA：</p>
+<table>
+<thead>
+<tr>
+<th>UA</th>
+<th>ws 升级结果</th>
+<th>mihomo 延迟 API</th>
+<th>真实访问 google</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Go-http-client/1.1</code></td>
+<td><strong>黑洞</strong>（读超时）</td>
+<td>Timeout 15054ms</td>
+<td>http&#x3D;000</td>
+</tr>
+<tr>
+<td><code>Chrome/131</code>（浏览器串）</td>
+<td><strong>101 Switching Protocols</strong></td>
+<td><strong>delay 1683ms</strong></td>
+<td><strong>http&#x3D;302</strong></td>
+</tr>
+</tbody></table>
+<p>三个 IP 各跑三遍，9&#x2F;9 次结果一致。同一台服务器、同一个端口、同一个 Host，唯一的变量就是 <code>User-Agent</code> 这一个字段。</p>
+<p><strong>第二组：同一台 anytls 服务器，TCP 全通，TLS 一个字节都不回。</strong></p>
+<table>
+<thead>
+<tr>
+<th>目标</th>
+<th>裸 TCP</th>
+<th>普通 TLS</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>203.0.113.20:443</code></td>
+<td>拒绝</td>
+<td>Connection refused</td>
+</tr>
+<tr>
+<td><code>203.0.113.20:8443</code></td>
+<td>拒绝</td>
+<td>Connection refused</td>
+</tr>
+<tr>
+<td><code>203.0.113.20:1661</code>（anytls 口）</td>
+<td>通 105ms</td>
+<td><strong>静默黑洞</strong></td>
+</tr>
+<tr>
+<td><code>203.0.113.20:1661</code> + ALPN h2</td>
+<td>通</td>
+<td><strong>静默黑洞</strong></td>
+</tr>
+<tr>
+<td><code>smtp.qq.com:465</code>（对照）</td>
+<td>通</td>
+<td>TLS 成功 TLS_AES_256_GCM_SHA384</td>
+</tr>
+<tr>
+<td><code>www.baidu.com:443</code>（对照）</td>
+<td>通</td>
+<td>TLS 成功 ECDHE-RSA-AES128-GCM-SHA256</td>
+</tr>
+</tbody></table>
+<p>对照组说明这不是「本机 TLS 栈坏了」也不是「非标端口的 TLS 被全局禁掉」——<code>smtp.qq.com:465</code> 本身就是非标端口，它握手好好的。</p>
+<p><strong>第三组：hysteria2 的 TCP 探测全部「拒绝」。</strong></p>
+<p>这组没什么可分析的，6 个节点全拒，因为 hy2 走 UDP&#x2F;QUIC，压根不监听 TCP。但它恰好是最关键的一组——它证明了网关的 DPI <strong>只处理 TCP</strong>。</p>
+<h2 id="2-6-Vmess封禁判断"><a href="#2-6-Vmess封禁判断" class="headerlink" title="2.6 Vmess封禁判断"></a>2.6 Vmess封禁判断</h2><p>这是这次最反直觉的部分。我一开始也往「协议被识别」的方向想，直到做了那个只换 UA 的对照才转向。</p>
+<p>先排除掉几个常见的怀疑对象。</p>
+<h3 id="2-6-1-非DNS"><a href="#2-6-1-非DNS" class="headerlink" title="2.6.1 非DNS"></a>2.6.1 非DNS</h3><p>在配置文件提取节点的host，dns查询<br><img loading="lazy" decoding="async" src="/images/VPN%E6%8A%97%E5%B0%81%E9%94%81/image_4.png" alt="VPN抗封锁·图4"></p>
+<p>这批 vmess 节点的 <code>Host</code> 是 <code>30fa289f13887d772259ba46e50b6afb.mobgslb.tbcache.com</code>——借用淘宝 CDN 的命名空间拼出来的虚构域名，公共 DNS 下返回 NXDOMAIN，换哪个解析器都查不出东西。客户端真正连的是 <code>server</code> 字段（<code>planb.relay-a.example</code>），Host 只是伪装用的。既然 Host 是假的、还照样能拿到 101，说明<strong>网关不靠 Host 判断</strong>。典型的协议特征伪造</p>
+<h3 id="2-6-2-非端口"><a href="#2-6-2-非端口" class="headerlink" title="2.6.2 非端口"></a>2.6.2 非端口</h3><p>同一台机器在 16616~16648 这段端口里挂了十个左右节点，全部是「Go UA 黑洞、Chrome UA 101」，一个例外都没有。</p>
+<h3 id="2-6-3-非协议"><a href="#2-6-3-非协议" class="headerlink" title="2.6.3 非协议"></a>2.6.3 非协议</h3><p>因为 WS 升级在 Chrome UA 下完整成功连接节点服务器，说明协议栈没问题。</p>
+<p>排除完只剩一个结论：<strong>网关匹配的是http明文里的UA头，很典型的被动DPI。</strong></p>
+<h2 id="2-7-anyTLS封禁判断"><a href="#2-7-anyTLS封禁判断" class="headerlink" title="2.7 anyTLS封禁判断"></a>2.7 anyTLS封禁判断</h2><p>2.5 的第二组只留下一个现象：TCP 通，TLS 一个字节都不回。2.4 也因此把这 10 个 anytls 归进了「IP 黑名单无法排除」。这一节把两件事一起解决。</p>
+<p>先复述现象。这一层和 vmess 那层长得像，但触发点完全不同：</p>
+<table>
+<thead>
+<tr>
+<th>目标</th>
+<th>裸 TCP</th>
+<th>普通 TLS</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>203.0.113.20:443</code></td>
+<td>拒绝</td>
+<td>Connection refused</td>
+</tr>
+<tr>
+<td><code>203.0.113.20:8443</code></td>
+<td>拒绝</td>
+<td>Connection refused</td>
+</tr>
+<tr>
+<td><code>203.0.113.20:1661</code>（anytls 口）</td>
+<td>通 105ms</td>
+<td><strong>静默黑洞</strong></td>
+</tr>
+<tr>
+<td><code>203.0.113.20:1661</code> + ALPN h2</td>
+<td>通</td>
+<td><strong>静默黑洞</strong></td>
+</tr>
+</tbody></table>
+<p>注意「静默」这两个字。不是 RST，不是 400，是连接建立之后一个字节都不回，一直挂到超时。这种形态通常意味着中间设备读到了某个字段，然后主动不转发。</p>
+<p>接下来按老办法，一个变量一个变量地换。</p>
+<h3 id="2-7-1-非JA3指纹"><a href="#2-7-1-非JA3指纹" class="headerlink" title="2.7.1 非JA3指纹"></a>2.7.1 非JA3指纹</h3><p>anytls 节点自带 <code>client-fingerprint: chrome</code> 和 <code>alpn: [h2, http/1.1]</code>，mihomo 会真的用 uTLS 把 ClientHello 伪装成 Chrome 的样子。如果封锁是按 TLS 指纹做的，带 Chrome 指纹就该能过。</p>
+<p>先把内核日志开到 debug，再打延迟：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">curl.exe <span class="literal">-s</span> <span class="string">&quot;http://127.0.0.1:9097/proxies/香港HK-A/delay?timeout=8000&amp;url=https%3A%2F%2Fwww.gstatic.com%2Fgenerate_204&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>日志里明确打出 <code>use specified fingerprint:Chrome</code>，证明指纹真的用上了，然后延迟 API 依然 Timeout。</p>
+<p>所以不是指纹问题。这一条不是推断出来的，是内核自己记账的。</p>
+<h3 id="2-7-2-非SNI域名黑名单"><a href="#2-7-2-非SNI域名黑名单" class="headerlink" title="2.7.2 非SNI域名黑名单"></a>2.7.2 非SNI域名黑名单</h3><p>指纹不是变量，那 ClientHello 里还剩什么可读的？SNI。</p>
+<p>先假设「某个域名被拉黑」，于是把 SNI 换成各种值：</p>
+<table>
+<thead>
+<tr>
+<th>SNI</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>any.node-a.example</code>（原配置）</td>
+<td>超时（零回应）</td>
+</tr>
+<tr>
+<td><code>www.microsoft.com</code></td>
+<td>超时</td>
+</tr>
+<tr>
+<td><code>www.baidu.com</code></td>
+<td>超时</td>
+</tr>
+<tr>
+<td><code>cloud.tencent.com</code></td>
+<td>超时</td>
+</tr>
+<tr>
+<td><code>203.0.113.20</code>（IP 字面量）</td>
+<td>超时</td>
+</tr>
+<tr>
+<td><strong>不带 SNI</strong></td>
+<td><strong>握手成功 TLS_AES_128_GCM_SHA256</strong></td>
+</tr>
+</tbody></table>
+<p>换什么都拦，只有「没有」才放行。所以不是按域名拉黑。</p>
+<p>复现用 openssl，<code>-servername</code> 加不加就是唯一变量：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 带 SNI</span></span><br><span class="line">openssl s_client <span class="literal">-connect</span> <span class="number">203.0</span>.<span class="number">113.20</span>:<span class="number">1661</span> <span class="literal">-servername</span> any.node<span class="literal">-a</span>.example <span class="literal">-brief</span></span><br><span class="line"><span class="comment"># 不带 SNI（去掉 -servername）</span></span><br><span class="line">openssl s_client <span class="literal">-connect</span> <span class="number">203.0</span>.<span class="number">113.20</span>:<span class="number">1661</span> <span class="literal">-brief</span></span><br></pre></td></tr></table></figure>
+
+<p>Windows 上没有 openssl 的话，用 Git 自带的那个（<code>where.exe openssl</code> 能找到就直接用）。</p>
+<h3 id="2-7-3-非SNI与IP不一致"><a href="#2-7-3-非SNI与IP不一致" class="headerlink" title="2.7.3 非SNI与IP不一致"></a>2.7.3 非SNI与IP不一致</h3><p>还有一种解释：设备在做一致性校验，SNI 解析出来的 IP 和实际连接的目的 IP 对不上就丢。这个假设听上去很合理，因为 anytls 的 <code>sni</code> 和 <code>server</code> 确实不是同一个域名。</p>
+<p>于是特意挑两个「一致」的组合：</p>
+<table>
+<thead>
+<tr>
+<th>目标</th>
+<th>SNI</th>
+<th>一致性</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>203.0.113.20:1661</code></td>
+<td><code>ousua.node-a.example</code></td>
+<td>该域名确实解析到 203.0.113.20</td>
+<td><strong>超时</strong></td>
+</tr>
+<tr>
+<td><code>203.0.113.21:1699</code></td>
+<td><code>hkt2.node-b.example</code></td>
+<td>该域名确实解析到 203.0.113.21</td>
+<td><strong>超时</strong></td>
+</tr>
+</tbody></table>
+<p>一致的也超时，假设证伪。</p>
+<h3 id="2-7-4-决定性对照：变量是SNI这个字段本身"><a href="#2-7-4-决定性对照：变量是SNI这个字段本身" class="headerlink" title="2.7.4 决定性对照：变量是SNI这个字段本身"></a>2.7.4 决定性对照：变量是SNI这个字段本身</h3><p>前面三个假设都是「SNI 的内容有问题」。最后把内容这个维度彻底剥离：换一个国内能正常访问的目的地，只改 SNI。</p>
+<table>
+<thead>
+<tr>
+<th>目标</th>
+<th>SNI</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>www.baidu.com:443</code></td>
+<td>不带</td>
+<td>握手成功 ECDHE-RSA-AES128-GCM-SHA256</td>
+</tr>
+<tr>
+<td><code>www.baidu.com:443</code></td>
+<td><code>www.baidu.com</code></td>
+<td>握手成功</td>
+</tr>
+<tr>
+<td><code>www.baidu.com:443</code></td>
+<td><code>any.node-a.example</code></td>
+<td><strong>超时</strong></td>
+</tr>
+</tbody></table>
+<p>同一个目的地、同一台服务器，只因为 SNI 换成了 <code>any.node-a.example</code> 就死。</p>
+<p>结论收敛成一句：<strong>向这些境外 IP 发起 TLS 时，ClientHello 里只要存在 SNI 扩展且内容不在白名单内，就被静默丢弃；不带 SNI 时设备无法分类，放行。</strong></p>
+<p>这也解释了为什么 2.5 里改 <code>client-fingerprint</code> 完全无效——指纹伪装改的是 ClientHello 的结构（字段顺序、扩展集合），SNI 是一个独立字段。两者是正交的维度，很容易被混成一个「TLS 伪装」的概念。</p>
+<p>顺带把 2.4 的悬案结了：<code>203.0.113.20</code> 不是「IP 被拉黑」，因为不带 SNI 时 TLS 能握手成功，数据确实从那个 IP 上过去了。这个 IP 上的 TLS 不是不能用，是不能带着 SNI 用。</p>
+<h3 id="2-7-5-修法一：清空SNI，不可行"><a href="#2-7-5-修法一：清空SNI，不可行" class="headerlink" title="2.7.5 修法一：清空SNI，不可行"></a>2.7.5 修法一：清空SNI，不可行</h3><p>最直接的想法是把 <code>sni</code> 去掉：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> &#123; <span class="attr">name:</span> <span class="string">香港HK-A</span>, <span class="attr">type:</span> <span class="string">anytls</span>, <span class="attr">server:</span> <span class="string">ousua.node-a.example</span>, <span class="attr">port:</span> <span class="number">1661</span>, <span class="attr">sni:</span> <span class="string">&#x27;&#x27;</span>, <span class="attr">password:</span> <span class="string">xxx</span>, <span class="attr">client-fingerprint:</span> <span class="string">chrome</span>, <span class="attr">skip-cert-verify:</span> <span class="literal">true</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>实测结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">香港HK-A -&gt; Timeout</span><br></pre></td></tr></table></figure>
+
+<p>mihomo 对空 SNI 的处理是回退到 <code>server</code> 的域名（<code>ousua.node-a.example</code>），照样带 SNI，照样超时。内核没有「强制不发 SNI」的开关。这条路在客户端侧堵死。</p>
+<h3 id="2-7-6-修法二：dialer-proxy链式复用，10-10通过"><a href="#2-7-6-修法二：dialer-proxy链式复用，10-10通过" class="headerlink" title="2.7.6 修法二：dialer-proxy链式复用，10&#x2F;10通过"></a>2.7.6 修法二：dialer-proxy链式复用，10&#x2F;10通过</h3><p>既然拦的是「带 SNI 的 TCP 直连」，那就别直连——把这条 TLS 连接塞进一个网关看不见的信道。</p>
+<p>hy2 走 QUIC&#x2F;UDP，那张设备只处理 TCP，隧道内部那个带 SNI 的 ClientHello 是加密的，DPI 读不到。</p>
+<p>配置上只加一个字段：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">香港HK-A</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">anytls</span></span><br><span class="line">  <span class="attr">server:</span> <span class="string">ousua.node-a.example</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">1661</span></span><br><span class="line">  <span class="comment"># 原参数一字不改</span></span><br><span class="line">  <span class="attr">dialer-proxy:</span> <span class="string">香港HK-HY2</span></span><br></pre></td></tr></table></figure>
+
+<p>10 个 anytls 全量实测：</p>
+<table>
+<thead>
+<tr>
+<th>节点</th>
+<th>端口</th>
+<th>延迟</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>香港HK-A</td>
+<td>1661</td>
+<td>绿 1245ms</td>
+</tr>
+<tr>
+<td>新加坡SG-A</td>
+<td>1662</td>
+<td>绿 1116ms</td>
+</tr>
+<tr>
+<td>日本JP-A</td>
+<td>1663</td>
+<td>绿 803ms</td>
+</tr>
+<tr>
+<td>越南VN-A</td>
+<td>1665</td>
+<td>绿 1105ms</td>
+</tr>
+<tr>
+<td>俄罗斯RU-A</td>
+<td>1671</td>
+<td>绿 2279ms</td>
+</tr>
+<tr>
+<td>美国USLA-A</td>
+<td>1672</td>
+<td>绿 1601ms</td>
+</tr>
+<tr>
+<td>土耳其TR-A</td>
+<td>1673</td>
+<td>绿 1672ms</td>
+</tr>
+<tr>
+<td>尼日利亚NG-A</td>
+<td>1681</td>
+<td>绿 2402ms</td>
+</tr>
+<tr>
+<td>法国FR-A</td>
+<td>1691</td>
+<td>绿 1690ms</td>
+</tr>
+<tr>
+<td>香港HKT-A</td>
+<td>1699</td>
+<td>绿 1752ms</td>
+</tr>
+</tbody></table>
+<p>另外还留了一个直连对照 <code>A_ORIG</code>，配置和它们一模一样、只少了 <code>dialer-proxy</code>，结果依然是红（Timeout）。这一组对照说明起作用的是隧道，不是节点本身。</p>
+<p>真实流量也验证了：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">curl.exe <span class="literal">-s</span> <span class="literal">-o</span> NUL <span class="literal">-w</span> <span class="string">&#x27;%&#123;http_code&#125;&#x27;</span> <span class="literal">--max-time</span> <span class="number">20</span> <span class="literal">-x</span> <span class="string">&#x27;http://127.0.0.1:7999&#x27;</span> https://www.google.com</span><br><span class="line">curl.exe <span class="literal">-s</span> <span class="literal">-o</span> NUL <span class="literal">-w</span> <span class="string">&#x27;%&#123;http_code&#125;&#x27;</span> <span class="literal">--max-time</span> <span class="number">20</span> <span class="literal">-x</span> <span class="string">&#x27;http://127.0.0.1:7999&#x27;</span> https://www.youtube.com</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://www.google.com    -&gt; HTTP 302</span><br><span class="line">https://www.youtube.com   -&gt; HTTP 200</span><br><span class="line">出口 IP: 198.51.100.90</span><br></pre></td></tr></table></figure>
+
+<p>出口不是校园网 IP，说明流量确实从节点出去了。</p>
+<p>反直觉的是链式 anytls 比 hy2 本身还快（803~2402ms vs 3379ms）。这个差异的成因我没有单独做对照验证，推测是 hy2 那次测的是冷启动的完整 QUIC 握手，而链式测试时隧道已经预热。</p>
+<h3 id="2-7-7-代价"><a href="#2-7-7-代价" class="headerlink" title="2.7.7 代价"></a>2.7.7 代价</h3><p>这个方案不是没有成本。后置的 10 个节点全挂在前置的 4 个 hy2 上，hy2 挂了这 10 个全跟着挂——后置的多样性被前置的单点抵消了。</p>
+<p>缓解办法是分散挂，别让 10 个都指同一个：</p>
+<table>
+<thead>
+<tr>
+<th>anytls</th>
+<th>前置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1661、1662、1663</td>
+<td>日本JP-HY2</td>
+</tr>
+<tr>
+<td>1665、1671、1672</td>
+<td>新加坡SG-HY2</td>
+</tr>
+<tr>
+<td>1673、1681、1691</td>
+<td>香港HK-HY2</td>
+</tr>
+<tr>
+<td>1699（hkt2）</td>
+<td>韩国KR-HY2</td>
+</tr>
+</tbody></table>
+<h2 id="2-8-修复"><a href="#2-8-修复" class="headerlink" title="2.8 修复"></a>2.8 修复</h2><p>Vmess 加浏览器UA头、anyTLS 走 dialer-proxy 链式复用</p>
+<p><img loading="lazy" decoding="async" src="/images/VPN%E6%8A%97%E5%B0%81%E9%94%81/image_5.png" alt="VPN抗封锁·图5"></p>
+<p>欧克了</p>
+
+		  <div class="article-footer-copyright">
+
+    本博客采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议(CC BY-NC-SA 4.0) 发布.</a>
+</div>
+
+
+		  <script>
+		    // 计算字数与阅读时长，同时更新阅读进度条
+		    (function() {
+		      var content = document.querySelector('.mypage');
+		      if (content) {
+		        var text = content.innerText || content.textContent;
+		        // 中文字符（含 CJK 扩展区 + 标点），按字符计数
+		        var chineseChars = (text.match(/[一-鿿㐀-䶿豈-﫿　-〿＀-￯]/g) || []).length;
+		        // 英文/数字按字符计（非词），与 CSDN 统计方式一致
+		        var latinChars = (text.match(/[a-zA-Z0-9]/g) || []).length;
+		        var wordCount = chineseChars + latinChars;
+		        // 阅读时长：中文约 300 字/分钟，英文约 200 词/分钟
+		        var englishWords = (text.match(/[a-zA-Z0-9]+/g) || []).length;
+		        var readingTime = Math.max(1, Math.ceil(chineseChars / 300 + englishWords / 200));
+		        var wcEl = document.getElementById('word-count');
+		        var rtEl = document.getElementById('reading-time');
+		        if (wcEl) wcEl.textContent = '~' + wordCount + ' 字';
+		        if (rtEl) rtEl.textContent = '约 ' + readingTime + ' 分钟';
+		      }
+		      // 阅读进度条
+		      var bar = document.getElementById('reading-progress-bar');
+		      if (bar) {
+		        window.addEventListener('scroll', function() {
+		          var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+		          var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+		          var progress = docHeight > 0 ? Math.min(100, (scrollTop / docHeight) * 100) : 0;
+		          bar.style.width = progress + '%';
+		        });
+		      }
+		    })();
+		  </script>
+		</div>
+
+		
+		<div>
+	  	<center>
+
+		<div class="pagination">
+
+    
+    
+    <a type="button" class="btn btn-default disabled"><i class="fa fa-arrow-circle-o-left"></i>上一页</a>
+    
+
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="/2026/10/30/Java安全/" type="button" class="btn btn-default ">下一页<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
+</div>
+
+
+	    </center>
+		</div>
+
+		<!-- comment -->
+	
+		
+		</div> <!-- col-md-9/col-md-12 -->
+
+
+		
+		<div id="side_meta">
+			<div class="col-md-3 sticky-meta" id="post_meta"> 
+
+	<!-- small fixed card (date + brief meta) -->
+	<div class="top-card">
+		<!-- date -->
+		
+		<div class="meta-widget">
+		<i class="fa fa-clock-o"></i>
+		2026-11-16
+		</div>
+		
+
+		<!-- brief categories/tags inside fixed card -->
+		
+		<div class="meta-widget small-cats">
+			<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>
+			<ul id="categorys" class="tag_box list-unstyled collapse in">
+				  
+  <li>
+    <li><a href="/categories/网络安全/">网络安全<span>47</span></a></li> <li><a href="/categories/网络安全/基础知识/">基础知识<span>17</span></a></li>
+  </li>
+
+			</ul>
+		</div>
+		
+
+		
+		<div class="meta-widget small-tags">
+			<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>
+			<ul id="tags" class="tag_box list-unstyled collapse in">
+				  
+  <li><a href="/tags/VPN/">VPN<span>1</span></a></li>
+			</ul>
+		</div>
+		
+	</div>
+
+	<!-- All Categories: sticky within sidebar area -->
+	<div class="category-stick" id="category-stick">
+		
+<div class="widget-wrap">
+  <h3 class="widget-title" style="font-family: monospace; font-size: 1.3em; font-weight: bold; color: #fff;">Categories</h3>
+  <div class="widget category-tree">
+    <ul class="hacker-category-list"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/408/">408</a><span class="hacker-category-list-count">7</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/408/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="hacker-category-list-count">7</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/AI/">AI</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/AI/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="hacker-category-list-count">2</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/">CTF</a><span class="hacker-category-list-count">3</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/">BUUCTF</a><span class="hacker-category-list-count">3</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/Misc/">Misc</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/PWN/">PWN</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/CTF/BUUCTF/WEB/">WEB</a><span class="hacker-category-list-count">1</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%9F%A5%E8%AF%86%E6%9D%82%E7%A2%8E/">知识杂碎</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a><span class="hacker-category-list-count">39</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/APP%E6%B8%97%E9%80%8F/">APP渗透</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Java%E5%AE%89%E5%85%A8/">Java安全</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC/">SRC</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">信息收集</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%86%85%E7%BD%91/">内网</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="hacker-category-list-count">14</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/">渗透&&攻防</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/%E7%BA%A2%E9%98%9F/">红队</a><span class="hacker-category-list-count">1</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/">漏洞</a><span class="hacker-category-list-count">16</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/PWN/">PWN</a><span class="hacker-category-list-count">3</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB/">WEB</a><span class="hacker-category-list-count">10</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB/Top10/">Top10</a><span class="hacker-category-list-count">10</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/%E5%A4%8D%E7%8E%B0/">复现</a><span class="hacker-category-list-count">3</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../../../categories/%E8%AF%81%E4%B9%A6/">证书</a><span class="hacker-category-list-count">1</span></li></ul>
+  </div>
+</div>
+
+
+<style>
+/* Hacker / Terminal Style Category Tree */
+.category-tree .hacker-category-list {
+  padding-left: 20px;
+  font-family: 'Consolas', 'Courier New', monospace;
+  color: #fff;
+  list-style-type: circle; /* 'o' bullet */
+}
+
+.category-tree .hacker-category-list .hacker-category-list {
+  list-style-type: square; /* '■' bullet */
+}
+
+.category-tree .hacker-category-list .hacker-category-list .hacker-category-list {
+  list-style-type: square;
+}
+
+.category-tree .hacker-category-list-item {
+  margin: 6px 0;
+}
+
+.category-tree .hacker-category-list-link {
+  background-color: rgba(43, 188, 138, 0.1);
+  color: #2bbc8a;
+  text-decoration: none;
+  padding: 1px 6px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.category-tree .hacker-category-list-link:hover {
+  background-color: rgba(43, 188, 138, 0.2);
+  text-decoration: none;
+}
+
+.category-tree .hacker-category-list-count {
+  color: #2bbc8a;
+  margin-left: 5px;
+}
+</style>
+
+	</div>
+
+	<!-- article TOC placed below the category list; should scroll with page -->
+	<div class="toc-wrapper">
+		<div class="toc-widget">
+		
+			 <div class="toc">
+				 <span class="toc-title"><i class="fa fa-list"></i> Contents</span>
+				<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E4%B8%80%E3%80%81VPN%E5%B0%81%E9%94%81%E6%8A%80%E6%9C%AF"><span class="toc-article-text">一、VPN封锁技术</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E4%BA%8C%E3%80%81%E4%B8%80%E6%AC%A1%E5%AE%9E%E6%88%98%E6%8E%92%E6%9F%A5"><span class="toc-article-text">二、一次实战排查</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-1-%E5%B0%8F%E6%95%99%E8%AE%AD"><span class="toc-article-text">2.1 小教训</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-2-%E7%8E%AF%E5%A2%83%E5%88%9D%E6%AD%A5%E7%A1%AE%E5%AE%9A"><span class="toc-article-text">2.2 环境初步确定</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-3-%E7%BB%9F%E8%AE%A1%E4%B8%8E%E6%8E%A2%E6%B4%BBip"><span class="toc-article-text">2.3 统计与探活ip</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-4-ip%E9%BB%91%E5%90%8D%E5%8D%95"><span class="toc-article-text">2.4 ip黑名单?</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-5-%E5%88%86%E5%B1%82%E5%88%A4%E6%96%AD"><span class="toc-article-text">2.5 分层判断</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-6-Vmess%E5%B0%81%E7%A6%81%E5%88%A4%E6%96%AD"><span class="toc-article-text">2.6 Vmess封禁判断</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-6-1-%E9%9D%9EDNS"><span class="toc-article-text">2.6.1 非DNS</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-6-2-%E9%9D%9E%E7%AB%AF%E5%8F%A3"><span class="toc-article-text">2.6.2 非端口</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-6-3-%E9%9D%9E%E5%8D%8F%E8%AE%AE"><span class="toc-article-text">2.6.3 非协议</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-7-anyTLS%E5%B0%81%E7%A6%81%E5%88%A4%E6%96%AD"><span class="toc-article-text">2.7 anyTLS封禁判断</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-7-1-%E9%9D%9EJA3%E6%8C%87%E7%BA%B9"><span class="toc-article-text">2.7.1 非JA3指纹</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-7-2-%E9%9D%9ESNI%E5%9F%9F%E5%90%8D%E9%BB%91%E5%90%8D%E5%8D%95"><span class="toc-article-text">2.7.2 非SNI域名黑名单</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-7-3-%E9%9D%9ESNI%E4%B8%8EIP%E4%B8%8D%E4%B8%80%E8%87%B4"><span class="toc-article-text">2.7.3 非SNI与IP不一致</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-7-4-%E5%86%B3%E5%AE%9A%E6%80%A7%E5%AF%B9%E7%85%A7%EF%BC%9A%E5%8F%98%E9%87%8F%E6%98%AFSNI%E8%BF%99%E4%B8%AA%E5%AD%97%E6%AE%B5%E6%9C%AC%E8%BA%AB"><span class="toc-article-text">2.7.4 决定性对照：变量是SNI这个字段本身</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-7-5-%E4%BF%AE%E6%B3%95%E4%B8%80%EF%BC%9A%E6%B8%85%E7%A9%BASNI%EF%BC%8C%E4%B8%8D%E5%8F%AF%E8%A1%8C"><span class="toc-article-text">2.7.5 修法一：清空SNI，不可行</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-7-6-%E4%BF%AE%E6%B3%95%E4%BA%8C%EF%BC%9Adialer-proxy%E9%93%BE%E5%BC%8F%E5%A4%8D%E7%94%A8%EF%BC%8C10-10%E9%80%9A%E8%BF%87"><span class="toc-article-text">2.7.6 修法二：dialer-proxy链式复用，10&#x2F;10通过</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-7-7-%E4%BB%A3%E4%BB%B7"><span class="toc-article-text">2.7.7 代价</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-8-%E4%BF%AE%E5%A4%8D"><span class="toc-article-text">2.8 修复</span></a></li></ol></li></ol>
+			</div>
+		
+		</div>
+	</div>
+
+</div><!-- col-md-3 -->
+
+
+		</div>
+
+		
+
+	</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  
+  &copy; 2026 Qexzi's Blog
+  
+      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/toc.js"></script>
+<script src="/js/reading.js"></script>
+<script src="/js/copy-code.js"></script>
+
+   <script type="text/javascript">
+     var searchPath = "/search.xml";
+   </script>
+
+
+<script src="/js/search.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

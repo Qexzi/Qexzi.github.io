@@ -151,6 +151,43 @@
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
+			<a href="/2026/10/18/nginx_parsing_vulnerability/" >Nginx_Parsing_Vulnerability</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2026-10-18  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近挖到一个RCE遇到了一样的漏洞点，所以就顺便复现一下，水一篇文章</p>
+<hr>
+<h1 id="1-复现"><a href="#1-复现" class="headerlink" title="1. 复现"></a>1. 复现</h1><p>Nginx 解析漏洞<br>Nginx 是一款 Web 服务器，可以作为反向代理、负载均衡、邮件代理、HTTP 缓存等。这个 Vulhub 环境包含一个由用户配置不当导致的解析漏洞。</p>
+<p>版本信息：</p>
+<ul>
+<li>Nginx 1.x 最新版</li>
+<li>PHP 7.1.x 最新版</li>
+</ul>
+<p>由此可知，该漏洞与 Nginx、PHP 版本无关，属于用户配置不当造成的解析漏洞。</p>
+<p>该漏洞存在的原因是 Nginx 在配置中对文件扩展名的处理方式。当请求一个具有多个扩展名的文件（如 file.jpg.php）时，Nginx 可能会根据最后一个扩展名来处理，即使该文件最初是作为图片上传的。</p>
+<p><img src="/images/nginx_parsing_vulnerability/image_1.png" alt="nginx_parsing_vulnerability·图1"></p>
+	
+	</div>
+  <a type="button" href="/2026/10/18/nginx_parsing_vulnerability/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
 			<a href="/2026/10/11/应急响应基础/" >应急响应基础</a>
 		</h3>
 		</div>
@@ -179,162 +216,6 @@
 	
 	</div>
   <a type="button" href="/2026/10/11/应急响应基础/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="/2026/10/09/BUUCTF-Misc/" >Misc合集</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2026-10-09  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>处理原有的“烂尾楼”笔记</p>
-<hr>
-<h1 id="一、基础知识"><a href="#一、基础知识" class="headerlink" title="一、基础知识"></a>一、基础知识</h1><h2 id="1-文件头"><a href="#1-文件头" class="headerlink" title="1. 文件头"></a>1. 文件头</h2><p>文件头（File Header），也称为<strong>魔数（Magic Number）</strong> 或<strong>文件签名（File Signature）</strong>，是文件开头的一段固定字节序列，用于标识文件的真实格式。它比文件后缀名更可靠，因为后缀可以被轻易修改。</p>
-<table>
-<thead>
-<tr>
-<th align="left">文件类型</th>
-<th align="left">常用扩展名</th>
-<th align="left">文件头 (十六进制 Hex)</th>
-<th align="left">文件尾 (部分格式)</th>
-<th align="left">简要说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><strong>PNG 图像</strong></td>
-<td align="left">.png</td>
-<td align="left"><code>89 50 4E 47 0D 0A 1A 0A</code></td>
-<td align="left"><code>AE 42 60 82</code></td>
-<td align="left">8字节签名，开头<code>\x89PNG</code>非常独特</td>
-</tr>
-<tr>
-<td align="left">JPEG 图像</td>
-<td align="left">.jpg, .jpeg</td>
-<td align="left"><code>FF D8 FF</code></td>
-<td align="left"><code>FF D9</code></td>
-<td align="left">最常见的照片格式</td>
-</tr>
-<tr>
-<td align="left">GIF 图像</td>
-<td align="left">.gif</td>
-<td align="left"><code>47 49 46 38</code> (GIF8)</td>
-<td align="left"><code>00 3B</code></td>
-<td align="left">支持动图，文件头后常跟<code>39 61</code>或<code>37 61</code></td>
-</tr>
-<tr>
-<td align="left">BMP 图像</td>
-<td align="left">.bmp</td>
-<td align="left"><code>42 4D</code> (BM)</td>
-<td align="left">-</td>
-<td align="left">位图文件，开头两个字母即为”BM”</td>
-</tr>
-<tr>
-<td align="left">TIFF 图像</td>
-<td align="left">.tif, .tiff</td>
-<td align="left"><code>49 49 2A 00</code> 或 <code>4D 4D 00 2A</code></td>
-<td align="left">-</td>
-<td align="left">两种字节序，分别对应小端和大端</td>
-</tr>
-<tr>
-<td align="left">PDF 文档</td>
-<td align="left">.pdf</td>
-<td align="left"><code>25 50 44 46 2D</code> (%PDF-)</td>
-<td align="left">-</td>
-<td align="left">文档格式，开头为<code>%PDF-</code></td>
-</tr>
-<tr>
-<td align="left">ZIP 压缩包</td>
-<td align="left">.zip</td>
-<td align="left"><code>50 4B 03 04</code> (PK..)</td>
-<td align="left"><code>50 4B</code></td>
-<td align="left">常见压缩格式，很多Office新格式也基于它</td>
-</tr>
-<tr>
-<td align="left">RAR 压缩包</td>
-<td align="left">.rar</td>
-<td align="left"><code>52 61 72 21 1A 07 00</code></td>
-<td align="left">-</td>
-<td align="left">另一种常见压缩格式</td>
-</tr>
-<tr>
-<td align="left">7-Zip 压缩包</td>
-<td align="left">.7z</td>
-<td align="left"><code>37 7A BC AF 27 1C</code></td>
-<td align="left">-</td>
-<td align="left">高压缩比格式</td>
-</tr>
-<tr>
-<td align="left">GZIP 压缩包</td>
-<td align="left">.gz</td>
-<td align="left"><code>1F 8B</code></td>
-<td align="left">-</td>
-<td align="left">常用于Linux系统的压缩格式</td>
-</tr>
-<tr>
-<td align="left">MS Office (旧)</td>
-<td align="left">.doc, .xls, .ppt</td>
-<td align="left"><code>D0 CF 11 E0 A1 B1 1A E1</code></td>
-<td align="left">-</td>
-<td align="left">传统的复合文档格式，Word&#x2F;Excel&#x2F;PPT共用</td>
-</tr>
-<tr>
-<td align="left">MP3 音频</td>
-<td align="left">.mp3</td>
-<td align="left"><code>49 44 33</code> (ID3) 或 <code>FF FB</code></td>
-<td align="left">-</td>
-<td align="left">常见音频格式，<code>ID3</code>表示有元数据标签</td>
-</tr>
-<tr>
-<td align="left">WAV 音频</td>
-<td align="left">.wav</td>
-<td align="left"><code>52 49 46 46</code> (RIFF)</td>
-<td align="left">-</td>
-<td align="left">无损音频，文件头为<code>RIFF</code></td>
-</tr>
-<tr>
-<td align="left">AVI 视频</td>
-<td align="left">.avi</td>
-<td align="left"><code>41 56 49 20</code> (AVI )</td>
-<td align="left">-</td>
-<td align="left">常见视频容器格式</td>
-</tr>
-<tr>
-<td align="left">MP4 视频</td>
-<td align="left">.mp4</td>
-<td align="left"><code>66 74 79 70</code> (ftyp)</td>
-<td align="left">-</td>
-<td align="left">现代视频格式，通常在文件偏移量4的位置出现<code>ftyp</code></td>
-</tr>
-<tr>
-<td align="left">ELF 可执行文件</td>
-<td align="left">(Linux)</td>
-<td align="left"><code>7F 45 4C 46</code> (\x7FELF)</td>
-<td align="left">-</td>
-<td align="left">Linux下的可执行文件格式</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p><strong>注意</strong>：<code>FF D8 FF</code> 是JPEG文件头的前三个字节，但完整的JPEG文件头通常是 <code>FF D8 FF E0</code> (JFIF) 或 <code>FF D8 FF E1</code> (EXIF)，<code>FF D8</code> 是其固定起始。</p>
-</blockquote>
-<h2 id="2-图片隐写的常用工具"><a href="#2-图片隐写的常用工具" class="headerlink" title="2. 图片隐写的常用工具"></a>2. 图片隐写的常用工具</h2><p><strong>file</strong></p>
-	
-	</div>
-  <a type="button" href="/2026/10/09/BUUCTF-Misc/#more" class="btn btn-default more">阅读此文</a>
 </div>
 
 		
@@ -436,48 +317,48 @@
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/代理/">代理<span>1</span></a></li>
+			<li><a href="/tags/Docker/">Docker<span>1</span></a></li>
 		
-			<li><a href="/tags/Pwn/">Pwn<span>3</span></a></li>
+			<li><a href="/tags/Misc/">Misc<span>1</span></a></li>
 		
-			<li><a href="/tags/虚拟机网络/">虚拟机网络<span>1</span></a></li>
+			<li><a href="/tags/Java/">Java<span>1</span></a></li>
 		
-			<li><a href="/tags/应急响应/">应急响应<span>1</span></a></li>
+			<li><a href="/tags/Redis/">Redis<span>1</span></a></li>
+		
+			<li><a href="/tags/同源策略/">同源策略<span>1</span></a></li>
+		
+			<li><a href="/tags/计算机体系架构/">计算机体系架构<span>1</span></a></li>
+		
+			<li><a href="/tags/文件上传/">文件上传<span>1</span></a></li>
+		
+			<li><a href="/tags/软考/">软考<span>1</span></a></li>
+		
+			<li><a href="/tags/隧道技术/">隧道技术<span>1</span></a></li>
+		
+			<li><a href="/tags/FOFA/">FOFA<span>1</span></a></li>
+		
+			<li><a href="/tags/服务器/">服务器<span>1</span></a></li>
 		
 			<li><a href="/tags/Google-Hacking/">Google Hacking<span>1</span></a></li>
 		
-			<li><a href="/tags/指令/">指令<span>3</span></a></li>
+			<li><a href="/tags/HTML/">HTML<span>1</span></a></li>
 		
-			<li><a href="/tags/刷机/">刷机<span>1</span></a></li>
+			<li><a href="/tags/SQL注入/">SQL注入<span>1</span></a></li>
 		
-			<li><a href="/tags/VPN/">VPN<span>1</span></a></li>
+			<li><a href="/tags/windows/">windows<span>1</span></a></li>
 		
-			<li><a href="/tags/root/">root<span>1</span></a></li>
-		
-			<li><a href="/tags/XXE/">XXE<span>1</span></a></li>
-		
-			<li><a href="/tags/网络层/">网络层<span>1</span></a></li>
-		
-			<li><a href="/tags/CSRF/">CSRF<span>1</span></a></li>
-		
-			<li><a href="/tags/SSH/">SSH<span>1</span></a></li>
-		
-			<li><a href="/tags/js/">js<span>4</span></a></li>
-		
-			<li><a href="/tags/业务逻辑漏洞/">业务逻辑漏洞<span>1</span></a></li>
-		
-			<li><a href="/tags/Jenkins/">Jenkins<span>1</span></a></li>
+			<li><a href="/tags/WEB/">WEB<span>1</span></a></li>
 		
 			<li><a href="/tags/PHP/">PHP<span>1</span></a></li>
 		
-			<li><a href="/tags/PWN/">PWN<span>1</span></a></li>
+			<li><a href="/tags/crawlers/">crawlers<span>1</span></a></li>
 		
-			<li><a href="/tags/Nginx/">Nginx<span>1</span></a></li>
+			<li><a href="/tags/栈/">栈<span>1</span></a></li>
 		
-			<li><a href="/tags/应用层/">应用层<span>1</span></a></li>
+			<li><a href="/tags/计算机网络/">计算机网络<span>7</span></a></li>
 		
 		
-		   <li><a href="/tags">...<span>68</span></a></li>
+		   <li><a href="/tags">...<span>66</span></a></li>
 		 
 		</ul>
 	</div>
@@ -488,6 +369,10 @@
 <div class="widget">
   <h4>最新文章</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2026/11/16/VPN抗封锁/" ><i class="fa fa-file-o"></i>VPN抗封锁</a>
+      </li>
     
       <li>
         <a href="/2026/10/30/Java安全/" ><i class="fa fa-file-o"></i>Java安全</a>
@@ -503,10 +388,6 @@
     
       <li>
         <a href="/2026/10/09/BUUCTF-Misc/" ><i class="fa fa-file-o"></i>Misc合集</a>
-      </li>
-    
-      <li>
-        <a href="/2026/09/10/红队思路v1.0.0/" ><i class="fa fa-file-o"></i>红队思路v1.0.0</a>
       </li>
     
   </ul>

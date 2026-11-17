@@ -151,11 +151,11 @@
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
-			<a href="/2025/12/05/计算机网络体系结构/" >计算机网络体系结构</a>
+			<a href="/2024/09/27/Mysql查询/" >Mysql查询</a>
 		</h3>
 		</div>
 	<div class="col-md-4">
-		<div class="date">post @ 2025-12-05  </div>
+		<div class="date">post @ 2024-09-27  </div>
 		</div>
 	</div>
 	
@@ -165,280 +165,61 @@
   <div class="row">
 	
 	
-		<h1 id="1-1-计算机网络概述"><a href="#1-1-计算机网络概述" class="headerlink" title="1.1   计算机网络概述"></a>1.1   计算机网络概述</h1><h2 id="1-1-1-计算机网络的概念"><a href="#1-1-1-计算机网络的概念" class="headerlink" title="1.1.1   计算机网络的概念"></a>1.1.1   计算机网络的概念</h2><ul>
-<li>计算机网络的概念<ul>
-<li>定义<ul>
-<li>将众多分散的、自治的计算机系统，通过通信设备与线路连接起来</li>
-<li>由功能完善的软件实现资源共享和信息传递的系统</li>
-</ul>
-</li>
-<li>组成<ul>
-<li>节点(Node)<ul>
-<li>计算机</li>
-<li>集线器</li>
-<li>交换机</li>
-<li>路由器</li>
-</ul>
-</li>
-<li>链路(Link)</li>
-</ul>
-</li>
-<li>互连网(internet)<ul>
-<li>网络之间通过路由器互连</li>
-<li>构成覆盖范围更广的计算机网络</li>
-</ul>
-</li>
-<li>名词区分<ul>
-<li>internet(互连网)<ul>
-<li>通用名词</li>
-<li>多个计算机网络互连而成</li>
-<li>可使用任意通信协议</li>
-</ul>
-</li>
-<li>Internet(互联网&#x2F;因特网)<ul>
-<li>专用名词</li>
-<li>全球最大、开放的特定计算机网络</li>
-<li>采用TCP&#x2F;IP族作为通信规则</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="1-1-2-计算机网络的组成"><a href="#1-1-2-计算机网络的组成" class="headerlink" title="1.1.2   计算机网络的组成"></a>1.1.2   计算机网络的组成</h2><ul>
-<li>从组成部分看<ul>
-<li>硬件<ul>
-<li>主机(端系统)</li>
-<li>通信链路<ul>
-<li>双绞线</li>
-<li>光纤</li>
-</ul>
-</li>
-<li>交换设备<ul>
-<li>路由器</li>
-<li>交换机</li>
-</ul>
-</li>
-<li>通信处理机<ul>
-<li>网卡</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>软件<ul>
-<li>资源共享软件</li>
-<li>工具软件<ul>
-<li>E-mail程序</li>
-<li>FTP程序</li>
-<li>聊天程序</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>协议<ul>
-<li>网络传输数据规范</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>从工作方式看(Internet)<ul>
-<li>边缘部分<ul>
-<li>用户直接使用的主机</li>
-<li>功能<ul>
-<li>通信<ul>
-<li>数据传输</li>
-<li>音频&#x2F;视频</li>
-</ul>
-</li>
-<li>资源共享</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>核心部分<ul>
-<li>网络和路由器</li>
-<li>功能<ul>
-<li>提供连通性</li>
-<li>交换服务</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>从功能组成看<ul>
-<li>通信子网<ul>
-<li>组成<ul>
-<li>传输介质</li>
-<li>通信设备</li>
-<li>网络协议</li>
-</ul>
-</li>
-<li>功能<ul>
-<li>数据传输</li>
-<li>交换</li>
-<li>控制</li>
-<li>存储</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>资源子网<ul>
-<li>组成<ul>
-<li>资源共享设备</li>
-<li>软件</li>
-</ul>
-</li>
-<li>功能<ul>
-<li>提供硬件资源共享服务</li>
-<li>提供软件资源共享服务</li>
-<li>提供数据资源共享服务</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="1-1-3-计算机网络的功能"><a href="#1-1-3-计算机网络的功能" class="headerlink" title="1.1.3    计算机网络的功能"></a>1.1.3    计算机网络的功能</h2><ul>
-<li>数据通信<ul>
-<li>最基本和最重要的功能</li>
-<li>实现联网计算机之间各种信息的传输</li>
-<li>应用示例<ul>
-<li>文件传输</li>
-<li>电子邮件</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>资源共享<ul>
-<li>共享类型<ul>
-<li>软件共享</li>
-<li>数据共享</li>
-<li>硬件共享</li>
-</ul>
-</li>
-<li>优势<ul>
-<li>互通有无、分工协作</li>
-<li>提高资源利用率</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>分布式处理<ul>
-<li>定义<ul>
-<li>将复杂任务分配给网络中空闲计算机</li>
-</ul>
-</li>
-<li>优势<ul>
-<li>提高系统利用率</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>提高可靠性<ul>
-<li>定义<ul>
-<li>各台计算机互为替代机</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>负载均衡<ul>
-<li>定义<ul>
-<li>均衡分配工作任务给各台计算机</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>其他功能<ul>
-<li>电子化办公与服务</li>
-<li>远程教育</li>
-<li>娱乐功能</li>
-<li>社会效益<ul>
-<li>满足社会需求</li>
-<li>方便学习、工作和生活</li>
-<li>巨大经济效益</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="1-1-4-电路交换、报文交换与分组交换"><a href="#1-1-4-电路交换、报文交换与分组交换" class="headerlink" title="1.1.4    电路交换、报文交换与分组交换"></a>1.1.4    电路交换、报文交换与分组交换</h2><ul>
-<li>电路交换<ul>
-<li>特点<ul>
-<li>建立连接、传输数据、释放连接</li>
-<li>物理通信路径独占</li>
-</ul>
-</li>
-<li>优点<ul>
-<li>通信时延小</li>
-<li>有序传输</li>
-<li>没有冲突</li>
-<li>实时性强</li>
-</ul>
-</li>
-<li>缺点<ul>
-<li>建立连接时间长</li>
-<li>线路利用率低</li>
-<li>灵活性差</li>
-<li>难以实现差错控制</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>报文交换<ul>
-<li>特点<ul>
-<li>存储转发技术</li>
-<li>报文为单位传输</li>
-</ul>
-</li>
-<li>优点<ul>
-<li>无建立连接时延</li>
-<li>灵活分配线路</li>
-<li>线路利用率高</li>
-<li>支持差错控制</li>
-</ul>
-</li>
-<li>缺点<ul>
-<li>转发时延高</li>
-<li>缓存开销大</li>
-<li>错误处理低效</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>分组交换<ul>
-<li>特点<ul>
-<li>存储转发技术</li>
-<li>将报文划分为分组</li>
-</ul>
-</li>
-<li>优点<ul>
-<li>方便存储管理</li>
-<li>传输效率高</li>
-<li>减少出错概率和重传代价</li>
-</ul>
-</li>
-<li>缺点<ul>
-<li>存在存储转发时延</li>
-<li>需要传输额外信息量</li>
-<li>可能出现失序、丢失或重复分组</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>三种交换方式比较<ul>
-<li>电路交换适合连续大量数据传输</li>
-<li>报文交换和分组交换信道利用率更高</li>
-<li>分组交换更适合突发式数据传送</li>
-</ul>
-</li>
-</ul>
-<h2 id="1-1-5-计算机网络的分类"><a href="#1-1-5-计算机网络的分类" class="headerlink" title="1.1.5    计算机网络的分类"></a>1.1.5    计算机网络的分类</h2>
+		<h1 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h1><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span>,<span class="keyword">show</span>,<span class="keyword">create</span>,<span class="keyword">drop</span>,<span class="keyword">alter</span>,<span class="keyword">as</span>（起别名）,<span class="keyword">grant</span>,<span class="keyword">revoke</span>,</span><br></pre></td></tr></table></figure>
+
+<h1 id="mysql用户操作"><a href="#mysql用户操作" class="headerlink" title="mysql用户操作"></a><code>mysql用户操作</code></h1><h2 id="一、用户存在查询"><a href="#一、用户存在查询" class="headerlink" title="一、用户存在查询"></a>一、用户存在查询</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="number">1.</span>直接查询（查询mysql库）：</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">User</span>, Host <span class="keyword">from</span> mysql.user <span class="keyword">where</span> <span class="keyword">user</span> <span class="operator">=</span> <span class="string">&#x27;要查询的用户名&#x27;</span> <span class="keyword">and</span> Host <span class="operator">=</span> <span class="string">&#x27;对应的主机&#x27;</span>;</span><br><span class="line"><span class="operator">/</span><span class="operator">/</span>注意具体字段名字的大小写，要与mysql库中匹配</span><br><span class="line">示例：</span><br><span class="line"><span class="operator">&gt;&gt;</span><span class="keyword">select</span> <span class="keyword">User</span>,Host <span class="keyword">from</span> mysql.user <span class="keyword">where</span> <span class="keyword">User</span><span class="operator">=</span><span class="string">&#x27;root&#x27;</span> <span class="keyword">and</span> Host<span class="operator">=</span><span class="string">&#x27;localhost&#x27;</span>;<span class="operator">/</span><span class="operator">/</span>查询为空则不存在</span><br><span class="line"><span class="operator">/</span><span class="operator">/</span>查询所有用户</span><br><span class="line"><span class="comment">-- 查看所有用户（显示用户名和允许连接的主机）</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">user</span>, Host <span class="keyword">from</span> mysql.user; </span><br><span class="line"><span class="operator">/</span><span class="operator">/</span>使用<span class="keyword">exists</span>函数</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">exists</span>(<span class="keyword">select</span> <span class="keyword">User</span>,Host <span class="keyword">from</span> mysql.user <span class="keyword">where</span> <span class="keyword">User</span><span class="operator">=</span><span class="string">&#x27;root&#x27;</span> <span class="keyword">and</span> Host<span class="operator">=</span><span class="string">&#x27;localhost&#x27;</span>); <span class="operator">/</span><span class="operator">/</span>用户存在返回<span class="number">1</span>，不存在返回<span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>间接查询（权限查询）<span class="comment">--&gt;一下会提到，暂不解释</span></span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<h2 id="二、用户创建与删除"><a href="#二、用户创建与删除" class="headerlink" title="二、用户创建与删除"></a>二、用户创建与删除</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="operator">/</span><span class="operator">/</span>创建语法格式</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">user</span> <span class="string">&#x27;用户名&#x27;</span>@<span class="string">&#x27;主机&#x27;</span> identified <span class="keyword">by</span> <span class="string">&#x27;密码&#x27;</span>;</span><br><span class="line"><span class="operator">&gt;&gt;</span><span class="string">&#x27;用户名&#x27;</span>@<span class="string">&#x27;主机&#x27;</span>：</span><br><span class="line"><span class="operator">&gt;</span>用户名 是自定义的账号</span><br><span class="line"><span class="operator">&gt;</span>主机 限制用户从哪里连接（localhost 仅本地、<span class="operator">%</span> 允许任意主机、固定ip地址、模糊网段、CIDR 子网）</span><br><span class="line"></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span>删除语法</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">user</span> <span class="string">&#x27;用户名&#x27;</span>@<span class="string">&#x27;主机&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>主机格式</th>
+<th>含义</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&#39;user&#39;@&#39;localhost&#39;</code></td>
+<td>仅本机连接</td>
+<td>本地管理用户（安全）</td>
+</tr>
+<tr>
+<td><code>&#39;user&#39;@&#39;192.168.1.100&#39;</code></td>
+<td>固定 IP 连接</td>
+<td>特定机器的服务账号</td>
+</tr>
+<tr>
+<td><code>&#39;user2&#39;@&#39;db.server.com&#39;</code></td>
+<td>固定域名</td>
+<td></td>
+</tr>
+<tr>
+<td><code>&#39;user&#39;@&#39;192.168.1.%&#39;</code> （也可使用_）</td>
+<td>模糊网段连接</td>
+<td>企业内网用户（控制一个网段）</td>
+</tr>
+<tr>
+<td><code>&#39;user&#39;@&#39;192.168.1.0/24&#39;</code></td>
+<td>CIDR 子网连接</td>
+<td>精准网段控制（专业场景）</td>
+</tr>
+<tr>
+<td><code>&#39;user&#39;@&#39;%&#39;</code></td>
+<td>任意主机连接</td>
+<td>测试环境（生产慎用）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>用 CREATE USER 创建的用户，默认几乎没有实际操作权限，仅具备最基础的登录能力，可执行少量无需特殊权限的操作<br>例如：</p>
+<blockquote>
+<p>SHOW ENGINES（查看所有存储引擎列表 ）<br>SHOW CHARACTER SET（查看字符集信息 ）<br>这类语句，用于了解 MySQL 服务器的基础配置，无需额外权限就能执行。</p>
+</blockquote>
+</blockquote>
 	
 	</div>
-  <a type="button" href="/2025/12/05/计算机网络体系结构/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2024/09/27/Mysql查询/#more" class="btn btn-default more">阅读此文</a>
 </div>
 
 		
@@ -448,11 +229,11 @@
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
-			<a href="/2025/12/05/物理层/" >物理层</a>
+			<a href="/2024/09/10/Blog/" >Blog</a>
 		</h3>
 		</div>
 	<div class="col-md-4">
-		<div class="date">post @ 2025-12-05  </div>
+		<div class="date">post @ 2024-09-10  </div>
 		</div>
 	</div>
 	
@@ -462,380 +243,27 @@
   <div class="row">
 	
 	
-		<h1 id="2-1-通信基础"><a href="#2-1-通信基础" class="headerlink" title="2.1   通信基础"></a>2.1   通信基础</h1><h2 id="2-1-1-基本概念"><a href="#2-1-1-基本概念" class="headerlink" title="2.1.1   基本概念"></a>2.1.1   基本概念</h2><ul>
-<li>①. 数据、信号与码元<ul>
-<li>通信目的：传输信息（文字、图像、视频等）</li>
-<li>数据：传送信息的实体</li>
-<li>信号：数据的电气或电磁表现</li>
-<li>分类：<ul>
-<li>模拟数据&#x2F;信号：取值连续</li>
-<li>数字数据&#x2F;信号：取值离散</li>
-</ul>
-</li>
-<li>码元：<ul>
-<li>定义：固定时长的信号波形表示k进制数</li>
-<li>码元宽度：信号周期</li>
-<li>信息量：1码元可携带若干比特</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>②. 信源、信道与信宿<ul>
-<li>通信系统模型：<ul>
-<li>信源：产生和发送数据的源头</li>
-<li>信道：信号的传输介质<ul>
-<li>分类：<ul>
-<li>按信号形式：模拟信道、数字信道</li>
-<li>按传输介质：无线信道、有线信道</li>
-</ul>
-</li>
-<li>信号类型：<ul>
-<li>基带信号：未调制的原始电信号</li>
-<li>宽带信号：调制后的频分复用模拟信号</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>信宿：接收数据的终点</li>
-</ul>
-</li>
-<li>数据传输方式：<ul>
-<li>串行传输：逐比特按序传输（长距离）</li>
-<li>并行传输：多比特同时传输（近距离）</li>
-</ul>
-</li>
-<li>通信交互方式：<ul>
-<li>单向通信：单方向（广播）</li>
-<li>半双工通信：双向但不能同时</li>
-<li>全双工通信：双向同时</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>③. 速率、波特与带宽<ul>
-<li>速率：<ul>
-<li>码元传输速率（波特率）：每秒传输码元数（Baud）</li>
-<li>信息传输速率（比特率）：每秒传输比特数（b&#x2F;s）</li>
-<li>关系：比特率 &#x3D; 波特率 × n（n为每码元比特数）</li>
-</ul>
-</li>
-<li>带宽：<ul>
-<li>模拟系统：频率范围（Hz）</li>
-<li>计算机网络：最高数据率（b&#x2F;s）</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="2-1-2-信道的极限容量"><a href="#2-1-2-信道的极限容量" class="headerlink" title="2.1.2    信道的极限容量"></a>2.1.2    信道的极限容量</h2><ul>
-<li>信道失真影响<ul>
-<li>失真不影响通信质量的条件</li>
-<li>导致严重失真的因素<ul>
-<li>码元传输速率高</li>
-<li>信号传输距离远</li>
-<li>噪声干扰大</li>
-<li>传输介质质量差</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>奈奎斯特定理(奈氏准则)<ul>
-<li>适用场景: 理想低通(无噪声、带宽有限)信道</li>
-<li>核心公式: 极限数据传输速率&#x3D;2Wlog₂V (b&#x2F;s)</li>
-<li>关键参数<ul>
-<li>W: 信道频率带宽(Hz)</li>
-<li>V: 码元离散电平数量</li>
-</ul>
-</li>
-<li>重要结论<br>①. 码元传输速率存在上限<br>②. 带宽越大传输能力越强<br>③. 只限制码元速率不限制信息速率</li>
-<li>提高数据速率的方法: 多元制调制</li>
-</ul>
-</li>
-<li>香农定理<ul>
-<li>适用场景: 带宽受限且有高斯噪声的信道</li>
-<li>核心公式: 极限数据传输速率&#x3D;Wlog₂(1+S&#x2F;N) (b&#x2F;s)</li>
-<li>关键参数<ul>
-<li>W: 信道频率带宽(Hz)</li>
-<li>S: 信号平均功率</li>
-<li>N: 高斯噪声功率</li>
-</ul>
-</li>
-<li>信噪比表示方法<ul>
-<li>无单位记法: S&#x2F;N</li>
-<li>分贝记法: 10log₁₀(S&#x2F;N) dB</li>
-</ul>
-</li>
-<li>重要结论<br>①. 带宽&#x2F;信噪比越大速率越高<br>②. 给定条件下速率上限确定<br>③. 低于极限速率可实现无差错传输<br>④. 实际速率远低于理论极限</li>
-</ul>
-</li>
-<li>奈氏准则 vs 香农定理<ul>
-<li>奈氏准则: 仅考虑带宽与码元速率</li>
-<li>香农定理: 同时考虑带宽和信噪比</li>
-<li>共同结论: 单个码元携带比特数有限</li>
-</ul>
-</li>
-</ul>
-<h2 id="2-1-3-编码与调制"><a href="#2-1-3-编码与调制" class="headerlink" title="2.1.3   编码与调制"></a>2.1.3   编码与调制</h2><ul>
-<li>信号与数据转换<ul>
-<li>编码: 数据→数字信号</li>
-<li>调制: 数据→模拟信号</li>
-</ul>
-</li>
-<li>数字数据转换方式<ul>
-<li>数字发送器→数字信号</li>
-<li>调制器→模拟信号</li>
-</ul>
-</li>
-<li>模拟数据转换方式<ul>
-<li>PCM编码器→数字信号</li>
-<li>放大器调制器→模拟信号</li>
-</ul>
-</li>
-<li>四种编码与调制方式<ul>
-<li>数字数据编码为数字信号<ul>
-<li>常用编码方式<ul>
-<li>归零(RZ)编码<ul>
-<li>特点: 码元中间跳变到零电平</li>
-<li>优点: 提供自同步机制</li>
-<li>缺点: 占用带宽</li>
-</ul>
-</li>
-<li>非归零(NRZ)编码<ul>
-<li>特点: 不归零</li>
-<li>优点: 编码效率最高</li>
-<li>缺点: 需要时钟线同步</li>
-</ul>
-</li>
-<li>反向非归零(NRZI)编码<ul>
-<li>特点: 电平跳变表示0,不变表示1</li>
-<li>应用: USB 2.0</li>
-</ul>
-</li>
-<li>曼彻斯特编码<ul>
-<li>特点: 码元中间电平跳变</li>
-<li>应用: 标准以太网</li>
-</ul>
-</li>
-<li>差分曼彻斯特编码<ul>
-<li>特点: 码元开始处跳变表示0</li>
-<li>优点: 抗干扰能力强</li>
-<li>应用: 宽带高速网</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>模拟数据编码为数字信号<ul>
-<li>步骤<ul>
-<li>采样<ul>
-<li>奈奎斯特定理: 采样频率≥2倍最大频率</li>
-</ul>
-</li>
-<li>量化<ul>
-<li>电平幅值→离散数字量</li>
-</ul>
-</li>
-<li>编码<ul>
-<li>离散整数→二进制编码</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>应用: PCM编码</li>
-</ul>
-</li>
-<li>数字数据调制为模拟信号<ul>
-<li>调制方式<ul>
-<li>调幅(AM)&#x2F;幅移键控(ASK)<ul>
-<li>特点: 改变振幅表示1和0</li>
-<li>缺点: 抗干扰能力差</li>
-</ul>
-</li>
-<li>调频(FM)&#x2F;频移键控(FSK)<ul>
-<li>特点: 改变频率表示1和0</li>
-<li>优点: 抗干扰能力强</li>
-</ul>
-</li>
-<li>调相(PM)&#x2F;相移键控(PSK)<ul>
-<li>特点: 改变相位表示1和0</li>
-<li>变种: DPSK(差分相移键控)</li>
-</ul>
-</li>
-<li>正交幅度调制(QAM)<ul>
-<li>特点: AM与PM结合</li>
-<li>数据传输速率公式: R&#x3D;Blog₂(mn)</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>模拟数据调制为模拟信号<ul>
-<li>应用<ul>
-<li>电话机和本地局交换机</li>
-</ul>
-</li>
-<li>技术: 频分复用(FDM)</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="2-2-传输介质"><a href="#2-2-传输介质" class="headerlink" title="2.2   传输介质"></a>2.2   传输介质</h1><h2 id="2-2-1-双绞线、同轴电缆、光纤与无线传输介质"><a href="#2-2-1-双绞线、同轴电缆、光纤与无线传输介质" class="headerlink" title="2.2.1    双绞线、同轴电缆、光纤与无线传输介质"></a>2.2.1    双绞线、同轴电缆、光纤与无线传输介质</h2><ul>
-<li>传输介质分类<ul>
-<li>导向传输介质<ul>
-<li>铜线或光纤</li>
-<li>电磁波沿固体介质传播</li>
-</ul>
-</li>
-<li>非导向传输介质<ul>
-<li>自由空间（空气、真空或海水）</li>
-<li>无线传输</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>①. 双绞线<ul>
-<li>特点<ul>
-<li>最常用传输介质</li>
-<li>两根绝缘铜导线绞合</li>
-<li>减少电磁干扰</li>
-</ul>
-</li>
-<li>分类<ul>
-<li>屏蔽双绞线(STP)</li>
-<li>非屏蔽双绞线(UTP)</li>
-</ul>
-</li>
-<li>性能<ul>
-<li>价格便宜</li>
-<li>模拟&#x2F;数字传输</li>
-<li>通信距离：几千米到数十千米</li>
-<li>带宽取决于铜线粗细和传输距离</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>②. 同轴电缆<ul>
-<li>结构<ul>
-<li>内导体</li>
-<li>绝缘层</li>
-<li>外导体屏蔽层</li>
-<li>绝缘保护套层</li>
-</ul>
-</li>
-<li>分类<ul>
-<li>50Ω同轴电缆<ul>
-<li>传送基带数字信号</li>
-<li>早期局域网应用</li>
-</ul>
-</li>
-<li>75Ω同轴电缆<ul>
-<li>传送宽带信号</li>
-<li>有线电视系统应用</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>特点<ul>
-<li>良好抗干扰特性</li>
-<li>传输较高速率数据</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>③. 光纤<ul>
-<li>原理<ul>
-<li>利用光脉冲通信</li>
-<li>1：有光脉冲</li>
-<li>0：无光脉冲</li>
-</ul>
-</li>
-<li>结构<ul>
-<li>纤芯（8-100μm）</li>
-<li>包层（较低折射率）</li>
-</ul>
-</li>
-<li>传输原理<ul>
-<li>全反射现象</li>
-</ul>
-</li>
-<li>分类<ul>
-<li>多模光纤<ul>
-<li>多条光线传输</li>
-<li>适合近距离</li>
-</ul>
-</li>
-<li>单模光纤<ul>
-<li>单波长传输</li>
-<li>适合远距离</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>优点<ul>
-<li>通信容量大</li>
-<li>传输损耗小</li>
-<li>抗干扰性能好</li>
-<li>无串音干扰</li>
-<li>体积小重量轻</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>④. 无线传输介质<ul>
-<li>应用场景<ul>
-<li>蜂窝移动电话</li>
-<li>无线局域网(WLAN)</li>
-<li>特殊场合移动联网</li>
-</ul>
-</li>
-<li>(1) 无线电波<ul>
-<li>特点<ul>
-<li>穿透能力强</li>
-<li>传输距离长</li>
-<li>全向传播</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>(2) 微波、红外线和激光<ul>
-<li>共同特点<ul>
-<li>需要视线通路</li>
-<li>指向性强</li>
-</ul>
-</li>
-<li>微波通信<ul>
-<li>频率：2-40GHz</li>
-<li>容量大</li>
-<li>直线传播</li>
-<li>需中继站</li>
-</ul>
-</li>
-<li>卫星通信<ul>
-<li>地球同步卫星中继</li>
-<li>优点<ul>
-<li>容量大</li>
-<li>距离远</li>
-<li>覆盖广</li>
-</ul>
-</li>
-<li>缺点<ul>
-<li>保密性差</li>
-<li>传播时延长</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+		<h1 id="从CSDN迁移博客到Hexo-Next-GitHub-Pages"><a href="#从CSDN迁移博客到Hexo-Next-GitHub-Pages" class="headerlink" title="从CSDN迁移博客到Hexo+Next+GitHub Pages"></a>从CSDN迁移博客到Hexo+Next+GitHub Pages</h1><p>本指南专为「从CSDN导出博客，部署到Hexo+Next主题GitHub Pages」的用户设计，全面解决：</p>
+<ul>
+<li>CSDN导出图片不显示问题</li>
+<li>Hexo配置错误导致部署失败</li>
+<li>路径解析和缓存冲突</li>
+<li>GitHub Pages部署疑难杂症</li>
+<li>博客结构混乱、功能缺失、体验不佳</li>
+</ul>
+<h1 id="一、环境准备与项目初始化"><a href="#一、环境准备与项目初始化" class="headerlink" title="一、环境准备与项目初始化"></a>一、环境准备与项目初始化</h1><p><strong>1.1 必备环境安装</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装Node.js（必需v14+，推荐v18+）</span></span><br><span class="line"><span class="comment"># 官网下载：https://nodejs.org/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装Git</span></span><br><span class="line"><span class="comment"># 官网下载：https://git-scm.com/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证安装</span></span><br><span class="line">node --version</span><br><span class="line">npm --version</span><br><span class="line">git --version</span><br></pre></td></tr></table></figure>
+
+<p><strong>1.2 GitHub仓库准备</strong></p>
+<ul>
+<li>创建一个名为 <code>你的用户名.github.io</code> 的仓库（必须是此格式）。</li>
+<li><strong>推荐</strong>：配置SSH密钥以实现免密推送。<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;your_email@example.com&quot;</span></span><br><span class="line"><span class="comment"># 将 ~/.ssh/id_rsa.pub 内容添加到 GitHub 的 SSH Keys 设置中</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>1.3 Hexo项目初始化</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装Hexo命令行工具</span></span><br><span class="line">npm install -g hexo-cli</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建博客项目</span></span><br><span class="line">hexo init myBlog</span><br><span class="line"><span class="built_in">cd</span> myBlog</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装Next主题</span></span><br><span class="line">npm install hexo-theme-next --save</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装部署插件</span></span><br><span class="line">npm install hexo-deployer-git --save</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装搜索插件（用于本地搜索）</span></span><br><span class="line">npm install hexo-generator-searchdb --save</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装站点地图插件（用于SEO）</span></span><br><span class="line">npm install hexo-generator-sitemap --save</span><br><span class="line">npm install hexo-generator-baidu-sitemap --save  <span class="comment"># 可选，百度专用</span></span><br></pre></td></tr></table></figure>
 	
 	</div>
-  <a type="button" href="/2025/12/05/物理层/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2024/09/10/Blog/#more" class="btn btn-default more">阅读此文</a>
 </div>
 
 		
@@ -854,7 +282,7 @@
 
         <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
  
-       <a href="/page/23/" type="button" class="btn btn-default ">下一页<i class="fa fa-arrow-circle-o-right"></i></a>     
+          <a type="button" class="btn btn-default disabled">下一页<i class="fa fa-arrow-circle-o-right"></i></a>
         
 
   
@@ -885,7 +313,7 @@
 <div class="widget-wrap">
   <h3 class="widget-title" style="font-family: monospace; font-size: 1.3em; font-weight: bold; color: #fff;">Categories</h3>
   <div class="widget category-tree">
-    <ul class="hacker-category-list"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/408/">408</a><span class="hacker-category-list-count">7</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/408/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="hacker-category-list-count">7</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/AI/">AI</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/AI/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="hacker-category-list-count">2</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/CTF/">CTF</a><span class="hacker-category-list-count">3</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/CTF/BUUCTF/">BUUCTF</a><span class="hacker-category-list-count">3</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/CTF/BUUCTF/Misc/">Misc</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/CTF/BUUCTF/PWN/">PWN</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/CTF/BUUCTF/WEB/">WEB</a><span class="hacker-category-list-count">1</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%9F%A5%E8%AF%86%E6%9D%82%E7%A2%8E/">知识杂碎</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a><span class="hacker-category-list-count">39</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/APP%E6%B8%97%E9%80%8F/">APP渗透</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Java%E5%AE%89%E5%85%A8/">Java安全</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC/">SRC</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">信息收集</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%86%85%E7%BD%91/">内网</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="hacker-category-list-count">14</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/">渗透&&攻防</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/%E7%BA%A2%E9%98%9F/">红队</a><span class="hacker-category-list-count">1</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/">漏洞</a><span class="hacker-category-list-count">16</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/PWN/">PWN</a><span class="hacker-category-list-count">3</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB/">WEB</a><span class="hacker-category-list-count">10</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB/Top10/">Top10</a><span class="hacker-category-list-count">10</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/%E5%A4%8D%E7%8E%B0/">复现</a><span class="hacker-category-list-count">3</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E8%AF%81%E4%B9%A6/">证书</a><span class="hacker-category-list-count">1</span></li></ul>
+    <ul class="hacker-category-list"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/408/">408</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/408/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="hacker-category-list-count">2</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/AI/">AI</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/AI/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="hacker-category-list-count">2</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/CTF/">CTF</a><span class="hacker-category-list-count">3</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/CTF/BUUCTF/">BUUCTF</a><span class="hacker-category-list-count">3</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/CTF/BUUCTF/Misc/">Misc</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/CTF/BUUCTF/PWN/">PWN</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/CTF/BUUCTF/WEB/">WEB</a><span class="hacker-category-list-count">1</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%9F%A5%E8%AF%86%E6%9D%82%E7%A2%8E/">知识杂碎</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a><span class="hacker-category-list-count">32</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/APP%E6%B8%97%E9%80%8F/">APP渗透</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Java%E5%AE%89%E5%85%A8/">Java安全</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC/">SRC</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">信息收集</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%86%85%E7%BD%91/">内网</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="hacker-category-list-count">7</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/">渗透&&攻防</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/%E7%BA%A2%E9%98%9F/">红队</a><span class="hacker-category-list-count">1</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/">漏洞</a><span class="hacker-category-list-count">16</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/PWN/">PWN</a><span class="hacker-category-list-count">3</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB/">WEB</a><span class="hacker-category-list-count">10</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB/Top10/">Top10</a><span class="hacker-category-list-count">10</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/%E5%A4%8D%E7%8E%B0/">复现</a><span class="hacker-category-list-count">3</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E8%AF%81%E4%B9%A6/">证书</a><span class="hacker-category-list-count">1</span></li></ul>
   </div>
 </div>
 
@@ -937,48 +365,48 @@
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/CSS/">CSS<span>1</span></a></li>
-		
-			<li><a href="/tags/Pwn/">Pwn<span>3</span></a></li>
-		
-			<li><a href="/tags/指令/">指令<span>3</span></a></li>
-		
-			<li><a href="/tags/软考/">软考<span>1</span></a></li>
-		
-			<li><a href="/tags/Java安全/">Java安全<span>1</span></a></li>
-		
-			<li><a href="/tags/SQL注入/">SQL注入<span>1</span></a></li>
-		
-			<li><a href="/tags/红队/">红队<span>1</span></a></li>
-		
-			<li><a href="/tags/域渗透/">域渗透<span>2</span></a></li>
-		
-			<li><a href="/tags/认证/">认证<span>2</span></a></li>
-		
-			<li><a href="/tags/python/">python<span>1</span></a></li>
-		
-			<li><a href="/tags/PWN/">PWN<span>1</span></a></li>
-		
-			<li><a href="/tags/SRC/">SRC<span>2</span></a></li>
+			<li><a href="/tags/CORS/">CORS<span>2</span></a></li>
 		
 			<li><a href="/tags/root/">root<span>1</span></a></li>
 		
-			<li><a href="/tags/邮箱解析/">邮箱解析<span>1</span></a></li>
+			<li><a href="/tags/hook/">hook<span>1</span></a></li>
 		
-			<li><a href="/tags/HTML/">HTML<span>1</span></a></li>
-		
-			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
+			<li><a href="/tags/WEB/">WEB<span>1</span></a></li>
 		
 			<li><a href="/tags/信息安全工程师/">信息安全工程师<span>1</span></a></li>
 		
-			<li><a href="/tags/业务逻辑漏洞/">业务逻辑漏洞<span>1</span></a></li>
+			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
 		
-			<li><a href="/tags/CORS/">CORS<span>2</span></a></li>
+			<li><a href="/tags/VPN/">VPN<span>1</span></a></li>
 		
-			<li><a href="/tags/计算机体系架构/">计算机体系架构<span>1</span></a></li>
+			<li><a href="/tags/刷机/">刷机<span>1</span></a></li>
+		
+			<li><a href="/tags/Misc/">Misc<span>1</span></a></li>
+		
+			<li><a href="/tags/js/">js<span>2</span></a></li>
+		
+			<li><a href="/tags/XXE/">XXE<span>1</span></a></li>
+		
+			<li><a href="/tags/Google-Hacking/">Google Hacking<span>1</span></a></li>
+		
+			<li><a href="/tags/Mysql/">Mysql<span>1</span></a></li>
+		
+			<li><a href="/tags/Redis/">Redis<span>1</span></a></li>
+		
+			<li><a href="/tags/CSRF/">CSRF<span>1</span></a></li>
+		
+			<li><a href="/tags/Hexo/">Hexo<span>1</span></a></li>
+		
+			<li><a href="/tags/隧道技术/">隧道技术<span>1</span></a></li>
+		
+			<li><a href="/tags/同源策略/">同源策略<span>1</span></a></li>
+		
+			<li><a href="/tags/CNN与RNN基础/">CNN与RNN基础<span>1</span></a></li>
+		
+			<li><a href="/tags/栈/">栈<span>1</span></a></li>
 		
 		
-		   <li><a href="/tags">...<span>66</span></a></li>
+		   <li><a href="/tags">...<span>60</span></a></li>
 		 
 		</ul>
 	</div>

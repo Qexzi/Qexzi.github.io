@@ -151,6 +151,40 @@
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
+			<a href="/2026/11/19/从小程序杀到web后台的心路历程/" >从小程序杀到web后台的心路历程</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2026-11-19  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="小发现"><a href="#小发现" class="headerlink" title="小发现"></a>小发现</h1><p>web端太难挖了，找找小程序吧<br><img src="/images/%E4%BB%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9D%80%E5%88%B0web%E5%90%8E%E5%8F%B0%E7%9A%84%E5%BF%83%E8%B7%AF%E5%8E%86%E7%A8%8B/image_1.png" alt="alt text"></p>
+<p>burp抓包<br><img loading="lazy" decoding="async" src="/images/%E4%BB%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9D%80%E5%88%B0web%E5%90%8E%E5%8F%B0%E7%9A%84%E5%BF%83%E8%B7%AF%E5%8E%86%E7%A8%8B/image_2.png" alt="alt text"></p>
+<p>可以看到有一个特征很明显的路径 “&#x2F;sys”, 这大概率是使用了框架<br>然后我查询了各种主流框架的接口特征，发现这与jeecgboot框架高度相似</p>
+<p>那就尝试爆破一下接口<br><img loading="lazy" decoding="async" src="/images/%E4%BB%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9D%80%E5%88%B0web%E5%90%8E%E5%8F%B0%E7%9A%84%E5%BF%83%E8%B7%AF%E5%8E%86%E7%A8%8B/image_3.png" alt="alt text"></p>
+<p>返回很多有意思的结果</p>
+<p>swagger爆红，但是很可惜，不可用（没有权限）。 然后我就逐个逐个接口的去尝试</p>
+<hr>
+<h1 id="关键越权接口"><a href="#关键越权接口" class="headerlink" title="关键越权接口"></a>关键越权接口</h1><h2 id="sys-user-list"><a href="#sys-user-list" class="headerlink" title="&#x2F;sys&#x2F;user&#x2F;list"></a>&#x2F;sys&#x2F;user&#x2F;list</h2>
+	
+	</div>
+  <a type="button" href="/2026/11/19/从小程序杀到web后台的心路历程/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
 			<a href="/2026/11/16/VPN抗封锁/" >VPN抗封锁</a>
 		</h3>
 		</div>
@@ -176,40 +210,6 @@
 	
 	</div>
   <a type="button" href="/2026/11/16/VPN抗封锁/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="/2026/10/30/Java安全/" >Java安全</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2026-10-30  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>走一遍过程</p>
-<hr>
-<h1 id="一、反射"><a href="#一、反射" class="headerlink" title="一、反射"></a>一、反射</h1><p><strong>有一个疑问：反射在原生 Java 里到底是为了处理什么问题？</strong></p>
-<p>编译期静态类型系统无法覆盖、但运行时又必须按名字或元数据去操作类和对象”的动态性问题</p>
-<p>普通 Java 代码在编译时就必须知道要 new 哪个类、调用哪个方法、访问哪个字段，而反射让程序在运行时才根据类名、方法名、字段名、注解、配置或外部输入，去加载类、获取构造器、创建实例、调用方法、读写字段、检查注解和泛型&#x2F;继承信息，从而让框架和基础设施代码能够用一套通用逻辑处理任意类型，而不是为每个业务类写死代码。</p>
-<p>典型场景包括 Spring 这类容器根据配置实例化 Bean 并注入依赖、JSON&#x2F;ORM 框架按字段名序列化和映射对象、JUnit 发现并执行带 @Test 的方法、JDBC 通过类名加载驱动、动态代理在方法调用前后织入逻辑、插件系统按字符串加载实现类，以及测试和工具代码访问私有或受保护成员。</p>
-<p>它还要处理类加载时机、访问权限、泛型擦除后信息有限、注解保留策略、异常包装、性能开销、安全限制和 Java 模块化下的开放性问题。但反射本身不实现业务逻辑，它只是提供“运行时动态访问类型信息与成员”的能力；能用接口多态、工厂、函数式接口等静态手段解决的地方通常不该用反射，反射主要留给框架、容器、序列化、代理、测试工具这类必须在编译期对未知类型做通用处理的底层代码。</p>
-<p>用例子来引入，写了一个 <code>Dog 类</code></p>
-	
-	</div>
-  <a type="button" href="/2026/10/30/Java安全/#more" class="btn btn-default more">阅读此文</a>
 </div>
 
 		
@@ -259,7 +259,7 @@
 <div class="widget-wrap">
   <h3 class="widget-title" style="font-family: monospace; font-size: 1.3em; font-weight: bold; color: #fff;">Categories</h3>
   <div class="widget category-tree">
-    <ul class="hacker-category-list"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/408/">408</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/408/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="hacker-category-list-count">2</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/AI/">AI</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/AI/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="hacker-category-list-count">2</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/CTF/">CTF</a><span class="hacker-category-list-count">3</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/CTF/BUUCTF/">BUUCTF</a><span class="hacker-category-list-count">3</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/CTF/BUUCTF/Misc/">Misc</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/CTF/BUUCTF/PWN/">PWN</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/CTF/BUUCTF/WEB/">WEB</a><span class="hacker-category-list-count">1</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%9F%A5%E8%AF%86%E6%9D%82%E7%A2%8E/">知识杂碎</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a><span class="hacker-category-list-count">31</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/APP%E6%B8%97%E9%80%8F/">APP渗透</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Java%E5%AE%89%E5%85%A8/">Java安全</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC/">SRC</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">信息收集</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%86%85%E7%BD%91/">内网</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="hacker-category-list-count">7</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/">渗透&&攻防</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/%E7%BA%A2%E9%98%9F/">红队</a><span class="hacker-category-list-count">1</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/">漏洞</a><span class="hacker-category-list-count">15</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/PWN/">PWN</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB/">WEB</a><span class="hacker-category-list-count">10</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB/Top10/">Top10</a><span class="hacker-category-list-count">10</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/%E5%A4%8D%E7%8E%B0/">复现</a><span class="hacker-category-list-count">3</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E8%AF%81%E4%B9%A6/">证书</a><span class="hacker-category-list-count">1</span></li></ul>
+    <ul class="hacker-category-list"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/408/">408</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/408/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="hacker-category-list-count">2</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/AI/">AI</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/AI/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="hacker-category-list-count">2</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/CTF/">CTF</a><span class="hacker-category-list-count">3</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/CTF/BUUCTF/">BUUCTF</a><span class="hacker-category-list-count">3</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/CTF/BUUCTF/Misc/">Misc</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/CTF/BUUCTF/PWN/">PWN</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/CTF/BUUCTF/WEB/">WEB</a><span class="hacker-category-list-count">1</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%9F%A5%E8%AF%86%E6%9D%82%E7%A2%8E/">知识杂碎</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a><span class="hacker-category-list-count">32</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/APP%E6%B8%97%E9%80%8F/">APP渗透</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Java%E5%AE%89%E5%85%A8/">Java安全</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC/">SRC</a><span class="hacker-category-list-count">3</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">信息收集</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%86%85%E7%BD%91/">内网</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="hacker-category-list-count">7</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/">渗透&&攻防</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/%E7%BA%A2%E9%98%9F/">红队</a><span class="hacker-category-list-count">1</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/">漏洞</a><span class="hacker-category-list-count">15</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/PWN/">PWN</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB/">WEB</a><span class="hacker-category-list-count">10</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB/Top10/">Top10</a><span class="hacker-category-list-count">10</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/%E5%A4%8D%E7%8E%B0/">复现</a><span class="hacker-category-list-count">3</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="categories/%E8%AF%81%E4%B9%A6/">证书</a><span class="hacker-category-list-count">1</span></li></ul>
   </div>
 </div>
 
@@ -311,45 +311,45 @@
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/CORS/">CORS<span>2</span></a></li>
+			<li><a href="/tags/PWN/">PWN<span>1</span></a></li>
 		
-			<li><a href="/tags/计算机体系架构/">计算机体系架构<span>1</span></a></li>
+			<li><a href="/tags/Pwn/">Pwn<span>2</span></a></li>
 		
-			<li><a href="/tags/root/">root<span>1</span></a></li>
-		
-			<li><a href="/tags/栈/">栈<span>1</span></a></li>
-		
-			<li><a href="/tags/计算机网络/">计算机网络<span>2</span></a></li>
-		
-			<li><a href="/tags/Google-Hacking/">Google Hacking<span>1</span></a></li>
-		
-			<li><a href="/tags/Mysql/">Mysql<span>1</span></a></li>
-		
-			<li><a href="/tags/深度学习/">深度学习<span>2</span></a></li>
+			<li><a href="/tags/隧道技术/">隧道技术<span>1</span></a></li>
 		
 			<li><a href="/tags/WEB/">WEB<span>1</span></a></li>
 		
-			<li><a href="/tags/Jenkins/">Jenkins<span>1</span></a></li>
-		
-			<li><a href="/tags/js/">js<span>2</span></a></li>
-		
-			<li><a href="/tags/红队/">红队<span>1</span></a></li>
-		
-			<li><a href="/tags/服务器/">服务器<span>1</span></a></li>
-		
-			<li><a href="/tags/XSS/">XSS<span>1</span></a></li>
-		
-			<li><a href="/tags/VPN/">VPN<span>1</span></a></li>
-		
-			<li><a href="/tags/堆/">堆<span>1</span></a></li>
-		
-			<li><a href="/tags/域渗透/">域渗透<span>2</span></a></li>
+			<li><a href="/tags/数据链路层/">数据链路层<span>1</span></a></li>
 		
 			<li><a href="/tags/Java安全/">Java安全<span>1</span></a></li>
 		
-			<li><a href="/tags/CSRF/">CSRF<span>1</span></a></li>
+			<li><a href="/tags/FOFA/">FOFA<span>1</span></a></li>
 		
-			<li><a href="/tags/神经网络基础/">神经网络基础<span>1</span></a></li>
+			<li><a href="/tags/刷机/">刷机<span>1</span></a></li>
+		
+			<li><a href="/tags/应用层/">应用层<span>1</span></a></li>
+		
+			<li><a href="/tags/软考/">软考<span>1</span></a></li>
+		
+			<li><a href="/tags/VPN/">VPN<span>1</span></a></li>
+		
+			<li><a href="/tags/文件上传/">文件上传<span>1</span></a></li>
+		
+			<li><a href="/tags/深度学习/">深度学习<span>2</span></a></li>
+		
+			<li><a href="/tags/JWT/">JWT<span>1</span></a></li>
+		
+			<li><a href="/tags/域渗透/">域渗透<span>2</span></a></li>
+		
+			<li><a href="/tags/Redis/">Redis<span>1</span></a></li>
+		
+			<li><a href="/tags/SQL注入/">SQL注入<span>1</span></a></li>
+		
+			<li><a href="/tags/Java/">Java<span>1</span></a></li>
+		
+			<li><a href="/tags/Misc/">Misc<span>1</span></a></li>
+		
+			<li><a href="/tags/Git/">Git<span>1</span></a></li>
 		
 		
 		   <li><a href="/tags">...<span>56</span></a></li>
@@ -365,6 +365,10 @@
   <ul class="entry list-unstyled">
     
       <li>
+        <a href="/2026/11/19/从小程序杀到web后台的心路历程/" ><i class="fa fa-file-o"></i>从小程序杀到web后台的心路历程</a>
+      </li>
+    
+      <li>
         <a href="/2026/11/16/VPN抗封锁/" ><i class="fa fa-file-o"></i>VPN抗封锁</a>
       </li>
     
@@ -378,10 +382,6 @@
     
       <li>
         <a href="/2026/10/11/应急响应基础/" ><i class="fa fa-file-o"></i>应急响应基础</a>
-      </li>
-    
-      <li>
-        <a href="/2026/10/09/BUUCTF-Misc/" ><i class="fa fa-file-o"></i>Misc合集</a>
       </li>
     
   </ul>

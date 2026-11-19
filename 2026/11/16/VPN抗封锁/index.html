@@ -154,9 +154,8 @@
 <p>因此选择技术时不该问“哪个协议最隐蔽”，而该问：未认证探测会得到什么响应？客户端握手像哪种常见流量、像到哪层？UDP 不可用有没有独立回退？节点暴露后控制面多快能替换并安全下发？协议有没有公开规范、独立实现或安全审查？伪装增加多少延迟、带宽和运维复杂度？这些才区分真正的系统能力和营销标签；未来也不会靠单一专用协议，而会更多借用标准 Web 传输、可编程中继和多路径连接，并用自动化控制面快速换入口，但标准协议提升兼容性不自动保证不可识别，后量子密码也只保护密钥建立，不解决流量指纹。</p>
 <p>参考文章：<a target="_blank" rel="noopener" href="https://chinavpnguide.com/posts/vpn-censorship-resistance-evolution">https://chinavpnguide.com/posts/vpn-censorship-resistance-evolution</a></p>
 <h1 id="二、一次实战排查"><a href="#二、一次实战排查" class="headerlink" title="二、一次实战排查"></a>二、一次实战排查</h1><h2 id="2-1-小教训"><a href="#2-1-小教训" class="headerlink" title="2.1 小教训"></a>2.1 小教训</h2><p>我碰到订阅是好的、节点却大面积红，“最贵的错误” – 判断太快</p>
-<p>看到一个转圈超时，就立刻在心里给它归了类——觉得是端口被封，就去换端口；觉得是协议被识别，就去换协议。</p>
 <p>如下图：<br><img src="/images/VPN%E6%8A%97%E5%B0%81%E9%94%81/image_1.png" alt="VPN抗封锁·图1"></p>
-<p>这次的教训更具体：同样都是红，三个协议“红”的其实是三个不同的地方。有的“红”在加密之后，有的“红”在加密之前，还有的根本没“红”。</p>
+<p>原先以为局域网肯定是限制了vmess以及anytls协议，最后发现只是简单的DPI</p>
 <h2 id="2-2-环境确定"><a href="#2-2-环境确定" class="headerlink" title="2.2 环境确定"></a>2.2 环境确定</h2><p>在排查之前，需要确认当前计算机的流量流向与出口ip（环境自检）</p>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">// 查默认网关和出口网卡</span><br><span class="line"><span class="built_in">Get-NetRoute</span> <span class="literal">-DestinationPrefix</span> <span class="string">&quot;0.0.0.0/0&quot;</span> | <span class="built_in">Select-Object</span> NextHop, InterfaceAlias  </span><br><span class="line">// 出口ip</span><br><span class="line">curl.exe <span class="literal">-s</span> <span class="literal">--noproxy</span> <span class="string">&#x27;*&#x27;</span> https://ipinfo.io/ip</span><br></pre></td></tr></table></figure>
 <p><img loading="lazy" decoding="async" src="/images/VPN%E6%8A%97%E5%B0%81%E9%94%81/image_2.png" alt="VPN抗封锁·图2"></p>
@@ -173,7 +172,7 @@
 <p>对某个节点配置的分析：</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;日本-优化&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vmess&quot;</span><span class="punctuation">,</span>  <span class="comment">// 协议类型</span></span><br><span class="line">    <span class="attr">&quot;server&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xxx.xxx.xxx.com&quot;</span><span class="punctuation">,</span> <span class="comment">// 节点域名</span></span><br><span class="line">    <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">12345</span><span class="punctuation">,</span>  <span class="comment">// 连接端口</span></span><br><span class="line">    <span class="attr">&quot;uuid&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xxxxx-xxx-xxxx-xxxx-xxxxxxxxxx&quot;</span><span class="punctuation">,</span> <span class="comment">// 身份密钥</span></span><br><span class="line">    <span class="attr">&quot;alterId&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span>  <span class="comment">// 不启动备用id</span></span><br><span class="line">    <span class="attr">&quot;cipher&quot;</span><span class="punctuation">:</span> <span class="string">&quot;auto&quot;</span><span class="punctuation">,</span> <span class="comment">// 自动选择加密算法</span></span><br><span class="line">    <span class="attr">&quot;udp&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span> <span class="comment">// 允许转发udp流量</span></span><br><span class="line">    <span class="attr">&quot;network&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ws&quot;</span><span class="punctuation">,</span> <span class="comment">// VMess 流量封装在ws</span></span><br><span class="line">    <span class="attr">&quot;ws-opts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span>  </span><br><span class="line">        <span class="attr">&quot;path&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/&quot;</span><span class="punctuation">,</span>  <span class="comment">// WebSocket 握手请求的 HTTP 路径</span></span><br><span class="line">        <span class="attr">&quot;headers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;Host&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xxxx.xxx.xxx.xxx.com&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;ws-path&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/&quot;</span><span class="punctuation">,</span>   <span class="comment">// 新版兼容写法</span></span><br><span class="line">    <span class="attr">&quot;ws-headers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;Host&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xxxx.xxx.xxx.xxx.com&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>从配置可知，vmess没有套tls，完全跑在ws（非wss）</p>
+<p>从配置可知，vmess没有套tls，完全是裸跑ws（非wss）</p>
 <p>类似的，把所有节点的配置都抽出来分析</p>
 <h2 id="2-3-统计与探活ip"><a href="#2-3-统计与探活ip" class="headerlink" title="2.3 统计与探活ip"></a>2.3 统计与探活ip</h2><p>订阅把节点列成 43 条，看上去是 43 个独立的希望。</p>
 <p>按 server:port 聚合成 41 个入口，再把入口按解析出来的 IP 归堆，只剩 9 个 IP。下表 IP、域名均为虚构示例，非真实地址：</p>
@@ -252,10 +251,9 @@
 </tr>
 </tbody></table>
 <p>前 4 个 IP 就吃掉了 36 个节点。  使用icmp与tcp握手探活，发现所有节点服务端都是活的。</p>
-<p>这个换算改变了问题的形状。真正会被封的是 IP，不是节点名——43 条节点是假象，9 个 IP 才是真实的攻击面。更具体地说，<code>203.0.113.20</code> 一台机器上挂了 9 个端口，如果这个 IP 出事，现象就是 9 条节点同时红。从客户端看，9 个节点各自被封和1 个 IP 被拉黑长得一模一样，都是九个转圈。</p>
-<p>所以不能急着往下分层。得先把这一层单独拎出来验。</p>
-<h2 id="2-4-ip黑名单"><a href="#2-4-ip黑名单" class="headerlink" title="2.4 ip黑名单?"></a>2.4 ip黑名单?</h2><p>大面积红最省事的解释就是某个 IP 被拉黑了，而且这次的订阅结构让这个假设看起来特别合理——九个端口挤一个 IP，一红红一片</p>
-<p>判据依据：同一个 IP 上，只要有一个通道能通，这个 IP 就没被整体拉黑。</p>
+<p>更具体地说，<code>203.0.113.20</code> 一台机器上挂了 9 个端口，如果这个 IP 出事，现象就是 9 条节点同时红。</p>
+<p>所以，第一步需要先判断“红”的原因是不是应为局域网直接将节点服务器的ip加入了黑名单</p>
+<h2 id="2-4-ip黑名单"><a href="#2-4-ip黑名单" class="headerlink" title="2.4 ip黑名单?"></a>2.4 ip黑名单?</h2><p>同一个 IP 上，只要有一个通道能通，这个 IP 就没被整体拉黑。</p>
 <p>结果：</p>
 <table>
 <thead>
@@ -303,30 +301,15 @@
 <td><strong>无法排除</strong></td>
 </tr>
 </tbody></table>
-<p><strong>vmess 的3个IP是干净的。</strong> 同一个 IP 上换个 UA 就能拿到 101，说明网关没有把这个 IP 整体丢掉，它只是挑着内容丢。</p>
-<p><strong>hy2的那4个IP也是干净的。</strong> TCP 探测全是 refused，看着像IP 死了，可 hy2 节点本身跑得出 2614ms 的延迟。所以 refused 只说明它不开 TCP，不说明 IP 被拉黑。这里有个容易搞反的地方：<strong>TCP refused 和 IP 被拉黑是两个完全不同的状态</strong>，前者是服务端没监听，后者是中间设备不转发。这次的 hy2 是前者。</p>
-<p><strong>anytls的2个IP排除不掉。</strong> <code>203.0.113.20</code> 的九个端口裸 TCP 全通（105~330ms），但 TLS 一个字节都不回。我在这个 IP 上找不到任何一个能通的通道——443 和 8443 是 refused，应该是服务端没监听，不能算被封的证据；1661 等端口 TCP 通但 TLS 黑洞。所以难以判断</p>
-<p>于是 43 个节点被这一步切成两组：</p>
-<table>
-<thead>
-<tr>
-<th>组</th>
-<th>节点数</th>
-<th>状态</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>IP 层已排除</td>
-<td>33（27 vmess + 6 hy2）</td>
-<td>问题在 IP 之上，可以往下分层</td>
-</tr>
-<tr>
-<td>IP 层仍有嫌疑</td>
-<td>10（全部 anytls）</td>
-<td>不能排除整个 IP 被丢，分层结论对它不成立</td>
-</tr>
-</tbody></table>
-<p>全量 43 个节点的判定汇总，是这样分布的。</p>
+<ul>
+<li><p>Vmess：同一个 IP 上换个 UA 就能拿到 101，说明网关没有把这个 IP 整体丢掉</p>
+</li>
+<li><p>hy2：TCP 探测全是 refused，看着像IP 死了，可 hy2 节点本身跑得出 2614ms 的延迟。所以 refused 只说明它不开 TCP，不说明 IP 被拉黑。这里有个容易搞反的地方：<strong>TCP refused 和 IP 被拉黑是两个完全不同的状态</strong></p>
+</li>
+<li><p>anytls：<code>203.0.113.20</code> 的九个端口裸 TCP 全通（105~330ms），但 TLS 一个字节都不回。我在这个 IP 上找不到任何一个能通的通道——443 和 8443 是 refused，应该是服务端没监听，不能算被封的证据；1661 等端口 TCP 通但 TLS 黑洞。所以难以判断</p>
+</li>
+</ul>
+<p>汇总一下分析结果</p>
 <table>
 <thead>
 <tr>
@@ -565,9 +548,7 @@
 <h3 id="2-7-5-清空SNI？"><a href="#2-7-5-清空SNI？" class="headerlink" title="2.7.5 清空SNI？"></a>2.7.5 清空SNI？</h3><p>最直接的想法是把 <code>sni</code> 去掉：</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> &#123; <span class="attr">name:</span> <span class="string">香港HK-A</span>, <span class="attr">type:</span> <span class="string">anytls</span>, <span class="attr">server:</span> <span class="string">ousua.node-a.example</span>, <span class="attr">port:</span> <span class="number">1661</span>, <span class="attr">sni:</span> <span class="string">&#x27;&#x27;</span>, <span class="attr">password:</span> <span class="string">xxx</span>, <span class="attr">client-fingerprint:</span> <span class="string">chrome</span>, <span class="attr">skip-cert-verify:</span> <span class="literal">true</span> &#125;</span><br></pre></td></tr></table></figure>
 
-<p>实测结果：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">香港HK-A -&gt; Timeout</span><br></pre></td></tr></table></figure>
-
+<p>实测结果：香港HK-A -&gt; Timeout</p>
 <p>mihomo 对空 SNI 的处理是回退到 <code>server</code> 的域名（<code>ousua.node-a.example</code>），照样带 SNI，照样超时。内核没有强制不发 SNI的开关。这条路在客户端侧堵死。</p>
 <h3 id="2-7-6-dialer-proxy链式复用？"><a href="#2-7-6-dialer-proxy链式复用？" class="headerlink" title="2.7.6 dialer-proxy链式复用？"></a>2.7.6 dialer-proxy链式复用？</h3><p>既然拦的是带 SNI 的 TCP 直连，那就别直连——把这条 TLS 连接塞进一个网关看不见的信道。</p>
 <p>hy2 走 QUIC&#x2F;UDP，那张设备只处理 TCP，隧道内部那个带 SNI 的 ClientHello 是加密的，DPI 读不到。</p>
@@ -634,8 +615,7 @@
 <td>绿 1752ms</td>
 </tr>
 </tbody></table>
-<p>另外还留了一个直连对照 <code>A_ORIG</code>，配置和它们一模一样、只少了 <code>dialer-proxy</code>，结果依然是红（Timeout）。这一组对照说明起作用的是隧道，不是节点本身。</p>
-<p>反直觉的是链式 anytls 比 hy2 本身还快（803~2402ms vs 3379ms）。这个差异的成因我没有单独做对照验证，推测是 hy2 那次测的是冷启动的完整 QUIC 握手，而链式测试时隧道已经预热。</p>
+<p>另外还留了一个直连对照 <code>A_ORIG</code>，配置和它们一模一样、只少了 <code>dialer-proxy</code>，结果依然是红（Timeout）。至于是什么原因，我也不清楚。</p>
 <h2 id="2-8-修复"><a href="#2-8-修复" class="headerlink" title="2.8 修复"></a>2.8 修复</h2><p>Vmess 加浏览器UA头、anyTLS 走 dialer-proxy 链式复用</p>
 <p><img loading="lazy" decoding="async" src="/images/VPN%E6%8A%97%E5%B0%81%E9%94%81/image_5.png" alt="VPN抗封锁·图5"></p>
 <p>欧克了</p>

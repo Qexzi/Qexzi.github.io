@@ -678,7 +678,7 @@
 <p>确认报文分析：<br><img loading="lazy" decoding="async" src="/images/%E4%BB%BB%E5%8A%A1%E5%AF%BC%E5%90%91%E8%AE%A1%E7%BD%91%E5%AD%A6%E4%B9%A0/image_111.png" alt="任务导向计网学习·图108"><br>DHCP Ack 报文是IP 地址分配流程的最终确认：服务器通过该报文完成 IP 地址的正式分配，并下发子网掩码、网关、DNS 等完整网络配置，客户端接收后即可基于分配的 IP 地址建立网络连接，标志 DHCP 全流程（Discover→Offer→Request→Ack）完成</p>
 <p><strong>DHCP分配IP地址过程图：</strong><br><img loading="lazy" decoding="async" src="/images/%E4%BB%BB%E5%8A%A1%E5%AF%BC%E5%90%91%E8%AE%A1%E7%BD%91%E5%AD%A6%E4%B9%A0/image_112.png" alt="任务导向计网学习·图109"></p>
 <hr>
-<h2 id="实验9-WEB-页面请求全历程协议及数据包解析（综合性实验）"><a href="#实验9-WEB-页面请求全历程协议及数据包解析（综合性实验）" class="headerlink" title="实验9(WEB 页面请求全历程协议及数据包解析（综合性实验）)"></a>实验9(WEB 页面请求全历程协议及数据包解析（综合性实验）)</h2><p>访问我自己的博客网站，获取数据：<a target="_blank" rel="noopener" href="http://zq-rookie-hacker.github.io/">http://zq-rookie-hacker.github.io</a></p>
+<h2 id="实验9-WEB-页面请求全历程协议及数据包解析（综合性实验）"><a href="#实验9-WEB-页面请求全历程协议及数据包解析（综合性实验）" class="headerlink" title="实验9(WEB 页面请求全历程协议及数据包解析（综合性实验）)"></a>实验9(WEB 页面请求全历程协议及数据包解析（综合性实验）)</h2><p>访问我自己的博客网站，获取数据：<a href="http://qexzi.github.io/">http://qexzi.github.io</a></p>
 <p><strong>1. 为什么不直接使用https呢？</strong><br>可以观察到HTTP到HTTPS的重定向过程</p>
 <p><strong>2. 访问这个网站可以获取实验所需的数据吗？</strong><br>真实网络环境：GitHub Pages是真实的Web服务，完全符合实验要求的”访问目标WEB网站”条件可能包含重定向：GitHub Pages通常会将HTTP请求重定向到HTTPS，这正好可以帮助您分析实验要求中的”如果发生重定向，新的web页面的地址是什么”问题<br>DNS解析复杂性：GitHub Pages使用CNAME记录和全球CDN，会使DNS解析过程更丰富，有助于分析DNS解析内容<br>网络协议完整性：仍然会经历完整的DNS解析→TCP连接建立→HTTP请求→数据传输过程</p>
 <p><strong>清除网站cookie：</strong><br><img loading="lazy" decoding="async" src="/images/%E4%BB%BB%E5%8A%A1%E5%AF%BC%E5%90%91%E8%AE%A1%E7%BD%91%E5%AD%A6%E4%B9%A0/image_113.png" alt="任务导向计网学习·图110"></p>
